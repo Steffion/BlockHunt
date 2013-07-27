@@ -1,0 +1,10 @@
+# Mac Filesystem.
+.DS_Store
+
+# Other unneeded files.
+/bin
+/manifest.mf
+.classpath
+.settings.classpath
+.settings
+.project
