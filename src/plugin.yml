@@ -1,0 +1,14 @@
+name: BlockHunt
+main: nl.Steffion.BlockHunt.BlockHunt
+version: 1.0.0
+authors:
+  - Steffion
+description: Description here.
+commands:
+  BlockHunt:
+    usage: /<command>
+    description: N/A
+    aliases:
+        - bh
+        - hideandseek
+        - hs
