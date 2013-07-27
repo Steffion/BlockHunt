@@ -19,6 +19,8 @@ public class W {
 	public static ArrayList<String> newFiles = new ArrayList<String>();
 	public static ConfigM config = new ConfigM("config", "");
 	public static ConfigM messages = new ConfigM("messages", "");
+	public static ConfigM note1 = new ConfigM("PLACE WORLD FOLDERS HERE!",
+			"defaultArenas/");
 
 	public static void newFiles() {
 		ConfigM.setDefaults();

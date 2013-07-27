@@ -18,7 +18,8 @@ public class PlayerM {
 	public enum PermsC {
 		info (main + "info", PType.ALL),
 		help (main + "help", PType.ALL),
-		reload (main + "reload", PType.MODERATOR);
+		reload (main + "reload", PType.MODERATOR),
+		list (main + "list", PType.MODERATOR);
 
 		public String perm;
 		public PType type;
