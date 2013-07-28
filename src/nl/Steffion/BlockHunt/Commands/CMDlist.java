@@ -38,10 +38,6 @@ public class CMDlist extends DefaultCMD {
 						false);
 				MessageM.sendMessage(player, "&7&oAdd arenas in the '"
 						+ W.pluginName + "/defaultArenas/' folder.", false);
-				MessageM.sendMessage(
-						player,
-						"&7&oWhile adding maps, be sure you REMOVE the uid.dat file. To prevent crashes.",
-						false);
 			}
 			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, false,
 					"header-&oArenas list");
