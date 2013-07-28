@@ -19,7 +19,8 @@ public class PlayerM {
 		info (main + "info", PType.ALL),
 		help (main + "help", PType.ALL),
 		reload (main + "reload", PType.MODERATOR),
-		list (main + "list", PType.MODERATOR);
+		list (main + "list", PType.MODERATOR),
+		preview (main + "preview", PType.ADMIN);
 
 		public String perm;
 		public PType type;

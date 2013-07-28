@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt;
 
+import nl.Steffion.BlockHunt.Listeners.PlayerListener;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -18,6 +19,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	public void onEnable() {
 		W.newFiles();
 		getServer().getPluginManager().registerEvents(this, this);
+		getServer().getPluginManager().registerEvents(new PlayerListener(this),
+				this);
 		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
 				+ W.pluginAutors);
