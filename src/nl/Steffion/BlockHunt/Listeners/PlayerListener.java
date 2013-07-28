@@ -25,45 +25,61 @@ public class PlayerListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void onPlayerTeleportEvent(PlayerTeleportEvent event) {
+	public void onPlayerTeleportEvent(final PlayerTeleportEvent event) {
 		final Player player = event.getPlayer();
-		MessageM.broadcastMessage("-2", false);
 		if (W.previewWorlds.contains(event.getFrom().getWorld().getName())) {
-			MessageM.broadcastMessage("-1", false);
 			if (!event.getFrom().getWorld().getName()
 					.equals(event.getTo().getWorld().getName())) {
-				MessageM.broadcastMessage("0", false);
 				final String worldLoc = event.getFrom().getWorld().getName();
 				boolean unload = true;
 
 				for (Player pl : Bukkit.getOnlinePlayers()) {
-					MessageM.broadcastMessage("1", false);
 					if (pl.getLocation().getWorld().getName().equals(worldLoc)) {
-						MessageM.broadcastMessage("2", false);
 						if (!pl.equals(player)) {
-							MessageM.broadcastMessage("3a", false);
 							unload = false;
-						} else {
-							MessageM.broadcastMessage("3b", false);
 						}
 					}
 				}
 
-				MessageM.broadcastMessage("4", false);
 				if (unload) {
-					MessageM.broadcastMessage("5", false);
 					Bukkit.getScheduler().runTaskLaterAsynchronously(
 							this.plugin, new Runnable() {
 								@Override
 								public void run() {
 									Bukkit.unloadWorld(
-											Bukkit.getWorld(worldLoc), false);
+											Bukkit.getWorld(worldLoc), true);
 									MessageM.sendFMessage(
 											player,
 											ConfigC.normal_previewWorldUnloaded,
 											true);
 								}
 							}, 20);
+
+					Bukkit.getScheduler().runTaskLaterAsynchronously(
+							this.plugin, new Runnable() {
+								@Override
+								public void run() {
+									try {
+										String[] worldPlace = event.getFrom()
+												.getWorld().getName()
+												.split("/");
+										String[] worldName = worldPlace[worldPlace.length - 1]
+												.split("_");
+										File destFolder = new File("plugins/"
+												+ W.pluginName
+												+ "/defaultArenas/"
+												+ worldName[0]);
+										if (destFolder.exists()) {
+											FileM.delete(destFolder);
+										}
+
+										FileM.copyFolder(new File(worldLoc),
+												destFolder);
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+							}, 40);
 
 					Bukkit.getScheduler().runTaskLaterAsynchronously(
 							this.plugin, new Runnable() {
@@ -80,7 +96,7 @@ public class PlayerListener implements Listener {
 											true);
 								}
 
-							}, 40);
+							}, 60);
 					W.previewWorlds
 							.remove(event.getFrom().getWorld().getName());
 				}

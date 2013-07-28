@@ -24,7 +24,9 @@ public class FileM {
 			for (String file : files) {
 				File srcFile = new File(src, file);
 				File destFile = new File(dest, file);
-				copyFolder(srcFile, destFile);
+				if (!srcFile.getName().equals("uid.dat")) {
+					copyFolder(srcFile, destFile);
+				}
 			}
 
 		} else {
