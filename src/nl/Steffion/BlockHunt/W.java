@@ -1,9 +1,13 @@
 package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 public class W {
 	/*
@@ -17,6 +21,8 @@ public class W {
 	public static String pluginMainPermission = pluginName + ".";
 
 	public static ArrayList<String> newFiles = new ArrayList<String>();
+	public static HashMap<Player, LocationSerializable> pos1 = new HashMap<Player, LocationSerializable>();
+	public static HashMap<Player, LocationSerializable> pos2 = new HashMap<Player, LocationSerializable>();
 	public static ConfigM config = new ConfigM("config", "");
 	public static ConfigM messages = new ConfigM("messages", "");
 
