@@ -25,6 +25,7 @@ public class W {
 	public static HashMap<Player, LocationSerializable> pos2 = new HashMap<Player, LocationSerializable>();
 	public static ConfigM config = new ConfigM("config", "");
 	public static ConfigM messages = new ConfigM("messages", "");
+	public static ConfigM arenas = new ConfigM("arenas", "");
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
