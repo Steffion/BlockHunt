@@ -19,6 +19,7 @@ public enum ConfigC {
 	commandEnabled_help (true, W.config),
 	commandEnabled_reload (true, W.config),
 	commandEnabled_wand (true, W.config),
+	commandEnabled_create (true, W.config),
 
 	wandID (280, W.config),
 	wandName ("%A&l" + W.pluginName + "%N's selection wand", W.config),
@@ -38,11 +39,14 @@ public enum ConfigC {
 	help_help ("%NShows a list of commands.", W.messages),
 	help_reload ("%NReloads all configs.", W.messages),
 	help_wand ("%NGives you the wand selection tool.", W.messages),
+	help_create ("%NCreates an arena from your selection.", W.messages),
 
 	normal_reloadedConfigs ("&aReloaded all configs!", W.messages),
-	normal_gaveWand ("%NHere you go ;)! &o(Use the %A&o%type%%N&o!)",
+	normal_wandGaveWand ("%NHere you go ;)! &o(Use the %A&o%type%%N&o!)",
 			W.messages),
-	normal_setPosition ("%NSet position %A#%number%%N to location: %pos%.",
+	normal_wandSetPosition ("%NSet position %A#%number%%N to location: %pos%.",
+			W.messages),
+	normal_createCreatedArena ("%NCreated an arena with the name %A%name%%N.",
 			W.messages),
 
 	error_noPermission ("%EYou don't have the permissions to do that!",
@@ -53,7 +57,12 @@ public enum ConfigC {
 	error_notEnoughArguments ("%EYou're missing arguments, correct syntax: %A/%syntax%",
 			W.messages),
 	error_noArena ("%ENo arena found with the name '%A%name%%E'.", W.messages),
-	error_onlyIngame ("%EThis is an only in-game command!", W.messages);
+	error_onlyIngame ("%EThis is an only in-game command!", W.messages),
+	error_createSelectionFirst ("%EMake a selection first. Use the wand command: %A/"
+			+ W.pluginName + " <wand|w>%E.",
+			W.messages),
+	error_createNotSameWorld ("%EMake your selection points in the same world!",
+			W.messages);
 
 	Object value;
 	ConfigM config;
