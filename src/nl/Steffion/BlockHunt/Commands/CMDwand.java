@@ -41,7 +41,7 @@ public class CMDwand extends DefaultCMD {
 				wand.setItemMeta(im);
 				player.getInventory().addItem(wand);
 				player.playSound(player.getLocation(), Sound.ORB_PICKUP, 5, 0);
-				MessageM.sendFMessage(player, ConfigC.normal_gaveWand, true,
+				MessageM.sendFMessage(player, ConfigC.normal_wandGaveWand, true,
 						"type-"
 								+ wand.getType().toString()
 										.replaceAll("_", " ").toLowerCase());

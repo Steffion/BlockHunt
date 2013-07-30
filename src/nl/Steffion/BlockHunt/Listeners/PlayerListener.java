@@ -46,7 +46,7 @@ public class PlayerListener implements Listener {
 										|| !W.pos1.get(player).equals(location)) {
 									MessageM.sendFMessage(
 											player,
-											ConfigC.normal_setPosition,
+											ConfigC.normal_wandSetPosition,
 											true,
 											"number-1",
 											"pos-%N(%A" + location.getBlockX()
@@ -63,7 +63,7 @@ public class PlayerListener implements Listener {
 										|| !W.pos2.get(player).equals(location)) {
 									MessageM.sendFMessage(
 											player,
-											ConfigC.normal_setPosition,
+											ConfigC.normal_wandSetPosition,
 											true,
 											"number-2",
 											"pos-%N(%A" + location.getBlockX()
