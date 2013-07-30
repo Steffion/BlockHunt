@@ -4,6 +4,7 @@ version: 1.0.0
 authors:
   - Steffion
 description: Description here.
+softdepend: [DisguiseCraft, Multiverse-Core]
 commands:
   BlockHunt:
     usage: /<command>

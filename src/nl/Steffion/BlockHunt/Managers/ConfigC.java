@@ -18,8 +18,6 @@ public enum ConfigC {
 	commandEnabled_info (true, W.config),
 	commandEnabled_help (true, W.config),
 	commandEnabled_reload (true, W.config),
-	commandEnabled_list (true, W.config),
-	commandEnabled_preview (true, W.config),
 
 	log_Enabled ("%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
 			W.messages),
@@ -29,18 +27,8 @@ public enum ConfigC {
 	help_info ("%NDisplays the plugin's info.", W.messages),
 	help_help ("%NShows a list of commands.", W.messages),
 	help_reload ("%NReloads all configs.", W.messages),
-	help_list ("%NDisplays a list of available arenas.", W.messages),
-	help_preview ("%NMakes a copy of an arena to make changes in your arena.",
-			W.messages),
 
 	normal_reloadedConfigs ("&aReloaded all configs!", W.messages),
-	normal_previewWorld ("%NMaking a preview world for you...", W.messages),
-	normal_previewWorldDone ("%NYour preview world has been created! Sending you...",
-			W.messages),
-	normal_previewWorldUnloaded ("%NYour preview world has been %Eunloaded%N!",
-			W.messages),
-	normal_previewWorldDeleted ("%NYour preview world has been %Edeleted%N!",
-			W.messages),
 
 	error_noPermission ("%EYou don't have the permissions to do that!",
 			W.messages),
