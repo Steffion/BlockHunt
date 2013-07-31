@@ -4,9 +4,11 @@ import nl.Steffion.BlockHunt.Listeners.PlayerListener;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,10 +19,15 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	 */
 
 	public void onEnable() {
-		W.newFiles();
 		getServer().getPluginManager().registerEvents(this, this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(),
 				this);
+
+		ConfigurationSerialization.registerClass(LocationSerializable.class,
+				"Location");
+
+		W.newFiles();
+
 		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
 				+ W.pluginAutors);
