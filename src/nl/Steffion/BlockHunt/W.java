@@ -15,7 +15,7 @@ public class W {
 	 */
 
 	public static String pluginName = "BlockHunt";
-	public static String pluginVersion = "v1.0.0";
+	public static String pluginVersion = "v0.1.0_ALPHA";
 	public static String engineVersion = "v1.1.0";
 	public static String pluginAutors = "Steffion";
 	public static String pluginMainPermission = pluginName + ".";
