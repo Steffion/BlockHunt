@@ -31,6 +31,16 @@ public class CMDcreate extends DefaultCMD {
 									W.pos1.get(player));
 							W.arenas.getFile().set(args[1] + ".pos2",
 									W.pos2.get(player));
+							W.arenas.getFile().set(args[1] + ".maxPlayers", 12);
+							W.arenas.getFile().set(args[1] + ".minPlayers", 3);
+							W.arenas.getFile().set(
+									args[1] + ".amountSeekersOnStart", 1);
+							W.arenas.getFile().set(
+									args[1] + ".timeInLobbyUntilStart", 90);
+							W.arenas.getFile().set(
+									args[1] + ".waitingTimeSeeker", 20);
+							W.arenas.getFile().set(args[1] + ".gameTime", 200);
+
 							W.arenas.save();
 							MessageM.sendFMessage(player,
 									ConfigC.normal_createCreatedArena, true,
@@ -44,9 +54,9 @@ public class CMDcreate extends DefaultCMD {
 								ConfigC.error_createSelectionFirst, true);
 					}
 				}
+			} else {
+				MessageM.sendFMessage(player, ConfigC.error_onlyIngame, true);
 			}
-		} else {
-			MessageM.sendFMessage(player, ConfigC.error_onlyIngame, true);
 		}
 		return true;
 	}

@@ -17,13 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class PlayerListener implements Listener {
-
-	// private BlockHunt plugin;
-	//
-	// public PlayerListener (BlockHunt plugin) {
-	// this.plugin = plugin;
-	// }
+public class OnPlayerInteractEvent implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {

@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt;
 
-import nl.Steffion.BlockHunt.Listeners.PlayerListener;
+import nl.Steffion.BlockHunt.Listeners.OnInventoryClickEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerInteractEvent;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -20,7 +21,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this, this);
-		getServer().getPluginManager().registerEvents(new PlayerListener(),
+		getServer().getPluginManager().registerEvents(new OnPlayerInteractEvent(),
+				this);
+		getServer().getPluginManager().registerEvents(
+				new OnInventoryClickEvent(),
 				this);
 
 		ConfigurationSerialization.registerClass(LocationSerializable.class,
