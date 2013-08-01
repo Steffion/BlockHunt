@@ -19,7 +19,8 @@ public class PlayerM {
 		info (main + "info", PType.ALL),
 		help (main + "help", PType.ALL),
 		reload (main + "reload", PType.MODERATOR),
-		create (main + "create", PType.ADMIN);
+		create (main + "create", PType.ADMIN),
+		set (main + "set", PType.MODERATOR);
 
 		public String perm;
 		public PType type;

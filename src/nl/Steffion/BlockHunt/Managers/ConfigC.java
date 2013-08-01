@@ -20,6 +20,7 @@ public enum ConfigC {
 	commandEnabled_reload (true, W.config),
 	commandEnabled_wand (true, W.config),
 	commandEnabled_create (true, W.config),
+	commandEnabled_set (true, W.config),
 
 	wandID (280, W.config),
 	wandName ("%A&l" + W.pluginName + "%N's selection wand", W.config),
@@ -40,13 +41,20 @@ public enum ConfigC {
 	help_reload ("%NReloads all configs.", W.messages),
 	help_wand ("%NGives you the wand selection tool.", W.messages),
 	help_create ("%NCreates an arena from your selection.", W.messages),
+	help_set ("%NOpens a panel to set settings.", W.messages),
+
+	button_add ("%NAdd %A%1%%N to %A%2%%N", W.messages),
+	button_add2 ("Add", W.messages),
+	button_setting ("%NSetting %A%1%%N is now: %A%2%%N.", W.messages),
+	button_remove ("%NRemove %A%1%%N from %A%2%%N", W.messages),
+	button_remove2 ("Remove", W.messages),
 
 	normal_reloadedConfigs ("&aReloaded all configs!", W.messages),
 	normal_wandGaveWand ("%NHere you go ;)! &o(Use the %A&o%type%%N&o!)",
 			W.messages),
 	normal_wandSetPosition ("%NSet position %A#%number%%N to location: %pos%.",
 			W.messages),
-	normal_createCreatedArena ("%NCreated an arena with the name %A%name%%N.",
+	normal_createCreatedArena ("%NCreated an arena with the name '%A%name%%N'.",
 			W.messages),
 
 	error_noPermission ("%EYou don't have the permissions to do that!",
@@ -62,6 +70,10 @@ public enum ConfigC {
 			+ W.pluginName + " <wand|w>%E.",
 			W.messages),
 	error_createNotSameWorld ("%EMake your selection points in the same world!",
+			W.messages),
+	error_tooHighNumber ("%EThat amount is too high! Max amount is: %A%max%%E.",
+			W.messages),
+	error_tooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
 			W.messages);
 
 	Object value;
