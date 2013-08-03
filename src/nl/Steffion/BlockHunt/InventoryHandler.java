@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class InventoryHandler {
 
 	public static void openPanel(Player player, String arenaname) {
-		String shorten = arenaname;
+
 		Arena arena = null;
 		for (Arena arena2 : W.arenaList) {
 			if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
@@ -23,6 +23,8 @@ public class InventoryHandler {
 		}
 
 		if (arena != null) {
+			String shorten = arena.arenaName;
+			arenaname = arena.arenaName;
 			if (shorten.length() > 6)
 				shorten = shorten.substring(0, 6);
 			Inventory panel = Bukkit
@@ -31,6 +33,16 @@ public class InventoryHandler {
 							27,
 							MessageM.replaceAll("\u00A7r%N&lSettings of: %A"
 									+ shorten));
+
+			ItemStack arenaNameNote = new ItemStack(Material.PAPER, 1);
+			ItemMeta arenaNameNote_IM = arenaNameNote.getItemMeta();
+			arenaNameNote_IM.setDisplayName(MessageM
+					.replaceAll("%NSettings of arena: %A" + arena.arenaName));
+			arenaNameNote.setItemMeta(arenaNameNote_IM);
+			panel.setItem(0, arenaNameNote);
+
+			//
+
 			ItemStack maxPlayers_UP = new ItemStack(Material.GOLD_NUGGET, 1);
 			ItemStack maxPlayers = new ItemStack(Material.PISTON_MOVING_PIECE,
 					arena.maxPlayers);
@@ -70,27 +82,27 @@ public class InventoryHandler {
 			//
 
 			updownButton(panel, arena, ArenaType.maxPlayers, "maxPlayers", "1",
-					maxPlayers_UP, maxPlayers, maxPlayers_DOWN, 0, 9, 18);
+					maxPlayers_UP, maxPlayers, maxPlayers_DOWN, 1, 10, 19);
 
 			updownButton(panel, arena, ArenaType.minPlayers, "minPlayers", "1",
-					minPlayers_UP, minPlayers, minPlayers_DOWN, 1, 10, 19);
+					minPlayers_UP, minPlayers, minPlayers_DOWN, 2, 11, 20);
 
 			updownButton(panel, arena, ArenaType.amountSeekersOnStart,
 					"amountSeekersOnStart", "1", amountSeekersOnStart_UP,
-					amountSeekersOnStart, amountSeekersOnStart_DOWN, 3, 12, 21);
+					amountSeekersOnStart, amountSeekersOnStart_DOWN, 4, 13, 22);
 
 			updownButton(panel, arena, ArenaType.timeInLobbyUntilStart,
 					"timeInLobbyUntilStart", "1 %Nsecond",
 					timeInLobbyUntilStart_UP, timeInLobbyUntilStart,
-					timeInLobbyUntilStart_DOWN, 5, 14, 23);
+					timeInLobbyUntilStart_DOWN, 6, 15, 24);
 
 			updownButton(panel, arena, ArenaType.waitingTimeSeeker,
 					"waitingTimeSeeker", "1 %Nsecond", waitingTimeSeeker_UP,
-					waitingTimeSeeker, waitingTimeSeeker_DOWN, 6, 15, 24);
+					waitingTimeSeeker, waitingTimeSeeker_DOWN, 7, 16, 25);
 
 			updownButton(panel, arena, ArenaType.gameTime, "gameTime",
-					"1 %Nsecond", gameTime_UP, gameTime, gameTime_DOWN, 7, 16,
-					25);
+					"1 %Nsecond", gameTime_UP, gameTime, gameTime_DOWN, 8, 17,
+					26);
 
 			player.openInventory(panel);
 		} else {
