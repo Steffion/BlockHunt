@@ -1,5 +1,8 @@
 package nl.Steffion.BlockHunt.Listeners;
 
+import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.Arena.ArenaType;
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.InventoryHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
@@ -28,6 +31,14 @@ public class OnInventoryClickEvent implements Listener {
 				ItemStack item = event.getCurrentItem();
 				String arenaname = inv.getName().replaceAll(
 						MessageM.replaceAll("\u00A7r%N&lSettings of: %A"), "");
+
+				Arena arena = null;
+				for (Arena arena2 : W.arenaList) {
+					if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
+						arena = arena2;
+					}
+				}
+
 				if (item == null)
 					return;
 				if (item.getType().equals(Material.AIR))
@@ -37,62 +48,109 @@ public class OnInventoryClickEvent implements Listener {
 				if (item.getType().equals(Material.GOLD_NUGGET)) {
 					if (item.getItemMeta().getDisplayName()
 							.contains("maxPlayers")) {
-						updownButton(item, arenaname, player, "maxPlayers",
-								Bukkit.getMaxPlayers(), 2, 1, 1);
+						updownButton(player, item, arena, ArenaType.maxPlayers,
+								arena.maxPlayers, Bukkit.getMaxPlayers(), 2, 1,
+								1);
 					} else if (item.getItemMeta().getDisplayName()
 							.contains("minPlayers")) {
-						updownButton(item, arenaname, player, "minPlayers",
-								Bukkit.getMaxPlayers() - 1, 2, 1, 1);
+						updownButton(player, item, arena, ArenaType.minPlayers,
+								arena.minPlayers, Bukkit.getMaxPlayers() - 1,
+								2, 1, 1);
 					} else if (item.getItemMeta().getDisplayName()
 							.contains("amountSeekersOnStart")) {
-						updownButton(item, arenaname, player,
-								"amountSeekersOnStart", W.arenas.getFile()
-										.getInt(arenaname + ".maxPlayers") - 1,
-								1, 1, 1);
+						updownButton(player, item, arena,
+								ArenaType.amountSeekersOnStart,
+								arena.amountSeekersOnStart,
+								arena.maxPlayers - 1, 1, 1, 1);
 					} else if (item.getItemMeta().getDisplayName()
 							.contains("timeInLobbyUntilStart")) {
-						updownButton(item, arenaname, player,
-								"timeInLobbyUntilStart", 1000, 5, 1, 1);
+						updownButton(player, item, arena,
+								ArenaType.timeInLobbyUntilStart,
+								arena.timeInLobbyUntilStart, 1000, 5, 1, 1);
 					} else if (item.getItemMeta().getDisplayName()
 							.contains("waitingTimeSeeker")) {
-						updownButton(item, arenaname, player,
-								"waitingTimeSeeker", 1000, 5, 1, 1);
+						updownButton(player, item, arena,
+								ArenaType.waitingTimeSeeker,
+								arena.waitingTimeSeeker, 1000, 5, 1, 1);
 					} else if (item.getItemMeta().getDisplayName()
 							.contains("gameTime")) {
-						updownButton(item, arenaname, player, "gameTime", 1000,
-								5, 1, 1);
+						updownButton(player, item, arena, ArenaType.gameTime,
+								arena.gameTime, 1000, 5, 1, 1);
 					}
 
-					W.arenas.save();
-					InventoryHandler.openPanel(player, arenaname);
+					save(arena);
+					InventoryHandler.openPanel(player, arena.arenaName);
 				}
 			}
 		}
 	}
 
-	public static void updownButton(ItemStack item, String arenaname,
-			Player player, String option, int max, int min, int add, int remove) {
+	public void save(Arena arena) {
+		W.arenas.getFile().set(arena.arenaName, arena);
+		W.arenas.save();
+		ArenaHandler.loadArenas();
+	}
+
+	public static void updownButton(Player player, ItemStack item, Arena arena,
+			ArenaType at, int option, int max, int min, int add, int remove) {
 		if (item.getItemMeta().getDisplayName()
 				.contains((String) W.messages.get(ConfigC.button_add2))) {
-			if (W.arenas.getFile().getInt(arenaname + "." + option) < max) {
-				W.arenas.getFile().set(
-						arenaname + "." + option,
-						W.arenas.getFile().getInt(arenaname + "." + option)
-								+ add);
+			if (option < max) {
+
+				// W.arenas.getFile().set(arenaname + "." + option, option +
+				// add);
+				switch (at) {
+				case maxPlayers:
+					arena.maxPlayers = option + add;
+					break;
+				case minPlayers:
+					arena.minPlayers = option + add;
+					break;
+				case amountSeekersOnStart:
+					arena.amountSeekersOnStart = option + add;
+					break;
+				case timeInLobbyUntilStart:
+					arena.timeInLobbyUntilStart = option + add;
+					break;
+				case waitingTimeSeeker:
+					arena.waitingTimeSeeker = option + add;
+					break;
+				case gameTime:
+					arena.gameTime = option + add;
+					break;
+				}
 			} else {
-				MessageM.sendFMessage(player, ConfigC.error_tooHighNumber,
+				MessageM.sendFMessage(player, ConfigC.error_setTooHighNumber,
 						true, "max-" + max);
 			}
 		} else if (item.getItemMeta().getDisplayName()
 				.contains((String) W.messages.get(ConfigC.button_remove2))) {
-			if (W.arenas.getFile().getInt(arenaname + "." + option) > min) {
-				W.arenas.getFile().set(
-						arenaname + "." + option,
-						W.arenas.getFile().getInt(arenaname + "." + option)
-								- remove);
+			if (option > min) {
+				// W.arenas.getFile().set(arenaname + "." + option,
+				// option - remove);
+				switch (at) {
+				case maxPlayers:
+					arena.maxPlayers = option - remove;
+					break;
+				case minPlayers:
+					arena.minPlayers = option - remove;
+					break;
+				case amountSeekersOnStart:
+					arena.amountSeekersOnStart = option - remove;
+					break;
+				case timeInLobbyUntilStart:
+					arena.timeInLobbyUntilStart = option - remove;
+					break;
+				case waitingTimeSeeker:
+					arena.waitingTimeSeeker = option - remove;
+					break;
+				case gameTime:
+					arena.gameTime = option - remove;
+					break;
+				}
 			} else {
-				MessageM.sendFMessage(player, ConfigC.error_tooLowNumber, true,
-						"min-" + min);
+				MessageM.sendFMessage(player, ConfigC.error_setTooLowNumber,
+						true, "min-" + min);
 			}
 		}
 	}
