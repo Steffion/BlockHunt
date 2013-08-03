@@ -4,7 +4,6 @@ import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.MessageM.CType;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ArenaHandler {
@@ -22,9 +21,6 @@ public class ArenaHandler {
 			player.sendMessage(MessageM.replaceAll(CType.TAG(tag) + pMessage,
 					vars));
 		}
-		message = message.replaceAll("%player%", "Console");
-		Bukkit.getConsoleSender().sendMessage(
-				MessageM.replaceAll(CType.TAG(tag) + message, vars));
 	}
 
 	public static void sendFMessage(Arena arena, ConfigC location, Boolean tag,
@@ -36,9 +32,5 @@ public class ArenaHandler {
 			player.sendMessage(MessageM.replaceAll(CType.TAG(tag) + pMessage,
 					vars));
 		}
-		String message = location.config.getFile().get(location.getLocation())
-				.toString().replaceAll("%player%", "Console");
-		Bukkit.getConsoleSender().sendMessage(
-				MessageM.replaceAll(CType.TAG(tag) + message, vars));
 	}
 }
