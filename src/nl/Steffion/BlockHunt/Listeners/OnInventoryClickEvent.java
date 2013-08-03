@@ -29,8 +29,13 @@ public class OnInventoryClickEvent implements Listener {
 			if (inv.getName().startsWith("\u00A7r")) {
 				event.setCancelled(true);
 				ItemStack item = event.getCurrentItem();
-				String arenaname = inv.getName().replaceAll(
-						MessageM.replaceAll("\u00A7r%N&lSettings of: %A"), "");
+				String arenaname = inv
+						.getItem(0)
+						.getItemMeta()
+						.getDisplayName()
+						.replaceAll(
+								MessageM.replaceAll("%NSettings of arena: %A"),
+								"");
 
 				Arena arena = null;
 				for (Arena arena2 : W.arenaList) {
