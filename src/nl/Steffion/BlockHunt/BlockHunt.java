@@ -5,6 +5,7 @@ import nl.Steffion.BlockHunt.Listeners.OnPlayerInteractEvent;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Serializables.ArenaSerializable;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.command.Command;
@@ -21,16 +22,19 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 	public void onEnable() {
 		getServer().getPluginManager().registerEvents(this, this);
-		getServer().getPluginManager().registerEvents(new OnPlayerInteractEvent(),
-				this);
 		getServer().getPluginManager().registerEvents(
-				new OnInventoryClickEvent(),
-				this);
+				new OnPlayerInteractEvent(), this);
+		getServer().getPluginManager().registerEvents(
+				new OnInventoryClickEvent(), this);
 
 		ConfigurationSerialization.registerClass(LocationSerializable.class,
 				"Location");
+		ConfigurationSerialization.registerClass(ArenaSerializable.class,
+				"Arena");
 
 		W.newFiles();
+
+		ArenaHandler.loadArenas();
 
 		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"

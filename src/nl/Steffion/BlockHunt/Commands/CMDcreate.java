@@ -1,11 +1,13 @@
 package nl.Steffion.BlockHunt.Commands;
 
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Serializables.ArenaSerializable;
 
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
@@ -26,22 +28,15 @@ public class CMDcreate extends DefaultCMD {
 							&& W.pos2.get(player) != null) {
 						if (W.pos1.get(player).getWorld()
 								.equals(W.pos2.get(player).getWorld())) {
-							W.arenas.getFile().set(args[1] + ".name", args[1]);
-							W.arenas.getFile().set(args[1] + ".pos1",
-									W.pos1.get(player));
-							W.arenas.getFile().set(args[1] + ".pos2",
-									W.pos2.get(player));
-							W.arenas.getFile().set(args[1] + ".maxPlayers", 12);
-							W.arenas.getFile().set(args[1] + ".minPlayers", 3);
-							W.arenas.getFile().set(
-									args[1] + ".amountSeekersOnStart", 1);
-							W.arenas.getFile().set(
-									args[1] + ".timeInLobbyUntilStart", 90);
-							W.arenas.getFile().set(
-									args[1] + ".waitingTimeSeeker", 20);
-							W.arenas.getFile().set(args[1] + ".gameTime", 200);
 
+							ArenaSerializable arena = new ArenaSerializable(
+									args[1], W.pos1.get(player),
+									W.pos2.get(player), 12, 3, 1, 90, 20, 200,
+									null);
+							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
+							ArenaHandler.loadArenas();
+
 							MessageM.sendFMessage(player,
 									ConfigC.normal_createCreatedArena, true,
 									"name-" + args[1]);
