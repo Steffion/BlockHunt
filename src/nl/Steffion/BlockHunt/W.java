@@ -26,6 +26,7 @@ public class W {
 	public static ConfigM config = new ConfigM("config", "");
 	public static ConfigM messages = new ConfigM("messages", "");
 	public static ConfigM arenas = new ConfigM("arenas", "");
+	public static ArrayList<Arena> arenaList = new ArrayList<Arena>();
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
