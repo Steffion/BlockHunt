@@ -20,7 +20,8 @@ public class PlayerM {
 		help (main + "help", PType.ALL),
 		reload (main + "reload", PType.MODERATOR),
 		create (main + "create", PType.ADMIN),
-		set (main + "set", PType.MODERATOR);
+		set (main + "set", PType.MODERATOR),
+		join (main + "join", PType.PLAYER);
 
 		public String perm;
 		public PType type;

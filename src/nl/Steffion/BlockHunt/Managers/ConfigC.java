@@ -18,6 +18,7 @@ public enum ConfigC {
 	commandEnabled_info (true, W.config),
 	commandEnabled_help (true, W.config),
 	commandEnabled_reload (true, W.config),
+	commandEnabled_join (true, W.config),
 	commandEnabled_wand (true, W.config),
 	commandEnabled_create (true, W.config),
 	commandEnabled_set (true, W.config),
@@ -39,6 +40,7 @@ public enum ConfigC {
 	help_info ("%NDisplays the plugin's info.", W.messages),
 	help_help ("%NShows a list of commands.", W.messages),
 	help_reload ("%NReloads all configs.", W.messages),
+	help_join ("%NJoins a " + W.pluginName + " game.", W.messages),
 	help_wand ("%NGives you the wand selection tool.", W.messages),
 	help_create ("%NCreates an arena from your selection.", W.messages),
 	help_set ("%NOpens a panel to set settings.", W.messages),
@@ -50,6 +52,8 @@ public enum ConfigC {
 	button_remove2 ("Remove", W.messages),
 
 	normal_reloadedConfigs ("&aReloaded all configs!", W.messages),
+	normal_joinJoinedArena ("%A%playername%%N joined your arena. (%A%1%%N/%A%2%%N)",
+			W.messages),
 	normal_wandGaveWand ("%NHere you go ;)! &o(Use the %A&o%type%%N&o!)",
 			W.messages),
 	normal_wandSetPosition ("%NSet position %A#%number%%N to location: %pos%.",
@@ -66,18 +70,19 @@ public enum ConfigC {
 			W.messages),
 	error_noArena ("%ENo arena found with the name '%A%name%%E'.", W.messages),
 	error_onlyIngame ("%EThis is an only in-game command!", W.messages),
+	error_joinAlreadyJoined ("%EYou've already joined an arena!", W.messages),
 	error_createSelectionFirst ("%EMake a selection first. Use the wand command: %A/"
 			+ W.pluginName + " <wand|w>%E.",
 			W.messages),
 	error_createNotSameWorld ("%EMake your selection points in the same world!",
 			W.messages),
-	error_tooHighNumber ("%EThat amount is too high! Max amount is: %A%max%%E.",
+	error_setTooHighNumber ("%EThat amount is too high! Max amount is: %A%max%%E.",
 			W.messages),
-	error_tooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
+	error_setTooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
 			W.messages);
 
-	Object value;
-	ConfigM config;
+	public Object value;
+	public ConfigM config;
 
 	private ConfigC (Object value, ConfigM config) {
 		this.value = value;
