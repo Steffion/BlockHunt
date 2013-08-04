@@ -27,6 +27,15 @@ public class OnInventoryClickEvent implements Listener {
 		Inventory inv = event.getInventory();
 		if (inv.getType().equals(InventoryType.CHEST)) {
 			if (inv.getName().startsWith("\u00A7r")) {
+				if (inv.getName().contains("DisguiseBlocks")) {
+					if (!event.getCurrentItem().getType().isBlock()) {
+						event.setCancelled(true);
+						MessageM.sendFMessage(player,
+								ConfigC.error_setNotABlock, true);
+					}
+
+					return;
+				}
 				event.setCancelled(true);
 				ItemStack item = event.getCurrentItem();
 				String arenaname = inv
@@ -85,6 +94,12 @@ public class OnInventoryClickEvent implements Listener {
 
 					save(arena);
 					InventoryHandler.openPanel(player, arena.arenaName);
+
+				} else if (item.getType().equals(Material.BOOK)) {
+					if (item.getItemMeta().getDisplayName()
+							.contains("disguiseBlocks")) {
+						InventoryHandler.openDisguiseBlocks(arena, player);
+					}
 				}
 			}
 		}
