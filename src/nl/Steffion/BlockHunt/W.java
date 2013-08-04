@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
-
+import org.bukkit.inventory.ItemStack;
 import pgDev.bukkit.DisguiseCraft.api.DisguiseCraftAPI;
 
 import nl.Steffion.BlockHunt.Managers.ConfigM;
@@ -32,6 +34,15 @@ public class W {
 	public static ArrayList<Arena> arenaList = new ArrayList<Arena>();
 	public static Random random = new Random();
 	public static DisguiseCraftAPI dcAPI;
+	public static HashMap<Player, Integer> seekertime = new HashMap<Player, Integer>();
+
+	public static HashMap<Player, Location> pLocation = new HashMap<Player, Location>();
+	public static HashMap<Player, GameMode> pGameMode = new HashMap<Player, GameMode>();
+	public static HashMap<Player, ItemStack[]> pInventory = new HashMap<Player, ItemStack[]>();
+	public static HashMap<Player, ItemStack[]> pArmor = new HashMap<Player, ItemStack[]>();
+	public static HashMap<Player, Float> pEXP = new HashMap<Player, Float>();
+	public static HashMap<Player, Double> pHealth = new HashMap<Player, Double>();
+	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
