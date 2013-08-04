@@ -19,9 +19,10 @@ public class PlayerM {
 		info (main + "info", PType.ALL),
 		help (main + "help", PType.ALL),
 		reload (main + "reload", PType.MODERATOR),
+		join (main + "join", PType.PLAYER),
+		leave (main + "leave", PType.PLAYER),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
-		join (main + "join", PType.PLAYER),
 		setwarp (main + "setwarp", PType.MODERATOR);
 
 		public String perm;
