@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt.Commands;
 
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -17,6 +18,8 @@ public class CMDreload extends DefaultCMD {
 		if (PlayerM.hasPerm(player, PermsC.reload, true)) {
 			W.config.load();
 			W.messages.load();
+			W.arenas.load();
+			ArenaHandler.loadArenas();
 			W.newFiles();
 			MessageM.sendFMessage(player, ConfigC.normal_reloadedConfigs, true);
 		}
