@@ -38,12 +38,26 @@ public class CMDjoin extends DefaultCMD {
 						for (Arena arena : W.arenaList) {
 							if (arena.arenaName.equalsIgnoreCase(args[1])) {
 								found = true;
-								arena.playersInArena.add(player);
-								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_joinJoinedArena, true,
-										"playername-" + player.getName(), "1-"
-												+ arena.playersInArena.size(),
-										"2-" + arena.maxPlayers);
+								if (arena.disguiseBlocks.isEmpty()) {
+									MessageM.sendFMessage(player,
+											ConfigC.error_joinNoBlocksSet, true);
+								} else {
+									arena.playersInArena.add(player);
+									ArenaHandler.sendFMessage(arena,
+											ConfigC.normal_joinJoinedArena,
+											true,
+											"playername-" + player.getName(),
+											"1-" + arena.playersInArena.size(),
+											"2-" + arena.maxPlayers);
+									if (arena.playersInArena.size() < arena.minPlayers) {
+										ArenaHandler
+												.sendFMessage(
+														arena,
+														ConfigC.warning_lobbyNeedAtleast,
+														true,
+														"1-" + arena.minPlayers);
+									}
+								}
 							}
 						}
 					} else {

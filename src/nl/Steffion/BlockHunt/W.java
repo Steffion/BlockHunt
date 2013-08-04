@@ -2,8 +2,11 @@ package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.bukkit.entity.Player;
+
+import pgDev.bukkit.DisguiseCraft.api.DisguiseCraftAPI;
 
 import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -27,6 +30,8 @@ public class W {
 	public static ConfigM messages = new ConfigM("messages", "");
 	public static ConfigM arenas = new ConfigM("arenas", "");
 	public static ArrayList<Arena> arenaList = new ArrayList<Arena>();
+	public static Random random = new Random();
+	public static DisguiseCraftAPI dcAPI;
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
