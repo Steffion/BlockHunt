@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 @SerializableAs("Arena")
 public class ArenaSerializable extends Arena implements
@@ -18,10 +19,13 @@ public class ArenaSerializable extends Arena implements
 	public ArenaSerializable (String arenaName, LocationSerializable pos1,
 			LocationSerializable pos2, int maxPlayers, int minPlayers,
 			int amountSeekersOnStart, int timeInLobbyUntilStart,
-			int waitingTimeSeeker, int gameTime, List<Player> playersInArena) {
+			int waitingTimeSeeker, int gameTime,
+			ArrayList<ItemStack> disguiseBlocks, List<Player> playersInArena,
+			ArenaState gameState, int timer, List<Player> seekers) {
 		super(arenaName, pos1, pos2, maxPlayers, minPlayers,
 				amountSeekersOnStart, timeInLobbyUntilStart, waitingTimeSeeker,
-				gameTime, playersInArena);
+				gameTime, disguiseBlocks, playersInArena, gameState, timer,
+				seekers);
 	}
 
 	@Override
@@ -36,9 +40,11 @@ public class ArenaSerializable extends Arena implements
 		map.put("timeInLobbyUntilStart", timeInLobbyUntilStart);
 		map.put("waitingTimeSeeker", waitingTimeSeeker);
 		map.put("gameTime", gameTime);
+		map.put("disguiseBlocks", disguiseBlocks);
 		return map;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static ArenaSerializable deserialize(Map<String, Object> map) {
 		LocationSerializable loc = new LocationSerializable(
 				Bukkit.getWorld("world"), 0, 0, 0, 0, 0);
@@ -50,6 +56,9 @@ public class ArenaSerializable extends Arena implements
 						"amountSeekersOnStart", 1), (Integer) M.g(map,
 						"timeInLobbyUntilStart", 90), (Integer) M.g(map,
 						"waitingTimeSeeker", 20), (Integer) M.g(map,
-						"gameTime", 200), new ArrayList<Player>());
+						"gameTime", 200), (ArrayList<ItemStack>) M.g(map,
+						"disguiseBlocks", new ArrayList<ItemStack>()),
+				new ArrayList<Player>(), ArenaState.WAITING, 0,
+				new ArrayList<Player>());
 	}
 }

@@ -1,5 +1,7 @@
 package nl.Steffion.BlockHunt;
 
+import java.util.ArrayList;
+
 import nl.Steffion.BlockHunt.Arena.ArenaType;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -30,7 +32,7 @@ public class InventoryHandler {
 			Inventory panel = Bukkit
 					.createInventory(
 							null,
-							27,
+							54,
 							MessageM.replaceAll("\u00A7r%N&lSettings of: %A"
 									+ shorten));
 
@@ -78,6 +80,13 @@ public class InventoryHandler {
 			ItemStack gameTime = new ItemStack(Material.PISTON_MOVING_PIECE,
 					arena.gameTime);
 			ItemStack gameTime_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
+
+			ItemStack disguiseBlocks_NOTE = new ItemStack(Material.BOOK, 1);
+			ItemMeta disguiseBlocks_NOTE_IM = disguiseBlocks_NOTE.getItemMeta();
+			disguiseBlocks_NOTE_IM.setDisplayName(MessageM
+					.replaceAll("%NSet the %AdisguiseBlocks%N."));
+			disguiseBlocks_NOTE.setItemMeta(disguiseBlocks_NOTE_IM);
+			panel.setItem(37, disguiseBlocks_NOTE);
 
 			//
 
@@ -157,5 +166,26 @@ public class InventoryHandler {
 		panel.setItem(up, UP);
 		panel.setItem(button, BUTTON);
 		panel.setItem(down, DOWN);
+	}
+
+	public static void openDisguiseBlocks(Arena arena, Player player) {
+		String arenaname = arena.arenaName;
+		Inventory panel = Bukkit.createInventory(null, 36,
+				MessageM.replaceAll("\u00A7r%N&lDisguiseBlocks"));
+
+		ItemStack arenaNameNote = new ItemStack(Material.PAPER, 1);
+		ItemMeta arenaNameNote_IM = arenaNameNote.getItemMeta();
+		arenaNameNote_IM.setDisplayName(MessageM
+				.replaceAll("%NDisguiseBlocks of arena: %A" + arenaname));
+		ArrayList<String> lores = new ArrayList<String>();
+		lores.add(MessageM
+				.replaceAll("%NPlace the DisguiseBlocks inside this inventory."));
+		arenaNameNote_IM.setLore(lores);
+		arenaNameNote.setItemMeta(arenaNameNote_IM);
+		panel.setItem(0, arenaNameNote);
+		for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
+			panel.setItem(i, arena.disguiseBlocks.get(i - 1));
+		}
+		player.openInventory(panel);
 	}
 }
