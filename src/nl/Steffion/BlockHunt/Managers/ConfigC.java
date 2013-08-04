@@ -22,6 +22,7 @@ public enum ConfigC {
 	commandEnabled_wand (true, W.config),
 	commandEnabled_create (true, W.config),
 	commandEnabled_set (true, W.config),
+	commandEnabled_setwarp (true, W.config),
 
 	wandID (280, W.config),
 	wandName ("%A&l" + W.pluginName + "%N's selection wand", W.config),
@@ -44,6 +45,7 @@ public enum ConfigC {
 	help_wand ("%NGives you the wand selection tool.", W.messages),
 	help_create ("%NCreates an arena from your selection.", W.messages),
 	help_set ("%NOpens a panel to set settings.", W.messages),
+	help_setwarp ("%NSets warps for your arena.", W.messages),
 
 	button_add ("%NAdd %A%1%%N to %A%2%%N", W.messages),
 	button_add2 ("Add", W.messages),
@@ -68,6 +70,8 @@ public enum ConfigC {
 			W.messages),
 	normal_ingameBlock ("%NYou're disguised as a(n) '%A%block%%N' block.",
 			W.messages),
+	normal_setwarpWarpSet ("%NSet warp '%A%warp%%N' to your location!",
+			W.messages),
 
 	warning_lobbyNeedAtleast ("%WYou need atleast %A%1%%W player(s) to start the game!",
 			W.messages),
@@ -84,6 +88,9 @@ public enum ConfigC {
 	error_joinAlreadyJoined ("%EYou've already joined an arena!", W.messages),
 	error_joinNoBlocksSet ("%EThere are none blocks set for this arena. Notify the administrator.",
 			W.messages),
+	error_joinWarpsNotSet ("%EThere are no warps set for this arena. Notify the administrator.",
+			W.messages),
+	error_joinArenaIngame ("%EThis game has already started.", W.messages),
 	error_createSelectionFirst ("%EMake a selection first. Use the wand command: %A/"
 			+ W.pluginName + " <wand|w>%E.",
 			W.messages),
@@ -93,7 +100,8 @@ public enum ConfigC {
 			W.messages),
 	error_setTooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
 			W.messages),
-	error_setNotABlock ("%EThat is not a block!", W.messages);
+	error_setNotABlock ("%EThat is not a block!", W.messages),
+	error_setwarpWarpNotFound ("%EWarp '%A%warp%%E' is not valid!", W.messages);
 
 	public Object value;
 	public ConfigM config;
