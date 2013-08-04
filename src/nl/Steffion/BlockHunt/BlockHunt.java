@@ -5,13 +5,17 @@ import java.util.LinkedList;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.Listeners.OnInventoryClickEvent;
 import nl.Steffion.BlockHunt.Listeners.OnInventoryCloseEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerDropItemEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerInteractEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerMoveEvent;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Serializables.ArenaSerializable;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -37,6 +41,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				new OnInventoryClickEvent(), this);
 		getServer().getPluginManager().registerEvents(
 				new OnInventoryCloseEvent(), this);
+		getServer().getPluginManager().registerEvents(
+				new OnPlayerDropItemEvent(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerMoveEvent(),
+				this);
 
 		ConfigurationSerialization.registerClass(LocationSerializable.class,
 				"Location");
@@ -116,8 +124,9 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										ConfigC.normal_ingameSeekerChoosen,
 										true, "seeker-" + seeker.getName());
 								arena.seekers.add(seeker);
+								seeker.teleport(arena.seekersWarp);
 							}
-							
+
 							for (Player arenaPlayer : arena.playersInArena) {
 								if (!arena.seekers.contains(arenaPlayer)) {
 									ItemStack block = arena.disguiseBlocks.get(W.random
@@ -138,6 +147,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 												disguise);
 									}
 
+									arenaPlayer.teleport(arena.hidersWarp);
+
 									MessageM.sendFMessage(
 											arenaPlayer,
 											ConfigC.normal_ingameBlock,
@@ -153,6 +164,24 @@ public class BlockHunt extends JavaPlugin implements Listener {
 													+ block.getDurability());
 								}
 							}
+						}
+					}
+
+					for (Player player : arena.seekers) {
+						if (player.getInventory().getItem(0) == null
+								|| player.getInventory().getItem(0).getType() != Material.DIAMOND_SWORD) {
+							player.getInventory().setItem(0,
+									new ItemStack(Material.DIAMOND_SWORD, 1));
+							player.getInventory().setHelmet(
+									new ItemStack(Material.IRON_HELMET, 1));
+							player.getInventory().setChestplate(
+									new ItemStack(Material.IRON_CHESTPLATE, 1));
+							player.getInventory().setLeggings(
+									new ItemStack(Material.IRON_LEGGINGS, 1));
+							player.getInventory().setBoots(
+									new ItemStack(Material.IRON_BOOTS, 1));
+							player.getWorld().playSound(player.getLocation(),
+									Sound.ANVIL_USE, 1, 1);
 						}
 					}
 				}

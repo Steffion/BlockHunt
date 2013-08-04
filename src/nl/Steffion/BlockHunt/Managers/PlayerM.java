@@ -21,7 +21,8 @@ public class PlayerM {
 		reload (main + "reload", PType.MODERATOR),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
-		join (main + "join", PType.PLAYER);
+		join (main + "join", PType.PLAYER),
+		setwarp (main + "setwarp", PType.MODERATOR);
 
 		public String perm;
 		public PType type;

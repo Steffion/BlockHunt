@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt.Commands;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.CommandC;
@@ -8,7 +9,9 @@ import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
@@ -42,20 +45,47 @@ public class CMDjoin extends DefaultCMD {
 									MessageM.sendFMessage(player,
 											ConfigC.error_joinNoBlocksSet, true);
 								} else {
-									arena.playersInArena.add(player);
-									ArenaHandler.sendFMessage(arena,
-											ConfigC.normal_joinJoinedArena,
-											true,
-											"playername-" + player.getName(),
-											"1-" + arena.playersInArena.size(),
-											"2-" + arena.maxPlayers);
-									if (arena.playersInArena.size() < arena.minPlayers) {
-										ArenaHandler
-												.sendFMessage(
-														arena,
-														ConfigC.warning_lobbyNeedAtleast,
-														true,
-														"1-" + arena.minPlayers);
+									LocationSerializable zero = new LocationSerializable(
+											Bukkit.getWorld("world"), 0, 0, 0,
+											0, 0);
+									if (!arena.lobbyWarp.equals(zero)
+											&& !arena.hidersWarp.equals(zero)
+											&& !arena.seekersWarp.equals(zero)) {
+										if (arena.gameState == ArenaState.WAITING
+												|| arena.gameState == ArenaState.STARTING) {
+											arena.playersInArena.add(player);
+											player.teleport(arena.lobbyWarp);
+											ArenaHandler
+													.sendFMessage(
+															arena,
+															ConfigC.normal_joinJoinedArena,
+															true,
+															"playername-"
+																	+ player.getName(),
+															"1-"
+																	+ arena.playersInArena
+																			.size(),
+															"2-"
+																	+ arena.maxPlayers);
+											if (arena.playersInArena.size() < arena.minPlayers) {
+												ArenaHandler
+														.sendFMessage(
+																arena,
+																ConfigC.warning_lobbyNeedAtleast,
+																true,
+																"1-"
+																		+ arena.minPlayers);
+											}
+										} else {
+											MessageM.sendFMessage(
+													player,
+													ConfigC.error_joinArenaIngame,
+													true);
+										}
+									} else {
+										MessageM.sendFMessage(player,
+												ConfigC.error_joinWarpsNotSet,
+												true);
 									}
 								}
 							}
