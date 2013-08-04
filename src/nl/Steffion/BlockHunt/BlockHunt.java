@@ -113,18 +113,25 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							arena.gameState = ArenaState.INGAME;
 							arena.timer = arena.gameTime;
 							ArenaHandler.sendFMessage(arena,
-									ConfigC.normal_lobbyArenaStarted, true);
+									ConfigC.normal_lobbyArenaStarted, true,
+									"secs-" + arena.waitingTimeSeeker);
 
 							for (int i = arena.amountSeekersOnStart; i > 0; i = i - 1) {
 								Player seeker = arena.playersInArena
 										.get(W.random
 												.nextInt(arena.playersInArena
 														.size()));
-								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameSeekerChoosen,
-										true, "seeker-" + seeker.getName());
-								arena.seekers.add(seeker);
-								seeker.teleport(arena.seekersWarp);
+								if (!arena.seekers.contains(seeker)) {
+									ArenaHandler.sendFMessage(arena,
+											ConfigC.normal_ingameSeekerChoosen,
+											true, "seeker-" + seeker.getName());
+									arena.seekers.add(seeker);
+									seeker.teleport(arena.seekersWarp);
+									W.seekertime.put(seeker,
+											arena.waitingTimeSeeker);
+								} else {
+									i = i + 1;
+								}
 							}
 
 							for (Player arenaPlayer : arena.playersInArena) {
@@ -180,8 +187,17 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									new ItemStack(Material.IRON_LEGGINGS, 1));
 							player.getInventory().setBoots(
 									new ItemStack(Material.IRON_BOOTS, 1));
-							player.getWorld().playSound(player.getLocation(),
+							player.playSound(player.getLocation(),
 									Sound.ANVIL_USE, 1, 1);
+						}
+
+						if (W.seekertime.get(player) != null) {
+							W.seekertime.put(player,
+									W.seekertime.get(player) - 1);
+							if (W.seekertime.get(player) <= 0) {
+								player.teleport(arena.hidersWarp);
+								W.seekertime.remove(player);
+							}
 						}
 					}
 				}
@@ -190,6 +206,14 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	}
 
 	public void onDisable() {
+		for (Arena arena : W.arenaList) {
+			if (arena.playersInArena != null) {
+				for (Player player : arena.playersInArena) {
+					ArenaHandler.playerLeaveArena(player);
+				}
+			}
+		}
+
 		MessageM.sendFMessage(null, ConfigC.log_Disabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
 				+ W.pluginAutors);
