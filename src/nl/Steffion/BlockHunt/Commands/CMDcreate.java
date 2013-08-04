@@ -31,8 +31,8 @@ public class CMDcreate extends DefaultCMD {
 
 							ArenaSerializable arena = new ArenaSerializable(
 									args[1], W.pos1.get(player),
-									W.pos2.get(player), 12, 3, 1, 90, 20, 200,
-									null);
+									W.pos2.get(player), 12, 3, 1, 90, 20, 300,
+									null, null, null, 0, null);
 							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
 							ArenaHandler.loadArenas();

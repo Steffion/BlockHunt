@@ -60,6 +60,17 @@ public enum ConfigC {
 			W.messages),
 	normal_createCreatedArena ("%NCreated an arena with the name '%A%name%%N'.",
 			W.messages),
+	normal_lobbyArenaIsStarting ("%NThe arena will start in %A%1%%N second(s)!",
+			W.messages),
+	normal_lobbyArenaStarted ("%NThe arena has been started! The seeker is comming to find you!",
+			W.messages),
+	normal_ingameSeekerChoosen ("%NPlayer %A%seeker%%N has been choosen as seeker!",
+			W.messages),
+	normal_ingameBlock ("%NYou're disguised as a(n) '%A%block%%N' block.",
+			W.messages),
+
+	warning_lobbyNeedAtleast ("%WYou need atleast %A%1%%W player(s) to start the game!",
+			W.messages),
 
 	error_noPermission ("%EYou don't have the permissions to do that!",
 			W.messages),
@@ -71,6 +82,8 @@ public enum ConfigC {
 	error_noArena ("%ENo arena found with the name '%A%name%%E'.", W.messages),
 	error_onlyIngame ("%EThis is an only in-game command!", W.messages),
 	error_joinAlreadyJoined ("%EYou've already joined an arena!", W.messages),
+	error_joinNoBlocksSet ("%EThere are none blocks set for this arena. Notify the administrator.",
+			W.messages),
 	error_createSelectionFirst ("%EMake a selection first. Use the wand command: %A/"
 			+ W.pluginName + " <wand|w>%E.",
 			W.messages),
@@ -79,7 +92,8 @@ public enum ConfigC {
 	error_setTooHighNumber ("%EThat amount is too high! Max amount is: %A%max%%E.",
 			W.messages),
 	error_setTooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
-			W.messages);
+			W.messages),
+	error_setNotABlock ("%EThat is not a block!", W.messages);
 
 	public Object value;
 	public ConfigM config;
