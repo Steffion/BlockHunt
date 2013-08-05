@@ -86,6 +86,8 @@ public class ArenaHandler {
 										new ItemStack(Material.AIR));
 								W.pEXP.put(player, player.getExp());
 								player.setExp(0);
+								W.pEXPL.put(player, player.getLevel());
+								player.setLevel(0);
 								W.pHealth.put(player, player.getHealth());
 								player.setHealth(20);
 								W.pFood.put(player, player.getFoodLevel());
@@ -150,6 +152,8 @@ public class ArenaHandler {
 			W.pArmor.remove(player);
 			player.setExp(W.pEXP.get(player));
 			W.pEXP.remove(player);
+			player.setLevel(W.pEXPL.get(player));
+			W.pEXPL.remove(player);
 			player.setHealth(W.pHealth.get(player));
 			W.pHealth.remove(player);
 			player.setFoodLevel(W.pFood.get(player));
