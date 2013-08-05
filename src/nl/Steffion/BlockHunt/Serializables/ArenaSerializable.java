@@ -22,12 +22,14 @@ public class ArenaSerializable extends Arena implements
 			int waitingTimeSeeker, int gameTime,
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
-			LocationSerializable seekersWarp, List<Player> playersInArena,
+			LocationSerializable seekersWarp, List<String> seekersWinCommands,
+			List<String> hidersWinCommands, List<Player> playersInArena,
 			ArenaState gameState, int timer, List<Player> seekers) {
 		super(arenaName, pos1, pos2, maxPlayers, minPlayers,
 				amountSeekersOnStart, timeInLobbyUntilStart, waitingTimeSeeker,
 				gameTime, disguiseBlocks, lobbyWarp, hidersWarp, seekersWarp,
-				playersInArena, gameState, timer, seekers);
+				seekersWinCommands, hidersWinCommands, playersInArena,
+				gameState, timer, seekers);
 	}
 
 	@Override
@@ -46,6 +48,8 @@ public class ArenaSerializable extends Arena implements
 		map.put("lobbyWarp", lobbyWarp);
 		map.put("hidersWarp", hidersWarp);
 		map.put("seekersWarp", seekersWarp);
+		map.put("seekersWinCommans", seekersWinCommands);
+		map.put("hidersWinCommands", hidersWinCommands);
 		return map;
 	}
 
@@ -66,6 +70,9 @@ public class ArenaSerializable extends Arena implements
 				(LocationSerializable) M.g(map, "lobbyWarp", loc),
 				(LocationSerializable) M.g(map, "hidersWarp", loc),
 				(LocationSerializable) M.g(map, "seekersWarp", loc),
+				(ArrayList<String>) M.g(map, "seekersWinCommands",
+						new ArrayList<String>()), (ArrayList<String>) M.g(map,
+						"hidersWinCommands", new ArrayList<String>()),
 				new ArrayList<Player>(), ArenaState.WAITING, 0,
 				new ArrayList<Player>());
 	}

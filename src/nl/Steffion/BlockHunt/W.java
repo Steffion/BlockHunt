@@ -44,6 +44,8 @@ public class W {
 	public static HashMap<Player, Integer> pEXPL = new HashMap<Player, Integer>();
 	public static HashMap<Player, Double> pHealth = new HashMap<Player, Double>();
 	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
+	
+	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
