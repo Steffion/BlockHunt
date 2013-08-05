@@ -1,15 +1,21 @@
 name: BlockHunt
 main: nl.Steffion.BlockHunt.BlockHunt
-version: 1.0.0
+version: 0.1.0_ALPHA
 authors:
   - Steffion
 description: Description here.
-softdepend: [DisguiseCraf]
+softdepend: [DisguiseCraft]
+load: POSTWORLD
 commands:
   BlockHunt:
     usage: /<command>
     description: N/A
     aliases:
         - bh
+        - prophunt
         - hideandseek
+        - has
         - hs
+        - seekandfind
+        - saf
+        - sf
