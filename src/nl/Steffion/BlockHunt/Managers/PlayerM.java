@@ -20,6 +20,7 @@ public class PlayerM {
 		help (main + "help", PType.ALL),
 		reload (main + "reload", PType.MODERATOR),
 		join (main + "join", PType.PLAYER),
+		joinfull (main + "joinfull", PType.MODERATOR),
 		leave (main + "leave", PType.PLAYER),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
