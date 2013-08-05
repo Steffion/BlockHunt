@@ -41,6 +41,7 @@ public class W {
 	public static HashMap<Player, ItemStack[]> pInventory = new HashMap<Player, ItemStack[]>();
 	public static HashMap<Player, ItemStack[]> pArmor = new HashMap<Player, ItemStack[]>();
 	public static HashMap<Player, Float> pEXP = new HashMap<Player, Float>();
+	public static HashMap<Player, Integer> pEXPL = new HashMap<Player, Integer>();
 	public static HashMap<Player, Double> pHealth = new HashMap<Player, Double>();
 	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
 
