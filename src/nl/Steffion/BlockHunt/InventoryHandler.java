@@ -183,8 +183,10 @@ public class InventoryHandler {
 		arenaNameNote_IM.setLore(lores);
 		arenaNameNote.setItemMeta(arenaNameNote_IM);
 		panel.setItem(0, arenaNameNote);
-		for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
-			panel.setItem(i, arena.disguiseBlocks.get(i - 1));
+		if (arena.disguiseBlocks != null) {
+			for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
+				panel.setItem(i, arena.disguiseBlocks.get(i - 1));
+			}
 		}
 		player.openInventory(panel);
 	}
