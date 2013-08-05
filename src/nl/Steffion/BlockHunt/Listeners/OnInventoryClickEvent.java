@@ -24,6 +24,13 @@ public class OnInventoryClickEvent implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
+
+		for (Arena arena : W.arenaList) {
+			if (arena.playersInArena.contains(player)) {
+				event.setCancelled(true);
+			}
+		}
+
 		Inventory inv = event.getInventory();
 		if (inv.getType().equals(InventoryType.CHEST)) {
 			if (inv.getName().startsWith("\u00A7r")) {
