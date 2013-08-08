@@ -21,6 +21,7 @@ public class OnPlayerDeathEvent implements Listener {
 			if (arena.playersInArena.contains(player)) {
 				event.setDeathMessage(null);
 				event.getDrops().clear();
+				event.setDroppedExp(0);
 				W.dcAPI.undisguisePlayer(player);
 
 				if (!arena.seekers.contains(player)) {
