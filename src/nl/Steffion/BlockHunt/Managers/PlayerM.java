@@ -18,13 +18,15 @@ public class PlayerM {
 	public enum PermsC {
 		info (main + "info", PType.ALL),
 		help (main + "help", PType.ALL),
-		reload (main + "reload", PType.MODERATOR),
+		reload (main + "reload", PType.ADMIN),
 		join (main + "join", PType.PLAYER),
 		joinfull (main + "joinfull", PType.MODERATOR),
+		joinsign (main + "joinsign", PType.PLAYER),
 		leave (main + "leave", PType.PLAYER),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
-		setwarp (main + "setwarp", PType.MODERATOR);
+		setwarp (main + "setwarp", PType.MODERATOR),
+		signcreate (main + "signcreate", PType.MODERATOR);
 
 		public String perm;
 		public PType type;

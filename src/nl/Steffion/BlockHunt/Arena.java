@@ -22,6 +22,9 @@ public class Arena {
 	public LocationSerializable lobbyWarp;
 	public LocationSerializable hidersWarp;
 	public LocationSerializable seekersWarp;
+	public List<String> seekersWinCommands;
+	public List<String> hidersWinCommands;
+
 	public List<Player> playersInArena;
 	public ArenaState gameState;
 	public int timer;
@@ -33,7 +36,8 @@ public class Arena {
 			int waitingTimeSeeker, int gameTime,
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
-			LocationSerializable seekersWarp, List<Player> playersInArena,
+			LocationSerializable seekersWarp, List<String> seekersWinCommands,
+			List<String> hidersWinCommands, List<Player> playersInArena,
 			ArenaState gameState, int timer, List<Player> seekers) {
 		this.arenaName = arenaName;
 		this.pos1 = pos1;
@@ -52,6 +56,8 @@ public class Arena {
 		this.lobbyWarp = lobbyWarp;
 		this.hidersWarp = hidersWarp;
 		this.seekersWarp = seekersWarp;
+		this.seekersWinCommands = seekersWinCommands;
+		this.hidersWinCommands = hidersWinCommands;
 	}
 
 	public enum ArenaType {

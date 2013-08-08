@@ -24,6 +24,13 @@ public class CMDinfo extends DefaultCMD {
 					"version-" + W.pluginVersion);
 			MessageM.sendMessage(player, "%NType %A/%helpusage% %Nfor help.",
 					false, "helpusage-" + CommandC.HELP.usage);
+			MessageM.sendMessage(
+					player,
+					"%NDev-Page: %Ahttp://dev.bukkit.org/bukkit-plugins/blockhunt/",
+					false);
+			MessageM.sendMessage(player, "%NDonations are welcome!", false);
+			MessageM.sendMessage(player,
+					"%NMade by help from some friends &c<3%N!", false);
 			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, false,
 					"header-&oInfo Page");
 		}

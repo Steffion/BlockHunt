@@ -4,6 +4,7 @@ import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.W;
 
+import org.bukkit.Effect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -33,6 +34,8 @@ public class OnEntityDamageByEntityEvent implements Listener {
 							event.setCancelled(true);
 						}
 					}
+
+					player.playEffect(player.getLocation(), Effect.BOW_FIRE, 0);
 				}
 			}
 		}
