@@ -1,5 +1,7 @@
 package nl.Steffion.BlockHunt.Commands;
 
+import java.util.ArrayList;
+
 import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.CommandC;
@@ -11,6 +13,7 @@ import nl.Steffion.BlockHunt.Serializables.ArenaSerializable;
 
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class CMDcreate extends DefaultCMD {
 
@@ -28,13 +31,17 @@ public class CMDcreate extends DefaultCMD {
 							&& W.pos2.get(player) != null) {
 						if (W.pos1.get(player).getWorld()
 								.equals(W.pos2.get(player).getWorld())) {
-
 							ArenaSerializable arena = new ArenaSerializable(
 									args[1], W.pos1.get(player),
 									W.pos2.get(player), 12, 3, 1, 90, 20, 300,
-									null, null, null, null, null, null, 0, null);
+									new ArrayList<ItemStack>(), null, null,
+									null, new ArrayList<String>(),
+									new ArrayList<String>(), null, null, 0,
+									null);
 							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
+							W.arenas.load();
+
 							ArenaHandler.loadArenas();
 
 							MessageM.sendFMessage(player,

@@ -3,22 +3,35 @@ package nl.Steffion.BlockHunt;
 import java.util.LinkedList;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Listeners.OnBlockBreakEvent;
+import nl.Steffion.BlockHunt.Listeners.OnBlockPlaceEvent;
+import nl.Steffion.BlockHunt.Listeners.OnEntityDamageByEntityEvent;
+import nl.Steffion.BlockHunt.Listeners.OnEntityDamageEvent;
+import nl.Steffion.BlockHunt.Listeners.OnFoodLevelChangeEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerCommandPreprocessEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerDeathEvent;
 import nl.Steffion.BlockHunt.Listeners.OnInventoryClickEvent;
 import nl.Steffion.BlockHunt.Listeners.OnInventoryCloseEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerDropItemEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerInteractEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerMoveEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerQuitEvent;
+import nl.Steffion.BlockHunt.Listeners.OnPlayerRespawnEvent;
+import nl.Steffion.BlockHunt.Listeners.OnSignChangeEvent;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Serializables.ArenaSerializable;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -34,16 +47,38 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	 */
 
 	public void onEnable() {
+
 		getServer().getPluginManager().registerEvents(this, this);
+
+		getServer().getPluginManager().registerEvents(new OnBlockBreakEvent(),
+				this);
+		getServer().getPluginManager().registerEvents(new OnBlockPlaceEvent(),
+				this);
 		getServer().getPluginManager().registerEvents(
-				new OnPlayerInteractEvent(), this);
+				new OnEntityDamageByEntityEvent(), this);
+		getServer().getPluginManager().registerEvents(
+				new OnEntityDamageEvent(), this);
+		getServer().getPluginManager().registerEvents(
+				new OnFoodLevelChangeEvent(), this);
 		getServer().getPluginManager().registerEvents(
 				new OnInventoryClickEvent(), this);
 		getServer().getPluginManager().registerEvents(
 				new OnInventoryCloseEvent(), this);
 		getServer().getPluginManager().registerEvents(
+				new OnPlayerCommandPreprocessEvent(), this);
+		getServer().getPluginManager().registerEvents(new OnPlayerDeathEvent(),
+				this);
+		getServer().getPluginManager().registerEvents(
 				new OnPlayerDropItemEvent(), this);
+		getServer().getPluginManager().registerEvents(
+				new OnPlayerInteractEvent(), this);
 		getServer().getPluginManager().registerEvents(new OnPlayerMoveEvent(),
+				this);
+		getServer().getPluginManager().registerEvents(new OnPlayerQuitEvent(),
+				this);
+		getServer().getPluginManager().registerEvents(
+				new OnPlayerRespawnEvent(this), this);
+		getServer().getPluginManager().registerEvents(new OnSignChangeEvent(),
 				this);
 
 		ConfigurationSerialization.registerClass(LocationSerializable.class,
@@ -54,6 +89,11 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		W.newFiles();
 
 		ArenaHandler.loadArenas();
+
+		if (!getServer().getPluginManager().isPluginEnabled("DisguiseCraft")) {
+			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled,
+					true);
+		}
 
 		W.dcAPI = DisguiseCraft.getAPI();
 
@@ -74,8 +114,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									"1-" + arena.timeInLobbyUntilStart);
 						}
 					} else if (arena.gameState == ArenaState.STARTING) {
+						arena.timer = arena.timer - 1;
 						if (arena.timer > 0) {
-							arena.timer = arena.timer - 1;
 							if (arena.timer == 60) {
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -156,6 +196,18 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 									arenaPlayer.teleport(arena.hidersWarp);
 
+									arenaPlayer.getInventory().addItem(
+											new ItemStack(Material.GOLD_SWORD,
+													1));
+									ItemStack blockCount = new ItemStack(block
+											.getType(), 5);
+									blockCount.setDurability(block
+											.getDurability());
+									arenaPlayer.getInventory().setItem(8,
+											blockCount);
+									arenaPlayer.getInventory().setHelmet(
+											new ItemStack(block));
+
 									MessageM.sendFMessage(
 											arenaPlayer,
 											ConfigC.normal_ingameBlock,
@@ -200,18 +252,117 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							}
 						}
 					}
+
+					if (arena.gameState == ArenaState.INGAME) {
+						arena.timer = arena.timer - 1;
+						if (arena.timer > 0) {
+							if (arena.timer == 190) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-190");
+							} else if (arena.timer == 60) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-60");
+							} else if (arena.timer == 30) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-30");
+							} else if (arena.timer == 10) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-10");
+							} else if (arena.timer == 5) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-5");
+							} else if (arena.timer == 4) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-4");
+							} else if (arena.timer == 3) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-3");
+							} else if (arena.timer == 2) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-2");
+							} else if (arena.timer == 1) {
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameArenaEnd, true,
+										"1-1");
+							}
+						} else {
+							ArenaHandler.hidersWin(arena);
+							return;
+						}
+
+						for (Player player : arena.playersInArena) {
+							if (!arena.seekers.contains(player)) {
+								Location pLoc = player.getLocation();
+								Location moveLoc = W.moveLoc.get(player);
+								ItemStack block = player.getInventory()
+										.getItem(8);
+
+								if (moveLoc != null) {
+									if (moveLoc.getX() == pLoc.getX()
+											&& moveLoc.getY() == pLoc.getY()
+											&& moveLoc.getZ() == pLoc.getZ()) {
+										if (block.getAmount() > 1) {
+											block.setAmount(block.getAmount() - 1);
+										} else {
+											Disguise dis = W.dcAPI
+													.getDisguise(player);
+											if (!dis.data.isEmpty()) {
+												if (!dis.data
+														.contains("blocklock")) {
+													dis.addSingleData("blocklock");
+													W.dcAPI.disguisePlayer(
+															player, dis);
+													block.addUnsafeEnchantment(
+															Enchantment.DURABILITY,
+															10);
+													player.playSound(pLoc,
+															Sound.ORB_PICKUP,
+															1, 1);
+												}
+											}
+										}
+									} else {
+										Disguise dis = W.dcAPI
+												.getDisguise(player);
+										block.setAmount(5);
+										if (!dis.data.isEmpty()) {
+											if (dis.data.contains("blocklock")) {
+												dis.data.remove("blocklock");
+												W.dcAPI.disguisePlayer(player,
+														dis);
+												player.playSound(pLoc,
+														Sound.BAT_HURT, 1, 1);
+												block.removeEnchantment(Enchantment.DURABILITY);
+											}
+
+										}
+									}
+								}
+							}
+						}
+					}
+
+					for (Player pl : arena.playersInArena) {
+						pl.setLevel(arena.timer);
+					}
 				}
+
+				SignsHandler.updateSigns();
 			}
 		}, 0, 20);
 	}
 
 	public void onDisable() {
-		for (Arena arena : W.arenaList) {
-			if (arena.playersInArena != null) {
-				for (Player player : arena.playersInArena) {
-					ArenaHandler.playerLeaveArena(player);
-				}
-			}
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			ArenaHandler.playerLeaveArena(player, false, true);
 		}
 
 		MessageM.sendFMessage(null, ConfigC.log_Disabled, true, "name-"

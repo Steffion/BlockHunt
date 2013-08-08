@@ -19,6 +19,7 @@ public class CMDreload extends DefaultCMD {
 			W.config.load();
 			W.messages.load();
 			W.arenas.load();
+			W.signs.load();
 			ArenaHandler.loadArenas();
 			W.newFiles();
 			MessageM.sendFMessage(player, ConfigC.normal_reloadedConfigs, true);

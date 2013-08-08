@@ -31,6 +31,7 @@ public class W {
 	public static ConfigM config = new ConfigM("config", "");
 	public static ConfigM messages = new ConfigM("messages", "");
 	public static ConfigM arenas = new ConfigM("arenas", "");
+	public static ConfigM signs = new ConfigM("signs", "");
 	public static ArrayList<Arena> arenaList = new ArrayList<Arena>();
 	public static Random random = new Random();
 	public static DisguiseCraftAPI dcAPI;
@@ -44,7 +45,7 @@ public class W {
 	public static HashMap<Player, Integer> pEXPL = new HashMap<Player, Integer>();
 	public static HashMap<Player, Double> pHealth = new HashMap<Player, Double>();
 	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
-	
+
 	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();
 
 	public static void newFiles() {

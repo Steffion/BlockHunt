@@ -24,24 +24,18 @@ public class OnPlayerRespawnEvent implements Listener {
 	public void onPlayerRespawnEvent(final PlayerRespawnEvent event) {
 		final Player player = event.getPlayer();
 
-		plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
-
-			@Override
-			public void run() {
-				for (Arena arena : W.arenaList) {
-					if (arena.seekers.contains(player)) {
-						if (arena.seekers.size() >= arena.playersInArena.size()) {
-							player.teleport(W.pLocation.get(player));
-							ArenaHandler.seekersWin(arena);
-						} else {
-							W.dcAPI.undisguisePlayer(player);
-							W.seekertime.put(player, arena.waitingTimeSeeker);
-							player.teleport(arena.seekersWarp);
-							player.setGameMode(GameMode.ADVENTURE);
-						}
-					}
+		for (Arena arena : W.arenaList) {
+			if (arena.seekers.contains(player)) {
+				if (arena.seekers.size() >= arena.playersInArena.size()) {
+					event.setRespawnLocation(W.pLocation.get(player));
+					ArenaHandler.seekersWin(arena);
+				} else {
+					W.dcAPI.undisguisePlayer(player);
+					W.seekertime.put(player, arena.waitingTimeSeeker);
+					event.setRespawnLocation(arena.seekersWarp);
+					player.setGameMode(GameMode.ADVENTURE);
 				}
 			}
-		}, 20);
+		}
 	}
 }

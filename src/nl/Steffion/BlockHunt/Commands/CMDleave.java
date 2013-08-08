@@ -15,7 +15,7 @@ public class CMDleave extends DefaultCMD {
 			String[] args) {
 		if (PlayerM.hasPerm(player, PermsC.leave, true)) {
 			if (player != null) {
-				ArenaHandler.playerLeaveArena(player);
+				ArenaHandler.playerLeaveArena(player, true, true);
 			} else {
 				MessageM.sendFMessage(player, ConfigC.error_onlyIngame, true);
 			}
