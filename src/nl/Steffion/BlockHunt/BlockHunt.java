@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
@@ -36,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 import pgDev.bukkit.DisguiseCraft.DisguiseCraft;
 import pgDev.bukkit.DisguiseCraft.disguise.Disguise;
@@ -96,6 +98,25 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		}
 
 		W.dcAPI = DisguiseCraft.getAPI();
+
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+			if (!metrics.configuration.getBoolean("opt-out", false)) {
+				MessageM.sendMessage(null,
+						"%NSending %AMCStats %Nto their server.", true);
+			} else {
+				MessageM.sendMessage(
+						null,
+						"%EUnable to send %AMCStats %Eto their server. %AMCStats%E is disabled?",
+						true);
+			}
+		} catch (IOException e) {
+			MessageM.sendMessage(
+					null,
+					"%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!",
+					true);
+		}
 
 		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
