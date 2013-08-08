@@ -33,9 +33,21 @@ public class OnEntityDamageByEntityEvent implements Listener {
 								&& arena.seekers.contains(event.getDamager())) {
 							event.setCancelled(true);
 						}
+
+						if (arena.playersInArena.contains(player)
+								&& arena.playersInArena.contains(event
+										.getDamager())
+								&& !arena.seekers.contains(player)) {
+							event.setCancelled(true);
+						}
 					}
 
 					player.playEffect(player.getLocation(), Effect.BOW_FIRE, 0);
+					event.getDamager()
+							.getLocation()
+							.getWorld()
+							.playEffect(event.getDamager().getLocation(),
+									Effect.BOW_FIRE, 0);
 				}
 			}
 		}
