@@ -14,8 +14,7 @@ public class ScoreboardHandler {
 		Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 		Objective object = board.registerNewObjective(arena.arenaName, "dummy");
 		object.setDisplaySlot(DisplaySlot.SIDEBAR);
-		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()
-				+ "%NGame Info"));
+		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()));
 		Score timeleft = object.getScore(Bukkit.getOfflinePlayer(MessageM
 				.replaceAll("%ATime left:")));
 		timeleft.setScore(arena.timer);
