@@ -118,7 +118,7 @@ public class SignsHandler {
 																"maxplayers-"
 																		+ arena.maxPlayers,
 																"timeleft-"
-																		+ arena.gameTime));
+																		+ arena.timer));
 									}
 
 									linecount = linecount + 1;
@@ -146,7 +146,7 @@ public class SignsHandler {
 																"maxplayers-"
 																		+ arena.maxPlayers,
 																"timeleft-"
-																		+ arena.gameTime));
+																		+ arena.timer));
 									}
 
 									linecount = linecount + 1;
@@ -174,7 +174,7 @@ public class SignsHandler {
 																"maxplayers-"
 																		+ arena.maxPlayers,
 																"timeleft-"
-																		+ arena.gameTime));
+																		+ arena.timer));
 									}
 
 									linecount = linecount + 1;
