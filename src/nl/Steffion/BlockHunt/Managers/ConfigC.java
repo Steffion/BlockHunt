@@ -40,7 +40,7 @@ public enum ConfigC {
 			"%A%players%%N/%A%maxplayers%", "&8Waiting..." }, W.config),
 	sign_STARTING (new String[] { "%H[" + W.pluginName + "%H]",
 			"%A%arenaname%", "%A%players%%N/%A%maxplayers%",
-			"&2Starting! %A%timeleft%" }, W.config),
+			"&2Start: %A%timeleft%" }, W.config),
 	sign_INGAME (new String[] { "%H[" + W.pluginName + "%H]", "%A%arenaname%",
 			"%A%players%%N/%A%maxplayers%", "%EIn-game." }, W.config),
 
