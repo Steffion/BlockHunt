@@ -205,6 +205,7 @@ public class ArenaHandler {
 			W.pLocation.remove(player);
 			player.setGameMode(W.pGameMode.get(player));
 			W.pGameMode.remove(player);
+			player.getInventory().clear();
 			player.getInventory().setContents(W.pInventory.get(player));
 			player.updateInventory();
 			W.pInventory.remove(player);
