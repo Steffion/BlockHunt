@@ -374,6 +374,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 					for (Player pl : arena.playersInArena) {
 						pl.setLevel(arena.timer);
 					}
+
+					ScoreboardHandler.doScoreboard(arena);
 				}
 
 				SignsHandler.updateSigns();
