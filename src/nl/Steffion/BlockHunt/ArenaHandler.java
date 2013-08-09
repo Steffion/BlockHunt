@@ -223,6 +223,8 @@ public class ArenaHandler {
 				W.dcAPI.undisguisePlayer(player);
 			}
 
+			ScoreboardHandler.removeScoreboard(player);
+
 			MessageM.sendFMessage(player, ConfigC.normal_leaveYouLeft, true);
 			if (message) {
 				ArenaHandler.sendFMessage(arena, ConfigC.normal_leaveLeftArena,
