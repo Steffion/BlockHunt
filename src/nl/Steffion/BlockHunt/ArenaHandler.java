@@ -190,6 +190,9 @@ public class ArenaHandler {
 					ArenaHandler.sendFMessage(arena,
 							ConfigC.warning_ingameNEWSeekerChoosen, true,
 							"seeker-" + seeker.getName());
+					ArenaHandler.sendFMessage(arena,
+							ConfigC.normal_ingameSeekerChoosen, true, "seeker-"
+									+ seeker.getName());
 					W.dcAPI.undisguisePlayer(seeker);
 					seeker.getInventory().clear();
 					arena.seekers.add(seeker);
