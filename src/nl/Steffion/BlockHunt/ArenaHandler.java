@@ -220,6 +220,7 @@ public class ArenaHandler {
 			W.pHealth.remove(player);
 			player.setFoodLevel(W.pFood.get(player));
 			W.pFood.remove(player);
+			W.pBlock.remove(player);
 
 			for (Player pl : Bukkit.getOnlinePlayers()) {
 				pl.showPlayer(player);
