@@ -116,25 +116,27 @@ public class SignsHandler {
 												ConfigC.sign_WAITING
 														.getLocation());
 								int linecount = 0;
-								for (String line : signLines) {
-									if (linecount <= 3) {
-										signblock
-												.setLine(
-														linecount,
-														MessageM.replaceAll(
-																line,
-																"arenaname-"
-																		+ arena.arenaName,
-																"players-"
-																		+ arena.playersInArena
-																				.size(),
-																"maxplayers-"
-																		+ arena.maxPlayers,
-																"timeleft-"
-																		+ arena.timer));
-									}
+								if (signLines != null) {
+									for (String line : signLines) {
+										if (linecount <= 3) {
+											signblock
+													.setLine(
+															linecount,
+															MessageM.replaceAll(
+																	line,
+																	"arenaname-"
+																			+ arena.arenaName,
+																	"players-"
+																			+ arena.playersInArena
+																					.size(),
+																	"maxplayers-"
+																			+ arena.maxPlayers,
+																	"timeleft-"
+																			+ arena.timer));
+										}
 
-									linecount = linecount + 1;
+										linecount = linecount + 1;
+									}
 								}
 								signblock.update();
 							} else if (arena.gameState
@@ -144,25 +146,27 @@ public class SignsHandler {
 												ConfigC.sign_STARTING
 														.getLocation());
 								int linecount = 0;
-								for (String line : signLines) {
-									if (linecount <= 3) {
-										signblock
-												.setLine(
-														linecount,
-														MessageM.replaceAll(
-																line,
-																"arenaname-"
-																		+ arena.arenaName,
-																"players-"
-																		+ arena.playersInArena
-																				.size(),
-																"maxplayers-"
-																		+ arena.maxPlayers,
-																"timeleft-"
-																		+ arena.timer));
-									}
+								if (signLines != null) {
+									for (String line : signLines) {
+										if (linecount <= 3) {
+											signblock
+													.setLine(
+															linecount,
+															MessageM.replaceAll(
+																	line,
+																	"arenaname-"
+																			+ arena.arenaName,
+																	"players-"
+																			+ arena.playersInArena
+																					.size(),
+																	"maxplayers-"
+																			+ arena.maxPlayers,
+																	"timeleft-"
+																			+ arena.timer));
+										}
 
-									linecount = linecount + 1;
+										linecount = linecount + 1;
+									}
 								}
 								signblock.update();
 							} else if (arena.gameState
@@ -172,25 +176,27 @@ public class SignsHandler {
 												ConfigC.sign_INGAME
 														.getLocation());
 								int linecount = 0;
-								for (String line : signLines) {
-									if (linecount <= 3) {
-										signblock
-												.setLine(
-														linecount,
-														MessageM.replaceAll(
-																line,
-																"arenaname-"
-																		+ arena.arenaName,
-																"players-"
-																		+ arena.playersInArena
-																				.size(),
-																"maxplayers-"
-																		+ arena.maxPlayers,
-																"timeleft-"
-																		+ arena.timer));
-									}
+								if (signLines != null) {
+									for (String line : signLines) {
+										if (linecount <= 3) {
+											signblock
+													.setLine(
+															linecount,
+															MessageM.replaceAll(
+																	line,
+																	"arenaname-"
+																			+ arena.arenaName,
+																	"players-"
+																			+ arena.playersInArena
+																					.size(),
+																	"maxplayers-"
+																			+ arena.maxPlayers,
+																	"timeleft-"
+																			+ arena.timer));
+										}
 
-									linecount = linecount + 1;
+										linecount = linecount + 1;
+									}
 								}
 								signblock.update();
 							}
