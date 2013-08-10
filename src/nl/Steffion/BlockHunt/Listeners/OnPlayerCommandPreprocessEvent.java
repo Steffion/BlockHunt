@@ -32,8 +32,10 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 					return;
 				}
 
-				if (arena.allowedCommands.contains(m)) {
-					return;
+				for (String command : arena.allowedCommands) {
+					if (m.startsWith("/" + command)) {
+						return;
+					}
 				}
 
 				MessageM.sendFMessage(player, ConfigC.warning_unableToCommand,
