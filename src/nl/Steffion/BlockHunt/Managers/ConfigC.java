@@ -42,7 +42,8 @@ public enum ConfigC {
 			"%A%arenaname%", "%A%players%%N/%A%maxplayers%",
 			"&2Start: %A%timeleft%" }, W.config),
 	sign_INGAME (new String[] { "%H[" + W.pluginName + "%H]", "%A%arenaname%",
-			"%A%players%%N/%A%maxplayers%", "%EIn-game." }, W.config),
+			"%A%players%%N/%A%maxplayers%", "%EIn-game: %A%timeleft%" },
+			W.config),
 
 	log_Enabled ("%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
 			W.messages),
