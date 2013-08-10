@@ -31,6 +31,7 @@ public class Arena implements ConfigurationSerializable {
 	public LocationSerializable seekersWarp;
 	public List<String> seekersWinCommands;
 	public List<String> hidersWinCommands;
+	public List<String> allowedCommands;
 
 	public List<Player> playersInArena;
 	public ArenaState gameState;
@@ -44,8 +45,9 @@ public class Arena implements ConfigurationSerializable {
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
 			LocationSerializable seekersWarp, List<String> seekersWinCommands,
-			List<String> hidersWinCommands, List<Player> playersInArena,
-			ArenaState gameState, int timer, List<Player> seekers) {
+			List<String> allowedCommands, List<String> hidersWinCommands,
+			List<Player> playersInArena, ArenaState gameState, int timer,
+			List<Player> seekers) {
 		this.arenaName = arenaName;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
@@ -65,6 +67,7 @@ public class Arena implements ConfigurationSerializable {
 		this.seekersWarp = seekersWarp;
 		this.seekersWinCommands = seekersWinCommands;
 		this.hidersWinCommands = hidersWinCommands;
+		this.allowedCommands = allowedCommands;
 	}
 
 	public enum ArenaType {
@@ -98,6 +101,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("seekersWarp", seekersWarp);
 		map.put("seekersWinCommans", seekersWinCommands);
 		map.put("hidersWinCommands", hidersWinCommands);
+		map.put("allowedCommands", allowedCommands);
 		return map;
 	}
 
@@ -121,7 +125,8 @@ public class Arena implements ConfigurationSerializable {
 				(ArrayList<String>) M.g(map, "seekersWinCommands",
 						new ArrayList<String>()), (ArrayList<String>) M.g(map,
 						"hidersWinCommands", new ArrayList<String>()),
-				new ArrayList<Player>(), ArenaState.WAITING, 0,
-				new ArrayList<Player>());
+				(ArrayList<String>) M.g(map, "allowedCommands",
+						new ArrayList<String>()), new ArrayList<Player>(),
+				ArenaState.WAITING, 0, new ArrayList<Player>());
 	}
 }
