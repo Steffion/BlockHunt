@@ -36,8 +36,10 @@ public class CMDcreate extends DefaultCMD {
 									3, 1, 90, 20, 300,
 									new ArrayList<ItemStack>(), null, null,
 									null, new ArrayList<String>(),
-									new ArrayList<String>(), null, null, 0,
-									null);
+									new ArrayList<String>(),
+									new ArrayList<String>(),
+									new ArrayList<Player>(), null, 0,
+									new ArrayList<Player>());
 							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
 							W.arenas.load();
