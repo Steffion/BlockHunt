@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -88,7 +89,7 @@ public class ArenaHandler {
 											player.getLocation());
 									W.pGameMode.put(player,
 											player.getGameMode());
-									player.setGameMode(GameMode.ADVENTURE);
+									player.setGameMode(GameMode.SURVIVAL);
 									W.pInventory.put(player, player
 											.getInventory().getContents());
 									player.getInventory().clear();
@@ -220,8 +221,17 @@ public class ArenaHandler {
 			player.setFoodLevel(W.pFood.get(player));
 			W.pFood.remove(player);
 
-			if (W.dcAPI.isDisguised(player)) {
-				W.dcAPI.undisguisePlayer(player);
+			for (Player pl : Bukkit.getOnlinePlayers()) {
+				pl.showPlayer(player);
+				if (W.hiddenLoc.get(player) != null) {
+					Block pBlock = W.hiddenLoc.get(player).getBlock();
+					pl.sendBlockChange(pBlock.getLocation(), Material.AIR,
+							(byte) 0);
+				}
+
+				if (W.dcAPI.isDisguised(player)) {
+					W.dcAPI.undisguisePlayer(player);
+				}
 			}
 
 			ScoreboardHandler.removeScoreboard(player);
