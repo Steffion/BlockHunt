@@ -68,6 +68,19 @@ public class SignsHandler {
 		}
 	}
 
+	public static boolean isSign(LocationSerializable location) {
+		for (String sign : W.signs.getFile().getKeys(false)) {
+			LocationSerializable loc = new LocationSerializable(
+					(LocationSerializable) W.signs.getFile().get(
+							sign + ".location"));
+			if (loc.equals(location)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	@SuppressWarnings("unchecked")
 	public static void updateSigns() {
 		W.signs.load();
