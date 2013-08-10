@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import nl.Steffion.BlockHunt.Managers.ConfigM;
+import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
+
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import pgDev.bukkit.DisguiseCraft.api.DisguiseCraftAPI;
 
-import nl.Steffion.BlockHunt.Managers.ConfigM;
-import nl.Steffion.BlockHunt.Managers.MessageM;
-import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
+import pgDev.bukkit.DisguiseCraft.api.DisguiseCraftAPI;
 
 public class W {
 	/*
@@ -47,6 +48,7 @@ public class W {
 	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
 
 	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();
+	public static HashMap<Player, Location> hiddenLoc = new HashMap<Player, Location>();
 
 	public static void newFiles() {
 		ConfigM.setDefaults();

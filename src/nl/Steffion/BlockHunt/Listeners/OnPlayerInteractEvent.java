@@ -9,7 +9,9 @@ import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -101,6 +103,28 @@ public class OnPlayerInteractEvent implements Listener {
 												arena.arenaName);
 									}
 								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK
+				|| event.getAction() == Action.LEFT_CLICK_BLOCK) {
+			for (Arena arena : W.arenaList) {
+				if (arena.seekers.contains(player)) {
+					for (Player pl : arena.playersInArena) {
+						if (W.hiddenLoc.get(pl) != null) {
+							Block pLoc = event.getClickedBlock();
+							Block moveLocBlock = W.hiddenLoc.get(pl).getBlock();
+							if (moveLocBlock.getX() == pLoc.getX()
+									&& moveLocBlock.getY() == pLoc.getY()
+									&& moveLocBlock.getZ() == pLoc.getZ()) {
+								W.moveLoc.put(pl, player.getLocation());
+								player.getWorld().playEffect(
+										player.getLocation(), Effect.BOW_FIRE,
+										0);
 							}
 						}
 					}

@@ -31,6 +31,11 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 						|| m.startsWith("/reload")) {
 					return;
 				}
+
+				if (arena.allowedCommands.contains(m)) {
+					return;
+				}
+
 				MessageM.sendFMessage(player, ConfigC.warning_unableToCommand,
 						true);
 				event.setCancelled(true);
