@@ -45,7 +45,7 @@ public class Arena implements ConfigurationSerializable {
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
 			LocationSerializable seekersWarp, List<String> seekersWinCommands,
-			List<String> allowedCommands, List<String> hidersWinCommands,
+			List<String> hidersWinCommands, List<String> allowedCommands,
 			List<Player> playersInArena, ArenaState gameState, int timer,
 			List<Player> seekers) {
 		this.arenaName = arenaName;
