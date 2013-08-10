@@ -2,6 +2,7 @@ package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.ArenaHandler;
+import nl.Steffion.BlockHunt.SignsHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -86,21 +87,25 @@ public class OnPlayerInteractEvent implements Listener {
 						.equals(Material.SIGN_POST)
 						|| event.getClickedBlock().getType()
 								.equals(Material.WALL_SIGN)) {
-					Sign sign = (Sign) event.getClickedBlock().getState();
-					if (sign.getLine(1) != null) {
-						if (sign.getLine(1).contains("LEAVE")) {
-							if (PlayerM.hasPerm(player, PermsC.joinsign, true)) {
-								ArenaHandler.playerLeaveArena(player, true,
-										true);
-							}
-						} else {
-							for (Arena arena : W.arenaList) {
-								if (sign.getLines()[1]
-										.contains(arena.arenaName)) {
-									if (PlayerM.hasPerm(player,
-											PermsC.joinsign, true)) {
-										ArenaHandler.playerJoinArena(player,
-												arena.arenaName);
+					if (SignsHandler.isSign(new LocationSerializable(event
+							.getClickedBlock().getLocation()))) {
+						Sign sign = (Sign) event.getClickedBlock().getState();
+						if (sign.getLine(1) != null) {
+							if (sign.getLine(1).contains("LEAVE")) {
+								if (PlayerM.hasPerm(player, PermsC.joinsign,
+										true)) {
+									ArenaHandler.playerLeaveArena(player, true,
+											true);
+								}
+							} else {
+								for (Arena arena : W.arenaList) {
+									if (sign.getLines()[1]
+											.contains(arena.arenaName)) {
+										if (PlayerM.hasPerm(player,
+												PermsC.joinsign, true)) {
+											ArenaHandler.playerJoinArena(
+													player, arena.arenaName);
+										}
 									}
 								}
 							}
