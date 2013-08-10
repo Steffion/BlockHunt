@@ -122,6 +122,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				+ W.pluginAutors);
 
 		getServer().getScheduler().runTaskTimer(this, new Runnable() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				for (Arena arena : W.arenaList) {
@@ -227,6 +228,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 											blockCount);
 									arenaPlayer.getInventory().setHelmet(
 											new ItemStack(block));
+									W.pBlock.put(arenaPlayer, block);
 
 									if (block.getDurability() != 0) {
 										MessageM.sendFMessage(
@@ -343,6 +345,14 @@ public class BlockHunt extends JavaPlugin implements Listener {
 								ItemStack block = player.getInventory()
 										.getItem(8);
 
+								if (block == null) {
+									if (W.pBlock.get(player) != null) {
+										block = W.pBlock.get(player);
+										player.getInventory().setItem(8, block);
+										player.updateInventory();
+									}
+								}
+
 								if (moveLoc != null) {
 									if (moveLoc.getX() == pLoc.getX()
 											&& moveLoc.getY() == pLoc.getY()
@@ -359,8 +369,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 													for (Player pl : Bukkit
 															.getOnlinePlayers()) {
 														if (!pl.equals(player)) {
-															// pl.hidePlayer(player);
-															// W.dcAPI.undisguisePlayer(player);
 															pl.hidePlayer(player);
 															pl.sendBlockChange(
 																	pBlock.getLocation(),

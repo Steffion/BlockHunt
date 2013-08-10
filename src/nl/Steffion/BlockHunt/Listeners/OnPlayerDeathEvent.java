@@ -23,6 +23,7 @@ public class OnPlayerDeathEvent implements Listener {
 				event.getDrops().clear();
 				event.setDroppedExp(0);
 				W.dcAPI.undisguisePlayer(player);
+				W.pBlock.remove(player);
 
 				if (!arena.seekers.contains(player)) {
 					arena.seekers.add(player);
