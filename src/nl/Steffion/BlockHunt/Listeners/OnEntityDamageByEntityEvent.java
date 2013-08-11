@@ -1,10 +1,13 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.W;
 
 import org.bukkit.Effect;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,6 +44,46 @@ public class OnEntityDamageByEntityEvent implements Listener {
 						} else {
 							player.getWorld().playEffect(player.getLocation(),
 									Effect.BOW_FIRE, 0);
+
+							if (event.getDamage() >= player.getHealth()) {
+								player.setHealth(20);
+								event.setCancelled(true);
+
+								W.dcAPI.undisguisePlayer(player);
+								W.pBlock.remove(player);
+
+								if (!arena.seekers.contains(player)) {
+									arena.seekers.add(player);
+									ArenaHandler
+											.sendFMessage(
+													arena,
+													ConfigC.normal_HiderDied,
+													true,
+													"playername-"
+															+ player.getName(),
+													"left-"
+															+ (arena.playersInArena
+																	.size() - arena.seekers
+																	.size()));
+								} else {
+									ArenaHandler.sendFMessage(arena,
+											ConfigC.normal_SeekerDied, true,
+											"playername-" + player.getName(),
+											"secs-" + arena.waitingTimeSeeker);
+								}
+
+								if (arena.seekers.size() >= arena.playersInArena
+										.size()) {
+									player.teleport(W.pLocation.get(player));
+									ArenaHandler.seekersWin(arena);
+								} else {
+									W.dcAPI.undisguisePlayer(player);
+									W.seekertime.put(player,
+											arena.waitingTimeSeeker);
+									player.teleport(arena.seekersWarp);
+									player.setGameMode(GameMode.SURVIVAL);
+								}
+							}
 						}
 					}
 				}
