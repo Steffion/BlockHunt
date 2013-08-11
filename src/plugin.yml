@@ -1,6 +1,6 @@
 name: BlockHunt
 main: nl.Steffion.BlockHunt.BlockHunt
-version: 0.1.1_ALPHA
+version: 0.1.2_ALPHA
 authors:
   - Steffion
 description: Description here.
