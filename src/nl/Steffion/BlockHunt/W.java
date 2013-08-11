@@ -21,7 +21,7 @@ public class W {
 	 */
 
 	public static String pluginName = "BlockHunt";
-	public static String pluginVersion = "v0.1.1_ALPHA";
+	public static String pluginVersion = "v0.1.2_ALPHA";
 	public static String engineVersion = "v1.1.0";
 	public static String pluginAutors = "Steffion";
 	public static String pluginMainPermission = pluginName + ".";
@@ -50,6 +50,7 @@ public class W {
 
 	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();
 	public static HashMap<Player, Location> hiddenLoc = new HashMap<Player, Location>();
+	public static HashMap<Player, Boolean> hiddenLocWater = new HashMap<Player, Boolean>();
 
 	public static void newFiles() {
 		ConfigM.setDefaults();
