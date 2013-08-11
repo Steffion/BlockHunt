@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
-@SerializableAs("Location")
+@SerializableAs("BlockHuntLocation")
 public class LocationSerializable extends Location implements
 		ConfigurationSerializable {
 	public LocationSerializable (World world, double x, double y, double z,
