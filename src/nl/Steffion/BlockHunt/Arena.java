@@ -14,7 +14,7 @@ import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@SerializableAs("Arena")
+@SerializableAs("BlockHuntArena")
 public class Arena implements ConfigurationSerializable {
 	public String arenaName;
 	public LocationSerializable pos1;
