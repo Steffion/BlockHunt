@@ -89,7 +89,10 @@ public class ArenaHandler {
 											player.getLocation());
 									W.pGameMode.put(player,
 											player.getGameMode());
+
+									player.teleport(arena.lobbyWarp);
 									player.setGameMode(GameMode.SURVIVAL);
+
 									W.pInventory.put(player, player
 											.getInventory().getContents());
 									player.getInventory().clear();
@@ -113,7 +116,6 @@ public class ArenaHandler {
 									W.pFood.put(player, player.getFoodLevel());
 									player.setFoodLevel(20);
 
-									player.teleport(arena.lobbyWarp);
 									ArenaHandler.sendFMessage(arena,
 											ConfigC.normal_joinJoinedArena,
 											true,
@@ -202,10 +204,6 @@ public class ArenaHandler {
 				}
 			}
 
-			player.teleport(W.pLocation.get(player));
-			W.pLocation.remove(player);
-			player.setGameMode(W.pGameMode.get(player));
-			W.pGameMode.remove(player);
 			player.getInventory().clear();
 			player.getInventory().setContents(W.pInventory.get(player));
 			player.updateInventory();
@@ -221,6 +219,12 @@ public class ArenaHandler {
 			player.setFoodLevel(W.pFood.get(player));
 			W.pFood.remove(player);
 			W.pBlock.remove(player);
+
+			player.teleport(W.pLocation.get(player));
+
+			player.setGameMode(W.pGameMode.get(player));
+			W.pGameMode.remove(player);
+			W.pLocation.remove(player);
 
 			for (Player pl : Bukkit.getOnlinePlayers()) {
 				pl.showPlayer(player);
