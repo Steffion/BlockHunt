@@ -527,8 +527,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	}
 
 	public void onDisable() {
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			ArenaHandler.playerLeaveArena(player, false, true);
+		for (Arena arena : W.arenaList) {
+			ArenaHandler.stopArena(arena);
 		}
 
 		MessageM.sendFMessage(null, ConfigC.log_Disabled, true, "name-"

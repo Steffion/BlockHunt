@@ -43,7 +43,10 @@ public class CMDcreate extends DefaultCMD {
 							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
 							W.arenas.load();
-
+							W.signs.load();
+							for (Arena arena2 : W.arenaList) {
+								ArenaHandler.stopArena(arena2);
+							}
 							ArenaHandler.loadArenas();
 
 							MessageM.sendFMessage(player,
