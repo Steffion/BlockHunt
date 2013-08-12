@@ -24,6 +24,7 @@ public enum ConfigC {
 	commandEnabled_create (true, W.config),
 	commandEnabled_set (true, W.config),
 	commandEnabled_setwarp (true, W.config),
+	commandEnabled_remove (true, W.config),
 
 	wandID (280, W.config),
 	wandName ("%A&l" + W.pluginName + "%N's selection wand", W.config),
@@ -42,7 +43,7 @@ public enum ConfigC {
 			"%A%arenaname%", "%A%players%%N/%A%maxplayers%",
 			"&2Start: %A%timeleft%" }, W.config),
 	sign_INGAME (new String[] { "%H[" + W.pluginName + "%H]", "%A%arenaname%",
-			"%A%players%%N/%A%maxplayers%", "%EIn-game: %A%timeleft%" },
+			"%A%players%%N/%A%maxplayers%", "%EIngame: %A%timeleft%" },
 			W.config),
 
 	log_Enabled ("%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
@@ -59,6 +60,7 @@ public enum ConfigC {
 	help_create ("%NCreates an arena from your selection.", W.messages),
 	help_set ("%NOpens a panel to set settings.", W.messages),
 	help_setwarp ("%NSets warps for your arena.", W.messages),
+	help_remove ("%NDeletes an Arena.", W.messages),
 
 	button_add ("%NAdd %A%1%%N to %A%2%%N", W.messages),
 	button_add2 ("Add", W.messages),
@@ -97,6 +99,7 @@ public enum ConfigC {
 	normal_winHiders ("%NThe %AHIDERS%N have won!", W.messages),
 	normal_setwarpWarpSet ("%NSet warp '%A%warp%%N' to your location!",
 			W.messages),
+	normal_removeRemovedArena ("%NRemoved arena '%A%name%%N'!", W.messages),
 	normal_ingameNowSolid ("%NYou're now a solid '%A%block%%N' block!",
 			W.messages),
 	normal_ingameNoMoreSolid ("%NYou're no longer a solid block!", W.messages),
@@ -109,6 +112,7 @@ public enum ConfigC {
 			W.messages),
 	warning_ingameNoSolidPlace ("%WThat's not a valid place to become solid!",
 			W.messages),
+	warning_arenaStopped ("%WThe arena has been forced to stop!", W.messages),
 
 	error_noPermission ("%EYou don't have the permissions to do that!",
 			W.messages),
