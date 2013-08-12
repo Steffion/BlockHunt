@@ -21,7 +21,7 @@ public class OnSignChangeEvent implements Listener {
 		if (lines[0] != null) {
 			if (lines[0].equalsIgnoreCase("[" + W.pluginName + "]")) {
 				if (PlayerM.hasPerm(player, PermsC.signcreate, true)) {
-					SignsHandler.createSign(lines, new LocationSerializable(
+					SignsHandler.createSign(event, lines, new LocationSerializable(
 							event.getBlock().getLocation()));
 				}
 			}

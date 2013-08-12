@@ -8,10 +8,12 @@ import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.Material;
 import org.bukkit.block.Sign;
+import org.bukkit.event.block.SignChangeEvent;
 
 public class SignsHandler {
 
-	public static void createSign(String[] lines, LocationSerializable location) {
+	public static void createSign(SignChangeEvent event, String[] lines,
+			LocationSerializable location) {
 		if (lines[1] != null) {
 			if (lines[1].equalsIgnoreCase("leave")) {
 				boolean saved = false;
@@ -30,9 +32,9 @@ public class SignsHandler {
 					}
 				}
 			} else {
+				boolean saved = false;
 				for (Arena arena : W.arenaList) {
-					if (lines[1].equalsIgnoreCase(arena.arenaName)) {
-						boolean saved = false;
+					if (lines[1].equals(arena.arenaName)) {
 						int number = 1;
 						while (!saved) {
 							if (W.signs.getFile().get(
@@ -51,6 +53,11 @@ public class SignsHandler {
 							}
 						}
 					}
+				}
+
+				if (!saved) {
+					MessageM.sendFMessage(event.getPlayer(),
+							ConfigC.error_noArena, true, "name-" + lines[1]);
 				}
 			}
 		}
@@ -107,9 +114,8 @@ public class SignsHandler {
 					}
 					signblock.update();
 				} else {
-
 					for (Arena arena : W.arenaList) {
-						if (lines[1].contains(arena.arenaName)) {
+						if (lines[1].endsWith(arena.arenaName)) {
 							if (arena.gameState.equals(ArenaState.WAITING)) {
 								ArrayList<String> signLines = (ArrayList<String>) W.config
 										.getFile().getList(
