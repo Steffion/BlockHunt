@@ -17,6 +17,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class OnEntityDamageByEntityEvent implements Listener {
 
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 		Entity ent = event.getEntity();
@@ -72,9 +73,11 @@ public class OnEntityDamageByEntityEvent implements Listener {
 											"secs-" + arena.waitingTimeSeeker);
 								}
 
+								player.getInventory().clear();
+								player.updateInventory();
+
 								if (arena.seekers.size() >= arena.playersInArena
 										.size()) {
-									player.teleport(W.pLocation.get(player));
 									ArenaHandler.seekersWin(arena);
 								} else {
 									W.dcAPI.undisguisePlayer(player);
