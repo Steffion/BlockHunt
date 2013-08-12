@@ -66,7 +66,8 @@ public class ArenaHandler {
 								ConfigC.error_joinNoBlocksSet, true);
 					} else {
 						LocationSerializable zero = new LocationSerializable(
-								Bukkit.getWorld("world"), 0, 0, 0, 0, 0);
+								Bukkit.getWorld(player.getWorld().getName()
+										.toString()), 0, 0, 0, 0, 0);
 						if (arena.lobbyWarp != null && arena.hidersWarp != null
 								&& arena.seekersWarp != null) {
 							if (!arena.lobbyWarp.equals(zero)
@@ -291,6 +292,17 @@ public class ArenaHandler {
 					}
 				}
 			}
+		}
+
+		arena.playersInArena.clear();
+		arena.seekers.clear();
+		arena.gameState = ArenaState.WAITING;
+	}
+
+	public static void stopArena(Arena arena) {
+		ArenaHandler.sendFMessage(arena, ConfigC.warning_arenaStopped, true);
+		for (Player player : arena.playersInArena) {
+			playerLeaveArena(player, false, false);
 		}
 
 		arena.playersInArena.clear();
