@@ -297,6 +297,7 @@ public class ArenaHandler {
 		arena.playersInArena.clear();
 		arena.seekers.clear();
 		arena.gameState = ArenaState.WAITING;
+		arena.gameTime = 0;
 	}
 
 	public static void stopArena(Arena arena) {
@@ -308,5 +309,6 @@ public class ArenaHandler {
 		arena.playersInArena.clear();
 		arena.seekers.clear();
 		arena.gameState = ArenaState.WAITING;
+		arena.gameTime = 0;
 	}
 }
