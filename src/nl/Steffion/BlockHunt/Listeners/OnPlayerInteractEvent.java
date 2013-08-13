@@ -49,12 +49,11 @@ public class OnPlayerInteractEvent implements Listener {
 											ConfigC.normal_wandSetPosition,
 											true,
 											"number-1",
-											"pos-%N(%A" + location.getBlockX()
+											"pos-%N(%A" + location.getX()
 													+ "%N, %A"
-													+ location.getBlockY()
+													+ location.getY()
 													+ "%N, %A"
-													+ location.getBlockZ()
-													+ "%N)");
+													+ location.getZ() + "%N)");
 									W.pos1.put(player, location);
 								}
 							} else if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -66,12 +65,11 @@ public class OnPlayerInteractEvent implements Listener {
 											ConfigC.normal_wandSetPosition,
 											true,
 											"number-2",
-											"pos-%N(%A" + location.getBlockX()
+											"pos-%N(%A" + location.getX()
 													+ "%N, %A"
-													+ location.getBlockY()
+													+ location.getY()
 													+ "%N, %A"
-													+ location.getBlockZ()
-													+ "%N)");
+													+ location.getZ() + "%N)");
 									W.pos2.put(player, location);
 								}
 							}
