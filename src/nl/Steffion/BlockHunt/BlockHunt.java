@@ -30,6 +30,9 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -96,7 +99,9 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
-			if (!metrics.configuration.getBoolean("opt-out", false)) {
+			FileConfiguration metrics_fc = new YamlConfiguration();
+			metrics_fc.load(metrics.getConfigFile());
+			if (!metrics_fc.getBoolean("opt-out", false)) {
 				MessageM.sendMessage(null,
 						"%NSending %AMCStats %Nto their server.", true);
 			} else {
@@ -106,6 +111,11 @@ public class BlockHunt extends JavaPlugin implements Listener {
 						true);
 			}
 		} catch (IOException e) {
+			MessageM.sendMessage(
+					null,
+					"%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!",
+					true);
+		} catch (InvalidConfigurationException e) {
 			MessageM.sendMessage(
 					null,
 					"%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!",
