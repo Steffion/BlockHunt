@@ -24,6 +24,7 @@ public class CMDreload extends DefaultCMD {
 			for (Arena arena : W.arenaList) {
 				ArenaHandler.stopArena(arena);
 			}
+
 			ArenaHandler.loadArenas();
 			W.newFiles();
 			MessageM.sendFMessage(player, ConfigC.normal_reloadedConfigs, true);
