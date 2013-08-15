@@ -1,7 +1,6 @@
 package nl.Steffion.BlockHunt.Commands;
 
 import nl.Steffion.BlockHunt.Arena;
-import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.CommandC;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
@@ -52,10 +51,8 @@ public class CMDremove extends DefaultCMD {
 
 							W.arenas.save();
 							W.signs.load();
-							for (Arena arena2 : W.arenaList) {
-								ArenaHandler.stopArena(arena2);
-							}
-							ArenaHandler.loadArenas();
+
+							W.arenaList.remove((Arena) arena);
 							return true;
 						}
 					}
