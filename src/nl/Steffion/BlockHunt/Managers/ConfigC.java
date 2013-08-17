@@ -26,6 +26,9 @@ public enum ConfigC {
 	commandEnabled_setwarp (true, W.config),
 	commandEnabled_remove (true, W.config),
 
+	autoUpdateCheck (true, W.config),
+	autoDownloadUpdate (false, W.config),
+
 	wandID (280, W.config),
 	wandName ("%A&l" + W.pluginName + "%N's selection wand", W.config),
 	wandDescription (new String[] {
