@@ -13,6 +13,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scoreboard.Scoreboard;
 
 @SerializableAs("BlockHuntArena")
 public class Arena implements ConfigurationSerializable {
@@ -37,6 +38,7 @@ public class Arena implements ConfigurationSerializable {
 	public ArenaState gameState;
 	public int timer;
 	public List<Player> seekers;
+	public Scoreboard scoreboard;
 
 	public Arena (String arenaName, LocationSerializable pos1,
 			LocationSerializable pos2, int maxPlayers, int minPlayers,
@@ -47,7 +49,7 @@ public class Arena implements ConfigurationSerializable {
 			LocationSerializable seekersWarp, List<String> seekersWinCommands,
 			List<String> hidersWinCommands, List<String> allowedCommands,
 			List<Player> playersInArena, ArenaState gameState, int timer,
-			List<Player> seekers) {
+			List<Player> seekers, Scoreboard scoreboard) {
 		this.arenaName = arenaName;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
@@ -58,16 +60,18 @@ public class Arena implements ConfigurationSerializable {
 		this.waitingTimeSeeker = waitingTimeSeeker;
 		this.gameTime = gameTime;
 		this.disguiseBlocks = disguiseBlocks;
-		this.playersInArena = playersInArena;
-		this.gameState = gameState;
-		this.timer = timer;
-		this.seekers = seekers;
 		this.lobbyWarp = lobbyWarp;
 		this.hidersWarp = hidersWarp;
 		this.seekersWarp = seekersWarp;
 		this.seekersWinCommands = seekersWinCommands;
 		this.hidersWinCommands = hidersWinCommands;
 		this.allowedCommands = allowedCommands;
+
+		this.playersInArena = playersInArena;
+		this.gameState = gameState;
+		this.timer = timer;
+		this.seekers = seekers;
+		this.scoreboard = scoreboard;
 	}
 
 	public enum ArenaType {
@@ -127,6 +131,7 @@ public class Arena implements ConfigurationSerializable {
 						"hidersWinCommands", new ArrayList<String>()),
 				(ArrayList<String>) M.g(map, "allowedCommands",
 						new ArrayList<String>()), new ArrayList<Player>(),
-				ArenaState.WAITING, 0, new ArrayList<Player>());
+				ArenaState.WAITING, 0, new ArrayList<Player>(), Bukkit
+						.getScoreboardManager().getNewScoreboard());
 	}
 }
