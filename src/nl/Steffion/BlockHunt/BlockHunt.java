@@ -122,6 +122,16 @@ public class BlockHunt extends JavaPlugin implements Listener {
 					true);
 		}
 
+		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
+			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
+				new Updater(this, W.pluginName,
+						this.getFile(), Updater.UpdateType.DEFAULT, true);
+			} else {
+				new Updater(this, W.pluginName, this.getFile(),
+						Updater.UpdateType.NO_DOWNLOAD, true);
+			}
+		}
+
 		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
 				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
 				+ W.pluginAutors);
