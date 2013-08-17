@@ -3,6 +3,7 @@ package nl.Steffion.BlockHunt.Commands;
 import java.util.ArrayList;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.ScoreboardHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.Managers.CommandC;
@@ -11,6 +12,7 @@ import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,12 +42,15 @@ public class CMDcreate extends DefaultCMD {
 									new ArrayList<String>(),
 									new ArrayList<Player>(),
 									ArenaState.WAITING, 0,
-									new ArrayList<Player>());
+									new ArrayList<Player>(), Bukkit
+											.getScoreboardManager()
+											.getNewScoreboard());
 							W.arenas.getFile().set(args[1], arena);
 							W.arenas.save();
 							W.signs.load();
 
 							W.arenaList.add((Arena) arena);
+							ScoreboardHandler.createScoreboard(arena);
 
 							MessageM.sendFMessage(player,
 									ConfigC.normal_createCreatedArena, true,

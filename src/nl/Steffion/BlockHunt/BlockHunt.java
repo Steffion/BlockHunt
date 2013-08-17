@@ -451,6 +451,17 @@ public class BlockHunt extends JavaPlugin implements Listener {
 														true);
 											}
 
+											for (Player pl : Bukkit
+													.getOnlinePlayers()) {
+												if (!pl.equals(player)) {
+													pl.hidePlayer(player);
+													pl.sendBlockChange(
+															pBlock.getLocation(),
+															block.getType(),
+															(byte) block
+																	.getDurability());
+												}
+											}
 										}
 									} else {
 										Block pBlock = player.getLocation()
@@ -468,7 +479,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 													if (W.hiddenLocWater
 															.get(player) != null) {
 														if (W.hiddenLocWater
-																.get(player) == true) {
+																.get(player)) {
 															pl.sendBlockChange(
 																	pBlock.getLocation(),
 																	Material.STATIONARY_WATER,
@@ -528,7 +539,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 						pl.setGameMode(GameMode.SURVIVAL);
 					}
 
-					ScoreboardHandler.doScoreboard(arena);
+					ScoreboardHandler.updateScoreboard(arena);
 				}
 
 				SignsHandler.updateSigns();
