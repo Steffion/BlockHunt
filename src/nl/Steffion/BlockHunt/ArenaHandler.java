@@ -24,6 +24,10 @@ public class ArenaHandler {
 		for (String arenaName : W.arenas.getFile().getKeys(false)) {
 			W.arenaList.add((Arena) W.arenas.getFile().get(arenaName));
 		}
+
+		for (Arena arena : W.arenaList) {
+			ScoreboardHandler.createScoreboard(arena);
+		}
 	}
 
 	public static void sendMessage(Arena arena, String message, Boolean tag,
@@ -86,20 +90,63 @@ public class ArenaHandler {
 									}
 									arena.playersInArena.add(player);
 
-									W.pLocation.put(player,
-											player.getLocation());
-									W.pGameMode.put(player,
-											player.getGameMode());
+									// OLD WAY OF SETTING A PLAYER'S DATA.
+									// W.pLocation.put(player,
+									// player.getLocation());
+									// W.pGameMode.put(player,
+									// player.getGameMode());
+									//
+									// player.teleport(arena.lobbyWarp);
+									// player.setGameMode(GameMode.SURVIVAL);
+									//
+									// W.pInventory.put(player, player
+									// .getInventory().getContents());
+									// player.getInventory().clear();
+									// player.updateInventory();
+									// W.pArmor.put(player,
+									// player.getInventory()
+									// .getArmorContents());
+									// player.getInventory().setHelmet(
+									// new ItemStack(Material.AIR));
+									// player.getInventory().setChestplate(
+									// new ItemStack(Material.AIR));
+									// player.getInventory().setLeggings(
+									// new ItemStack(Material.AIR));
+									// player.getInventory().setBoots(
+									// new ItemStack(Material.AIR));
+									// W.pEXP.put(player, player.getExp());
+									// player.setExp(0);
+									// W.pEXPL.put(player, player.getLevel());
+									// player.setLevel(0);
+									// W.pHealth.put(player,
+									// player.getHealth());
+									// player.setHealth(20);
+									// W.pFood.put(player,
+									// player.getFoodLevel());
+									// player.setFoodLevel(20);
+
+									PlayerArenaData pad = new PlayerArenaData(
+											player.getLocation(),
+											player.getGameMode(), player
+													.getInventory()
+													.getContents(), player
+													.getInventory()
+													.getArmorContents(),
+											player.getExp(), player.getLevel(),
+											player.getHealth(),
+											player.getFoodLevel(),
+											player.getActivePotionEffects());
+
+									W.pData.put(player, pad);
 
 									player.teleport(arena.lobbyWarp);
 									player.setGameMode(GameMode.SURVIVAL);
-
-									W.pInventory.put(player, player
-											.getInventory().getContents());
+									player.getActivePotionEffects().clear();
+									player.setFoodLevel(20);
+									player.setHealth(20);
+									player.setLevel(arena.timer);
+									player.setExp(0);
 									player.getInventory().clear();
-									player.updateInventory();
-									W.pArmor.put(player, player.getInventory()
-											.getArmorContents());
 									player.getInventory().setHelmet(
 											new ItemStack(Material.AIR));
 									player.getInventory().setChestplate(
@@ -108,14 +155,11 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
-									W.pEXP.put(player, player.getExp());
-									player.setExp(0);
-									W.pEXPL.put(player, player.getLevel());
-									player.setLevel(0);
-									W.pHealth.put(player, player.getHealth());
-									player.setHealth(20);
-									W.pFood.put(player, player.getFoodLevel());
-									player.setFoodLevel(20);
+									player.updateInventory();
+
+									if (W.dcAPI.isDisguised(player)) {
+										W.dcAPI.undisguisePlayer(player);
+									}
 
 									ArenaHandler.sendFMessage(arena,
 											ConfigC.normal_joinJoinedArena,
@@ -176,18 +220,31 @@ public class ArenaHandler {
 				if (arena.seekers.contains(player)) {
 					arena.seekers.remove(player);
 				}
-				if (arena.playersInArena.size() <= arena.minPlayers) {
-					if (arena.gameState.equals(ArenaState.STARTING)) {
-						arena.gameState = ArenaState.WAITING;
-						arena.timer = 0;
 
-						ArenaHandler.sendFMessage(arena,
-								ConfigC.warning_lobbyNeedAtleast, true, "1-"
-										+ arena.minPlayers);
-					} else {
+				if (arena.playersInArena.size() < arena.minPlayers
+						&& arena.gameState.equals(ArenaState.STARTING)) {
+					arena.gameState = ArenaState.WAITING;
+					arena.timer = 0;
+
+					ArenaHandler.sendFMessage(arena,
+							ConfigC.warning_lobbyNeedAtleast, true, "1-"
+									+ arena.minPlayers);
+				}
+
+				if (arena.playersInArena.size() <= 1
+						&& arena.gameState == ArenaState.INGAME) {
+					if (arena.seekers.size() >= arena.playersInArena.size()) {
 						ArenaHandler.seekersWin(arena);
+					} else {
+						ArenaHandler.hidersWin(arena);
 					}
-				} else if (arena.seekers.size() <= 0
+				}
+
+				if (arena.seekers.size() >= arena.playersInArena.size()) {
+					ArenaHandler.seekersWin(arena);
+				}
+
+				if (arena.seekers.size() <= 0
 						&& arena.gameState == ArenaState.INGAME) {
 					Player seeker = arena.playersInArena.get(W.random
 							.nextInt(arena.playersInArena.size()));
@@ -205,34 +262,63 @@ public class ArenaHandler {
 				}
 			}
 
+			// OLD WAY OF RESETTING A PLAYER'S DATA.
+			// player.getInventory().clear();
+			// player.getInventory().setContents(W.pInventory.get(player));
+			// player.updateInventory();
+			// W.pInventory.remove(player);
+			// player.getInventory().setArmorContents(W.pArmor.get(player));
+			// W.pArmor.remove(player);
+			// player.setExp(W.pEXP.get(player));
+			// W.pEXP.remove(player);
+			// player.setLevel(W.pEXPL.get(player));
+			// W.pEXPL.remove(player);
+			// player.setHealth(W.pHealth.get(player));
+			// W.pHealth.remove(player);
+			// player.setFoodLevel(W.pFood.get(player));
+			// W.pFood.remove(player);
+			// W.pBlock.remove(player);
+			//
+			// player.teleport(W.pLocation.get(player));
+			//
+			// player.setGameMode(W.pGameMode.get(player));
+			// W.pGameMode.remove(player);
+			// W.pLocation.remove(player);
+
+			PlayerArenaData pad = new PlayerArenaData(null, null, null, null,
+					null, null, null, null, null);
+
+			if (W.pData.get(player) != null) {
+				pad = W.pData.get(player);
+			}
+
 			player.getInventory().clear();
-			player.getInventory().setContents(W.pInventory.get(player));
+			player.getInventory().setContents(pad.pInventory);
+			player.getInventory().setArmorContents(pad.pArmor);
 			player.updateInventory();
-			W.pInventory.remove(player);
-			player.getInventory().setArmorContents(W.pArmor.get(player));
-			W.pArmor.remove(player);
-			player.setExp(W.pEXP.get(player));
-			W.pEXP.remove(player);
-			player.setLevel(W.pEXPL.get(player));
-			W.pEXPL.remove(player);
-			player.setHealth(W.pHealth.get(player));
-			W.pHealth.remove(player);
-			player.setFoodLevel(W.pFood.get(player));
-			W.pFood.remove(player);
-			W.pBlock.remove(player);
+			player.setExp(pad.pEXP);
+			player.setLevel(pad.pEXPL);
+			player.setHealth(pad.pHealth);
+			player.setFoodLevel(pad.pFood);
+			player.addPotionEffects(pad.pPotionEffects);
+			player.teleport(pad.pLocation);
+			player.setGameMode(pad.pGameMode);
 
-			player.teleport(W.pLocation.get(player));
-
-			player.setGameMode(W.pGameMode.get(player));
-			W.pGameMode.remove(player);
-			W.pLocation.remove(player);
+			W.pData.remove(player);
 
 			for (Player pl : Bukkit.getOnlinePlayers()) {
 				pl.showPlayer(player);
 				if (W.hiddenLoc.get(player) != null) {
-					Block pBlock = W.hiddenLoc.get(player).getBlock();
-					pl.sendBlockChange(pBlock.getLocation(), Material.AIR,
-							(byte) 0);
+					if (W.hiddenLocWater.get(player) != null) {
+						Block pBlock = W.hiddenLoc.get(player).getBlock();
+						if (W.hiddenLocWater.get(player)) {
+							pl.sendBlockChange(pBlock.getLocation(),
+									Material.STATIONARY_WATER, (byte) 0);
+						} else {
+							pl.sendBlockChange(pBlock.getLocation(),
+									Material.AIR, (byte) 0);
+						}
+					}
 				}
 
 				if (W.dcAPI.isDisguised(player)) {
@@ -263,8 +349,6 @@ public class ArenaHandler {
 	public static void seekersWin(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers, true);
 		for (Player player : arena.playersInArena) {
-			playerLeaveArena(player, false, false);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 			if (arena.seekersWinCommands != null) {
 				for (String command : arena.seekersWinCommands) {
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
@@ -273,16 +357,21 @@ public class ArenaHandler {
 			}
 		}
 
-		arena.playersInArena.clear();
 		arena.seekers.clear();
+
+		for (Player player : arena.playersInArena) {
+			playerLeaveArena(player, false, false);
+			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+		}
+
 		arena.gameState = ArenaState.WAITING;
+		arena.timer = 0;
+		arena.playersInArena.clear();
 	}
 
 	public static void hidersWin(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders, true);
 		for (Player player : arena.playersInArena) {
-			playerLeaveArena(player, false, false);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 			if (!arena.seekers.contains(player)) {
 				if (arena.hidersWinCommands != null) {
 					for (String command : arena.hidersWinCommands) {
@@ -294,21 +383,30 @@ public class ArenaHandler {
 			}
 		}
 
-		arena.playersInArena.clear();
 		arena.seekers.clear();
+
+		for (Player player : arena.playersInArena) {
+			playerLeaveArena(player, false, false);
+			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+		}
+
 		arena.gameState = ArenaState.WAITING;
-		arena.gameTime = 0;
+		arena.timer = 0;
+		arena.playersInArena.clear();
 	}
 
 	public static void stopArena(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.warning_arenaStopped, true);
+
+		arena.seekers.clear();
+
 		for (Player player : arena.playersInArena) {
 			playerLeaveArena(player, false, false);
+			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 		}
 
-		arena.playersInArena.clear();
-		arena.seekers.clear();
 		arena.gameState = ArenaState.WAITING;
-		arena.gameTime = 0;
+		arena.timer = 0;
+		arena.playersInArena.clear();
 	}
 }

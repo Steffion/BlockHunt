@@ -8,7 +8,6 @@ import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,16 +37,25 @@ public class W {
 	public static DisguiseCraftAPI dcAPI;
 	public static HashMap<Player, Integer> seekertime = new HashMap<Player, Integer>();
 
-	public static HashMap<Player, Location> pLocation = new HashMap<Player, Location>();
-	public static HashMap<Player, GameMode> pGameMode = new HashMap<Player, GameMode>();
-	public static HashMap<Player, ItemStack[]> pInventory = new HashMap<Player, ItemStack[]>();
-	public static HashMap<Player, ItemStack[]> pArmor = new HashMap<Player, ItemStack[]>();
-	public static HashMap<Player, Float> pEXP = new HashMap<Player, Float>();
-	public static HashMap<Player, Integer> pEXPL = new HashMap<Player, Integer>();
-	public static HashMap<Player, Double> pHealth = new HashMap<Player, Double>();
-	public static HashMap<Player, Integer> pFood = new HashMap<Player, Integer>();
-	public static HashMap<Player, ItemStack> pBlock = new HashMap<Player, ItemStack>();
+	public static HashMap<Player, PlayerArenaData> pData = new HashMap<Player, PlayerArenaData>();
 
+	// public static HashMap<Player, Location> pLocation = new HashMap<Player,
+	// Location>();
+	// public static HashMap<Player, GameMode> pGameMode = new HashMap<Player,
+	// GameMode>();
+	// public static HashMap<Player, ItemStack[]> pInventory = new
+	// HashMap<Player, ItemStack[]>();
+	// public static HashMap<Player, ItemStack[]> pArmor = new HashMap<Player,
+	// ItemStack[]>();
+	// public static HashMap<Player, Float> pEXP = new HashMap<Player, Float>();
+	// public static HashMap<Player, Integer> pEXPL = new HashMap<Player,
+	// Integer>();
+	// public static HashMap<Player, Double> pHealth = new HashMap<Player,
+	// Double>();
+	// public static HashMap<Player, Integer> pFood = new HashMap<Player,
+	// Integer>();
+
+	public static HashMap<Player, ItemStack> pBlock = new HashMap<Player, ItemStack>();
 	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();
 	public static HashMap<Player, Location> hiddenLoc = new HashMap<Player, Location>();
 	public static HashMap<Player, Boolean> hiddenLocWater = new HashMap<Player, Boolean>();

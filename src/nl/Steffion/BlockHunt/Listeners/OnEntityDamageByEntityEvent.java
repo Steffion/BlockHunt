@@ -1,13 +1,14 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
-import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
+import nl.Steffion.BlockHunt.Managers.ConfigC;
 
 import org.bukkit.Effect;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -43,8 +44,10 @@ public class OnEntityDamageByEntityEvent implements Listener {
 								&& !arena.seekers.contains(player)) {
 							event.setCancelled(true);
 						} else {
+							player.getWorld().playSound(player.getLocation(),
+									Sound.HURT_FLESH, 1, 1);
 							player.getWorld().playEffect(player.getLocation(),
-									Effect.BOW_FIRE, 0);
+									Effect.ENDER_SIGNAL, 0);
 
 							if (event.getDamage() >= player.getHealth()) {
 								player.setHealth(20);
