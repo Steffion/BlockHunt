@@ -10,8 +10,8 @@ import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
-import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -125,9 +125,9 @@ public class OnPlayerInteractEvent implements Listener {
 									&& moveLocBlock.getY() == pLoc.getY()
 									&& moveLocBlock.getZ() == pLoc.getZ()) {
 								W.moveLoc.put(pl, player.getLocation());
-								player.getWorld().playEffect(
-										player.getLocation(), Effect.BOW_FIRE,
-										0);
+								player.getWorld().playSound(
+										player.getLocation(), Sound.HURT_FLESH,
+										1, 1);
 							}
 						}
 					}
