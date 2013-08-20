@@ -255,6 +255,9 @@ public class ArenaHandler {
 							ConfigC.normal_ingameSeekerChoosen, true, "seeker-"
 									+ seeker.getName());
 					W.dcAPI.undisguisePlayer(seeker);
+					for (Player pl : Bukkit.getOnlinePlayers()) {
+						pl.showPlayer(seeker);
+					}
 					seeker.getInventory().clear();
 					arena.seekers.add(seeker);
 					seeker.teleport(arena.seekersWarp);
