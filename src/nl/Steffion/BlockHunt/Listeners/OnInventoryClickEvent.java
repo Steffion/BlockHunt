@@ -33,18 +33,17 @@ public class OnInventoryClickEvent implements Listener {
 
 		Inventory inv = event.getInventory();
 		if (inv.getType().equals(InventoryType.CHEST)) {
-			if (inv.getName().startsWith("\u00A7r")) {
-				if (inv.getName().contains("DisguiseBlocks")) {
-					if (event.getCurrentItem() != null) {
-						if (!event.getCurrentItem().getType().isBlock()) {
-							event.setCancelled(true);
-							MessageM.sendFMessage(player,
-									ConfigC.error_setNotABlock, true);
-						}
+			if (inv.getName().contains("DisguiseBlocks")) {
+				if (event.getCurrentItem() != null) {
+					if (!event.getCurrentItem().getType().isBlock()) {
+						event.setCancelled(true);
+						MessageM.sendFMessage(player,
+								ConfigC.error_setNotABlock, true);
 					}
-
-					return;
 				}
+
+				return;
+			} else if (inv.getName().startsWith("\u00A7r")) {
 				event.setCancelled(true);
 				ItemStack item = event.getCurrentItem();
 				String arenaname = inv
