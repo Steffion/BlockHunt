@@ -126,6 +126,8 @@ public enum ConfigC {
 			W.messages),
 	error_disguiseCraftNotInstalled ("%EThe plugin '%ADisguiseCraft%E' is required to run this plugin! Intall it or it won't work!",
 			W.messages),
+	error_protocolLibNotInstalled ("%EThe plugin '%AProtocolLib%E' is required to run this plugin! Intall it or it won't work!",
+			W.messages),
 	error_noArena ("%ENo arena found with the name '%A%name%%E'.", W.messages),
 	error_onlyIngame ("%EThis is an only in-game command!", W.messages),
 	error_joinAlreadyJoined ("%EYou've already joined an arena!", W.messages),
