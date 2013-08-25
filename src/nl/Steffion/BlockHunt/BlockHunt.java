@@ -93,6 +93,11 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled,
 					true);
 		}
+		
+		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
+			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled,
+					true);
+		}
 
 		W.dcAPI = DisguiseCraft.getAPI();
 
