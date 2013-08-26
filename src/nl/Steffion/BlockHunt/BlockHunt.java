@@ -508,6 +508,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 											}
 										}
 									} else {
+										block.setAmount(5);
 										if (!W.dcAPI.isDisguised(player)) {
 											SolidBlockHandler
 													.makePlayerUnsolid(player);

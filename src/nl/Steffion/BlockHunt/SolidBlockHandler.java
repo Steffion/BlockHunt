@@ -17,12 +17,14 @@ import pgDev.bukkit.DisguiseCraft.disguise.Disguise;
 import pgDev.bukkit.DisguiseCraft.disguise.DisguiseType;
 
 public class SolidBlockHandler {
-	public static void makePlayerUnsolid(Player player, ItemStack block) {
+	public static void makePlayerUnsolid(Player player) {
+		ItemStack block = player.getInventory().getItem(8);
 		Block pBlock = player.getLocation().getBlock();
 
 		if (W.hiddenLoc.get(player) != null) {
 			pBlock = W.hiddenLoc.get(player).getBlock();
 		}
+
 		block.setAmount(5);
 		for (Player pl : Bukkit.getOnlinePlayers()) {
 			if (!pl.equals(player)) {
