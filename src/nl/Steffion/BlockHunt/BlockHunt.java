@@ -93,7 +93,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled,
 					true);
 		}
-		
+
 		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
 			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled,
 					true);
@@ -129,8 +129,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
-				new Updater(this, W.pluginName,
-						this.getFile(), Updater.UpdateType.DEFAULT, true);
+				new Updater(this, W.pluginName, this.getFile(),
+						Updater.UpdateType.DEFAULT, true);
 			} else {
 				new Updater(this, W.pluginName, this.getFile(),
 						Updater.UpdateType.NO_DOWNLOAD, true);
@@ -479,69 +479,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 											}
 										}
 									} else {
-										Block pBlock = player.getLocation()
-												.getBlock();
-										block.setAmount(5);
-
-										if (W.hiddenLoc.get(player) != null) {
-											pBlock = W.hiddenLoc.get(player)
-													.getBlock();
-										}
 										if (!W.dcAPI.isDisguised(player)) {
-											for (Player pl : Bukkit
-													.getOnlinePlayers()) {
-												if (!pl.equals(player)) {
-													if (W.hiddenLocWater
-															.get(player) != null) {
-														if (W.hiddenLocWater
-																.get(player)) {
-															pl.sendBlockChange(
-																	pBlock.getLocation(),
-																	Material.STATIONARY_WATER,
-																	(byte) 0);
-														} else {
-															pl.sendBlockChange(
-																	pBlock.getLocation(),
-																	Material.AIR,
-																	(byte) 0);
-														}
-													} else {
-														pl.sendBlockChange(
-																pBlock.getLocation(),
-																Material.AIR,
-																(byte) 0);
-													}
-
-													W.hiddenLocWater
-															.remove(player);
-												}
-											}
-
-											player.playSound(pLoc,
-													Sound.BAT_HURT, 1, 1);
-											block.removeEnchantment(Enchantment.DURABILITY);
-
-											LinkedList<String> data = new LinkedList<String>();
-											data.add("blockID:"
-													+ block.getTypeId());
-											data.add("blockData:"
-													+ block.getDurability());
-											Disguise disguise = new Disguise(
-													W.dcAPI.newEntityID(),
-													data,
-													DisguiseType.FallingBlock);
-											if (W.dcAPI.isDisguised(player)) {
-												W.dcAPI.changePlayerDisguise(
-														player, disguise);
-											} else {
-												W.dcAPI.disguisePlayer(player,
-														disguise);
-											}
-
-											MessageM.sendFMessage(
-													player,
-													ConfigC.normal_ingameNoMoreSolid,
-													true);
+											SolidBlockHandler
+													.makePlayerUnsolid(player,
+															block);
 										}
 									}
 								}

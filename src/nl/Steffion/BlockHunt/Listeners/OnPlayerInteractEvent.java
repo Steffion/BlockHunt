@@ -3,6 +3,7 @@ package nl.Steffion.BlockHunt.Listeners;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.SignsHandler;
+import nl.Steffion.BlockHunt.SolidBlockHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
@@ -10,6 +11,7 @@ import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -124,10 +126,12 @@ public class OnPlayerInteractEvent implements Listener {
 							if (moveLocBlock.getX() == pLoc.getX()
 									&& moveLocBlock.getY() == pLoc.getY()
 									&& moveLocBlock.getZ() == pLoc.getZ()) {
-								W.moveLoc.put(pl, player.getLocation());
-								player.getWorld().playSound(
-										player.getLocation(), Sound.HURT_FLESH,
-										1, 1);
+								W.moveLoc.put(pl, new Location(pl.getWorld(),
+										0, 0, 0));
+								pl.getWorld().playSound(player.getLocation(),
+										Sound.HURT_FLESH, 1, 1);
+								ItemStack block = pl.getInventory().getItem(8);
+								SolidBlockHandler.makePlayerUnsolid(pl, block);
 							}
 						}
 					}
