@@ -34,7 +34,8 @@ public class CMDstart extends DefaultCMD {
 					if (arena != null) {
 						if (arena.gameState.equals(ArenaState.WAITING)) {
 							if (arena.playersInArena.size() >= 2) {
-								arena.timer = 10;
+								arena.timer = 11;
+								arena.gameState = ArenaState.STARTING;
 								MessageM.sendFMessage(player,
 										ConfigC.normal_startForced, true,
 										"arenaname-" + arena.arenaName);
@@ -44,8 +45,10 @@ public class CMDstart extends DefaultCMD {
 										"1-2");
 							}
 						} else if (arena.gameState.equals(ArenaState.STARTING)) {
-							if (arena.playersInArena.size() != arena.maxPlayers) {
-								arena.timer = 10;
+							if (arena.playersInArena.size() < arena.maxPlayers) {
+								if (arena.timer >= 10) {
+									arena.timer = 11;
+								}
 							} else {
 								arena.timer = 1;
 							}
