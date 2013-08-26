@@ -87,8 +87,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		W.newFiles();
 
-		ArenaHandler.loadArenas();
-
 		if (!getServer().getPluginManager().isPluginEnabled("DisguiseCraft")) {
 			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled,
 					true);
@@ -100,6 +98,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		}
 
 		W.dcAPI = DisguiseCraft.getAPI();
+
+		ArenaHandler.loadArenas();
 
 		try {
 			Metrics metrics = new Metrics(this);
@@ -489,30 +489,28 @@ public class BlockHunt extends JavaPlugin implements Listener {
 																				.toLowerCase());
 													}
 												}
+												for (Player pl : Bukkit
+														.getOnlinePlayers()) {
+													if (!pl.equals(player)) {
+														pl.hidePlayer(player);
+														pl.sendBlockChange(
+																pBlock.getLocation(),
+																block.getType(),
+																(byte) block
+																		.getDurability());
+													}
+												}
 											} else {
 												MessageM.sendFMessage(
 														player,
 														ConfigC.warning_ingameNoSolidPlace,
 														true);
 											}
-
-											for (Player pl : Bukkit
-													.getOnlinePlayers()) {
-												if (!pl.equals(player)) {
-													pl.hidePlayer(player);
-													pl.sendBlockChange(
-															pBlock.getLocation(),
-															block.getType(),
-															(byte) block
-																	.getDurability());
-												}
-											}
 										}
 									} else {
 										if (!W.dcAPI.isDisguised(player)) {
 											SolidBlockHandler
-													.makePlayerUnsolid(player,
-															block);
+													.makePlayerUnsolid(player);
 										}
 									}
 								}
