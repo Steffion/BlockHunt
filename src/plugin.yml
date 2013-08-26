@@ -3,8 +3,8 @@ main: nl.Steffion.BlockHunt.BlockHunt
 version: 0.1.4_ALPHA
 authors:
   - Steffion
-description: Description here.
-softdepend: [DisguiseCraft]
+description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
+softdepend: [DisguiseCraft, ProtocolLib]
 load: POSTWORLD
 commands:
   BlockHunt:
