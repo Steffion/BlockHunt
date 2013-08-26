@@ -84,7 +84,7 @@ public enum ConfigC {
 			W.messages),
 	normal_wandGaveWand ("%NHere you go ;)! &o(Use the %A&o%type%%N&o!)",
 			W.messages),
-	normal_wandSetPosition ("%NSet position %A#%number%%N to location: %pos%.",
+	normal_wandSetPosition ("%NSet position %A#%number%%N to location: (%A%x%%N, %A%y%%N, %A%z%%N).",
 			W.messages),
 	normal_createCreatedArena ("%NCreated an arena with the name '%A%name%%N'.",
 			W.messages),
