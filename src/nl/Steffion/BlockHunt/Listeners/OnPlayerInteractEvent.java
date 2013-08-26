@@ -55,7 +55,10 @@ public class OnPlayerInteractEvent implements Listener {
 													+ "%N, %A"
 													+ location.getY()
 													+ "%N, %A"
-													+ location.getZ() + "%N)");
+													+ location.getZ() + "%N)",
+											"x-" + location.getX(), "y-"
+													+ location.getY(), "z-"
+													+ location.getZ());
 									W.pos1.put(player, location);
 								}
 							} else if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -71,7 +74,10 @@ public class OnPlayerInteractEvent implements Listener {
 													+ "%N, %A"
 													+ location.getY()
 													+ "%N, %A"
-													+ location.getZ() + "%N)");
+													+ location.getZ() + "%N)",
+											"x-" + location.getX(), "y-"
+													+ location.getY(), "z-"
+													+ location.getZ());
 									W.pos2.put(player, location);
 								}
 							}
