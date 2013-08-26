@@ -136,8 +136,7 @@ public class OnPlayerInteractEvent implements Listener {
 										0, 0, 0));
 								pl.getWorld().playSound(player.getLocation(),
 										Sound.HURT_FLESH, 1, 1);
-								ItemStack block = pl.getInventory().getItem(8);
-								SolidBlockHandler.makePlayerUnsolid(pl, block);
+								SolidBlockHandler.makePlayerUnsolid(pl);
 							}
 						}
 					}
