@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
@@ -21,14 +22,18 @@ public class ScoreboardHandler {
 		Objective object = board.registerNewObjective(arena.arenaName, "dummy");
 		object.setDisplaySlot(DisplaySlot.SIDEBAR);
 		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()));
-		Score timeleft = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%ATime left:")));
+		Score timeleft = object
+				.getScore(Bukkit.getOfflinePlayer(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.scoreboard_timeleft))));
 		timeleft.setScore(arena.timer);
-		Score seekers = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%NSeekers:")));
+		Score seekers = object
+				.getScore(Bukkit.getOfflinePlayer(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.scoreboard_seekers))));
 		seekers.setScore(arena.seekers.size());
 		Score hiders = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%NHiders:")));
+				.replaceAll((String) W.config.get(ConfigC.scoreboard_hiders))));
 		hiders.setScore(arena.playersInArena.size() - arena.seekers.size());
 		if (arena.gameState == ArenaState.INGAME) {
 			for (Player pl : arena.playersInArena) {
@@ -46,14 +51,18 @@ public class ScoreboardHandler {
 		Scoreboard board = arena.scoreboard;
 		Objective object = board.getObjective(DisplaySlot.SIDEBAR);
 		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()));
-		Score timeleft = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%ATime left:")));
+		Score timeleft = object
+				.getScore(Bukkit.getOfflinePlayer(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.scoreboard_timeleft))));
 		timeleft.setScore(arena.timer);
-		Score seekers = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%NSeekers:")));
+		Score seekers = object
+				.getScore(Bukkit.getOfflinePlayer(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.scoreboard_seekers))));
 		seekers.setScore(arena.seekers.size());
 		Score hiders = object.getScore(Bukkit.getOfflinePlayer(MessageM
-				.replaceAll("%NHiders:")));
+				.replaceAll((String) W.config.get(ConfigC.scoreboard_hiders))));
 		hiders.setScore(arena.playersInArena.size() - arena.seekers.size());
 		if (arena.gameState == ArenaState.INGAME) {
 			for (Player pl : arena.playersInArena) {
