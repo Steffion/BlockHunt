@@ -50,6 +50,10 @@ public enum ConfigC {
 			"%A%players%%N/%A%maxplayers%", "%EIngame: %A%timeleft%" },
 			W.config),
 
+	scoreboard_timeleft ("%ATime left:", W.config),
+	scoreboard_seekers ("%NSeekers:", W.config),
+	scoreboard_hiders ("%NHiders:", W.config),
+
 	log_Enabled ("%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
 			W.messages),
 	log_Disabled ("%N%name%&c&k - %N%version% is now Disabled. Made by %A%autors%%N.",
