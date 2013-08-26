@@ -6,7 +6,6 @@ import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
 
-import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -46,8 +45,6 @@ public class OnEntityDamageByEntityEvent implements Listener {
 						} else {
 							player.getWorld().playSound(player.getLocation(),
 									Sound.HURT_FLESH, 1, 1);
-							player.getWorld().playEffect(player.getLocation(),
-									Effect.ENDER_SIGNAL, 0);
 
 							if (event.getDamage() >= player.getHealth()) {
 								player.setHealth(20);
