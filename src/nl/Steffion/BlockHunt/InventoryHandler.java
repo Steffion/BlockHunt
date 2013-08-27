@@ -171,7 +171,7 @@ public class InventoryHandler {
 	public static void openDisguiseBlocks(Arena arena, Player player) {
 		String arenaname = arena.arenaName;
 		Inventory panel = Bukkit.createInventory(null, 36,
-				MessageM.replaceAll("\u00A7r%N&lDisguiseBlocks"));
+				MessageM.replaceAll("%N&lDisguiseBlocks"));
 
 		ItemStack arenaNameNote = new ItemStack(Material.PAPER, 1);
 		ItemMeta arenaNameNote_IM = arenaNameNote.getItemMeta();
