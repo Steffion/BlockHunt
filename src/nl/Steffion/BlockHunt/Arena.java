@@ -26,6 +26,7 @@ public class Arena implements ConfigurationSerializable {
 	public int timeInLobbyUntilStart;
 	public int waitingTimeSeeker;
 	public int gameTime;
+	public int timeUntilHidersSword;
 	public ArrayList<ItemStack> disguiseBlocks;
 	public LocationSerializable lobbyWarp;
 	public LocationSerializable hidersWarp;
@@ -43,7 +44,7 @@ public class Arena implements ConfigurationSerializable {
 	public Arena (String arenaName, LocationSerializable pos1,
 			LocationSerializable pos2, int maxPlayers, int minPlayers,
 			int amountSeekersOnStart, int timeInLobbyUntilStart,
-			int waitingTimeSeeker, int gameTime,
+			int waitingTimeSeeker, int gameTime, int timeUntilHidersSword,
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
 			LocationSerializable seekersWarp, List<String> seekersWinCommands,
@@ -59,6 +60,7 @@ public class Arena implements ConfigurationSerializable {
 		this.timeInLobbyUntilStart = timeInLobbyUntilStart;
 		this.waitingTimeSeeker = waitingTimeSeeker;
 		this.gameTime = gameTime;
+		this.timeUntilHidersSword = timeUntilHidersSword;
 		this.disguiseBlocks = disguiseBlocks;
 		this.lobbyWarp = lobbyWarp;
 		this.hidersWarp = hidersWarp;
@@ -80,7 +82,8 @@ public class Arena implements ConfigurationSerializable {
 		amountSeekersOnStart,
 		timeInLobbyUntilStart,
 		waitingTimeSeeker,
-		gameTime;
+		gameTime,
+		timeUntilHidersSword;
 	}
 
 	public enum ArenaState {
@@ -99,6 +102,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("timeInLobbyUntilStart", timeInLobbyUntilStart);
 		map.put("waitingTimeSeeker", waitingTimeSeeker);
 		map.put("gameTime", gameTime);
+		map.put("timeUntilHidersSword", timeUntilHidersSword);
 		map.put("disguiseBlocks", disguiseBlocks);
 		map.put("lobbyWarp", lobbyWarp);
 		map.put("hidersWarp", hidersWarp);
@@ -121,8 +125,10 @@ public class Arena implements ConfigurationSerializable {
 						"amountSeekersOnStart", 1), (Integer) M.g(map,
 						"timeInLobbyUntilStart", 90), (Integer) M.g(map,
 						"waitingTimeSeeker", 20), (Integer) M.g(map,
-						"gameTime", 200), (ArrayList<ItemStack>) M.g(map,
-						"disguiseBlocks", new ArrayList<ItemStack>()),
+						"gameTime", 200), (Integer) M.g(map,
+						"timeUntilHidersSword", 30),
+				(ArrayList<ItemStack>) M.g(map, "disguiseBlocks",
+						new ArrayList<ItemStack>()),
 				(LocationSerializable) M.g(map, "lobbyWarp", loc),
 				(LocationSerializable) M.g(map, "hidersWarp", loc),
 				(LocationSerializable) M.g(map, "seekersWarp", loc),

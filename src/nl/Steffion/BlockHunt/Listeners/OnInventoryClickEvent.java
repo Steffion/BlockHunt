@@ -98,6 +98,11 @@ public class OnInventoryClickEvent implements Listener {
 							.contains("gameTime")) {
 						updownButton(player, item, arena, ArenaType.gameTime,
 								arena.gameTime, 1000, 5, 1, 1);
+					} else if (item.getItemMeta().getDisplayName()
+							.contains("timeUntilHidersSword")) {
+						updownButton(player, item, arena,
+								ArenaType.timeUntilHidersSword,
+								arena.timeUntilHidersSword, 1000, 0, 1, 1);
 					}
 
 					save(arena);
@@ -124,9 +129,6 @@ public class OnInventoryClickEvent implements Listener {
 		if (item.getItemMeta().getDisplayName()
 				.contains((String) W.messages.get(ConfigC.button_add2))) {
 			if (option < max) {
-
-				// W.arenas.getFile().set(arenaname + "." + option, option +
-				// add);
 				switch (at) {
 				case maxPlayers:
 					arena.maxPlayers = option + add;
@@ -146,6 +148,9 @@ public class OnInventoryClickEvent implements Listener {
 				case gameTime:
 					arena.gameTime = option + add;
 					break;
+				case timeUntilHidersSword:
+					arena.timeUntilHidersSword = option + add;
+					break;
 				}
 			} else {
 				MessageM.sendFMessage(player, ConfigC.error_setTooHighNumber,
@@ -154,8 +159,6 @@ public class OnInventoryClickEvent implements Listener {
 		} else if (item.getItemMeta().getDisplayName()
 				.contains((String) W.messages.get(ConfigC.button_remove2))) {
 			if (option > min) {
-				// W.arenas.getFile().set(arenaname + "." + option,
-				// option - remove);
 				switch (at) {
 				case maxPlayers:
 					arena.maxPlayers = option - remove;
@@ -174,6 +177,9 @@ public class OnInventoryClickEvent implements Listener {
 					break;
 				case gameTime:
 					arena.gameTime = option - remove;
+					break;
+				case timeUntilHidersSword:
+					arena.timeUntilHidersSword = option - remove;
 					break;
 				}
 			} else {
