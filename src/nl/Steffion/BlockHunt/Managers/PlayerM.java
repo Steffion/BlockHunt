@@ -24,6 +24,7 @@ public class PlayerM {
 		joinsign (main + "joinsign", PType.PLAYER),
 		leave (main + "leave", PType.PLAYER),
 		list (main + "list", PType.PLAYER),
+		shop (main + "shop", PType.PLAYER),
 		start (main + "start", PType.MODERATOR),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),

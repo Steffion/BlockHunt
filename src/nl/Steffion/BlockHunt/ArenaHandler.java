@@ -1,5 +1,8 @@
 package nl.Steffion.BlockHunt;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 
 import nl.Steffion.BlockHunt.Managers.ConfigC;
@@ -16,6 +19,7 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @SuppressWarnings("deprecation")
 public class ArenaHandler {
@@ -90,41 +94,6 @@ public class ArenaHandler {
 									}
 									arena.playersInArena.add(player);
 
-									// OLD WAY OF SETTING A PLAYER'S DATA.
-									// W.pLocation.put(player,
-									// player.getLocation());
-									// W.pGameMode.put(player,
-									// player.getGameMode());
-									//
-									// player.teleport(arena.lobbyWarp);
-									// player.setGameMode(GameMode.SURVIVAL);
-									//
-									// W.pInventory.put(player, player
-									// .getInventory().getContents());
-									// player.getInventory().clear();
-									// player.updateInventory();
-									// W.pArmor.put(player,
-									// player.getInventory()
-									// .getArmorContents());
-									// player.getInventory().setHelmet(
-									// new ItemStack(Material.AIR));
-									// player.getInventory().setChestplate(
-									// new ItemStack(Material.AIR));
-									// player.getInventory().setLeggings(
-									// new ItemStack(Material.AIR));
-									// player.getInventory().setBoots(
-									// new ItemStack(Material.AIR));
-									// W.pEXP.put(player, player.getExp());
-									// player.setExp(0);
-									// W.pEXPL.put(player, player.getLevel());
-									// player.setLevel(0);
-									// W.pHealth.put(player,
-									// player.getHealth());
-									// player.setHealth(20);
-									// W.pFood.put(player,
-									// player.getFoodLevel());
-									// player.setFoodLevel(20);
-
 									PlayerArenaData pad = new PlayerArenaData(
 											player.getLocation(),
 											player.getGameMode(), player
@@ -155,6 +124,40 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
+
+									if ((Boolean) W.config
+											.get(ConfigC.shop_blockChooserEnabled) == true) {
+										if (W.shop.getFile().get(
+												player.getName()
+														+ ".blockchooser") != null) {
+											ItemStack shopBlockChooser = new ItemStack(
+													Material.getMaterial((Integer) W.config
+															.get(ConfigC.shop_blockChooserID)),
+													1);
+											ItemMeta shopBlockChooser_IM = shopBlockChooser
+													.getItemMeta();
+											shopBlockChooser_IM
+													.setDisplayName(MessageM
+															.replaceAll((String) W.config
+																	.get(ConfigC.shop_blockChooserName)));
+											List<String> lores = W.config
+													.getFile()
+													.getStringList(
+															ConfigC.shop_blockChooserDescription
+																	.getLocation());
+											List<String> lores2 = new ArrayList<String>();
+											for (String lore : lores) {
+												lores2.add(MessageM
+														.replaceAll(lore));
+											}
+											shopBlockChooser_IM.setLore(lores2);
+											shopBlockChooser
+													.setItemMeta(shopBlockChooser_IM);
+
+											player.getInventory().addItem(
+													shopBlockChooser);
+										}
+									}
 									player.updateInventory();
 
 									if (W.dcAPI.isDisguised(player)) {
@@ -264,29 +267,6 @@ public class ArenaHandler {
 					W.seekertime.put(seeker, arena.waitingTimeSeeker);
 				}
 			}
-
-			// OLD WAY OF RESETTING A PLAYER'S DATA.
-			// player.getInventory().clear();
-			// player.getInventory().setContents(W.pInventory.get(player));
-			// player.updateInventory();
-			// W.pInventory.remove(player);
-			// player.getInventory().setArmorContents(W.pArmor.get(player));
-			// W.pArmor.remove(player);
-			// player.setExp(W.pEXP.get(player));
-			// W.pEXP.remove(player);
-			// player.setLevel(W.pEXPL.get(player));
-			// W.pEXPL.remove(player);
-			// player.setHealth(W.pHealth.get(player));
-			// W.pHealth.remove(player);
-			// player.setFoodLevel(W.pFood.get(player));
-			// W.pFood.remove(player);
-			// W.pBlock.remove(player);
-			//
-			// player.teleport(W.pLocation.get(player));
-			//
-			// player.setGameMode(W.pGameMode.get(player));
-			// W.pGameMode.remove(player);
-			// W.pLocation.remove(player);
 
 			PlayerArenaData pad = new PlayerArenaData(null, null, null, null,
 					null, null, null, null, null);
