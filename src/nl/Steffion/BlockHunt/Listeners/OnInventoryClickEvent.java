@@ -159,6 +159,21 @@ public class OnInventoryClickEvent implements Listener {
 							updownButton(player, item, arena,
 									ArenaType.timeUntilHidersSword,
 									arena.timeUntilHidersSword, 1000, 0, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("hidersTokenWin")) {
+							updownButton(player, item, arena,
+									ArenaType.hidersTokenWin,
+									arena.hidersTokenWin, 1000, 0, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("seekersTokenWin")) {
+							updownButton(player, item, arena,
+									ArenaType.seekersTokenWin,
+									arena.seekersTokenWin, 1000, 0, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("killTokens")) {
+							updownButton(player, item, arena,
+									ArenaType.killTokens, arena.killTokens,
+									1000, 0, 1, 1);
 						}
 
 						save(arena);
@@ -208,6 +223,15 @@ public class OnInventoryClickEvent implements Listener {
 				case timeUntilHidersSword:
 					arena.timeUntilHidersSword = option + add;
 					break;
+				case hidersTokenWin:
+					arena.hidersTokenWin = option + add;
+					break;
+				case seekersTokenWin:
+					arena.seekersTokenWin = option + add;
+					break;
+				case killTokens:
+					arena.killTokens = option + add;
+					break;
 				}
 			} else {
 				MessageM.sendFMessage(player, ConfigC.error_setTooHighNumber,
@@ -237,6 +261,15 @@ public class OnInventoryClickEvent implements Listener {
 					break;
 				case timeUntilHidersSword:
 					arena.timeUntilHidersSword = option - remove;
+					break;
+				case hidersTokenWin:
+					arena.hidersTokenWin = option - remove;
+					break;
+				case seekersTokenWin:
+					arena.seekersTokenWin = option - remove;
+					break;
+				case killTokens:
+					arena.killTokens = option - remove;
 					break;
 				}
 			} else {

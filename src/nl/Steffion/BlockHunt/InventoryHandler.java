@@ -96,6 +96,24 @@ public class InventoryHandler {
 			ItemStack timeUntilHidersSword_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
+			ItemStack hidersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET, 1);
+			ItemStack hidersTokenWin = new ItemStack(
+					Material.PISTON_MOVING_PIECE, arena.hidersTokenWin);
+			ItemStack hidersTokenWin_DOWN = new ItemStack(Material.GOLD_NUGGET,
+					1);
+
+			ItemStack seekersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET,
+					1);
+			ItemStack seekersTokenWin = new ItemStack(
+					Material.PISTON_MOVING_PIECE, arena.seekersTokenWin);
+			ItemStack seekersTokenWin_DOWN = new ItemStack(
+					Material.GOLD_NUGGET, 1);
+
+			ItemStack killTokens_UP = new ItemStack(Material.GOLD_NUGGET, 1);
+			ItemStack killTokens = new ItemStack(Material.PISTON_MOVING_PIECE,
+					arena.killTokens);
+			ItemStack killTokens_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
+
 			//
 
 			updownButton(panel, arena, ArenaType.maxPlayers, "maxPlayers", "1",
@@ -125,6 +143,18 @@ public class InventoryHandler {
 					"timeUntilHidersSword", "1 %Nsecond",
 					timeUntilHidersSword_UP, timeUntilHidersSword,
 					timeUntilHidersSword_DOWN, 30, 39, 48);
+
+			updownButton(panel, arena, ArenaType.hidersTokenWin,
+					"hidersTokenWin", "1 %Ntoken", hidersTokenWin_UP,
+					hidersTokenWin, hidersTokenWin_DOWN, 32, 41, 50);
+
+			updownButton(panel, arena, ArenaType.seekersTokenWin,
+					"seekersTokenWin", "1 %Ntoken", seekersTokenWin_UP,
+					seekersTokenWin, seekersTokenWin_DOWN, 33, 42, 51);
+
+			updownButton(panel, arena, ArenaType.killTokens, "killTokens",
+					"1 %Ntoken", killTokens_UP, killTokens, killTokens_DOWN,
+					34, 43, 52);
 
 			player.openInventory(panel);
 		} else {
@@ -164,6 +194,15 @@ public class InventoryHandler {
 			break;
 		case timeUntilHidersSword:
 			setting = arena.timeUntilHidersSword;
+			break;
+		case hidersTokenWin:
+			setting = arena.hidersTokenWin;
+			break;
+		case seekersTokenWin:
+			setting = arena.seekersTokenWin;
+			break;
+		case killTokens:
+			setting = arena.killTokens;
 			break;
 		}
 
@@ -246,11 +285,37 @@ public class InventoryHandler {
 		shopBlockChooser_IM.setLore(lores2);
 		shopBlockChooser.setItemMeta(shopBlockChooser_IM);
 
+		ItemStack shopBlockHuntPass = new ItemStack(
+				Material.getMaterial((Integer) W.config
+						.get(ConfigC.shop_BlockHuntPassID)), 1);
+		ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
+		shopBlockHuntPass_IM.setDisplayName(MessageM
+				.replaceAll((String) W.config
+						.get(ConfigC.shop_BlockHuntPassName)));
+		lores = W.config.getFile().getStringList(
+				ConfigC.shop_BlockHuntPassDescription.getLocation());
+		lores2 = new ArrayList<String>();
+		for (String lore : lores) {
+			lores2.add(MessageM.replaceAll(lore));
+		}
+
+		lores2.add(MessageM.replaceAll(
+				(String) W.config.get(ConfigC.shop_price),
+				"amount-" + W.config.get(ConfigC.shop_BlockHuntPassPrice)));
+
+		shopBlockHuntPass_IM.setLore(lores2);
+		shopBlockHuntPass.setItemMeta(shopBlockHuntPass_IM);
+
 		shop.setItem(0, shopTokens);
 		if ((Boolean) W.config.get(ConfigC.shop_blockChooserEnabled) == true
 				&& (Boolean) W.shop.getFile().get(
 						player.getName() + ".blockchooser") == null) {
 			shop.setItem(1, shopBlockChooser);
+		}
+		if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassEnabled) == true
+				&& (Boolean) W.shop.getFile().get(
+						player.getName() + ".blockhuntpass") == null) {
+			shop.setItem(2, shopBlockHuntPass);
 		}
 		player.openInventory(shop);
 	}

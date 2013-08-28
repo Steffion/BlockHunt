@@ -21,6 +21,7 @@ public class CMDreload extends DefaultCMD {
 			W.messages.load();
 			W.arenas.load();
 			W.signs.load();
+			W.shop.load();
 			for (Arena arena : W.arenaList) {
 				ArenaHandler.stopArena(arena);
 			}

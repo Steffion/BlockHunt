@@ -39,7 +39,7 @@ public class CMDcreate extends DefaultCMD {
 									new ArrayList<ItemStack>(), null, null,
 									null, new ArrayList<String>(),
 									new ArrayList<String>(),
-									new ArrayList<String>(),
+									new ArrayList<String>(), 10, 50, 8,
 									new ArrayList<Player>(),
 									ArenaState.WAITING, 0,
 									new ArrayList<Player>(), Bukkit
@@ -49,7 +49,7 @@ public class CMDcreate extends DefaultCMD {
 							W.arenas.save();
 							W.signs.load();
 
-							W.arenaList.add((Arena) arena);
+							W.arenaList.add(arena);
 							ScoreboardHandler.createScoreboard(arena);
 
 							MessageM.sendFMessage(player,

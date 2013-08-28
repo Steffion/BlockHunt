@@ -43,13 +43,23 @@ public enum ConfigC {
 
 	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
 	shop_blockChooserEnabled (true, W.config),
-	shop_blockChooserID (345, W.config),
+	shop_blockChooserID (340, W.config),
 	shop_blockChooserPrice (3000, W.config),
 	shop_blockChooserName ("%H&lBlock Chooser", W.config),
 	shop_blockChooserDescription (new String[] {
 			"%NUse this item before the arena starts.",
 			"%ARight-Click%N in the lobby and choose",
 			"%Nthe block you want to be!", "&6Unlimited uses." }, W.config),
+
+	shop_BlockHuntPassEnabled (true, W.config),
+	shop_BlockHuntPassID (421, W.config),
+	shop_BlockHuntPassPrice (150, W.config),
+	shop_BlockHuntPassName ("%H&lBlockHunt Pass", W.config),
+	shop_BlockHuntPassDescription (new String[] {
+			"%NUse this item before the arena starts.",
+			"%ARight-Click%N in the lobby and choose",
+			"%Nif you want to be a Hider or a Seeker!", "&61 use.",
+			"&c&lCOMING SOON!" }, W.config),
 
 	sign_LEAVE (new String[] { "%H[" + W.pluginName + "%H]", "&4LEAVE",
 			"&8Right-Click", "&8To leave." }, W.config),
@@ -124,6 +134,8 @@ public enum ConfigC {
 	normal_winSeekers ("%NThe %ASEEKERS%N have won!", W.messages),
 	normal_winHiders ("%NThe %AHIDERS%N have won!", W.messages),
 	normal_setwarpWarpSet ("%NSet warp '%A%warp%%N' to your location!",
+			W.messages),
+	normal_addedToken ("%A%amount%%N tokens were added to your account!",
 			W.messages),
 	normal_removeRemovedArena ("%NRemoved arena '%A%name%%N'!", W.messages),
 	normal_ingameNowSolid ("%NYou're now a solid '%A%block%%N' block!",
