@@ -97,7 +97,13 @@ public class OnPlayerInteractEvent implements Listener {
 							.getClickedBlock().getLocation()))) {
 						Sign sign = (Sign) event.getClickedBlock().getState();
 						if (sign.getLine(1) != null) {
-							if (sign.getLine(1).contains("LEAVE")) {
+							if (sign.getLine(1).equals(
+									MessageM.replaceAll(W.config
+											.getFile()
+											.getStringList(
+													ConfigC.sign_LEAVE
+															.getLocation())
+											.get(1)))) {
 								if (PlayerM.hasPerm(player, PermsC.joinsign,
 										true)) {
 									ArenaHandler.playerLeaveArena(player, true,
