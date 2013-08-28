@@ -23,6 +23,7 @@ public class PlayerM {
 		joinfull (main + "joinfull", PType.MODERATOR),
 		joinsign (main + "joinsign", PType.PLAYER),
 		leave (main + "leave", PType.PLAYER),
+		list (main + "list", PType.PLAYER),
 		start (main + "start", PType.MODERATOR),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
