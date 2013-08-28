@@ -251,12 +251,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									}
 
 									arenaPlayer.teleport(arena.hidersWarp);
-									ItemStack sword = new ItemStack(
-											Material.WOOD_SWORD, 1);
-									sword.addUnsafeEnchantment(
-											Enchantment.KNOCKBACK, 1);
-
-									arenaPlayer.getInventory().addItem(sword);
 
 									ItemStack blockCount = new ItemStack(block
 											.getType(), 5);
@@ -334,6 +328,23 @@ public class BlockHunt extends JavaPlugin implements Listener {
 					if (arena.gameState == ArenaState.INGAME) {
 						arena.timer = arena.timer - 1;
 						if (arena.timer > 0) {
+							if (arena.timer == arena.gameTime
+									- arena.timeUntilHidersSword) {
+								ItemStack sword = new ItemStack(
+										Material.WOOD_SWORD, 1);
+								sword.addUnsafeEnchantment(
+										Enchantment.KNOCKBACK, 1);
+								for (Player arenaPlayer : arena.playersInArena) {
+									if (!arena.seekers.contains(arenaPlayer)) {
+										arenaPlayer.getInventory().addItem(
+												sword);
+										MessageM.sendFMessage(
+												arenaPlayer,
+												ConfigC.normal_ingameGivenSword,
+												true);
+									}
+								}
+							}
 							if (arena.timer == 190) {
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, true,

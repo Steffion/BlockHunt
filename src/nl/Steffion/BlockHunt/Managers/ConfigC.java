@@ -104,6 +104,7 @@ public enum ConfigC {
 			W.messages),
 	normal_ingameArenaEnd ("%NThe arena will end in %A%1%%N second(s)!",
 			W.messages),
+	normal_ingameGivenSword ("%NYou were given a sword!", W.messages),
 	normal_HiderDied ("%NHider %A%playername%%N died! %A%left%%N hider(s) remain...",
 			W.messages),
 	normal_SeekerDied ("%NSeeker %A%playername%%N died! He will respawn in %A%secs%%N seconds!",

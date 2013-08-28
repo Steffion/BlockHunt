@@ -88,6 +88,13 @@ public class InventoryHandler {
 			disguiseBlocks_NOTE.setItemMeta(disguiseBlocks_NOTE_IM);
 			panel.setItem(37, disguiseBlocks_NOTE);
 
+			ItemStack timeUntilHidersSword_UP = new ItemStack(
+					Material.GOLD_NUGGET, 1);
+			ItemStack timeUntilHidersSword = new ItemStack(
+					Material.PISTON_MOVING_PIECE, arena.timeUntilHidersSword);
+			ItemStack timeUntilHidersSword_DOWN = new ItemStack(
+					Material.GOLD_NUGGET, 1);
+
 			//
 
 			updownButton(panel, arena, ArenaType.maxPlayers, "maxPlayers", "1",
@@ -112,6 +119,11 @@ public class InventoryHandler {
 			updownButton(panel, arena, ArenaType.gameTime, "gameTime",
 					"1 %Nsecond", gameTime_UP, gameTime, gameTime_DOWN, 8, 17,
 					26);
+
+			updownButton(panel, arena, ArenaType.timeUntilHidersSword,
+					"timeUntilHidersSword", "1 %Nsecond",
+					timeUntilHidersSword_UP, timeUntilHidersSword,
+					timeUntilHidersSword_DOWN, 30, 39, 48);
 
 			player.openInventory(panel);
 		} else {
@@ -148,6 +160,9 @@ public class InventoryHandler {
 			break;
 		case gameTime:
 			setting = arena.gameTime;
+			break;
+		case timeUntilHidersSword:
+			setting = arena.timeUntilHidersSword;
 			break;
 		}
 

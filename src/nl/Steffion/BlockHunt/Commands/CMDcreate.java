@@ -35,7 +35,7 @@ public class CMDcreate extends DefaultCMD {
 								.equals(W.pos2.get(player).getWorld())) {
 							Arena arena = new Arena(args[1],
 									W.pos1.get(player), W.pos2.get(player), 12,
-									3, 1, 50, 20, 300,
+									3, 1, 50, 20, 300, 30,
 									new ArrayList<ItemStack>(), null, null,
 									null, new ArrayList<String>(),
 									new ArrayList<String>(),
