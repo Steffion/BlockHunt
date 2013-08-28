@@ -89,13 +89,15 @@ public class OnInventoryClickEvent implements Listener {
 						MessageM.replaceAll((String) W.config
 								.get(ConfigC.shop_blockChooserName)))) {
 					event.setCancelled(true);
-					W.choosenBlock.put(player, event.getCurrentItem());
-					MessageM.sendFMessage(player,
-							ConfigC.normal_ShopChoosenBlock, true, "block-"
-									+ event.getCurrentItem().getType()
-											.toString().replaceAll("_", "")
-											.replaceAll("BLOCK", "")
-											.toLowerCase());
+					if (event.getCurrentItem().getType() != Material.AIR) {
+						W.choosenBlock.put(player, event.getCurrentItem());
+						MessageM.sendFMessage(player,
+								ConfigC.normal_ShopChoosenBlock, true, "block-"
+										+ event.getCurrentItem().getType()
+												.toString().replaceAll("_", "")
+												.replaceAll("BLOCK", "")
+												.toLowerCase());
+					}
 				} else {
 					event.setCancelled(true);
 					ItemStack item = event.getCurrentItem();
