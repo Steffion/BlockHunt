@@ -22,35 +22,33 @@ public class OnInventoryCloseEvent implements Listener {
 	public void onInventoryCloseEvent(InventoryCloseEvent event) {
 		Inventory inv = event.getInventory();
 		if (inv.getType().equals(InventoryType.CHEST)) {
-			if (inv.getName().startsWith("\u00A7r")) {
-				if (inv.getName().contains("DisguiseBlocks")) {
-					String arenaname = inv
-							.getItem(0)
-							.getItemMeta()
-							.getDisplayName()
-							.replaceAll(
-									MessageM.replaceAll("%NDisguiseBlocks of arena: %A"),
-									"");
+			if (inv.getName().contains("DisguiseBlocks")) {
+				String arenaname = inv
+						.getItem(0)
+						.getItemMeta()
+						.getDisplayName()
+						.replaceAll(
+								MessageM.replaceAll("%NDisguiseBlocks of arena: %A"),
+								"");
 
-					Arena arena = null;
-					for (Arena arena2 : W.arenaList) {
-						if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
-							arena = arena2;
-						}
+				Arena arena = null;
+				for (Arena arena2 : W.arenaList) {
+					if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
+						arena = arena2;
 					}
-
-					ArrayList<ItemStack> blocks = new ArrayList<ItemStack>();
-					for (ItemStack item : inv.getContents()) {
-						if (item != null) {
-							if (!item.getType().equals(Material.PAPER)) {
-								blocks.add(item);
-							}
-						}
-					}
-
-					arena.disguiseBlocks = blocks;
-					save(arena);
 				}
+
+				ArrayList<ItemStack> blocks = new ArrayList<ItemStack>();
+				for (ItemStack item : inv.getContents()) {
+					if (item != null) {
+						if (!item.getType().equals(Material.PAPER)) {
+							blocks.add(item);
+						}
+					}
+				}
+
+				arena.disguiseBlocks = blocks;
+				save(arena);
 			}
 		}
 	}
