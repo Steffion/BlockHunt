@@ -232,9 +232,17 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 							for (Player arenaPlayer : arena.playersInArena) {
 								if (!arena.seekers.contains(arenaPlayer)) {
+									arenaPlayer.getInventory().clear();
+									arenaPlayer.updateInventory();
 									ItemStack block = arena.disguiseBlocks.get(W.random
 											.nextInt(arena.disguiseBlocks
 													.size()));
+
+									if (W.choosenBlock.get(arenaPlayer) != null) {
+										block = W.choosenBlock.get(arenaPlayer);
+										W.choosenBlock.remove(arenaPlayer);
+									}
+
 									LinkedList<String> data = new LinkedList<String>();
 									data.add("blockID:" + block.getTypeId());
 									data.add("blockData:"

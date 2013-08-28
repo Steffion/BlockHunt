@@ -21,6 +21,7 @@ public enum ConfigC {
 	commandEnabled_join (true, W.config),
 	commandEnabled_leave (true, W.config),
 	commandEnabled_list (true, W.config),
+	commandEnabled_shop (true, W.config),
 	commandEnabled_start (true, W.config),
 	commandEnabled_wand (true, W.config),
 	commandEnabled_create (true, W.config),
@@ -39,6 +40,16 @@ public enum ConfigC {
 			"%ARight-Click%N to select point #2.",
 			"%NUse the create command to define your arena.",
 			"%A/" + W.pluginName + " <help|h>" }, W.config),
+
+	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
+	shop_blockChooserEnabled (true, W.config),
+	shop_blockChooserID (345, W.config),
+	shop_blockChooserPrice (3000, W.config),
+	shop_blockChooserName ("%H&lBlock Chooser", W.config),
+	shop_blockChooserDescription (new String[] {
+			"%NUse this item before the arena starts.",
+			"%ARight-Click%N in the lobby and choose",
+			"%Nthe block you want to be!", "&6Unlimited uses." }, W.config),
 
 	sign_LEAVE (new String[] { "%H[" + W.pluginName + "%H]", "&4LEAVE",
 			"&8Right-Click", "&8To leave." }, W.config),
@@ -66,6 +77,7 @@ public enum ConfigC {
 	help_join ("%NJoins a " + W.pluginName + " game.", W.messages),
 	help_leave ("%NLeave a " + W.pluginName + " game.", W.messages),
 	help_list ("%NShows a list of available arenas.", W.messages),
+	help_shop ("%NOpens the " + W.pluginName + " shop.", W.messages),
 	help_start ("%NForces an arena to start.", W.messages),
 	help_wand ("%NGives you the wand selection tool.", W.messages),
 	help_create ("%NCreates an arena from your selection.", W.messages),
@@ -117,6 +129,10 @@ public enum ConfigC {
 	normal_ingameNowSolid ("%NYou're now a solid '%A%block%%N' block!",
 			W.messages),
 	normal_ingameNoMoreSolid ("%NYou're no longer a solid block!", W.messages),
+	normal_ShopBoughtItem ("%NYou've bought the '%A%itemname%%N' item!",
+			W.messages),
+	normal_ShopChoosenBlock ("%NYou've choosen to be a(n) '%A%block%%N' block!",
+			W.messages),
 
 	warning_lobbyNeedAtleast ("%WYou need atleast %A%1%%W player(s) to start the game!",
 			W.messages),
@@ -159,7 +175,9 @@ public enum ConfigC {
 	error_setTooLowNumber ("%EThat amount is too low! Minimal amount is: %A%min%%E.",
 			W.messages),
 	error_setNotABlock ("%EThat is not a block!", W.messages),
-	error_setwarpWarpNotFound ("%EWarp '%A%warp%%E' is not valid!", W.messages);
+	error_setwarpWarpNotFound ("%EWarp '%A%warp%%E' is not valid!", W.messages),
+	error_ShopNeedMoreTokens ("%EYou need more tokens before you can buy this item.",
+			W.messages);
 
 	public Object value;
 	public ConfigM config;

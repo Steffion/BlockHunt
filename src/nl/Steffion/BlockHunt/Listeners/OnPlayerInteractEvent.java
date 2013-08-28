@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.SignsHandler;
 import nl.Steffion.BlockHunt.SolidBlockHandler;
@@ -11,6 +12,7 @@ import nl.Steffion.BlockHunt.Managers.PlayerM;
 import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -22,6 +24,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -144,6 +147,39 @@ public class OnPlayerInteractEvent implements Listener {
 										Sound.HURT_FLESH, 1, 1);
 								SolidBlockHandler.makePlayerUnsolid(pl);
 							}
+						}
+					}
+				}
+			}
+		}
+
+		for (Arena arena : W.arenaList) {
+			if (arena.playersInArena.contains(player)
+					&& (arena.gameState.equals(ArenaState.WAITING) || arena.gameState
+							.equals(ArenaState.STARTING))) {
+				event.setCancelled(true);
+				ItemStack item = player.getInventory().getItemInHand();
+				if (item.getType() != Material.AIR) {
+					if (item.getItemMeta().getDisplayName() != null) {
+						if (item.getItemMeta()
+								.getDisplayName()
+								.equals(MessageM.replaceAll((String) W.config
+										.get(ConfigC.shop_blockChooserName)))) {
+							Inventory blockChooser = Bukkit
+									.createInventory(
+											null,
+											36,
+											MessageM.replaceAll("\u00A7r"
+													+ W.config
+															.get(ConfigC.shop_blockChooserName)));
+							if (arena.disguiseBlocks != null) {
+								for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
+									blockChooser.setItem(i - 1,
+											arena.disguiseBlocks.get(i - 1));
+								}
+							}
+
+							player.openInventory(blockChooser);
 						}
 					}
 				}

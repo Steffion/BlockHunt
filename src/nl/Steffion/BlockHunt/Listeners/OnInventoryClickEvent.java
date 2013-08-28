@@ -27,7 +27,9 @@ public class OnInventoryClickEvent implements Listener {
 
 		for (Arena arena : W.arenaList) {
 			if (arena.playersInArena.contains(player)) {
-				event.setCancelled(true);
+				if (event.getSlot() == 8) {
+					event.setCancelled(true);
+				}
 			}
 		}
 
@@ -44,74 +46,127 @@ public class OnInventoryClickEvent implements Listener {
 
 				return;
 			} else if (inv.getName().startsWith("\u00A7r")) {
-				event.setCancelled(true);
-				ItemStack item = event.getCurrentItem();
-				String arenaname = inv
-						.getItem(0)
-						.getItemMeta()
-						.getDisplayName()
-						.replaceAll(
-								MessageM.replaceAll("%NSettings of arena: %A"),
-								"");
-
-				Arena arena = null;
-				for (Arena arena2 : W.arenaList) {
-					if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
-						arena = arena2;
+				if (inv.getName().contains("Shop")) {
+					event.setCancelled(true);
+					ItemStack item = event.getCurrentItem();
+					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+						W.shop.getFile().set(player.getName() + ".tokens", 0);
+						W.shop.save();
 					}
-				}
-
-				if (item == null)
-					return;
-				if (item.getType().equals(Material.AIR))
-					return;
-				if (!item.getItemMeta().hasDisplayName())
-					return;
-				if (item.getType().equals(Material.GOLD_NUGGET)) {
-					if (item.getItemMeta().getDisplayName()
-							.contains("maxPlayers")) {
-						updownButton(player, item, arena, ArenaType.maxPlayers,
-								arena.maxPlayers, Bukkit.getMaxPlayers(), 2, 1,
-								1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("minPlayers")) {
-						updownButton(player, item, arena, ArenaType.minPlayers,
-								arena.minPlayers, Bukkit.getMaxPlayers() - 1,
-								2, 1, 1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("amountSeekersOnStart")) {
-						updownButton(player, item, arena,
-								ArenaType.amountSeekersOnStart,
-								arena.amountSeekersOnStart,
-								arena.maxPlayers - 1, 1, 1, 1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("timeInLobbyUntilStart")) {
-						updownButton(player, item, arena,
-								ArenaType.timeInLobbyUntilStart,
-								arena.timeInLobbyUntilStart, 1000, 5, 1, 1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("waitingTimeSeeker")) {
-						updownButton(player, item, arena,
-								ArenaType.waitingTimeSeeker,
-								arena.waitingTimeSeeker, 1000, 5, 1, 1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("gameTime")) {
-						updownButton(player, item, arena, ArenaType.gameTime,
-								arena.gameTime, 1000, 5, 1, 1);
-					} else if (item.getItemMeta().getDisplayName()
-							.contains("timeUntilHidersSword")) {
-						updownButton(player, item, arena,
-								ArenaType.timeUntilHidersSword,
-								arena.timeUntilHidersSword, 1000, 0, 1, 1);
+					int playerTokens = W.shop.getFile().getInt(
+							player.getName() + ".tokens");
+					if (item.getType().equals(Material.AIR))
+						return;
+					if (item.getItemMeta()
+							.getDisplayName()
+							.equals(MessageM.replaceAll(W.config.get(
+									ConfigC.shop_blockChooserName).toString()))) {
+						if (playerTokens >= (Integer) W.config
+								.get(ConfigC.shop_blockChooserPrice)) {
+							W.shop.getFile().set(
+									player.getName() + ".blockchooser", true);
+							W.shop.getFile()
+									.set(player.getName() + ".tokens",
+											playerTokens
+													- (Integer) W.config
+															.get(ConfigC.shop_blockChooserPrice));
+							W.shop.save();
+							MessageM.sendFMessage(
+									player,
+									ConfigC.normal_ShopBoughtItem,
+									true,
+									"itemname-"
+											+ W.config
+													.get(ConfigC.shop_blockChooserName));
+						} else {
+							MessageM.sendFMessage(player,
+									ConfigC.error_ShopNeedMoreTokens, true);
+						}
 					}
 
-					save(arena);
-					InventoryHandler.openPanel(player, arena.arenaName);
+					InventoryHandler.openShop(player);
+				} else if (inv.getName().contains(
+						MessageM.replaceAll((String) W.config
+								.get(ConfigC.shop_blockChooserName)))) {
+					event.setCancelled(true);
+					W.choosenBlock.put(player, event.getCurrentItem());
+					MessageM.sendFMessage(player,
+							ConfigC.normal_ShopChoosenBlock, true, "block-"
+									+ event.getCurrentItem().getType()
+											.toString().replaceAll("_", "")
+											.replaceAll("BLOCK", "")
+											.toLowerCase());
+				} else {
+					event.setCancelled(true);
+					ItemStack item = event.getCurrentItem();
+					String arenaname = inv
+							.getItem(0)
+							.getItemMeta()
+							.getDisplayName()
+							.replaceAll(
+									MessageM.replaceAll("%NSettings of arena: %A"),
+									"");
 
-				} else if (item.getType().equals(Material.BOOK)) {
-					if (item.getItemMeta().getDisplayName()
-							.contains("disguiseBlocks")) {
-						InventoryHandler.openDisguiseBlocks(arena, player);
+					Arena arena = null;
+					for (Arena arena2 : W.arenaList) {
+						if (arena2.arenaName.equalsIgnoreCase(arenaname)) {
+							arena = arena2;
+						}
+					}
+
+					if (item == null)
+						return;
+					if (item.getType().equals(Material.AIR))
+						return;
+					if (!item.getItemMeta().hasDisplayName())
+						return;
+					if (item.getType().equals(Material.GOLD_NUGGET)) {
+						if (item.getItemMeta().getDisplayName()
+								.contains("maxPlayers")) {
+							updownButton(player, item, arena,
+									ArenaType.maxPlayers, arena.maxPlayers,
+									Bukkit.getMaxPlayers(), 2, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("minPlayers")) {
+							updownButton(player, item, arena,
+									ArenaType.minPlayers, arena.minPlayers,
+									Bukkit.getMaxPlayers() - 1, 2, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("amountSeekersOnStart")) {
+							updownButton(player, item, arena,
+									ArenaType.amountSeekersOnStart,
+									arena.amountSeekersOnStart,
+									arena.maxPlayers - 1, 1, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("timeInLobbyUntilStart")) {
+							updownButton(player, item, arena,
+									ArenaType.timeInLobbyUntilStart,
+									arena.timeInLobbyUntilStart, 1000, 5, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("waitingTimeSeeker")) {
+							updownButton(player, item, arena,
+									ArenaType.waitingTimeSeeker,
+									arena.waitingTimeSeeker, 1000, 5, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("gameTime")) {
+							updownButton(player, item, arena,
+									ArenaType.gameTime, arena.gameTime, 1000,
+									5, 1, 1);
+						} else if (item.getItemMeta().getDisplayName()
+								.contains("timeUntilHidersSword")) {
+							updownButton(player, item, arena,
+									ArenaType.timeUntilHidersSword,
+									arena.timeUntilHidersSword, 1000, 0, 1, 1);
+						}
+
+						save(arena);
+						InventoryHandler.openPanel(player, arena.arenaName);
+
+					} else if (item.getType().equals(Material.BOOK)) {
+						if (item.getItemMeta().getDisplayName()
+								.contains("disguiseBlocks")) {
+							InventoryHandler.openDisguiseBlocks(arena, player);
+						}
 					}
 				}
 			}

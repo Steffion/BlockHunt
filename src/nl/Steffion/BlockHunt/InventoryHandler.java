@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaType;
 import nl.Steffion.BlockHunt.Managers.ConfigC;
@@ -204,5 +205,53 @@ public class InventoryHandler {
 			}
 		}
 		player.openInventory(panel);
+	}
+
+	public static void openShop(Player player) {
+		Inventory shop = Bukkit.createInventory(null, 9,
+				MessageM.replaceAll("\u00A7r%H&lBlockHunt %NShop"));
+		if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+			W.shop.getFile().set(player.getName() + ".tokens", 0);
+			W.shop.save();
+		}
+		int playerTokens = W.shop.getFile()
+				.getInt(player.getName() + ".tokens");
+		List<String> lores = new ArrayList<String>();
+		List<String> lores2 = new ArrayList<String>();
+
+		ItemStack shopTokens = new ItemStack(Material.EMERALD, 1);
+		ItemMeta shopTokens_IM = shopTokens.getItemMeta();
+		shopTokens_IM.setDisplayName(MessageM.replaceAll("%N&lTokens: %A"
+				+ playerTokens));
+		shopTokens.setItemMeta(shopTokens_IM);
+
+		ItemStack shopBlockChooser = new ItemStack(
+				Material.getMaterial((Integer) W.config
+						.get(ConfigC.shop_blockChooserID)), 1);
+		ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
+		shopBlockChooser_IM.setDisplayName(MessageM
+				.replaceAll((String) W.config
+						.get(ConfigC.shop_blockChooserName)));
+		lores = W.config.getFile().getStringList(
+				ConfigC.shop_blockChooserDescription.getLocation());
+		lores2 = new ArrayList<String>();
+		for (String lore : lores) {
+			lores2.add(MessageM.replaceAll(lore));
+		}
+
+		lores2.add(MessageM.replaceAll(
+				(String) W.config.get(ConfigC.shop_price),
+				"amount-" + W.config.get(ConfigC.shop_blockChooserPrice)));
+
+		shopBlockChooser_IM.setLore(lores2);
+		shopBlockChooser.setItemMeta(shopBlockChooser_IM);
+
+		shop.setItem(0, shopTokens);
+		if ((Boolean) W.config.get(ConfigC.shop_blockChooserEnabled) == true
+				&& (Boolean) W.shop.getFile().get(
+						player.getName() + ".blockchooser") == null) {
+			shop.setItem(1, shopBlockChooser);
+		}
+		player.openInventory(shop);
 	}
 }
