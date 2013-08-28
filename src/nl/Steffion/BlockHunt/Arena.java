@@ -107,7 +107,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("lobbyWarp", lobbyWarp);
 		map.put("hidersWarp", hidersWarp);
 		map.put("seekersWarp", seekersWarp);
-		map.put("seekersWinCommans", seekersWinCommands);
+		map.put("seekersWinCommands", seekersWinCommands);
 		map.put("hidersWinCommands", hidersWinCommands);
 		map.put("allowedCommands", allowedCommands);
 		return map;
