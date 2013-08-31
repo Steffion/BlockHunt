@@ -122,6 +122,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("allowedCommands", allowedCommands);
 		map.put("seekersTokenWin", seekersTokenWin);
 		map.put("hidersTokenWin", hidersTokenWin);
+		map.put("killTokens", killTokens);
 		return map;
 	}
 
