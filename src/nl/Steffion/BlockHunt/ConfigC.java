@@ -82,6 +82,7 @@ public enum ConfigC {
 			"%A%arenaname%", "%A%players%%N/%A%maxplayers%",
 			"%EIngame: %A%timeleft%" }, W.config),
 
+	scoreboard_title ("[" + BlockHunt.pdfFile.getName() + "]", W.config),
 	scoreboard_timeleft ("%ATime left:", W.config),
 	scoreboard_seekers ("%NSeekers:", W.config),
 	scoreboard_hiders ("%NHiders:", W.config),
