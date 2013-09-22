@@ -3,9 +3,9 @@ package nl.Steffion.BlockHunt.Listeners;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaType;
 import nl.Steffion.BlockHunt.ArenaHandler;
+import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.InventoryHandler;
 import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
@@ -40,7 +40,7 @@ public class OnInventoryClickEvent implements Listener {
 					if (!event.getCurrentItem().getType().isBlock()) {
 						event.setCancelled(true);
 						MessageM.sendFMessage(player,
-								ConfigC.error_setNotABlock, true);
+								ConfigC.error_setNotABlock);
 					}
 				}
 
@@ -74,13 +74,12 @@ public class OnInventoryClickEvent implements Listener {
 							MessageM.sendFMessage(
 									player,
 									ConfigC.normal_ShopBoughtItem,
-									true,
 									"itemname-"
 											+ W.config
 													.get(ConfigC.shop_blockChooserName));
 						} else {
 							MessageM.sendFMessage(player,
-									ConfigC.error_ShopNeedMoreTokens, true);
+									ConfigC.error_ShopNeedMoreTokens);
 						}
 					}
 
@@ -92,7 +91,7 @@ public class OnInventoryClickEvent implements Listener {
 					if (event.getCurrentItem().getType() != Material.AIR) {
 						W.choosenBlock.put(player, event.getCurrentItem());
 						MessageM.sendFMessage(player,
-								ConfigC.normal_ShopChoosenBlock, true, "block-"
+								ConfigC.normal_ShopChoosenBlock, "block-"
 										+ event.getCurrentItem().getType()
 												.toString().replaceAll("_", "")
 												.replaceAll("BLOCK", "")
@@ -235,7 +234,7 @@ public class OnInventoryClickEvent implements Listener {
 				}
 			} else {
 				MessageM.sendFMessage(player, ConfigC.error_setTooHighNumber,
-						true, "max-" + max);
+						"max-" + max);
 			}
 		} else if (item.getItemMeta().getDisplayName()
 				.contains((String) W.messages.get(ConfigC.button_remove2))) {
@@ -274,7 +273,7 @@ public class OnInventoryClickEvent implements Listener {
 				}
 			} else {
 				MessageM.sendFMessage(player, ConfigC.error_setTooLowNumber,
-						true, "min-" + min);
+						"min-" + min);
 			}
 		}
 	}

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaType;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
@@ -158,7 +157,7 @@ public class InventoryHandler {
 
 			player.openInventory(panel);
 		} else {
-			MessageM.sendFMessage(player, ConfigC.error_noArena, true, "name-"
+			MessageM.sendFMessage(player, ConfigC.error_noArena, "name-"
 					+ arenaname);
 		}
 	}
@@ -272,7 +271,7 @@ public class InventoryHandler {
 				.replaceAll((String) W.config
 						.get(ConfigC.shop_blockChooserName)));
 		lores = W.config.getFile().getStringList(
-				ConfigC.shop_blockChooserDescription.getLocation());
+				ConfigC.shop_blockChooserDescription.location);
 		lores2 = new ArrayList<String>();
 		for (String lore : lores) {
 			lores2.add(MessageM.replaceAll(lore));
@@ -293,7 +292,7 @@ public class InventoryHandler {
 				.replaceAll((String) W.config
 						.get(ConfigC.shop_BlockHuntPassName)));
 		lores = W.config.getFile().getStringList(
-				ConfigC.shop_BlockHuntPassDescription.getLocation());
+				ConfigC.shop_BlockHuntPassDescription.location);
 		lores2 = new ArrayList<String>();
 		for (String lore : lores) {
 			lores2.add(MessageM.replaceAll(lore));

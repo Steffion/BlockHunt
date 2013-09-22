@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.MessageM.CType;
-import nl.Steffion.BlockHunt.Managers.PlayerM;
-import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.Bukkit;
@@ -38,19 +37,16 @@ public class ArenaHandler {
 			String... vars) {
 		for (Player player : arena.playersInArena) {
 			String pMessage = message.replaceAll("%player%", player.getName());
-			player.sendMessage(MessageM.replaceAll(CType.TAG(tag) + pMessage,
-					vars));
+			player.sendMessage(MessageM.replaceAll(CType.TAG() + pMessage, vars));
 		}
 	}
 
 	public static void sendFMessage(Arena arena, ConfigC location, Boolean tag,
 			String... vars) {
 		for (Player player : arena.playersInArena) {
-			String pMessage = location.config.getFile()
-					.get(location.getLocation()).toString()
-					.replaceAll("%player%", player.getName());
-			player.sendMessage(MessageM.replaceAll(CType.TAG(tag) + pMessage,
-					vars));
+			String pMessage = location.config.getFile().get(location.location)
+					.toString().replaceAll("%player%", player.getName());
+			player.sendMessage(MessageM.replaceAll(CType.TAG() + pMessage, vars));
 		}
 	}
 
@@ -71,7 +67,7 @@ public class ArenaHandler {
 					found = true;
 					if (arena.disguiseBlocks.isEmpty()) {
 						MessageM.sendFMessage(player,
-								ConfigC.error_joinNoBlocksSet, true);
+								ConfigC.error_joinNoBlocksSet);
 					} else {
 						LocationSerializable zero = new LocationSerializable(
 								Bukkit.getWorld(player.getWorld().getName()
@@ -84,11 +80,10 @@ public class ArenaHandler {
 								if (arena.gameState == ArenaState.WAITING
 										|| arena.gameState == ArenaState.STARTING) {
 									if (arena.playersInArena.size() >= arena.maxPlayers) {
-										if (!PlayerM.hasPerm(player,
-												PermsC.joinfull, false)) {
+										if (!PermissionsM.hasPerm(player,
+												Permissions.joinfull, false)) {
 											MessageM.sendFMessage(player,
-													ConfigC.error_joinFull,
-													true);
+													ConfigC.error_joinFull);
 											return;
 										}
 									}
@@ -143,8 +138,7 @@ public class ArenaHandler {
 											List<String> lores = W.config
 													.getFile()
 													.getStringList(
-															ConfigC.shop_blockChooserDescription
-																	.getLocation());
+															ConfigC.shop_blockChooserDescription.location);
 											List<String> lores2 = new ArrayList<String>();
 											for (String lore : lores) {
 												lores2.add(MessageM
@@ -180,26 +174,26 @@ public class ArenaHandler {
 									}
 								} else {
 									MessageM.sendFMessage(player,
-											ConfigC.error_joinArenaIngame, true);
+											ConfigC.error_joinArenaIngame);
 								}
 							} else {
 								MessageM.sendFMessage(player,
-										ConfigC.error_joinWarpsNotSet, true);
+										ConfigC.error_joinWarpsNotSet);
 							}
 						} else {
 							MessageM.sendFMessage(player,
-									ConfigC.error_joinWarpsNotSet, true);
+									ConfigC.error_joinWarpsNotSet);
 						}
 					}
 				}
 			}
 		} else {
-			MessageM.sendFMessage(player, ConfigC.error_joinAlreadyJoined, true);
+			MessageM.sendFMessage(player, ConfigC.error_joinAlreadyJoined);
 			return;
 		}
 
 		if (!found) {
-			MessageM.sendFMessage(player, ConfigC.error_noArena, true, "name-"
+			MessageM.sendFMessage(player, ConfigC.error_noArena, "name-"
 					+ arenaname);
 		}
 
@@ -311,7 +305,7 @@ public class ArenaHandler {
 
 			ScoreboardHandler.removeScoreboard(player);
 
-			MessageM.sendFMessage(player, ConfigC.normal_leaveYouLeft, true);
+			MessageM.sendFMessage(player, ConfigC.normal_leaveYouLeft);
 			if (message) {
 				ArenaHandler.sendFMessage(arena, ConfigC.normal_leaveLeftArena,
 						true, "playername-" + player.getName(), "1-"
@@ -320,8 +314,7 @@ public class ArenaHandler {
 			}
 		} else {
 			if (message) {
-				MessageM.sendFMessage(player, ConfigC.error_leaveNotInArena,
-						true);
+				MessageM.sendFMessage(player, ConfigC.error_leaveNotInArena);
 			}
 			return;
 		}
@@ -348,7 +341,7 @@ public class ArenaHandler {
 						playerTokens + arena.seekersTokenWin);
 				W.shop.save();
 
-				MessageM.sendFMessage(player, ConfigC.normal_addedToken, true,
+				MessageM.sendFMessage(player, ConfigC.normal_addedToken,
 						"amount-" + arena.seekersTokenWin);
 			}
 		}
@@ -387,7 +380,7 @@ public class ArenaHandler {
 					W.shop.save();
 
 					MessageM.sendFMessage(player, ConfigC.normal_addedToken,
-							true, "amount-" + arena.hidersTokenWin);
+							"amount-" + arena.hidersTokenWin);
 				}
 			}
 		}

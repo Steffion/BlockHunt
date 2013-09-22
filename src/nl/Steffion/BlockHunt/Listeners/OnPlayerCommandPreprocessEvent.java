@@ -1,8 +1,8 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.entity.Player;
@@ -38,8 +38,7 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 					}
 				}
 
-				MessageM.sendFMessage(player, ConfigC.warning_unableToCommand,
-						true);
+				MessageM.sendFMessage(player, ConfigC.warning_unableToCommand);
 				event.setCancelled(true);
 			}
 		}

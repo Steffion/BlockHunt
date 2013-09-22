@@ -1,9 +1,9 @@
 package nl.Steffion.BlockHunt.Listeners;
 
+import nl.Steffion.BlockHunt.BlockHunt;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.SignsHandler;
-import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.PlayerM;
-import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.entity.Player;
@@ -19,10 +19,12 @@ public class OnSignChangeEvent implements Listener {
 		Player player = event.getPlayer();
 		String[] lines = event.getLines();
 		if (lines[0] != null) {
-			if (lines[0].equalsIgnoreCase("[" + W.pluginName + "]")) {
-				if (PlayerM.hasPerm(player, PermsC.signcreate, true)) {
-					SignsHandler.createSign(event, lines, new LocationSerializable(
-							event.getBlock().getLocation()));
+			if (lines[0].equalsIgnoreCase("[" + BlockHunt.pdfFile.getName()
+					+ "]")) {
+				if (PermissionsM.hasPerm(player, Permissions.signcreate, true)) {
+					SignsHandler.createSign(event, lines,
+							new LocationSerializable(event.getBlock()
+									.getLocation()));
 				}
 			}
 		}

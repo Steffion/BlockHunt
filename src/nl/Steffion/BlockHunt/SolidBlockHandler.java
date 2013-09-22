@@ -2,7 +2,6 @@ package nl.Steffion.BlockHunt;
 
 import java.util.LinkedList;
 
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
@@ -59,6 +58,6 @@ public class SolidBlockHandler {
 			W.dcAPI.disguisePlayer(player, disguise);
 		}
 
-		MessageM.sendFMessage(player, ConfigC.normal_ingameNoMoreSolid, true);
+		MessageM.sendFMessage(player, ConfigC.normal_ingameNoMoreSolid);
 	}
 }
