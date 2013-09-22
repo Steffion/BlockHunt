@@ -246,8 +246,11 @@ public class InventoryHandler {
 	}
 
 	public static void openShop(Player player) {
-		Inventory shop = Bukkit.createInventory(null, 9,
-				MessageM.replaceAll("\u00A7r%H&lBlockHunt %NShop"));
+		Inventory shop = Bukkit.createInventory(
+				null,
+				9,
+				MessageM.replaceAll("\u00A7r"
+						+ W.config.get(ConfigC.shop_title)));
 		if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
 			W.shop.getFile().set(player.getName() + ".tokens", 0);
 			W.shop.save();
