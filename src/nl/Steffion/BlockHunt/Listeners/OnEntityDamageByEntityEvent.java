@@ -101,7 +101,6 @@ public class OnEntityDamageByEntityEvent implements Listener {
 											.sendFMessage(
 													arena,
 													ConfigC.normal_HiderDied,
-													true,
 													"playername-"
 															+ player.getName(),
 													"left-"
@@ -110,7 +109,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 																	.size()));
 								} else {
 									ArenaHandler.sendFMessage(arena,
-											ConfigC.normal_SeekerDied, true,
+											ConfigC.normal_SeekerDied,
 											"playername-" + player.getName(),
 											"secs-" + arena.waitingTimeSeeker);
 								}

@@ -5,9 +5,7 @@ import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
-
 import nl.Steffion.BlockHunt.Managers.MessageM;
-import nl.Steffion.BlockHunt.Managers.MessageM.CType;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
@@ -33,20 +31,19 @@ public class ArenaHandler {
 		}
 	}
 
-	public static void sendMessage(Arena arena, String message, Boolean tag,
-			String... vars) {
+	public static void sendMessage(Arena arena, String message, String... vars) {
 		for (Player player : arena.playersInArena) {
 			String pMessage = message.replaceAll("%player%", player.getName());
-			player.sendMessage(MessageM.replaceAll(CType.TAG() + pMessage, vars));
+			player.sendMessage(MessageM.replaceAll(pMessage, vars));
 		}
 	}
 
-	public static void sendFMessage(Arena arena, ConfigC location, Boolean tag,
+	public static void sendFMessage(Arena arena, ConfigC location,
 			String... vars) {
 		for (Player player : arena.playersInArena) {
 			String pMessage = location.config.getFile().get(location.location)
 					.toString().replaceAll("%player%", player.getName());
-			player.sendMessage(MessageM.replaceAll(CType.TAG() + pMessage, vars));
+			player.sendMessage(MessageM.replaceAll(pMessage, vars));
 		}
 	}
 
@@ -160,7 +157,6 @@ public class ArenaHandler {
 
 									ArenaHandler.sendFMessage(arena,
 											ConfigC.normal_joinJoinedArena,
-											true,
 											"playername-" + player.getName(),
 											"1-" + arena.playersInArena.size(),
 											"2-" + arena.maxPlayers);
@@ -169,7 +165,6 @@ public class ArenaHandler {
 												.sendFMessage(
 														arena,
 														ConfigC.warning_lobbyNeedAtleast,
-														true,
 														"1-" + arena.minPlayers);
 									}
 								} else {
@@ -224,7 +219,7 @@ public class ArenaHandler {
 					arena.timer = 0;
 
 					ArenaHandler.sendFMessage(arena,
-							ConfigC.warning_lobbyNeedAtleast, true, "1-"
+							ConfigC.warning_lobbyNeedAtleast, "1-"
 									+ arena.minPlayers);
 				}
 
@@ -246,10 +241,10 @@ public class ArenaHandler {
 					Player seeker = arena.playersInArena.get(W.random
 							.nextInt(arena.playersInArena.size()));
 					ArenaHandler.sendFMessage(arena,
-							ConfigC.warning_ingameNEWSeekerChoosen, true,
-							"seeker-" + seeker.getName());
+							ConfigC.warning_ingameNEWSeekerChoosen, "seeker-"
+									+ seeker.getName());
 					ArenaHandler.sendFMessage(arena,
-							ConfigC.normal_ingameSeekerChoosen, true, "seeker-"
+							ConfigC.normal_ingameSeekerChoosen, "seeker-"
 									+ seeker.getName());
 					W.dcAPI.undisguisePlayer(seeker);
 					for (Player pl : Bukkit.getOnlinePlayers()) {
@@ -308,7 +303,7 @@ public class ArenaHandler {
 			MessageM.sendFMessage(player, ConfigC.normal_leaveYouLeft);
 			if (message) {
 				ArenaHandler.sendFMessage(arena, ConfigC.normal_leaveLeftArena,
-						true, "playername-" + player.getName(), "1-"
+						"playername-" + player.getName(), "1-"
 								+ arena.playersInArena.size(), "2-"
 								+ arena.maxPlayers);
 			}
@@ -323,7 +318,7 @@ public class ArenaHandler {
 	}
 
 	public static void seekersWin(Arena arena) {
-		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers, true);
+		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
 		for (Player player : arena.playersInArena) {
 			if (arena.seekersWinCommands != null) {
 				for (String command : arena.seekersWinCommands) {
@@ -359,7 +354,7 @@ public class ArenaHandler {
 	}
 
 	public static void hidersWin(Arena arena) {
-		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders, true);
+		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
 		for (Player player : arena.playersInArena) {
 			if (!arena.seekers.contains(player)) {
 				if (arena.hidersWinCommands != null) {
@@ -398,7 +393,7 @@ public class ArenaHandler {
 	}
 
 	public static void stopArena(Arena arena) {
-		ArenaHandler.sendFMessage(arena, ConfigC.warning_arenaStopped, true);
+		ArenaHandler.sendFMessage(arena, ConfigC.warning_arenaStopped);
 
 		arena.seekers.clear();
 
