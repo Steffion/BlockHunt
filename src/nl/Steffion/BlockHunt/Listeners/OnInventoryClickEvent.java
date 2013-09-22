@@ -75,13 +75,13 @@ public class OnInventoryClickEvent implements Listener {
 							W.shop.save();
 							MessageM.sendFMessage(
 									player,
-									ConfigC.normal_ShopBoughtItem,
+									ConfigC.normal_shopBoughtItem,
 									"itemname-"
 											+ W.config
 													.get(ConfigC.shop_blockChooserName));
 						} else {
 							MessageM.sendFMessage(player,
-									ConfigC.error_ShopNeedMoreTokens);
+									ConfigC.error_shopNeedMoreTokens);
 						}
 					}
 
@@ -93,7 +93,7 @@ public class OnInventoryClickEvent implements Listener {
 					if (event.getCurrentItem().getType() != Material.AIR) {
 						W.choosenBlock.put(player, event.getCurrentItem());
 						MessageM.sendFMessage(player,
-								ConfigC.normal_ShopChoosenBlock, "block-"
+								ConfigC.normal_shopChoosenBlock, "block-"
 										+ event.getCurrentItem().getType()
 												.toString().replaceAll("_", "")
 												.replaceAll("BLOCK", "")

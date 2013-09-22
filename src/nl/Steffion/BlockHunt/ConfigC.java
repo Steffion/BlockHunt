@@ -36,6 +36,7 @@ public enum ConfigC {
 	commandEnabled_set (true, W.config),
 	commandEnabled_setwarp (true, W.config),
 	commandEnabled_remove (true, W.config),
+	commandEnabled_tokens (true, W.config),
 
 	autoUpdateCheck (true, W.config),
 	autoDownloadUpdate (false, W.config),
@@ -109,6 +110,7 @@ public enum ConfigC {
 	help_set ("%NOpens a panel to set settings.", W.messages),
 	help_setwarp ("%NSets warps for your arena.", W.messages),
 	help_remove ("%NDeletes an Arena.", W.messages),
+	help_tokens ("%NChange someones tokens.", W.messages),
 
 	button_add ("%NAdd %A%1%%N to %A%2%%N", W.messages),
 	button_add2 ("Add", W.messages),
@@ -153,13 +155,15 @@ public enum ConfigC {
 	normal_addedToken ("%TAG%A%amount%%N tokens were added to your account!",
 			W.messages),
 	normal_removeRemovedArena ("%TAG%NRemoved arena '%A%name%%N'!", W.messages),
+	normal_tokensChanged ("%TAG%N%option% %A%amount%%N tokens %option2% %A%playername%%N.",
+			W.messages),
 	normal_ingameNowSolid ("%TAG%NYou're now a solid '%A%block%%N' block!",
 			W.messages),
 	normal_ingameNoMoreSolid ("%TAG%NYou're no longer a solid block!",
 			W.messages),
-	normal_ShopBoughtItem ("%TAG%NYou've bought the '%A%itemname%%N' item!",
+	normal_shopBoughtItem ("%TAG%NYou've bought the '%A%itemname%%N' item!",
 			W.messages),
-	normal_ShopChoosenBlock ("%TAG%NYou've choosen to be a(n) '%A%block%%N' block!",
+	normal_shopChoosenBlock ("%TAG%NYou've choosen to be a(n) '%A%block%%N' block!",
 			W.messages),
 
 	warning_lobbyNeedAtleast ("%TAG%WYou need atleast %A%1%%W player(s) to start the game!",
@@ -175,12 +179,13 @@ public enum ConfigC {
 
 	error_noPermission ("%TAG%EYou don't have the permissions to do that!",
 			W.messages),
+	error_notANumber ("%TAG%E'%A%1%%E' is not a number!", W.messages),
 	error_commandNotEnabled ("%TAG%EThis command has been disabled!",
 			W.messages),
 	error_commandNotFound ("%TAG%ECouldn't find the command. Try %A/"
 			+ BlockHunt.pdfFile.getName() + " help %Efor more info.",
 			W.messages),
-	error_notEnoughArguments ("%TAG%EYou're missing arguments, correct syntax: %A/%syntax%",
+	error_notEnoughArguments ("%TAG%EYou're missing arguments, correct syntax: %A%syntax%",
 			W.messages),
 	error_disguiseCraftNotInstalled ("%TAG%EThe plugin '%ADisguiseCraft%E' is required to run this plugin! Intall it or it won't work!",
 			W.messages),
@@ -210,7 +215,11 @@ public enum ConfigC {
 	error_setNotABlock ("%TAG%EThat is not a block!", W.messages),
 	error_setwarpWarpNotFound ("%TAG%EWarp '%A%warp%%E' is not valid!",
 			W.messages),
-	error_ShopNeedMoreTokens ("%TAG%EYou need more tokens before you can buy this item.",
+	error_tokensPlayerNotOnline ("%TAG%ENo player found with the name '%A%playername%%E'!",
+			W.messages),
+	error_tokensUnknownsetting ("%TAG%E'%A%option%%E' is not a known option!",
+			W.messages),
+	error_shopNeedMoreTokens ("%TAG%EYou need more tokens before you can buy this item.",
 			W.messages);
 
 	public Object value;

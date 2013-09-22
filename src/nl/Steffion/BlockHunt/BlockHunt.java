@@ -21,6 +21,7 @@ import nl.Steffion.BlockHunt.Commands.CMDsetwarp;
 import nl.Steffion.BlockHunt.Commands.CMDshop;
 import nl.Steffion.BlockHunt.Commands.CMDstart;
 import nl.Steffion.BlockHunt.Commands.CMDwand;
+import nl.Steffion.BlockHunt.Commands.CMDtokens;
 import nl.Steffion.BlockHunt.Listeners.OnBlockBreakEvent;
 import nl.Steffion.BlockHunt.Listeners.OnBlockPlaceEvent;
 import nl.Steffion.BlockHunt.Listeners.OnEntityDamageByEntityEvent;
@@ -95,6 +96,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			add("set");
 			add("setwarp");
 			add("remove");
+			add("tokens");
 		}
 	};
 
@@ -112,6 +114,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	public static CommandM CMDset;
 	public static CommandM CMDsetwarp;
 	public static CommandM CMDremove;
+	public static CommandM CMDtokens;
 
 	public void onEnable() {
 
@@ -213,6 +216,11 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				(Boolean) W.config.get(ConfigC.commandEnabled_remove),
 				BlockHuntCMD, new CMDremove(),
 				"/BlockHunt <remove|delete> <arenaname>");
+		CMDtokens = new CommandM("BlockHunt TOKENS", "BlockHunt", "tokens",
+				"t", Permissions.tokens, ConfigC.help_tokens,
+				(Boolean) W.config.get(ConfigC.commandEnabled_tokens),
+				BlockHuntCMD, new CMDtokens(),
+				"/BlockHunt <tokens|t> <set|add|take> <playername> <amount>");
 
 		if (!getServer().getPluginManager().isPluginEnabled("DisguiseCraft")) {
 			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled);

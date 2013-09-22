@@ -13,8 +13,7 @@ public class PermissionsC {
 	 * @author Steffion
 	 */
 
-	public static String main = BlockHunt.pdfFile.getName().toLowerCase()
-			+ ".";
+	public static String main = BlockHunt.pdfFile.getName().toLowerCase() + ".";
 
 	public enum PType {
 		ALL, PLAYER, MODERATOR, ADMIN, OP;
@@ -35,7 +34,8 @@ public class PermissionsC {
 		set (main + "set", PType.MODERATOR),
 		setwarp (main + "setwarp", PType.MODERATOR),
 		signcreate (main + "signcreate", PType.MODERATOR),
-		remove (main + "remove", PType.ADMIN);
+		remove (main + "remove", PType.ADMIN),
+		tokens (main + "tokens", PType.ADMIN);
 
 		public String perm;
 		public PType type;
