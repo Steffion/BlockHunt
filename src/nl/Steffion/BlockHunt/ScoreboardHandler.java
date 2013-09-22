@@ -20,7 +20,8 @@ public class ScoreboardHandler {
 
 		Objective object = board.registerNewObjective(arena.arenaName, "dummy");
 		object.setDisplaySlot(DisplaySlot.SIDEBAR);
-		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()));
+		object.setDisplayName(MessageM.replaceAll((String) W.config
+				.get(ConfigC.scoreboard_title)));
 		Score timeleft = object
 				.getScore(Bukkit.getOfflinePlayer(MessageM
 						.replaceAll((String) W.config
@@ -49,7 +50,8 @@ public class ScoreboardHandler {
 	public static void updateScoreboard(Arena arena) {
 		Scoreboard board = arena.scoreboard;
 		Objective object = board.getObjective(DisplaySlot.SIDEBAR);
-		object.setDisplayName(MessageM.replaceAll(MessageM.CType.TAG()));
+		object.setDisplayName(MessageM.replaceAll((String) W.config
+				.get(ConfigC.scoreboard_title)));
 		Score timeleft = object
 				.getScore(Bukkit.getOfflinePlayer(MessageM
 						.replaceAll((String) W.config
