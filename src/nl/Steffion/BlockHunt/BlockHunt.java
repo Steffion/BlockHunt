@@ -271,8 +271,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							arena.gameState = ArenaState.STARTING;
 							arena.timer = arena.timeInLobbyUntilStart;
 							ArenaHandler.sendFMessage(arena,
-									ConfigC.normal_lobbyArenaIsStarting, true,
-									"1-" + arena.timeInLobbyUntilStart);
+									ConfigC.normal_lobbyArenaIsStarting, "1-"
+											+ arena.timeInLobbyUntilStart);
 						}
 					} else if (arena.gameState == ArenaState.STARTING) {
 						arena.timer = arena.timer - 1;
@@ -280,57 +280,57 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							if (arena.timer == 60) {
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-60");
+										"1-60");
 							} else if (arena.timer == 30) {
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-30");
+										"1-30");
 							} else if (arena.timer == 10) {
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-10");
+										"1-10");
 							} else if (arena.timer == 5) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-5");
+										"1-5");
 							} else if (arena.timer == 4) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-4");
+										"1-4");
 							} else if (arena.timer == 3) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-3");
+										"1-3");
 							} else if (arena.timer == 2) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-2");
+										"1-2");
 							} else if (arena.timer == 1) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 2);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
-										true, "1-1");
+										"1-1");
 							}
 						} else {
 							arena.gameState = ArenaState.INGAME;
 							arena.timer = arena.gameTime;
 							ArenaHandler.sendFMessage(arena,
-									ConfigC.normal_lobbyArenaStarted, true,
-									"secs-" + arena.waitingTimeSeeker);
+									ConfigC.normal_lobbyArenaStarted, "secs-"
+											+ arena.waitingTimeSeeker);
 
 							for (int i = arena.amountSeekersOnStart; i > 0; i = i - 1) {
 								Player seeker = arena.playersInArena
@@ -340,7 +340,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 								if (!arena.seekers.contains(seeker)) {
 									ArenaHandler.sendFMessage(arena,
 											ConfigC.normal_ingameSeekerChoosen,
-											true, "seeker-" + seeker.getName());
+											"seeker-" + seeker.getName());
 									arena.seekers.add(seeker);
 									seeker.teleport(arena.seekersWarp);
 									W.seekertime.put(seeker,
@@ -471,55 +471,46 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							}
 							if (arena.timer == 190) {
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-190");
+										ConfigC.normal_ingameArenaEnd, "1-190");
 							} else if (arena.timer == 60) {
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-60");
+										ConfigC.normal_ingameArenaEnd, "1-60");
 							} else if (arena.timer == 30) {
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-30");
+										ConfigC.normal_ingameArenaEnd, "1-30");
 							} else if (arena.timer == 10) {
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-10");
+										ConfigC.normal_ingameArenaEnd, "1-10");
 							} else if (arena.timer == 5) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-5");
+										ConfigC.normal_ingameArenaEnd, "1-5");
 							} else if (arena.timer == 4) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-4");
+										ConfigC.normal_ingameArenaEnd, "1-4");
 							} else if (arena.timer == 3) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-3");
+										ConfigC.normal_ingameArenaEnd, "1-3");
 							} else if (arena.timer == 2) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-2");
+										ConfigC.normal_ingameArenaEnd, "1-2");
 							} else if (arena.timer == 1) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
 												Sound.ORB_PICKUP, 1, 2);
 								ArenaHandler.sendFMessage(arena,
-										ConfigC.normal_ingameArenaEnd, true,
-										"1-1");
+										ConfigC.normal_ingameArenaEnd, "1-1");
 							}
 						} else {
 							ArenaHandler.hidersWin(arena);
