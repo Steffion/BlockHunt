@@ -56,7 +56,7 @@ public class LocationSerializable extends Location implements
 			MessageM.sendMessage(
 					null,
 					"%EError deserializing LocationSerializable - world not found! (%A%w%%E)",
-					true, "w-" + w);
+					"w-" + w);
 			return null;
 		}
 		return new LocationSerializable(w, (Double) M.g(map, "x", 0D),

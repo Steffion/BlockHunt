@@ -2,7 +2,6 @@ package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
@@ -57,7 +56,7 @@ public class SignsHandler {
 
 				if (!saved) {
 					MessageM.sendFMessage(event.getPlayer(),
-							ConfigC.error_noArena, true, "name-" + lines[1]);
+							ConfigC.error_noArena, "name-" + lines[1]);
 				}
 			}
 		}
@@ -101,8 +100,7 @@ public class SignsHandler {
 				String[] lines = signblock.getLines();
 				if (sign.contains("leave")) {
 					ArrayList<String> signLines = (ArrayList<String>) W.config
-							.getFile()
-							.getList(ConfigC.sign_LEAVE.getLocation());
+							.getFile().getList(ConfigC.sign_LEAVE.location);
 					int linecount = 0;
 					for (String line : signLines) {
 						if (linecount <= 3) {
@@ -119,8 +117,7 @@ public class SignsHandler {
 							if (arena.gameState.equals(ArenaState.WAITING)) {
 								ArrayList<String> signLines = (ArrayList<String>) W.config
 										.getFile().getList(
-												ConfigC.sign_WAITING
-														.getLocation());
+												ConfigC.sign_WAITING.location);
 								int linecount = 0;
 								if (signLines != null) {
 									for (String line : signLines) {
@@ -149,8 +146,7 @@ public class SignsHandler {
 									.equals(ArenaState.STARTING)) {
 								ArrayList<String> signLines = (ArrayList<String>) W.config
 										.getFile().getList(
-												ConfigC.sign_STARTING
-														.getLocation());
+												ConfigC.sign_STARTING.location);
 								int linecount = 0;
 								if (signLines != null) {
 									for (String line : signLines) {
@@ -179,8 +175,7 @@ public class SignsHandler {
 									.equals(ArenaState.INGAME)) {
 								ArrayList<String> signLines = (ArrayList<String>) W.config
 										.getFile().getList(
-												ConfigC.sign_INGAME
-														.getLocation());
+												ConfigC.sign_INGAME.location);
 								int linecount = 0;
 								if (signLines != null) {
 									for (String line : signLines) {

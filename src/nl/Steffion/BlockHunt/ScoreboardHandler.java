@@ -1,7 +1,6 @@
 package nl.Steffion.BlockHunt;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;

@@ -1,9 +1,10 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.PlayerM;
-import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,7 +26,7 @@ public class OnBlockBreakEvent implements Listener {
 
 		if (event.getBlock().equals(Material.SIGN_POST)
 				|| event.getBlock().equals(Material.WALL_SIGN)) {
-			if (!PlayerM.hasPerm(player, PermsC.signcreate, true)) {
+			if (!PermissionsM.hasPerm(player, Permissions.signcreate, true)) {
 				event.setCancelled(true);
 			}
 		}

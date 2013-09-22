@@ -3,13 +3,13 @@ package nl.Steffion.BlockHunt.Listeners;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
+import nl.Steffion.BlockHunt.ConfigC;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.SignsHandler;
 import nl.Steffion.BlockHunt.SolidBlockHandler;
 import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
-import nl.Steffion.BlockHunt.Managers.PlayerM;
-import nl.Steffion.BlockHunt.Managers.PlayerM.PermsC;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.Bukkit;
@@ -33,7 +33,7 @@ public class OnPlayerInteractEvent implements Listener {
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
-		if (PlayerM.hasPerm(player, PermsC.create, false)) {
+		if (PermissionsM.hasPerm(player, Permissions.create, false)) {
 			ItemStack item = player.getItemInHand();
 			if (item.getType() != Material.AIR) {
 				if (item.getItemMeta().hasDisplayName()) {
@@ -52,7 +52,6 @@ public class OnPlayerInteractEvent implements Listener {
 									MessageM.sendFMessage(
 											player,
 											ConfigC.normal_wandSetPosition,
-											true,
 											"number-1",
 											"pos-%N(%A" + location.getX()
 													+ "%N, %A"
@@ -71,7 +70,6 @@ public class OnPlayerInteractEvent implements Listener {
 									MessageM.sendFMessage(
 											player,
 											ConfigC.normal_wandSetPosition,
-											true,
 											"number-2",
 											"pos-%N(%A" + location.getX()
 													+ "%N, %A"
@@ -100,15 +98,15 @@ public class OnPlayerInteractEvent implements Listener {
 							.getClickedBlock().getLocation()))) {
 						Sign sign = (Sign) event.getClickedBlock().getState();
 						if (sign.getLine(1) != null) {
-							if (sign.getLine(1).equals(
-									MessageM.replaceAll(W.config
-											.getFile()
-											.getStringList(
-													ConfigC.sign_LEAVE
-															.getLocation())
-											.get(1)))) {
-								if (PlayerM.hasPerm(player, PermsC.joinsign,
-										true)) {
+							if (sign.getLine(1)
+									.equals(MessageM
+											.replaceAll(W.config
+													.getFile()
+													.getStringList(
+															ConfigC.sign_LEAVE.location)
+													.get(1)))) {
+								if (PermissionsM.hasPerm(player,
+										Permissions.joinsign, true)) {
 									ArenaHandler.playerLeaveArena(player, true,
 											true);
 								}
@@ -116,8 +114,8 @@ public class OnPlayerInteractEvent implements Listener {
 								for (Arena arena : W.arenaList) {
 									if (sign.getLines()[1]
 											.contains(arena.arenaName)) {
-										if (PlayerM.hasPerm(player,
-												PermsC.joinsign, true)) {
+										if (PermissionsM.hasPerm(player,
+												Permissions.joinsign, true)) {
 											ArenaHandler.playerJoinArena(
 													player, arena.arenaName);
 										}

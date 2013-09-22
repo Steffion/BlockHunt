@@ -3,8 +3,8 @@ package nl.Steffion.BlockHunt.Listeners;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
+import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.W;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.GameMode;
@@ -74,7 +74,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 									W.shop.save();
 
 									MessageM.sendFMessage(damager,
-											ConfigC.normal_addedToken, true,
+											ConfigC.normal_addedToken,
 											"amount-" + arena.killTokens);
 
 									if (W.shop.getFile().get(
@@ -93,7 +93,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 									W.shop.save();
 
 									MessageM.sendFMessage(player,
-											ConfigC.normal_addedToken, true,
+											ConfigC.normal_addedToken,
 											"amount-" + (int) addingTokens);
 
 									arena.seekers.add(player);

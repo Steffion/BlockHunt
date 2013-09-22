@@ -201,11 +201,11 @@ public class Updater {
 			url = new URL(DBOUrl + slug + "/files.rss");
 		} catch (MalformedURLException ex) {
 			// Invalid slug
-			MessageM.sendMessage(null, "%WThe author of this plugin ("
+			MessageM.sendMessage(null, "%TAG%WThe author of this plugin ("
 					+ plugin.getDescription().getAuthors().get(0)
-					+ ") has misconfigured their Auto Update system", true);
-			MessageM.sendMessage(null, "%WThe project slug given ('" + slug
-					+ "') is invalid. Please nag the author about this.", true);
+					+ ") has misconfigured their Auto Update system");
+			MessageM.sendMessage(null, "%TAG%WThe project slug given ('" + slug
+					+ "') is invalid. Please nag the author about this.");
 			result = Updater.UpdateResult.FAIL_BADSLUG; // Bad slug! Bad!
 		}
 		thread = new Thread(new UpdateRunnable());
@@ -271,16 +271,16 @@ public class Updater {
 			byte[] data = new byte[BYTE_SIZE];
 			int count;
 			if (announce)
-				MessageM.sendMessage(null, "%NAbout to download a new update: "
-						+ versionTitle, true);
+				MessageM.sendMessage(null,
+						"%TAG%NAbout to download a new update: " + versionTitle);
 			long downloaded = 0;
 			while ((count = in.read(data, 0, BYTE_SIZE)) != -1) {
 				downloaded += count;
 				fout.write(data, 0, count);
 				int percent = (int) (downloaded * 100 / fileLength);
 				if (announce & (percent % 10 == 0)) {
-					MessageM.sendMessage(null, "%NDownloading update: "
-							+ percent + "% of " + fileLength + " bytes.", true);
+					MessageM.sendMessage(null, "%TAG%NDownloading update: "
+							+ percent + "% of " + fileLength + " bytes.");
 				}
 			}
 			// Just a quick check to make sure we didn't leave any files from
@@ -297,12 +297,10 @@ public class Updater {
 				unzip(dFile.getCanonicalPath());
 			}
 			if (announce)
-				MessageM.sendMessage(null, "%NFinished updating.", true);
+				MessageM.sendMessage(null, "%TAG%NFinished updating.");
 		} catch (Exception ex) {
-			MessageM.sendMessage(
-					null,
-					"%WThe auto-updater tried to download a new update, but was unsuccessful.",
-					true);
+			MessageM.sendMessage(null,
+					"%TAG%WThe auto-updater tried to download a new update, but was unsuccessful.");
 			result = Updater.UpdateResult.FAIL_DOWNLOAD;
 		} finally {
 			try {
@@ -405,8 +403,7 @@ public class Updater {
 			ex.printStackTrace();
 			MessageM.sendMessage(
 					null,
-					"%WThe auto-updater tried to unzip a new update file, but was unsuccessful.",
-					true);
+					"%TAG%WThe auto-updater tried to unzip a new update file, but was unsuccessful.");
 			result = Updater.UpdateResult.FAIL_DOWNLOAD;
 		}
 		new File(file).delete();
@@ -465,10 +462,8 @@ public class Updater {
 			buff = null;
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			MessageM.sendMessage(
-					null,
-					"%WThe auto-updater tried to contact dev.bukkit.org, but was unsuccessful.",
-					true);
+			MessageM.sendMessage(null,
+					"%TAG%WThe auto-updater tried to contact dev.bukkit.org, but was unsuccessful.");
 			result = Updater.UpdateResult.FAIL_DBO;
 			return null;
 		}
@@ -505,13 +500,12 @@ public class Updater {
 				}
 			} else {
 				// The file's name did not contain the string 'vVersion'
-				MessageM.sendMessage(null, "%WThe author of this plugin ("
+				MessageM.sendMessage(null, "%TAG%WThe author of this plugin ("
 						+ plugin.getDescription().getAuthors().get(0)
-						+ ") has misconfigured their Auto Update system", true);
+						+ ") has misconfigured their Auto Update system");
 				MessageM.sendMessage(
 						null,
-						"%WFiles uploaded to BukkitDev should contain the version number, seperated from the name by a 'v', such as PluginName v1.0",
-						true);
+						"%TAG%WFiles uploaded to BukkitDev should contain the version number, seperated from the name by a 'v', such as PluginName v1.0");
 				result = Updater.UpdateResult.FAIL_NOVERSION;
 				return false;
 			}
@@ -598,10 +592,8 @@ public class Updater {
 				return false;
 			}
 		} catch (XMLStreamException e) {
-			MessageM.sendMessage(
-					null,
-					"%WCould not reach dev.bukkit.org for update checking. Is it offline?",
-					true);
+			MessageM.sendMessage(null,
+					"%TAG%WCould not reach dev.bukkit.org for update checking. Is it offline?");
 			return false;
 		}
 	}
@@ -615,8 +607,7 @@ public class Updater {
 		} catch (IOException e) {
 			MessageM.sendMessage(
 					null,
-					"%WCould not reach BukkitDev file stream for update checking. Is dev.bukkit.org offline?",
-					true);
+					"%TAG%WCould not reach BukkitDev file stream for update checking. Is dev.bukkit.org offline?");
 			return null;
 		}
 	}

@@ -1,9 +1,26 @@
 package nl.Steffion.BlockHunt;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
+import nl.Steffion.BlockHunt.Commands.CMDcreate;
+import nl.Steffion.BlockHunt.Commands.CMDhelp;
+import nl.Steffion.BlockHunt.Commands.CMDinfo;
+import nl.Steffion.BlockHunt.Commands.CMDjoin;
+import nl.Steffion.BlockHunt.Commands.CMDleave;
+import nl.Steffion.BlockHunt.Commands.CMDlist;
+import nl.Steffion.BlockHunt.Commands.CMDnotfound;
+import nl.Steffion.BlockHunt.Commands.CMDreload;
+import nl.Steffion.BlockHunt.Commands.CMDremove;
+import nl.Steffion.BlockHunt.Commands.CMDset;
+import nl.Steffion.BlockHunt.Commands.CMDsetwarp;
+import nl.Steffion.BlockHunt.Commands.CMDshop;
+import nl.Steffion.BlockHunt.Commands.CMDstart;
+import nl.Steffion.BlockHunt.Commands.CMDwand;
 import nl.Steffion.BlockHunt.Listeners.OnBlockBreakEvent;
 import nl.Steffion.BlockHunt.Listeners.OnBlockPlaceEvent;
 import nl.Steffion.BlockHunt.Listeners.OnEntityDamageByEntityEvent;
@@ -17,9 +34,10 @@ import nl.Steffion.BlockHunt.Listeners.OnPlayerInteractEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerMoveEvent;
 import nl.Steffion.BlockHunt.Listeners.OnPlayerQuitEvent;
 import nl.Steffion.BlockHunt.Listeners.OnSignChangeEvent;
-import nl.Steffion.BlockHunt.Managers.CommandC;
-import nl.Steffion.BlockHunt.Managers.ConfigC;
+import nl.Steffion.BlockHunt.Managers.CommandM;
+import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
 import org.bukkit.Bukkit;
@@ -38,6 +56,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
@@ -46,9 +65,53 @@ import pgDev.bukkit.DisguiseCraft.disguise.Disguise;
 import pgDev.bukkit.DisguiseCraft.disguise.DisguiseType;
 
 public class BlockHunt extends JavaPlugin implements Listener {
-	/*
-	 * Made by @author Steffion, © 2013.
+	/**
+	 * Steffion's Engine - Made by Steffion.
+	 * 
+	 * You're allowed to use this engine for own usage, you're not allowed to
+	 * republish the engine. Using this for your own plugin is allowed when a
+	 * credit is placed somewhere in the plugin.
+	 * 
+	 * Thanks for your cooperate!
+	 * 
+	 * @author Steffion
 	 */
+
+	public static PluginDescriptionFile pdfFile;
+
+	@SuppressWarnings("serial")
+	public static List<String> BlockHuntCMD = new ArrayList<String>() {
+		{
+			add("info");
+			add("help");
+			add("reload");
+			add("join");
+			add("leave");
+			add("list");
+			add("shop");
+			add("start");
+			add("wand");
+			add("create");
+			add("set");
+			add("setwarp");
+			add("remove");
+		}
+	};
+
+	public static CommandM CMD;
+	public static CommandM CMDinfo;
+	public static CommandM CMDhelp;
+	public static CommandM CMDreload;
+	public static CommandM CMDjoin;
+	public static CommandM CMDleave;
+	public static CommandM CMDlist;
+	public static CommandM CMDshop;
+	public static CommandM CMDstart;
+	public static CommandM CMDwand;
+	public static CommandM CMDcreate;
+	public static CommandM CMDset;
+	public static CommandM CMDsetwarp;
+	public static CommandM CMDremove;
 
 	public void onEnable() {
 
@@ -85,16 +148,78 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				"BlockHuntLocation");
 		ConfigurationSerialization.registerClass(Arena.class, "BlockHuntArena");
 
-		W.newFiles();
+		pdfFile = getDescription();
+
+		ConfigM.newFiles();
+
+		CMD = new CommandM("BlockHunt", "BlockHunt", null, null,
+				Permissions.info, ConfigC.help_info,
+				(Boolean) W.config.get(ConfigC.commandEnabled_info),
+				BlockHuntCMD, new CMDinfo(), null);
+		CMDinfo = new CommandM("BlockHunt INFO", "BlockHunt", "info", "i",
+				Permissions.info, ConfigC.help_info,
+				(Boolean) W.config.get(ConfigC.commandEnabled_info),
+				BlockHuntCMD, new CMDinfo(), "/BlockHunt [info|i]");
+		CMDhelp = new CommandM("BlockHunt HELP", "BlockHunt", "help", "h",
+				Permissions.help, ConfigC.help_help,
+				(Boolean) W.config.get(ConfigC.commandEnabled_help),
+				BlockHuntCMD, new CMDhelp(),
+				"/BlockHunt <help|h> [page number]");
+		CMDreload = new CommandM("BlockHunt RELOAD", "BlockHunt", "reload",
+				"r", Permissions.reload, ConfigC.help_reload,
+				(Boolean) W.config.get(ConfigC.commandEnabled_reload),
+				BlockHuntCMD, new CMDreload(), "/BlockHunt <reload|r>");
+		CMDjoin = new CommandM("BlockHunt JOIN", "BlockHunt", "join", "j",
+				Permissions.join, ConfigC.help_join,
+				(Boolean) W.config.get(ConfigC.commandEnabled_join),
+				BlockHuntCMD, new CMDjoin(), "/BlockHunt <join|j> <arenaname>");
+		CMDleave = new CommandM("BlockHunt LEAVE", "BlockHunt", "leave", "l",
+				Permissions.leave, ConfigC.help_leave,
+				(Boolean) W.config.get(ConfigC.commandEnabled_leave),
+				BlockHuntCMD, new CMDleave(), "/BlockHunt <leave|l>");
+		CMDlist = new CommandM("BlockHunt LIST", "BlockHunt", "list", "li",
+				Permissions.list, ConfigC.help_list,
+				(Boolean) W.config.get(ConfigC.commandEnabled_list),
+				BlockHuntCMD, new CMDlist(), "/BlockHunt <list|li>");
+		CMDshop = new CommandM("BlockHunt SHOP", "BlockHunt", "shop", "sh",
+				Permissions.shop, ConfigC.help_shop,
+				(Boolean) W.config.get(ConfigC.commandEnabled_shop),
+				BlockHuntCMD, new CMDshop(), "/BlockHunt <shop|sh>");
+		CMDstart = new CommandM("BlockHunt START", "BlockHunt", "start", "go",
+				Permissions.start, ConfigC.help_start,
+				(Boolean) W.config.get(ConfigC.commandEnabled_start),
+				BlockHuntCMD, new CMDstart(),
+				"/BlockHunt <start|st> <arenaname>");
+		CMDwand = new CommandM("BlockHunt WAND", "BlockHunt", "wand", "w",
+				Permissions.create, ConfigC.help_wand,
+				(Boolean) W.config.get(ConfigC.commandEnabled_wand),
+				BlockHuntCMD, new CMDwand(), "/BlockHunt <wand|w>");
+		CMDcreate = new CommandM("BlockHunt CREATE", "BlockHunt", "create",
+				"c", Permissions.create, ConfigC.help_create,
+				(Boolean) W.config.get(ConfigC.commandEnabled_create),
+				BlockHuntCMD, new CMDcreate(),
+				"/BlockHunt <create|c> <arenaname>");
+		CMDset = new CommandM("BlockHunt SET", "BlockHunt", "set", "s",
+				Permissions.set, ConfigC.help_set,
+				(Boolean) W.config.get(ConfigC.commandEnabled_set),
+				BlockHuntCMD, new CMDset(), "/BlockHunt <set|s> <arenaname>");
+		CMDsetwarp = new CommandM("BlockHunt SETWARP", "BlockHunt", "setwarp",
+				"sw", Permissions.setwarp, ConfigC.help_setwarp,
+				(Boolean) W.config.get(ConfigC.commandEnabled_setwarp),
+				BlockHuntCMD, new CMDsetwarp(),
+				"/BlockHunt <setwarp|sw> <lobby|hiders|seekers> <arenaname>");
+		CMDremove = new CommandM("BlockHunt REMOVE", "BlockHunt", "remove",
+				"delete", Permissions.remove, ConfigC.help_remove,
+				(Boolean) W.config.get(ConfigC.commandEnabled_remove),
+				BlockHuntCMD, new CMDremove(),
+				"/BlockHunt <remove|delete> <arenaname>");
 
 		if (!getServer().getPluginManager().isPluginEnabled("DisguiseCraft")) {
-			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled,
-					true);
+			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled);
 		}
 
 		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
-			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled,
-					true);
+			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled);
 		}
 
 		W.dcAPI = DisguiseCraft.getAPI();
@@ -108,38 +233,33 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			metrics_fc.load(metrics.getConfigFile());
 			if (!metrics_fc.getBoolean("opt-out", false)) {
 				MessageM.sendMessage(null,
-						"%NSending %AMCStats %Nto their server.", true);
+						"%TAG%NSending %AMCStats %Nto their server.");
 			} else {
-				MessageM.sendMessage(
-						null,
-						"%EUnable to send %AMCStats %Eto their server. %AMCStats%E is disabled?",
-						true);
+				MessageM.sendMessage(null,
+						"%TAG%EUnable to send %AMCStats %Eto their server. %AMCStats%E is disabled?");
 			}
 		} catch (IOException e) {
-			MessageM.sendMessage(
-					null,
-					"%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!",
-					true);
+			MessageM.sendMessage(null,
+					"%TAG%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!");
 		} catch (InvalidConfigurationException e) {
-			MessageM.sendMessage(
-					null,
-					"%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!",
-					true);
+			MessageM.sendMessage(null,
+					"%TAG%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!");
 		}
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
-				new Updater(this, W.pluginName, this.getFile(),
+				new Updater(this, pdfFile.getName(), this.getFile(),
 						Updater.UpdateType.DEFAULT, true);
 			} else {
-				new Updater(this, W.pluginName, this.getFile(),
+				new Updater(this, pdfFile.getName(), this.getFile(),
 						Updater.UpdateType.NO_DOWNLOAD, true);
 			}
 		}
 
-		MessageM.sendFMessage(null, ConfigC.log_Enabled, true, "name-"
-				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
-				+ W.pluginAutors);
+		MessageM.sendFMessage(null, ConfigC.log_enabledPlugin, "name-"
+				+ BlockHunt.pdfFile.getName(),
+				"version-" + BlockHunt.pdfFile.getVersion(), "autors-"
+						+ BlockHunt.pdfFile.getAuthors().get(0));
 
 		getServer().getScheduler().runTaskTimer(this, new Runnable() {
 			@SuppressWarnings("deprecation")
@@ -274,7 +394,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										MessageM.sendFMessage(
 												arenaPlayer,
 												ConfigC.normal_ingameBlock,
-												true,
 												"block-"
 														+ block.getType()
 																.name()
@@ -290,7 +409,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										MessageM.sendFMessage(
 												arenaPlayer,
 												ConfigC.normal_ingameBlock,
-												true,
 												"block-"
 														+ block.getType()
 																.name()
@@ -346,10 +464,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									if (!arena.seekers.contains(arenaPlayer)) {
 										arenaPlayer.getInventory().addItem(
 												sword);
-										MessageM.sendFMessage(
-												arenaPlayer,
-												ConfigC.normal_ingameGivenSword,
-												true);
+										MessageM.sendFMessage(arenaPlayer,
+												ConfigC.normal_ingameGivenSword);
 									}
 								}
 							}
@@ -478,7 +594,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 														MessageM.sendFMessage(
 																player,
 																ConfigC.normal_ingameNowSolid,
-																true,
 																"block-"
 																		+ block.getType()
 																				.name()
@@ -495,7 +610,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 														MessageM.sendFMessage(
 																player,
 																ConfigC.normal_ingameNowSolid,
-																true,
 																"block-"
 																		+ block.getType()
 																				.name()
@@ -522,8 +636,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 											} else {
 												MessageM.sendFMessage(
 														player,
-														ConfigC.warning_ingameNoSolidPlace,
-														true);
+														ConfigC.warning_ingameNoSolidPlace);
 											}
 										}
 									} else {
@@ -556,19 +669,23 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			ArenaHandler.stopArena(arena);
 		}
 
-		MessageM.sendFMessage(null, ConfigC.log_Disabled, true, "name-"
-				+ W.pluginName, "version-" + W.pluginVersion, "autors-"
-				+ W.pluginAutors);
+		MessageM.sendFMessage(null, ConfigC.log_disabledPlugin, "name-"
+				+ BlockHunt.pdfFile.getName(),
+				"version-" + BlockHunt.pdfFile.getVersion(), "autors-"
+						+ BlockHunt.pdfFile.getAuthors().get(0));
 	}
 
 	/**
-	 * Build a string.
+	 * Args to String. Makes 1 string.
 	 * 
 	 * @param input
+	 *            String list which should be converted to a string.
 	 * @param startArg
-	 * @return
+	 *            Start on this length.
+	 * 
+	 * @return The converted string.
 	 */
-	public static String argsBuild(String[] input, int startArg) {
+	public static String stringBuilder(String[] input, int startArg) {
 		if (input.length - startArg <= 0) {
 			return null;
 		}
@@ -587,51 +704,70 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			player = (Player) sender;
 		}
 
-		for (CommandC command : CommandC.values()) {
-			String[] commandArgsSplit = command.command.split("%");
-			String[] argsSplit = commandArgsSplit[1].split("_");
-			String[] argsSplitAlias = command.alias.split("%")[1].split("_");
+		for (CommandM command : W.commands) {
+			if (PermissionsM.hasPerm(player, command.permission, true)) {
+				String[] argsSplit = null;
+				String[] argsSplitAlias = null;
 
-			if (cmd.getName().equalsIgnoreCase(commandArgsSplit[0])) {
-				int i = 0;
-				boolean equals = true;
-
-				if (command.minLenght == 0) {
-					if (args.length == 0) {
-						equals = true;
-					} else {
-						equals = false;
-					}
-				} else {
-					if (args.length >= command.minLenght) {
-						for (String arg : argsSplit) {
-							for (String arga : argsSplitAlias) {
-								if (!arg.equalsIgnoreCase(args[i])
-										&& !arga.equalsIgnoreCase(args[i])) {
-									equals = false;
-								}
-								i = i + 1;
-							}
-						}
-					} else {
-						equals = false;
-					}
+				if (command.args != null && command.argsalias != null) {
+					argsSplit = command.args.split("/");
+					argsSplitAlias = command.argsalias.split("/");
 				}
 
-				if (equals) {
-					if (W.config.getFile().getBoolean(
-							command.enabled.getLocation())) {
-						command.cmd.exectue(player, cmd, label, args);
+				if (cmd.getName().equalsIgnoreCase(command.label)) {
+					boolean equals = true;
+
+					if (argsSplit == null) {
+						if (args.length == 0) {
+							equals = true;
+						} else {
+							equals = false;
+						}
 					} else {
-						MessageM.sendFMessage(player,
-								ConfigC.error_commandNotEnabled, true);
+						if (args.length >= argsSplit.length) {
+							for (int i2 = argsSplit.length - 1; i2 >= 0; i2 = i2 - 1) {
+								int loc = argsSplit.length - i2 - 1;
+								if (!argsSplit[loc].equalsIgnoreCase(args[loc])
+										&& !argsSplitAlias[loc]
+												.equalsIgnoreCase(args[loc])) {
+									equals = false;
+								}
+							}
+						} else {
+							equals = false;
+						}
 					}
 
-					return true;
+					if (equals) {
+						if (command.enabled) {
+							command.CMD.exectue(player, cmd, label, args);
+						} else {
+							MessageM.sendFMessage(player,
+									ConfigC.error_commandNotEnabled);
+						}
+
+						return true;
+					}
 				}
 			}
 		}
-		CommandC.NOT_FOUND.cmd.exectue(player, cmd, label, args);
+
+		CMDnotfound.exectue(player, cmd, label, args);
 		return true;
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, Command cmd,
+			String label, String[] args) {
+
+		for (CommandM command : W.commands) {
+			if (cmd.getName().equalsIgnoreCase(command.label)) {
+				if (args.length == 1) {
+					return command.mainTABlist;
+				}
+			}
+		}
+
+		return null;
 	}
 }
