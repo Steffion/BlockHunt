@@ -17,8 +17,8 @@ public class CMDlist extends DefaultCMD {
 		MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-"
 				+ BlockHunt.pdfFile.getName());
 		if (W.arenaList.size() >= 1) {
+			MessageM.sendMessage(player, "&7Available arena(s):");
 			for (Arena arena : W.arenaList) {
-				MessageM.sendMessage(player, "&7Available arena(s):");
 				MessageM.sendMessage(player, "%A" + arena.arenaName);
 			}
 		} else {
