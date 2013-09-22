@@ -4,7 +4,7 @@ version: 0.1.5_ALPHA
 authors:
   - Steffion
 description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
-softdepend: [DisguiseCraft, ProtocolLib]
+softdepend: [DisguiseCraft, ProtocolLib, Multiverse-Core]
 load: POSTWORLD
 commands:
   BlockHunt:
