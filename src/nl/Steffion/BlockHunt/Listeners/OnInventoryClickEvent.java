@@ -46,7 +46,9 @@ public class OnInventoryClickEvent implements Listener {
 
 				return;
 			} else if (inv.getName().startsWith("\u00A7r")) {
-				if (inv.getName().contains("Shop")) {
+				if (inv.getName().equals(
+						MessageM.replaceAll((String) "\u00A7r"
+								+ W.config.get(ConfigC.shop_title)))) {
 					event.setCancelled(true);
 					ItemStack item = event.getCurrentItem();
 					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {

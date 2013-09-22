@@ -50,6 +50,7 @@ public enum ConfigC {
 			"%NUse the create command to define your arena.",
 			"%A/" + BlockHunt.pdfFile.getName() + " <help|h>" }, W.config),
 
+	shop_title ("%H&lBlockHunt %NShop", W.config),
 	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
 	shop_blockChooserEnabled (true, W.config),
 	shop_blockChooserID (340, W.config),
@@ -59,7 +60,6 @@ public enum ConfigC {
 			"%NUse this item before the arena starts.",
 			"%ARight-Click%N in the lobby and choose",
 			"%Nthe block you want to be!", "&6Unlimited uses." }, W.config),
-
 	shop_BlockHuntPassEnabled (true, W.config),
 	shop_BlockHuntPassID (421, W.config),
 	shop_BlockHuntPassPrice (150, W.config),
@@ -83,7 +83,7 @@ public enum ConfigC {
 			"%EIngame: %A%timeleft%" }, W.config),
 
 	scoreboard_enabled (true, W.config),
-	scoreboard_title ("[" + BlockHunt.pdfFile.getName() + "]", W.config),
+	scoreboard_title ("%H[" + BlockHunt.pdfFile.getName() + "]", W.config),
 	scoreboard_timeleft ("%ATime left:", W.config),
 	scoreboard_seekers ("%NSeekers:", W.config),
 	scoreboard_hiders ("%NHiders:", W.config),
