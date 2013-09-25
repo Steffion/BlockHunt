@@ -91,13 +91,21 @@ public class OnInventoryClickEvent implements Listener {
 								.get(ConfigC.shop_blockChooserName)))) {
 					event.setCancelled(true);
 					if (event.getCurrentItem().getType() != Material.AIR) {
-						W.choosenBlock.put(player, event.getCurrentItem());
-						MessageM.sendFMessage(player,
-								ConfigC.normal_shopChoosenBlock, "block-"
-										+ event.getCurrentItem().getType()
-												.toString().replaceAll("_", "")
-												.replaceAll("BLOCK", "")
-												.toLowerCase());
+						if (event.getCurrentItem().getType().isBlock()) {
+							W.choosenBlock.put(player, event.getCurrentItem());
+							MessageM.sendFMessage(
+									player,
+									ConfigC.normal_shopChoosenBlock,
+									"block-"
+											+ event.getCurrentItem().getType()
+													.toString()
+													.replaceAll("_", "")
+													.replaceAll("BLOCK", "")
+													.toLowerCase());
+						} else {
+							MessageM.sendFMessage(player,
+									ConfigC.error_setNotABlock);
+						}
 					}
 				} else {
 					event.setCancelled(true);
