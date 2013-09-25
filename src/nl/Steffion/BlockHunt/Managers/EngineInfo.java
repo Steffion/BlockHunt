@@ -13,6 +13,6 @@ public class EngineInfo {
 	 * @author Steffion
 	 */
 
-	public static String engineVersion = "3.0.0";
+	public static String engineVersion = "3.0.2";
 	public static String engineAuthors = "Steffion";
 }
