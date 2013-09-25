@@ -192,7 +192,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				Permissions.start, ConfigC.help_start,
 				(Boolean) W.config.get(ConfigC.commandEnabled_start),
 				BlockHuntCMD, new CMDstart(),
-				"/BlockHunt <start|st> <arenaname>");
+				"/BlockHunt <start|go> <arenaname>");
 		CMDwand = new CommandM("BlockHunt WAND", "BlockHunt", "wand", "w",
 				Permissions.create, ConfigC.help_wand,
 				(Boolean) W.config.get(ConfigC.commandEnabled_wand),
@@ -704,49 +704,49 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		}
 
 		for (CommandM command : W.commands) {
-			if (PermissionsM.hasPerm(player, command.permission, true)) {
-				String[] argsSplit = null;
-				String[] argsSplitAlias = null;
+			String[] argsSplit = null;
+			String[] argsSplitAlias = null;
 
-				if (command.args != null && command.argsalias != null) {
-					argsSplit = command.args.split("/");
-					argsSplitAlias = command.argsalias.split("/");
-				}
+			if (command.args != null && command.argsalias != null) {
+				argsSplit = command.args.split("/");
+				argsSplitAlias = command.argsalias.split("/");
+			}
 
-				if (cmd.getName().equalsIgnoreCase(command.label)) {
-					boolean equals = true;
+			if (cmd.getName().equalsIgnoreCase(command.label)) {
+				boolean equals = true;
 
-					if (argsSplit == null) {
-						if (args.length == 0) {
-							equals = true;
-						} else {
-							equals = false;
+				if (argsSplit == null) {
+					if (args.length == 0) {
+						equals = true;
+					} else {
+						equals = false;
+					}
+				} else {
+					if (args.length >= argsSplit.length) {
+						for (int i2 = argsSplit.length - 1; i2 >= 0; i2 = i2 - 1) {
+							int loc = argsSplit.length - i2 - 1;
+							if (!argsSplit[loc].equalsIgnoreCase(args[loc])
+									&& !argsSplitAlias[loc]
+											.equalsIgnoreCase(args[loc])) {
+								equals = false;
+							}
 						}
 					} else {
-						if (args.length >= argsSplit.length) {
-							for (int i2 = argsSplit.length - 1; i2 >= 0; i2 = i2 - 1) {
-								int loc = argsSplit.length - i2 - 1;
-								if (!argsSplit[loc].equalsIgnoreCase(args[loc])
-										&& !argsSplitAlias[loc]
-												.equalsIgnoreCase(args[loc])) {
-									equals = false;
-								}
-							}
-						} else {
-							equals = false;
-						}
+						equals = false;
 					}
+				}
 
-					if (equals) {
+				if (equals) {
+					if (PermissionsM.hasPerm(player, command.permission, true)) {
 						if (command.enabled) {
 							command.CMD.exectue(player, cmd, label, args);
 						} else {
 							MessageM.sendFMessage(player,
 									ConfigC.error_commandNotEnabled);
 						}
-
-						return true;
 					}
+
+					return true;
 				}
 			}
 		}
