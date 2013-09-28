@@ -41,6 +41,7 @@ import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 import nl.Steffion.BlockHunt.mcstats.Metrics;
+import nl.Steffion.BlockHunt.mcstats.Metrics.Graph;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -79,6 +80,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	 */
 
 	public static PluginDescriptionFile pdfFile;
+	public static BlockHunt plugin;
 
 	@SuppressWarnings("serial")
 	public static List<String> BlockHuntCMD = new ArrayList<String>() {
@@ -117,7 +119,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 	public static CommandM CMDtokens;
 
 	public void onEnable() {
-
 		getServer().getPluginManager().registerEvents(this, this);
 
 		getServer().getPluginManager().registerEvents(new OnBlockBreakEvent(),
@@ -234,25 +235,65 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		ArenaHandler.loadArenas();
 
-		try {
-			Metrics metrics = new Metrics(this);
-			metrics.start();
-			FileConfiguration metrics_fc = new YamlConfiguration();
-			metrics_fc.load(metrics.getConfigFile());
-			if (!metrics_fc.getBoolean("opt-out", false)) {
-				MessageM.sendMessage(null,
-						"%TAG%NSending %AMCStats %Nto their server.");
-			} else {
-				MessageM.sendMessage(null,
-						"%TAG%EUnable to send %AMCStats %Eto their server. %AMCStats%E is disabled?");
+		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Metrics metrics = new Metrics(plugin);
+					Graph playersPlayingBlockHunt = metrics
+							.createGraph("Players playing BlockHunt");
+
+					playersPlayingBlockHunt.addPlotter(new Metrics.Plotter(
+							"Playing") {
+
+						@Override
+						public int getValue() {
+							int playersPlaying = 0;
+							for (Arena arena : W.arenaList) {
+								playersPlaying = playersPlaying
+										+ arena.playersInArena.size();
+							}
+							return playersPlaying;
+						}
+
+					});
+
+					playersPlayingBlockHunt.addPlotter(new Metrics.Plotter(
+							"Not playing") {
+
+						@Override
+						public int getValue() {
+							int playersPlaying = 0;
+							for (Arena arena : W.arenaList) {
+								playersPlaying = playersPlaying
+										+ arena.playersInArena.size();
+							}
+							return Bukkit.getOnlinePlayers().length
+									- playersPlaying;
+						}
+
+					});
+
+					metrics.start();
+					FileConfiguration metrics_fc = new YamlConfiguration();
+					metrics_fc.load(metrics.getConfigFile());
+					if (!metrics_fc.getBoolean("opt-out", false)) {
+						MessageM.sendMessage(null,
+								"%TAG%NSending %AMCStats%N to the server...");
+					} else {
+						MessageM.sendMessage(null,
+								"%TAG%EUnable to send %AMCStats %Eto the server. %AMCStats%E is disabled?");
+					}
+				} catch (IOException e) {
+					MessageM.sendMessage(null,
+							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
+				} catch (InvalidConfigurationException e) {
+					MessageM.sendMessage(null,
+							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
+				}
 			}
-		} catch (IOException e) {
-			MessageM.sendMessage(null,
-					"%TAG%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!");
-		} catch (InvalidConfigurationException e) {
-			MessageM.sendMessage(null,
-					"%TAG%EUnable to send %AMCStats %Eto their server. Something went wrong ;(!");
-		}
+		}, 0, 100);
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
