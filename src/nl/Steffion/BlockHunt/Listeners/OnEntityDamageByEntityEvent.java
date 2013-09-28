@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt.Listeners;
 
+import me.libraryaddict.disguise.DisguiseAPI;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
@@ -54,7 +55,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 								player.setHealth(20);
 								event.setCancelled(true);
 
-								W.dcAPI.undisguisePlayer(player);
+								DisguiseAPI.undisguiseToAll(player);
 								W.pBlock.remove(player);
 
 								if (!arena.seekers.contains(player)) {
@@ -121,7 +122,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 										.size()) {
 									ArenaHandler.seekersWin(arena);
 								} else {
-									W.dcAPI.undisguisePlayer(player);
+									DisguiseAPI.undisguiseToAll(player);
 									W.seekertime.put(player,
 											arena.waitingTimeSeeker);
 									player.teleport(arena.seekersWarp);

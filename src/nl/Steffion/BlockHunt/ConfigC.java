@@ -187,7 +187,7 @@ public enum ConfigC {
 			W.messages),
 	error_notEnoughArguments ("%TAG%EYou're missing arguments, correct syntax: %A%syntax%",
 			W.messages),
-	error_disguiseCraftNotInstalled ("%TAG%EThe plugin '%ADisguiseCraft%E' is required to run this plugin! Intall it or it won't work!",
+	error_libsDisguisesNotInstalled ("%TAG%EThe plugin '%ALib's Disguises%E' is required to run this plugin! Intall it or it won't work!",
 			W.messages),
 	error_protocolLibNotInstalled ("%TAG%EThe plugin '%AProtocolLib%E' is required to run this plugin! Intall it or it won't work!",
 			W.messages),

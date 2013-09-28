@@ -2,9 +2,11 @@ package nl.Steffion.BlockHunt;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.Commands.CMDcreate;
@@ -20,8 +22,8 @@ import nl.Steffion.BlockHunt.Commands.CMDset;
 import nl.Steffion.BlockHunt.Commands.CMDsetwarp;
 import nl.Steffion.BlockHunt.Commands.CMDshop;
 import nl.Steffion.BlockHunt.Commands.CMDstart;
-import nl.Steffion.BlockHunt.Commands.CMDwand;
 import nl.Steffion.BlockHunt.Commands.CMDtokens;
+import nl.Steffion.BlockHunt.Commands.CMDwand;
 import nl.Steffion.BlockHunt.Listeners.OnBlockBreakEvent;
 import nl.Steffion.BlockHunt.Listeners.OnBlockPlaceEvent;
 import nl.Steffion.BlockHunt.Listeners.OnEntityDamageByEntityEvent;
@@ -61,10 +63,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import pgDev.bukkit.DisguiseCraft.DisguiseCraft;
-import pgDev.bukkit.DisguiseCraft.disguise.Disguise;
-import pgDev.bukkit.DisguiseCraft.disguise.DisguiseType;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
@@ -153,6 +151,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 		ConfigurationSerialization.registerClass(Arena.class, "BlockHuntArena");
 
 		pdfFile = getDescription();
+		plugin = this;
 
 		ConfigM.newFiles();
 
@@ -223,15 +222,13 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				BlockHuntCMD, new CMDtokens(),
 				"/BlockHunt <tokens|t> <set|add|take> <playername> <amount>");
 
-		if (!getServer().getPluginManager().isPluginEnabled("DisguiseCraft")) {
-			MessageM.broadcastFMessage(ConfigC.error_disguiseCraftNotInstalled);
+		if (!getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
+			MessageM.broadcastFMessage(ConfigC.error_libsDisguisesNotInstalled);
 		}
 
 		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
 			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled);
 		}
-
-		W.dcAPI = DisguiseCraft.getAPI();
 
 		ArenaHandler.loadArenas();
 
@@ -293,7 +290,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
 				}
 			}
-		}, 0, 100);
+		}, 0, 6000);
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
@@ -412,20 +409,12 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										W.choosenBlock.remove(arenaPlayer);
 									}
 
-									LinkedList<String> data = new LinkedList<String>();
-									data.add("blockID:" + block.getTypeId());
-									data.add("blockData:"
-											+ block.getDurability());
-									Disguise disguise = new Disguise(W.dcAPI
-											.newEntityID(), data,
-											DisguiseType.FallingBlock);
-									if (W.dcAPI.isDisguised(arenaPlayer)) {
-										W.dcAPI.changePlayerDisguise(
-												arenaPlayer, disguise);
-									} else {
-										W.dcAPI.disguisePlayer(arenaPlayer,
-												disguise);
-									}
+									MiscDisguise disguise = new MiscDisguise(
+											DisguiseType.FALLING_BLOCK, block
+													.getTypeId(), block
+													.getDurability());
+									DisguiseAPI.disguiseToAll(arenaPlayer,
+											disguise);
 
 									arenaPlayer.teleport(arena.hidersWarp);
 
@@ -608,8 +597,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 													W.hiddenLocWater.put(
 															player, false);
 												}
-												if (W.dcAPI.isDisguised(player)) {
-													W.dcAPI.undisguisePlayer(player);
+												if (DisguiseAPI
+														.isDisguised(player)) {
+													DisguiseAPI
+															.undisguiseToAll(player);
 													for (Player pl : Bukkit
 															.getOnlinePlayers()) {
 														if (!pl.equals(player)) {
@@ -681,7 +672,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										}
 									} else {
 										block.setAmount(5);
-										if (!W.dcAPI.isDisguised(player)) {
+										if (!DisguiseAPI.isDisguised(player)) {
 											SolidBlockHandler
 													.makePlayerUnsolid(player);
 										}
