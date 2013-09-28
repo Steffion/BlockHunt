@@ -1,7 +1,8 @@
 package nl.Steffion.BlockHunt;
 
-import java.util.LinkedList;
-
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
@@ -11,9 +12,6 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import pgDev.bukkit.DisguiseCraft.disguise.Disguise;
-import pgDev.bukkit.DisguiseCraft.disguise.DisguiseType;
 
 public class SolidBlockHandler {
 	public static void makePlayerUnsolid(Player player) {
@@ -47,16 +45,12 @@ public class SolidBlockHandler {
 		player.playSound(player.getLocation(), Sound.BAT_HURT, 1, 1);
 		block.removeEnchantment(Enchantment.DURABILITY);
 
-		LinkedList<String> data = new LinkedList<String>();
-		data.add("blockID:" + block.getTypeId());
-		data.add("blockData:" + block.getDurability());
-		Disguise disguise = new Disguise(W.dcAPI.newEntityID(), data,
-				DisguiseType.FallingBlock);
-		if (W.dcAPI.isDisguised(player)) {
-			W.dcAPI.changePlayerDisguise(player, disguise);
-		} else {
-			W.dcAPI.disguisePlayer(player, disguise);
+		for (Player playerShow : Bukkit.getOnlinePlayers()) {
+			playerShow.showPlayer(player);
 		}
+		MiscDisguise disguise = new MiscDisguise(DisguiseType.FALLING_BLOCK,
+				block.getTypeId(), block.getDurability());
+		DisguiseAPI.disguiseToAll(player, disguise);
 
 		MessageM.sendFMessage(player, ConfigC.normal_ingameNoMoreSolid);
 	}

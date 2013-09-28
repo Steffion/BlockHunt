@@ -12,8 +12,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import pgDev.bukkit.DisguiseCraft.api.DisguiseCraftAPI;
-
 public class W {
 	/**
 	 * Steffion's Engine - Made by Steffion.
@@ -51,7 +49,6 @@ public class W {
 
 	public static ArrayList<Arena> arenaList = new ArrayList<Arena>();
 	public static Random random = new Random();
-	public static DisguiseCraftAPI dcAPI;
 	public static HashMap<Player, Integer> seekertime = new HashMap<Player, Integer>();
 
 	public static HashMap<Player, PlayerArenaData> pData = new HashMap<Player, PlayerArenaData>();
