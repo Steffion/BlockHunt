@@ -1,10 +1,10 @@
 name: BlockHunt
 main: nl.Steffion.BlockHunt.BlockHunt
-version: 0.1.6_ALPHA
+version: 0.1.6_BETA
 authors:
   - Steffion
 description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
-softdepend: [DisguiseCraft, ProtocolLib, Multiverse-Core]
+softdepend: [LibsDisguises, ProtocolLib, Multiverse-Core]
 load: POSTWORLD
 commands:
   BlockHunt:
