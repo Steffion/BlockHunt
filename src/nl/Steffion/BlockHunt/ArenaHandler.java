@@ -126,8 +126,8 @@ public class ArenaHandler {
 												player.getName()
 														+ ".blockchooser") != null) {
 											ItemStack shopBlockChooser = new ItemStack(
-													Material.getMaterial((Integer) W.config
-															.get(ConfigC.shop_blockChooserID)),
+													Material.getMaterial((String) W.config
+															.get(ConfigC.shop_blockChooserIDname)),
 													1);
 											ItemMeta shopBlockChooser_IM = shopBlockChooser
 													.getItemMeta();

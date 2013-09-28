@@ -41,7 +41,7 @@ public enum ConfigC {
 	autoUpdateCheck (true, W.config),
 	autoDownloadUpdate (false, W.config),
 
-	wandID (280, W.config),
+	wandIDname ("STICK", W.config),
 	wandName ("%A&l" + BlockHunt.pdfFile.getName() + "%N's selection wand",
 			W.config),
 	wandDescription (new String[] {
@@ -54,7 +54,7 @@ public enum ConfigC {
 	shop_title ("%H&lBlockHunt %NShop", W.config),
 	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
 	shop_blockChooserEnabled (true, W.config),
-	shop_blockChooserID (340, W.config),
+	shop_blockChooserIDname ("BOOK", W.config),
 	shop_blockChooserPrice (3000, W.config),
 	shop_blockChooserName ("%H&lBlock Chooser", W.config),
 	shop_blockChooserDescription (new String[] {
@@ -62,7 +62,7 @@ public enum ConfigC {
 			"%ARight-Click%N in the lobby and choose",
 			"%Nthe block you want to be!", "&6Unlimited uses." }, W.config),
 	shop_BlockHuntPassEnabled (true, W.config),
-	shop_BlockHuntPassID (421, W.config),
+	shop_BlockHuntPassIDname ("NAME_TAG", W.config),
 	shop_BlockHuntPassPrice (150, W.config),
 	shop_BlockHuntPassName ("%H&lBlockHunt Pass", W.config),
 	shop_BlockHuntPassDescription (new String[] {

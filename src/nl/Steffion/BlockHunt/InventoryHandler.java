@@ -267,8 +267,8 @@ public class InventoryHandler {
 		shopTokens.setItemMeta(shopTokens_IM);
 
 		ItemStack shopBlockChooser = new ItemStack(
-				Material.getMaterial((Integer) W.config
-						.get(ConfigC.shop_blockChooserID)), 1);
+				Material.getMaterial((String) W.config
+						.get(ConfigC.shop_blockChooserIDname)), 1);
 		ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
 		shopBlockChooser_IM.setDisplayName(MessageM
 				.replaceAll((String) W.config
@@ -288,8 +288,8 @@ public class InventoryHandler {
 		shopBlockChooser.setItemMeta(shopBlockChooser_IM);
 
 		ItemStack shopBlockHuntPass = new ItemStack(
-				Material.getMaterial((Integer) W.config
-						.get(ConfigC.shop_BlockHuntPassID)), 1);
+				Material.getMaterial((String) W.config
+						.get(ConfigC.shop_BlockHuntPassIDname)), 1);
 		ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
 		shopBlockHuntPass_IM.setDisplayName(MessageM
 				.replaceAll((String) W.config

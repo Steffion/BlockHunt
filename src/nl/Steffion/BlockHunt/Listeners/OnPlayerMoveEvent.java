@@ -39,32 +39,32 @@ public class OnPlayerMoveEvent implements Listener {
 					Location loc = player.getLocation();
 					if (loc.getBlockX() > maxX) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					} else if (loc.getBlockX() < minX) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					} else if (loc.getBlockZ() > maxZ) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					} else if (loc.getBlockZ() < minZ) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					} else if (loc.getBlockY() > maxY) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					} else if (loc.getBlockY() < minY) {
 						event.setCancelled(true);
-						player.playEffect(loc, Effect.ENDER_SIGNAL, 0);
+						player.playEffect(loc, Effect.ENDER_SIGNAL, null);
 						player.playSound(loc, Sound.GHAST_FIREBALL, 1, 1);
 						player.teleport(arena.hidersWarp);
 					}
