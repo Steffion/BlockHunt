@@ -97,7 +97,8 @@ public class ArenaHandler {
 											player.getExp(), player.getLevel(),
 											player.getHealth(),
 											player.getFoodLevel(),
-											player.getActivePotionEffects());
+											player.getActivePotionEffects(),
+											player.isFlying());
 
 									W.pData.put(player, pad);
 
@@ -117,6 +118,7 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
+									player.setFlying(false);
 
 									if ((Boolean) W.config
 											.get(ConfigC.shop_blockChooserEnabled) == true) {
@@ -257,7 +259,7 @@ public class ArenaHandler {
 			}
 
 			PlayerArenaData pad = new PlayerArenaData(null, null, null, null,
-					null, null, null, null, null);
+					null, null, null, null, null, false);
 
 			if (W.pData.get(player) != null) {
 				pad = W.pData.get(player);
@@ -274,6 +276,7 @@ public class ArenaHandler {
 			player.addPotionEffects(pad.pPotionEffects);
 			player.teleport(pad.pLocation);
 			player.setGameMode(pad.pGameMode);
+			player.setFlying(pad.pFlying);
 
 			W.pData.remove(player);
 
