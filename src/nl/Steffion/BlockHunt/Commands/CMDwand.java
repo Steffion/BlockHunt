@@ -21,7 +21,8 @@ public class CMDwand extends DefaultCMD {
 			String[] args) {
 		if (player != null) {
 			ItemStack wand = new ItemStack(
-					Material.getMaterial((Integer) W.config.get(ConfigC.wandID)));
+					Material.getMaterial((String) W.config
+							.get(ConfigC.wandIDname)));
 			ItemMeta im = wand.getItemMeta();
 			im.setDisplayName(MessageM.replaceAll((String) W.config
 					.get(ConfigC.wandName)));
