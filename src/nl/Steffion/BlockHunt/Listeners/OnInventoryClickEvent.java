@@ -57,7 +57,9 @@ public class OnInventoryClickEvent implements Listener {
 					}
 					int playerTokens = W.shop.getFile().getInt(
 							player.getName() + ".tokens");
-					if (item.getType().equals(Material.AIR))
+					if (item == null)
+						return;
+					if (item.getItemMeta().getDisplayName() == null)
 						return;
 					if (item.getItemMeta()
 							.getDisplayName()
