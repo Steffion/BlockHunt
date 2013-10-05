@@ -30,6 +30,22 @@ public class SignsHandler {
 						number = number + 1;
 					}
 				}
+			} else if (lines[1].equalsIgnoreCase("shop")) {
+				boolean saved = false;
+				int number = 1;
+				while (!saved) {
+					if (W.signs.getFile().get("shop_" + number) == null) {
+						W.signs.getFile().set("shop_" + number + ".arenaName",
+								"shop");
+						W.signs.getFile().set("shop_" + number + ".location",
+								location);
+						W.signs.save();
+
+						saved = true;
+					} else {
+						number = number + 1;
+					}
+				}
 			} else {
 				boolean saved = false;
 				for (Arena arena : W.arenaList) {
@@ -101,6 +117,19 @@ public class SignsHandler {
 				if (sign.contains("leave")) {
 					ArrayList<String> signLines = (ArrayList<String>) W.config
 							.getFile().getList(ConfigC.sign_LEAVE.location);
+					int linecount = 0;
+					for (String line : signLines) {
+						if (linecount <= 3) {
+							signblock.setLine(linecount,
+									MessageM.replaceAll(line));
+						}
+
+						linecount = linecount + 1;
+					}
+					signblock.update();
+				} else if (sign.contains("shop")) {
+					ArrayList<String> signLines = (ArrayList<String>) W.config
+							.getFile().getList(ConfigC.sign_SHOP.location);
 					int linecount = 0;
 					for (String line : signLines) {
 						if (linecount <= 3) {

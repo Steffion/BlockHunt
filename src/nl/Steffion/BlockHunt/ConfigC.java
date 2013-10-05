@@ -73,6 +73,8 @@ public enum ConfigC {
 
 	sign_LEAVE (new String[] { "%H[" + BlockHunt.pdfFile.getName() + "%H]",
 			"&4LEAVE", "&8Right-Click", "&8To leave." }, W.config),
+	sign_SHOP (new String[] { "%H[" + BlockHunt.pdfFile.getName() + "%H]",
+			"&4SHOP", "&8Right-Click", "&8To shop." }, W.config),
 	sign_WAITING (new String[] { "%H[" + BlockHunt.pdfFile.getName() + "%H]",
 			"%A%arenaname%", "%A%players%%N/%A%maxplayers%", "&8Waiting..." },
 			W.config),
