@@ -89,6 +89,8 @@ public enum ConfigC {
 	scoreboard_seekers ("%NSeekers:", W.config),
 	scoreboard_hiders ("%NHiders:", W.config),
 
+	require_inventory_clear_onJoin (false, W.config),
+
 	log_enabledPlugin ("%TAG%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
 			W.messages),
 	log_disabledPlugin ("%TAG%N%name%&c&k - %N%version% is now Disabled. Made by %A%autors%%N.",
@@ -202,6 +204,8 @@ public enum ConfigC {
 			W.messages),
 	error_joinArenaIngame ("%TAG%EThis game has already started.", W.messages),
 	error_joinFull ("%TAG%EUnable to join this arena. It's full!", W.messages),
+	error_joinInventoryNotEmpty ("%TAG%EYour inventory should be empty before joining!",
+			W.messages),
 	error_leaveNotInArena ("%TAG%EYou're not in an arena!", W.messages),
 	error_createSelectionFirst ("%TAG%EMake a selection first. Use the wand command: %A/"
 			+ BlockHunt.pdfFile.getName() + " <wand|w>%E.",
