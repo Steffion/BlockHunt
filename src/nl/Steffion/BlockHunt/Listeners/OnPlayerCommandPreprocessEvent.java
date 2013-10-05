@@ -2,8 +2,10 @@ package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.ConfigC;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,6 +38,11 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 					if (m.startsWith("/" + command)) {
 						return;
 					}
+				}
+
+				if (PermissionsM
+						.hasPerm(player, Permissions.allcommands, false)) {
+					return;
 				}
 
 				MessageM.sendFMessage(player, ConfigC.warning_unableToCommand);
