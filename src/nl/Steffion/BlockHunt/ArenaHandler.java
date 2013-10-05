@@ -67,6 +67,29 @@ public class ArenaHandler {
 						MessageM.sendFMessage(player,
 								ConfigC.error_joinNoBlocksSet);
 					} else {
+						boolean inventoryempty = true;
+						for (ItemStack invitem : player.getInventory()) {
+							if (invitem != null) {
+								if (invitem.getType() != Material.AIR) {
+									inventoryempty = false;
+								}
+							}
+						}
+
+						for (ItemStack invitem : player.getInventory()
+								.getArmorContents()) {
+							if (invitem.getType() != Material.AIR) {
+								inventoryempty = false;
+							}
+						}
+
+						if ((Boolean) W.config
+								.get(ConfigC.require_inventory_clear_onJoin)
+								&& !inventoryempty) {
+							MessageM.sendFMessage(player,
+									ConfigC.error_joinInventoryNotEmpty);
+							return;
+						}
 						LocationSerializable zero = new LocationSerializable(
 								Bukkit.getWorld(player.getWorld().getName()
 										.toString()), 0, 0, 0, 0, 0);
