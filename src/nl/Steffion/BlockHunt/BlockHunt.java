@@ -801,4 +801,20 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		return null;
 	}
+
+	/**
+	 * Short a String for like the Scoreboard title.
+	 * 
+	 * @param string
+	 *            String to be shorten.
+	 * @param maxLenght
+	 *            Max lenght of the characters.
+	 * @return Shorten string, else normal string.
+	 */
+	public static String cutString(String string, int maxLenght) {
+		if (string.length() > maxLenght) {
+			string = string.substring(0, maxLenght);
+		}
+		return string;
+	}
 }
