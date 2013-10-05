@@ -4,6 +4,7 @@ import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.ConfigC;
+import nl.Steffion.BlockHunt.InventoryHandler;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.SignsHandler;
 import nl.Steffion.BlockHunt.SolidBlockHandler;
@@ -111,6 +112,16 @@ public class OnPlayerInteractEvent implements Listener {
 										Permissions.joinsign, true)) {
 									ArenaHandler.playerLeaveArena(player, true,
 											true);
+								}
+							} else if (sign.getLine(1).equals(
+									MessageM.replaceAll(W.config
+											.getFile()
+											.getStringList(
+													ConfigC.sign_SHOP.location)
+											.get(1)))) {
+								if (PermissionsM.hasPerm(player,
+										Permissions.shop, true)) {
+									InventoryHandler.openShop(player);
 								}
 							} else {
 								for (Arena arena : W.arenaList) {
