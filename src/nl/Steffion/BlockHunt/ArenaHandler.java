@@ -90,6 +90,7 @@ public class ArenaHandler {
 									ConfigC.error_joinInventoryNotEmpty);
 							return;
 						}
+
 						LocationSerializable zero = new LocationSerializable(
 								Bukkit.getWorld(player.getWorld().getName()
 										.toString()), 0, 0, 0, 0, 0);
@@ -141,8 +142,10 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
-									player.setFlying(false);
-									player.setAllowFlight(false);
+									player.setAllowFlight(pad.pFlying);
+									if (player.getAllowFlight()) {
+										player.setFlying(true);
+									}
 
 									if ((Boolean) W.config
 											.get(ConfigC.shop_blockChooserEnabled) == true) {
@@ -301,9 +304,6 @@ public class ArenaHandler {
 			player.teleport(pad.pLocation);
 			player.setGameMode(pad.pGameMode);
 			player.setAllowFlight(pad.pFlying);
-			if (player.getAllowFlight()) {
-				player.setFlying(true);
-			}
 
 			W.pData.remove(player);
 
