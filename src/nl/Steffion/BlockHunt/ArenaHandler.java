@@ -180,18 +180,18 @@ public class ArenaHandler {
 												Permissions.vip, true)) {
 											ItemStack shopBlockChooser = new ItemStack(
 													Material.getMaterial((String) W.config
-															.get(ConfigC.shop_blockChooserIDname)),
+															.get(ConfigC.shop_blockChooserv1IDname)),
 													1);
 											ItemMeta shopBlockChooser_IM = shopBlockChooser
 													.getItemMeta();
 											shopBlockChooser_IM
 													.setDisplayName(MessageM
 															.replaceAll((String) W.config
-																	.get(ConfigC.shop_blockChooserName)));
+																	.get(ConfigC.shop_blockChooserv1Name)));
 											List<String> lores = W.config
 													.getFile()
 													.getStringList(
-															ConfigC.shop_blockChooserDescription.location);
+															ConfigC.shop_blockChooserv1Description.location);
 											List<String> lores2 = new ArrayList<String>();
 											for (String lore : lores) {
 												lores2.add(MessageM
