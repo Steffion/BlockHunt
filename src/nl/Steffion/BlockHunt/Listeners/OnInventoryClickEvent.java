@@ -21,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class OnInventoryClickEvent implements Listener {
 
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
@@ -59,28 +60,68 @@ public class OnInventoryClickEvent implements Listener {
 							player.getName() + ".tokens");
 					if (item == null)
 						return;
+					if (item.getType().equals(Material.AIR))
+						return;
 					if (item.getItemMeta().getDisplayName() == null)
 						return;
 					if (item.getItemMeta()
 							.getDisplayName()
-							.equals(MessageM.replaceAll(W.config.get(
-									ConfigC.shop_blockChooserName).toString()))) {
+							.equals(MessageM
+									.replaceAll(W.config.get(
+											ConfigC.shop_blockChooserv1Name)
+											.toString()))) {
 						if (playerTokens >= (Integer) W.config
-								.get(ConfigC.shop_blockChooserPrice)) {
+								.get(ConfigC.shop_blockChooserv1Price)) {
 							W.shop.getFile().set(
 									player.getName() + ".blockchooser", true);
 							W.shop.getFile()
 									.set(player.getName() + ".tokens",
 											playerTokens
 													- (Integer) W.config
-															.get(ConfigC.shop_blockChooserPrice));
+															.get(ConfigC.shop_blockChooserv1Price));
 							W.shop.save();
 							MessageM.sendFMessage(
 									player,
 									ConfigC.normal_shopBoughtItem,
 									"itemname-"
 											+ W.config
-													.get(ConfigC.shop_blockChooserName));
+													.get(ConfigC.shop_blockChooserv1Name));
+						} else {
+							MessageM.sendFMessage(player,
+									ConfigC.error_shopNeedMoreTokens);
+						}
+					} else if (item
+							.getItemMeta()
+							.getDisplayName()
+							.equals(MessageM.replaceAll(W.config.get(
+									ConfigC.shop_BlockHuntPassv2Name)
+									.toString()))) {
+						if (playerTokens >= (Integer) W.config
+								.get(ConfigC.shop_BlockHuntPassv2Price)) {
+							if (W.shop.getFile().get(
+									player.getName() + ".blockhuntpass") == null) {
+								W.shop.getFile().set(
+										player.getName() + ".blockhuntpass", 0);
+								W.shop.save();
+							}
+
+							W.shop.getFile().set(
+									player.getName() + ".blockhuntpass",
+									(Integer) W.shop.getFile()
+											.get(player.getName()
+													+ ".blockhuntpass") + 1);
+							W.shop.getFile()
+									.set(player.getName() + ".tokens",
+											playerTokens
+													- (Integer) W.config
+															.get(ConfigC.shop_BlockHuntPassv2Price));
+							W.shop.save();
+							MessageM.sendFMessage(
+									player,
+									ConfigC.normal_shopBoughtItem,
+									"itemname-"
+											+ W.config
+													.get(ConfigC.shop_BlockHuntPassv2Name));
 						} else {
 							MessageM.sendFMessage(player,
 									ConfigC.error_shopNeedMoreTokens);
@@ -90,7 +131,7 @@ public class OnInventoryClickEvent implements Listener {
 					InventoryHandler.openShop(player);
 				} else if (inv.getName().contains(
 						MessageM.replaceAll((String) W.config
-								.get(ConfigC.shop_blockChooserName)))) {
+								.get(ConfigC.shop_blockChooserv1Name)))) {
 					event.setCancelled(true);
 					if (event.getCurrentItem().getType() != Material.AIR) {
 						if (event.getCurrentItem().getType().isBlock()) {
@@ -107,6 +148,108 @@ public class OnInventoryClickEvent implements Listener {
 						} else {
 							MessageM.sendFMessage(player,
 									ConfigC.error_setNotABlock);
+						}
+					}
+				} else if (inv.getName().contains(
+						MessageM.replaceAll((String) W.config
+								.get(ConfigC.shop_BlockHuntPassv2Name)))) {
+					event.setCancelled(true);
+					if (event.getCurrentItem().getType() != Material.AIR) {
+						if (event.getCurrentItem().getType()
+								.equals(Material.WOOL)
+								&& event.getCurrentItem().getDurability() == (short) 11) {
+							int i = 0;
+							for (Arena arena : W.arenaList) {
+								if (arena.playersInArena.contains(player)) {
+									for (Player playerCheck : arena.playersInArena) {
+										if (W.choosenSeeker.get(playerCheck) != null) {
+											if (W.choosenSeeker
+													.get(playerCheck) == true) {
+												i = i + 1;
+											}
+										}
+									}
+								}
+
+								if (i >= arena.amountSeekersOnStart) {
+									MessageM.sendFMessage(player,
+											ConfigC.error_shopMaxSeekersReached);
+								} else {
+									W.choosenSeeker.put(player, true);
+									player.getInventory().setItemInHand(
+											new ItemStack(Material.AIR));
+									player.updateInventory();
+									MessageM.sendFMessage(player,
+											ConfigC.normal_shopChoosenSeeker);
+									inv.clear();
+									if (W.shop.getFile()
+											.getInt(player.getName()
+													+ ".blockhuntpass") == 1) {
+										W.shop.getFile().set(
+												player.getName()
+														+ ".blockhuntpass",
+												null);
+										W.shop.save();
+									} else {
+										W.shop.getFile()
+												.set(player.getName()
+														+ ".blockhuntpass",
+														W.shop.getFile()
+																.getInt(player
+																		.getName()
+																		+ ".blockhuntpass") - 1);
+										W.shop.save();
+									}
+								}
+							}
+
+						} else if (event.getCurrentItem().getType()
+								.equals(Material.WOOL)
+								&& event.getCurrentItem().getDurability() == (short) 14) {
+							int i = 0;
+							for (Arena arena : W.arenaList) {
+								if (arena.playersInArena.contains(player)) {
+									for (Player playerCheck : arena.playersInArena) {
+										if (W.choosenSeeker.get(playerCheck) != null) {
+											if (W.choosenSeeker
+													.get(playerCheck) == false) {
+												i = i + 1;
+											}
+										}
+									}
+								}
+
+								if (i >= (arena.playersInArena.size() - 1)) {
+									MessageM.sendFMessage(player,
+											ConfigC.error_shopMaxHidersReached);
+								} else {
+									W.choosenSeeker.put(player, false);
+									player.getInventory().setItemInHand(
+											new ItemStack(Material.AIR));
+									player.updateInventory();
+									MessageM.sendFMessage(player,
+											ConfigC.normal_shopChoosenHiders);
+									inv.clear();
+									if (W.shop.getFile()
+											.getInt(player.getName()
+													+ ".blockhuntpass") == 1) {
+										W.shop.getFile().set(
+												player.getName()
+														+ ".blockhuntpass",
+												null);
+										W.shop.save();
+									} else {
+										W.shop.getFile()
+												.set(player.getName()
+														+ ".blockhuntpass",
+														W.shop.getFile()
+																.getInt(player
+																		.getName()
+																		+ ".blockhuntpass") - 1);
+										W.shop.save();
+									}
+								}
+							}
 						}
 					}
 				} else {

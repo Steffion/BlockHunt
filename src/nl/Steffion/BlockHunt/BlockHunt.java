@@ -379,20 +379,42 @@ public class BlockHunt extends JavaPlugin implements Listener {
 											+ arena.waitingTimeSeeker);
 
 							for (int i = arena.amountSeekersOnStart; i > 0; i = i - 1) {
+								boolean loop = true;
 								Player seeker = arena.playersInArena
 										.get(W.random
 												.nextInt(arena.playersInArena
 														.size()));
-								if (!arena.seekers.contains(seeker)) {
-									ArenaHandler.sendFMessage(arena,
-											ConfigC.normal_ingameSeekerChoosen,
-											"seeker-" + seeker.getName());
-									arena.seekers.add(seeker);
-									seeker.teleport(arena.seekersWarp);
-									W.seekertime.put(seeker,
-											arena.waitingTimeSeeker);
-								} else {
-									i = i + 1;
+
+								for (Player playerCheck : arena.playersInArena) {
+									if (W.choosenSeeker.get(playerCheck) != null) {
+										if (W.choosenSeeker.get(playerCheck) == true) {
+											seeker = playerCheck;
+										} else {
+											if (seeker.equals(playerCheck)) {
+												i = i + 1;
+												loop = false;
+											}
+										}
+									}
+
+									W.choosenSeeker.remove(playerCheck);
+								}
+
+								if (loop) {
+									if (!arena.seekers.contains(seeker)) {
+										ArenaHandler
+												.sendFMessage(
+														arena,
+														ConfigC.normal_ingameSeekerChoosen,
+														"seeker-"
+																+ seeker.getName());
+										arena.seekers.add(seeker);
+										seeker.teleport(arena.seekersWarp);
+										W.seekertime.put(seeker,
+												arena.waitingTimeSeeker);
+									} else {
+										i = i + 1;
+									}
 								}
 							}
 

@@ -53,23 +53,25 @@ public enum ConfigC {
 
 	shop_title ("%H&lBlockHunt %NShop", W.config),
 	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
-	shop_blockChooserEnabled (true, W.config),
-	shop_blockChooserIDname ("BOOK", W.config),
-	shop_blockChooserPrice (3000, W.config),
-	shop_blockChooserName ("%H&lBlock Chooser", W.config),
-	shop_blockChooserDescription (new String[] {
+
+	shop_blockChooserv1Enabled (true, W.config),
+	shop_blockChooserv1IDname ("BOOK", W.config),
+	shop_blockChooserv1Price (3000, W.config),
+	shop_blockChooserv1Name ("%H&lBlock Chooser", W.config),
+	shop_blockChooserv1Description (new String[] {
 			"%NUse this item before the arena starts.",
 			"%ARight-Click%N in the lobby and choose",
 			"%Nthe block you want to be!", "&6Unlimited uses." }, W.config),
-	shop_BlockHuntPassEnabled (true, W.config),
-	shop_BlockHuntPassIDname ("NAME_TAG", W.config),
-	shop_BlockHuntPassPrice (150, W.config),
-	shop_BlockHuntPassName ("%H&lBlockHunt Pass", W.config),
-	shop_BlockHuntPassDescription (new String[] {
+
+	shop_BlockHuntPassv2Enabled (true, W.config),
+	shop_BlockHuntPassv2IDName ("NAME_TAG", W.config),
+	shop_BlockHuntPassv2Price (150, W.config),
+	shop_BlockHuntPassv2Name ("%H&lBlockHunt Pass", W.config),
+	shop_BlockHuntPassv2Description (new String[] {
 			"%NUse this item before the arena starts.",
 			"%ARight-Click%N in the lobby and choose",
-			"%Nif you want to be a Hider or a Seeker!", "&61 use.",
-			"&c&lCOMING SOON!" }, W.config),
+			"%Nif you want to be a Hider or a Seeker!", "&61 time use.", },
+			W.config),
 
 	sign_LEAVE (new String[] { "%H[" + BlockHunt.pdfFile.getName() + "%H]",
 			"&4LEAVE", "&8Right-Click", "&8To leave." }, W.config),
@@ -171,6 +173,10 @@ public enum ConfigC {
 			W.messages),
 	normal_shopChoosenBlock ("%TAG%NYou've choosen to be a(n) '%A%block%%N' block!",
 			W.messages),
+	normal_shopChoosenSeeker ("%TAG%NYou've choosen to be a %Aseeker%N!",
+			W.messages),
+	normal_shopChoosenHiders ("%TAG%NYou've choosen to be a %Ahider%N!",
+			W.messages),
 
 	warning_lobbyNeedAtleast ("%TAG%WYou need atleast %A%1%%W player(s) to start the game!",
 			W.messages),
@@ -228,6 +234,10 @@ public enum ConfigC {
 	error_tokensUnknownsetting ("%TAG%E'%A%option%%E' is not a known option!",
 			W.messages),
 	error_shopNeedMoreTokens ("%TAG%EYou need more tokens before you can buy this item.",
+			W.messages),
+	error_shopMaxSeekersReached ("%TAG%ESorry, the maximum amount of seekers has been reached!",
+			W.messages),
+	error_shopMaxHidersReached ("%TAG%ESorry, the maximum amount of hiders has been reached!",
 			W.messages);
 
 	public Object value;
