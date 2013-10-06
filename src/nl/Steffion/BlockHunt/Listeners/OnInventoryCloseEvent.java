@@ -42,7 +42,11 @@ public class OnInventoryCloseEvent implements Listener {
 				for (ItemStack item : inv.getContents()) {
 					if (item != null) {
 						if (!item.getType().equals(Material.PAPER)) {
-							blocks.add(item);
+							if (item.getType().equals(Material.FLOWER_POT_ITEM)) {
+								blocks.add(new ItemStack(Material.FLOWER_POT));
+							} else {
+								blocks.add(item);
+							}
 						}
 					}
 				}
