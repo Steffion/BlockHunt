@@ -36,7 +36,8 @@ public class PermissionsC {
 		signcreate (main + "signcreate", PType.MODERATOR),
 		remove (main + "remove", PType.ADMIN),
 		tokens (main + "tokens", PType.ADMIN),
-		allcommands (main + "allcommands", PType.OP);
+		allcommands (main + "allcommands", PType.OP),
+		vip (main + "vip", PType.ADMIN);
 
 		public String perm;
 		public PType type;
