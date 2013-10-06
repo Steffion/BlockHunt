@@ -147,6 +147,8 @@ public enum ConfigC {
 			W.messages),
 	normal_ingameArenaEnd ("%TAG%NThe arena will end in %A%1%%N second(s)!",
 			W.messages),
+	normal_ingameSeekerSpawned ("%TAG%A%playername%%N has spawned as a seeker!",
+			W.messages),
 	normal_ingameGivenSword ("%TAG%NYou were given a sword!", W.messages),
 	normal_HiderDied ("%TAG%NHider %A%playername%%N died! %A%left%%N hider(s) remain...",
 			W.messages),
