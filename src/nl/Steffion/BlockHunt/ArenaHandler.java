@@ -142,10 +142,8 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
-									player.setAllowFlight(pad.pFlying);
-									if (player.getAllowFlight()) {
-										player.setFlying(true);
-									}
+									player.setFlying(false);
+									player.setAllowFlight(false);
 
 									if ((Boolean) W.config
 											.get(ConfigC.shop_blockChooserv1Enabled) == true) {
@@ -345,6 +343,9 @@ public class ArenaHandler {
 			player.teleport(pad.pLocation);
 			player.setGameMode(pad.pGameMode);
 			player.setAllowFlight(pad.pFlying);
+			if (player.getAllowFlight()) {
+				player.setFlying(true);
+			}
 
 			W.pData.remove(player);
 
