@@ -175,14 +175,14 @@ public class OnPlayerInteractEvent implements Listener {
 						if (item.getItemMeta()
 								.getDisplayName()
 								.equals(MessageM.replaceAll((String) W.config
-										.get(ConfigC.shop_blockChooserName)))) {
+										.get(ConfigC.shop_blockChooserv1Name)))) {
 							Inventory blockChooser = Bukkit
 									.createInventory(
 											null,
 											36,
 											MessageM.replaceAll("\u00A7r"
 													+ W.config
-															.get(ConfigC.shop_blockChooserName)));
+															.get(ConfigC.shop_blockChooserv1Name)));
 							if (arena.disguiseBlocks != null) {
 								for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
 									blockChooser.setItem(i - 1,
@@ -191,6 +191,36 @@ public class OnPlayerInteractEvent implements Listener {
 							}
 
 							player.openInventory(blockChooser);
+						}
+
+						if (item.getItemMeta()
+								.getDisplayName()
+								.equals(MessageM.replaceAll((String) W.config
+										.get(ConfigC.shop_BlockHuntPassv2Name)))) {
+							Inventory BlockHuntPass = Bukkit
+									.createInventory(
+											null,
+											9,
+											MessageM.replaceAll("\u00A7r"
+													+ W.config
+															.get(ConfigC.shop_BlockHuntPassv2Name)));
+							ItemStack BlockHuntPassSEEKER = new ItemStack(
+									Material.WOOL, 1, (short) 11);
+							ItemMeta BlockHuntPassIM = BlockHuntPassSEEKER
+									.getItemMeta();
+							BlockHuntPassIM.setDisplayName(MessageM
+									.replaceAll("&eSEEKER"));
+							BlockHuntPassSEEKER.setItemMeta(BlockHuntPassIM);
+							BlockHuntPass.setItem(1, BlockHuntPassSEEKER);
+
+							ItemStack BlockHuntPassHIDER = new ItemStack(
+									Material.WOOL, 1, (short) 14);
+							BlockHuntPassIM.setDisplayName(MessageM
+									.replaceAll("&eHIDER"));
+							BlockHuntPassHIDER.setItemMeta(BlockHuntPassIM);
+							BlockHuntPass.setItem(7, BlockHuntPassHIDER);
+
+							player.openInventory(BlockHuntPass);
 						}
 					}
 				}

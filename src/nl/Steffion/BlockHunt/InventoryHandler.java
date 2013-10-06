@@ -268,13 +268,13 @@ public class InventoryHandler {
 
 		ItemStack shopBlockChooser = new ItemStack(
 				Material.getMaterial((String) W.config
-						.get(ConfigC.shop_blockChooserIDname)), 1);
+						.get(ConfigC.shop_blockChooserv1IDname)), 1);
 		ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
 		shopBlockChooser_IM.setDisplayName(MessageM
 				.replaceAll((String) W.config
-						.get(ConfigC.shop_blockChooserName)));
+						.get(ConfigC.shop_blockChooserv1Name)));
 		lores = W.config.getFile().getStringList(
-				ConfigC.shop_blockChooserDescription.location);
+				ConfigC.shop_blockChooserv1Description.location);
 		lores2 = new ArrayList<String>();
 		for (String lore : lores) {
 			lores2.add(MessageM.replaceAll(lore));
@@ -282,20 +282,20 @@ public class InventoryHandler {
 
 		lores2.add(MessageM.replaceAll(
 				(String) W.config.get(ConfigC.shop_price),
-				"amount-" + W.config.get(ConfigC.shop_blockChooserPrice)));
+				"amount-" + W.config.get(ConfigC.shop_blockChooserv1Price)));
 
 		shopBlockChooser_IM.setLore(lores2);
 		shopBlockChooser.setItemMeta(shopBlockChooser_IM);
 
 		ItemStack shopBlockHuntPass = new ItemStack(
 				Material.getMaterial((String) W.config
-						.get(ConfigC.shop_BlockHuntPassIDname)), 1);
+						.get(ConfigC.shop_BlockHuntPassv2IDName)), 1);
 		ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
 		shopBlockHuntPass_IM.setDisplayName(MessageM
 				.replaceAll((String) W.config
-						.get(ConfigC.shop_BlockHuntPassName)));
+						.get(ConfigC.shop_BlockHuntPassv2Name)));
 		lores = W.config.getFile().getStringList(
-				ConfigC.shop_BlockHuntPassDescription.location);
+				ConfigC.shop_BlockHuntPassv2Description.location);
 		lores2 = new ArrayList<String>();
 		for (String lore : lores) {
 			lores2.add(MessageM.replaceAll(lore));
@@ -303,20 +303,18 @@ public class InventoryHandler {
 
 		lores2.add(MessageM.replaceAll(
 				(String) W.config.get(ConfigC.shop_price),
-				"amount-" + W.config.get(ConfigC.shop_BlockHuntPassPrice)));
+				"amount-" + W.config.get(ConfigC.shop_BlockHuntPassv2Price)));
 
 		shopBlockHuntPass_IM.setLore(lores2);
 		shopBlockHuntPass.setItemMeta(shopBlockHuntPass_IM);
 
 		shop.setItem(0, shopTokens);
-		if ((Boolean) W.config.get(ConfigC.shop_blockChooserEnabled) == true
+		if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
 				&& (Boolean) W.shop.getFile().get(
 						player.getName() + ".blockchooser") == null) {
 			shop.setItem(1, shopBlockChooser);
 		}
-		if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassEnabled) == true
-				&& (Boolean) W.shop.getFile().get(
-						player.getName() + ".blockhuntpass") == null) {
+		if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
 			shop.setItem(2, shopBlockHuntPass);
 		}
 		player.openInventory(shop);
