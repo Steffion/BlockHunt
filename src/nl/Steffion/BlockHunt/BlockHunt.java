@@ -485,6 +485,9 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							if (W.seekertime.get(player) <= 0) {
 								player.teleport(arena.hidersWarp);
 								W.seekertime.remove(player);
+								ArenaHandler.sendFMessage(arena,
+										ConfigC.normal_ingameSeekerSpawned,
+										"playername-" + player.getName());
 							}
 						}
 					}
