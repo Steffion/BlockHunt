@@ -176,6 +176,34 @@ public class ArenaHandler {
 											player.getInventory().addItem(
 													shopBlockChooser);
 										}
+										if (!PermissionsM.hasPerm(player,
+												Permissions.vip, true)) {
+											ItemStack shopBlockChooser = new ItemStack(
+													Material.getMaterial((String) W.config
+															.get(ConfigC.shop_blockChooserIDname)),
+													1);
+											ItemMeta shopBlockChooser_IM = shopBlockChooser
+													.getItemMeta();
+											shopBlockChooser_IM
+													.setDisplayName(MessageM
+															.replaceAll((String) W.config
+																	.get(ConfigC.shop_blockChooserName)));
+											List<String> lores = W.config
+													.getFile()
+													.getStringList(
+															ConfigC.shop_blockChooserDescription.location);
+											List<String> lores2 = new ArrayList<String>();
+											for (String lore : lores) {
+												lores2.add(MessageM
+														.replaceAll(lore));
+											}
+											shopBlockChooser_IM.setLore(lores2);
+											shopBlockChooser
+													.setItemMeta(shopBlockChooser_IM);
+
+											player.getInventory().addItem(
+													shopBlockChooser);
+										}
 									}
 
 									if ((Boolean) W.config
