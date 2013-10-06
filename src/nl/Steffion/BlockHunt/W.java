@@ -53,6 +53,7 @@ public class W {
 
 	public static HashMap<Player, PlayerArenaData> pData = new HashMap<Player, PlayerArenaData>();
 	public static HashMap<Player, ItemStack> choosenBlock = new HashMap<Player, ItemStack>();
+	public static HashMap<Player, Boolean> choosenSeeker = new HashMap<Player, Boolean>();
 
 	public static HashMap<Player, ItemStack> pBlock = new HashMap<Player, ItemStack>();
 	public static HashMap<Player, Location> moveLoc = new HashMap<Player, Location>();

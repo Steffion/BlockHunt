@@ -142,30 +142,28 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.getInventory().setBoots(
 											new ItemStack(Material.AIR));
-									player.setAllowFlight(pad.pFlying);
-									if (player.getAllowFlight()) {
-										player.setFlying(true);
-									}
+									player.setFlying(false);
+									player.setAllowFlight(false);
 
 									if ((Boolean) W.config
-											.get(ConfigC.shop_blockChooserEnabled) == true) {
+											.get(ConfigC.shop_blockChooserv1Enabled) == true) {
 										if (W.shop.getFile().get(
 												player.getName()
 														+ ".blockchooser") != null) {
 											ItemStack shopBlockChooser = new ItemStack(
 													Material.getMaterial((String) W.config
-															.get(ConfigC.shop_blockChooserIDname)),
+															.get(ConfigC.shop_blockChooserv1IDname)),
 													1);
 											ItemMeta shopBlockChooser_IM = shopBlockChooser
 													.getItemMeta();
 											shopBlockChooser_IM
 													.setDisplayName(MessageM
 															.replaceAll((String) W.config
-																	.get(ConfigC.shop_blockChooserName)));
+																	.get(ConfigC.shop_blockChooserv1Name)));
 											List<String> lores = W.config
 													.getFile()
 													.getStringList(
-															ConfigC.shop_blockChooserDescription.location);
+															ConfigC.shop_blockChooserv1Description.location);
 											List<String> lores2 = new ArrayList<String>();
 											for (String lore : lores) {
 												lores2.add(MessageM
@@ -205,6 +203,47 @@ public class ArenaHandler {
 
 											player.getInventory().addItem(
 													shopBlockChooser);
+										}
+									}
+
+									if ((Boolean) W.config
+											.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
+										if (W.shop.getFile().getInt(
+												player.getName()
+														+ ".blockhuntpass") != 0) {
+											ItemStack shopBlockHuntPass = new ItemStack(
+													Material.getMaterial((String) W.config
+															.get(ConfigC.shop_BlockHuntPassv2IDName)),
+													1);
+											ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass
+													.getItemMeta();
+											shopBlockHuntPass_IM
+													.setDisplayName(MessageM
+															.replaceAll((String) W.config
+																	.get(ConfigC.shop_BlockHuntPassv2Name)));
+											List<String> lores = W.config
+													.getFile()
+													.getStringList(
+															ConfigC.shop_BlockHuntPassv2Description.location);
+											List<String> lores2 = new ArrayList<String>();
+											for (String lore : lores) {
+												lores2.add(MessageM
+														.replaceAll(lore));
+											}
+
+											shopBlockHuntPass_IM
+													.setLore(lores2);
+											shopBlockHuntPass
+													.setItemMeta(shopBlockHuntPass_IM);
+											shopBlockHuntPass
+													.setAmount(W.shop
+															.getFile()
+															.getInt(player
+																	.getName()
+																	+ ".blockhuntpass"));
+
+											player.getInventory().addItem(
+													shopBlockHuntPass);
 										}
 									}
 									player.updateInventory();
@@ -332,6 +371,9 @@ public class ArenaHandler {
 			player.teleport(pad.pLocation);
 			player.setGameMode(pad.pGameMode);
 			player.setAllowFlight(pad.pFlying);
+			if (player.getAllowFlight()) {
+				player.setFlying(true);
+			}
 
 			W.pData.remove(player);
 
