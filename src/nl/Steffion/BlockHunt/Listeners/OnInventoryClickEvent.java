@@ -38,9 +38,12 @@ public class OnInventoryClickEvent implements Listener {
 			if (inv.getName().contains("DisguiseBlocks")) {
 				if (event.getCurrentItem() != null) {
 					if (!event.getCurrentItem().getType().isBlock()) {
-						event.setCancelled(true);
-						MessageM.sendFMessage(player,
-								ConfigC.error_setNotABlock);
+						if (!event.getCurrentItem().getType()
+								.equals(Material.FLOWER_POT_ITEM)) {
+							event.setCancelled(true);
+							MessageM.sendFMessage(player,
+									ConfigC.error_setNotABlock);
+						}
 					}
 				}
 
