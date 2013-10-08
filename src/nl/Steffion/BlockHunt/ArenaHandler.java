@@ -18,6 +18,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
 
 @SuppressWarnings("deprecation")
 public class ArenaHandler {
@@ -128,7 +129,10 @@ public class ArenaHandler {
 
 									player.teleport(arena.lobbyWarp);
 									player.setGameMode(GameMode.SURVIVAL);
-									player.getActivePotionEffects().clear();
+									for (PotionEffect pe : player
+											.getActivePotionEffects()) {
+										player.removePotionEffect(pe.getType());
+									}
 									player.setFoodLevel(20);
 									player.setHealth(20);
 									player.setLevel(arena.timer);
