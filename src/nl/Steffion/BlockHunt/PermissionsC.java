@@ -29,6 +29,7 @@ public class PermissionsC {
 		leave (main + "leave", PType.PLAYER),
 		list (main + "list", PType.PLAYER),
 		shop (main + "shop", PType.PLAYER),
+		shopblockchooser (main + "shop.blockchooser", PType.ADMIN),
 		start (main + "start", PType.MODERATOR),
 		create (main + "create", PType.ADMIN),
 		set (main + "set", PType.MODERATOR),
@@ -36,8 +37,7 @@ public class PermissionsC {
 		signcreate (main + "signcreate", PType.MODERATOR),
 		remove (main + "remove", PType.ADMIN),
 		tokens (main + "tokens", PType.ADMIN),
-		allcommands (main + "allcommands", PType.OP),
-		vip (main + "vip", PType.ADMIN);
+		allcommands (main + "allcommands", PType.OP);
 
 		public String perm;
 		public PType type;

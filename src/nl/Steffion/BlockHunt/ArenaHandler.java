@@ -153,35 +153,12 @@ public class ArenaHandler {
 											.get(ConfigC.shop_blockChooserv1Enabled) == true) {
 										if (W.shop.getFile().get(
 												player.getName()
-														+ ".blockchooser") != null) {
-											ItemStack shopBlockChooser = new ItemStack(
-													Material.getMaterial((String) W.config
-															.get(ConfigC.shop_blockChooserv1IDname)),
-													1);
-											ItemMeta shopBlockChooser_IM = shopBlockChooser
-													.getItemMeta();
-											shopBlockChooser_IM
-													.setDisplayName(MessageM
-															.replaceAll((String) W.config
-																	.get(ConfigC.shop_blockChooserv1Name)));
-											List<String> lores = W.config
-													.getFile()
-													.getStringList(
-															ConfigC.shop_blockChooserv1Description.location);
-											List<String> lores2 = new ArrayList<String>();
-											for (String lore : lores) {
-												lores2.add(MessageM
-														.replaceAll(lore));
-											}
-											shopBlockChooser_IM.setLore(lores2);
-											shopBlockChooser
-													.setItemMeta(shopBlockChooser_IM);
-
-											player.getInventory().addItem(
-													shopBlockChooser);
-										}
-										if (!PermissionsM.hasPerm(player,
-												Permissions.vip, true)) {
+														+ ".blockchooser") != null
+												|| PermissionsM
+														.hasPerm(
+																player,
+																Permissions.shopblockchooser,
+																false)) {
 											ItemStack shopBlockChooser = new ItemStack(
 													Material.getMaterial((String) W.config
 															.get(ConfigC.shop_blockChooserv1IDname)),

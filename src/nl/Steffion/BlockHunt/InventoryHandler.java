@@ -5,6 +5,8 @@ import java.util.List;
 
 import nl.Steffion.BlockHunt.Arena.ArenaType;
 import nl.Steffion.BlockHunt.Managers.MessageM;
+import nl.Steffion.BlockHunt.Managers.PermissionsM;
+import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -310,8 +312,9 @@ public class InventoryHandler {
 
 		shop.setItem(0, shopTokens);
 		if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
-				&& (Boolean) W.shop.getFile().get(
-						player.getName() + ".blockchooser") == null) {
+				&& ((Boolean) W.shop.getFile().get(
+						player.getName() + ".blockchooser") == null || !PermissionsM
+						.hasPerm(player, Permissions.shopblockchooser, false))) {
 			shop.setItem(1, shopBlockChooser);
 		}
 		if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
