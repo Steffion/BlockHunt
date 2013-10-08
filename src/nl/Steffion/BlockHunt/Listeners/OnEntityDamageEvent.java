@@ -21,8 +21,7 @@ public class OnEntityDamageEvent implements Listener {
 			Player player = (Player) event.getEntity();
 			for (Arena arena : W.arenaList) {
 				if (arena.playersInArena.contains(player)) {
-					if (event.getCause().equals(DamageCause.FALL)
-							|| event.getCause().equals(DamageCause.DROWNING)) {
+					if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
 						event.setCancelled(true);
 					}
 				}
