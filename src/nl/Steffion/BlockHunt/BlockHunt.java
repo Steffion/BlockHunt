@@ -410,6 +410,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 																+ seeker.getName());
 										arena.seekers.add(seeker);
 										seeker.teleport(arena.seekersWarp);
+										seeker.getInventory().clear();
+										seeker.updateInventory();
 										W.seekertime.put(seeker,
 												arena.waitingTimeSeeker);
 									} else {
