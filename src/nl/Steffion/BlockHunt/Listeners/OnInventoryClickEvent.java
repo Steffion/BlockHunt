@@ -16,6 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -29,7 +30,7 @@ public class OnInventoryClickEvent implements Listener {
 		for (Arena arena : W.arenaList) {
 			if (arena.playersInArena.contains(player)
 					&& !arena.seekers.contains(player)) {
-				if (event.getSlot() == 8 || event.getSlot() == 103) {
+				if (event.getSlot() == 8 || event.getSlotType() == SlotType.ARMOR) {
 					event.setCancelled(true);
 				}
 			}
