@@ -85,7 +85,7 @@ public class ArenaHandler {
 						}
 
 						if ((Boolean) W.config
-								.get(ConfigC.require_inventory_clear_onJoin)
+								.get(ConfigC.requireInventoryClearOnJoin)
 								&& !inventoryempty) {
 							MessageM.sendFMessage(player,
 									ConfigC.error_joinInventoryNotEmpty);

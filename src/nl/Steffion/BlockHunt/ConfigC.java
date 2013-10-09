@@ -93,7 +93,7 @@ public enum ConfigC {
 	scoreboard_seekers ("%NSeekers:", W.config),
 	scoreboard_hiders ("%NHiders:", W.config),
 
-	require_inventory_clear_onJoin (false, W.config),
+	requireInventoryClearOnJoin (false, W.config),
 
 	log_enabledPlugin ("%TAG%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.",
 			W.messages),
