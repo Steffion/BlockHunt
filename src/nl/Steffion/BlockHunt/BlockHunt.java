@@ -210,7 +210,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				"sw", Permissions.setwarp, ConfigC.help_setwarp,
 				(Boolean) W.config.get(ConfigC.commandEnabled_setwarp),
 				BlockHuntCMD, new CMDsetwarp(),
-				"/BlockHunt <setwarp|sw> <lobby|hiders|seekers> <arenaname>");
+				"/BlockHunt <setwarp|sw> <lobby|hiders|seekers|spawn> <arenaname>");
 		CMDremove = new CommandM("BlockHunt REMOVE", "BlockHunt", "remove",
 				"delete", Permissions.remove, ConfigC.help_remove,
 				(Boolean) W.config.get(ConfigC.commandEnabled_remove),
