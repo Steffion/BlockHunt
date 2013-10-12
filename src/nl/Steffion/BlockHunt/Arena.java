@@ -31,6 +31,7 @@ public class Arena implements ConfigurationSerializable {
 	public LocationSerializable lobbyWarp;
 	public LocationSerializable hidersWarp;
 	public LocationSerializable seekersWarp;
+	public LocationSerializable spawnWarp;
 	public List<String> seekersWinCommands;
 	public List<String> hidersWinCommands;
 	public List<String> allowedCommands;
@@ -50,11 +51,12 @@ public class Arena implements ConfigurationSerializable {
 			int waitingTimeSeeker, int gameTime, int timeUntilHidersSword,
 			ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
-			LocationSerializable seekersWarp, List<String> seekersWinCommands,
-			List<String> hidersWinCommands, List<String> allowedCommands,
-			int seekersTokenWin, int hidersTokenWin, int killTokens,
-			List<Player> playersInArena, ArenaState gameState, int timer,
-			List<Player> seekers, Scoreboard scoreboard) {
+			LocationSerializable seekersWarp, LocationSerializable spawnWarp,
+			List<String> seekersWinCommands, List<String> hidersWinCommands,
+			List<String> allowedCommands, int seekersTokenWin,
+			int hidersTokenWin, int killTokens, List<Player> playersInArena,
+			ArenaState gameState, int timer, List<Player> seekers,
+			Scoreboard scoreboard) {
 		this.arenaName = arenaName;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
@@ -69,6 +71,7 @@ public class Arena implements ConfigurationSerializable {
 		this.lobbyWarp = lobbyWarp;
 		this.hidersWarp = hidersWarp;
 		this.seekersWarp = seekersWarp;
+		this.spawnWarp = spawnWarp;
 		this.seekersWinCommands = seekersWinCommands;
 		this.hidersWinCommands = hidersWinCommands;
 		this.allowedCommands = allowedCommands;
@@ -117,6 +120,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("lobbyWarp", lobbyWarp);
 		map.put("hidersWarp", hidersWarp);
 		map.put("seekersWarp", seekersWarp);
+		map.put("spawnWarp", spawnWarp);
 		map.put("seekersWinCommands", seekersWinCommands);
 		map.put("hidersWinCommands", hidersWinCommands);
 		map.put("allowedCommands", allowedCommands);
@@ -145,6 +149,7 @@ public class Arena implements ConfigurationSerializable {
 				(LocationSerializable) M.g(map, "lobbyWarp", loc),
 				(LocationSerializable) M.g(map, "hidersWarp", loc),
 				(LocationSerializable) M.g(map, "seekersWarp", loc),
+				(LocationSerializable) M.g(map, "spawnWarp", loc),
 				(ArrayList<String>) M.g(map, "seekersWinCommands",
 						new ArrayList<String>()), (ArrayList<String>) M.g(map,
 						"hidersWinCommands", new ArrayList<String>()),

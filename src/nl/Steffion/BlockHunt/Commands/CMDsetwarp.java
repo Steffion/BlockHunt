@@ -51,6 +51,12 @@ public class CMDsetwarp extends DefaultCMD {
 						MessageM.sendFMessage(player,
 								ConfigC.normal_setwarpWarpSet, "warp-"
 										+ warpname);
+					} else if (warpname.equalsIgnoreCase("spawn")) {
+						arena.spawnWarp = loc;
+						save(arena);
+						MessageM.sendFMessage(player,
+								ConfigC.normal_setwarpWarpSet, "warp-"
+										+ warpname);
 					} else {
 						MessageM.sendFMessage(player,
 								ConfigC.error_setwarpWarpNotFound, "warp-"

@@ -96,10 +96,12 @@ public class ArenaHandler {
 								Bukkit.getWorld(player.getWorld().getName()
 										.toString()), 0, 0, 0, 0, 0);
 						if (arena.lobbyWarp != null && arena.hidersWarp != null
-								&& arena.seekersWarp != null) {
+								&& arena.seekersWarp != null
+								&& arena.spawnWarp != null) {
 							if (!arena.lobbyWarp.equals(zero)
 									&& !arena.hidersWarp.equals(zero)
-									&& !arena.seekersWarp.equals(zero)) {
+									&& !arena.seekersWarp.equals(zero)
+									&& !arena.spawnWarp.equals(zero)) {
 								if (arena.gameState == ArenaState.WAITING
 										|| arena.gameState == ArenaState.STARTING) {
 									if (arena.playersInArena.size() >= arena.maxPlayers) {
@@ -349,7 +351,7 @@ public class ArenaHandler {
 			player.setHealth(pad.pHealth);
 			player.setFoodLevel(pad.pFood);
 			player.addPotionEffects(pad.pPotionEffects);
-			player.teleport(pad.pLocation);
+			player.teleport(arena.spawnWarp);
 			player.setGameMode(pad.pGameMode);
 			player.setAllowFlight(pad.pFlying);
 			if (player.getAllowFlight()) {
