@@ -9,7 +9,7 @@ import java.io.OutputStream;
 
 public class FileM {
 	/*
-	 * Made by @author Steffion, © 2013.
+	 * Made by @author Steffion, Â© 2013.
 	 */
 
 	public static void copyFolder(File src, File dest) throws IOException {
