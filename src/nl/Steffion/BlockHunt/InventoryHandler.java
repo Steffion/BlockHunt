@@ -313,7 +313,7 @@ public class InventoryHandler {
 		shop.setItem(0, shopTokens);
 		if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
 				&& ((Boolean) W.shop.getFile().get(
-						player.getName() + ".blockchooser") == null || !PermissionsM
+						player.getName() + ".blockchooser") == null && !PermissionsM
 						.hasPerm(player, Permissions.shopblockchooser, false))) {
 			shop.setItem(1, shopBlockChooser);
 		}
