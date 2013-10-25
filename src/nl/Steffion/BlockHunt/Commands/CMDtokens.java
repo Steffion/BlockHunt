@@ -47,6 +47,10 @@ public class CMDtokens extends DefaultCMD {
 								+ playerName);
 				return true;
 			}
+			String name = "\u00A78Console";
+			if (player != null) {
+				name = player.getName();
+			}
 
 			if (option.equalsIgnoreCase("set")) {
 				W.shop.getFile().set(tokenPlayer.getName() + ".tokens", amount);
@@ -54,6 +58,10 @@ public class CMDtokens extends DefaultCMD {
 				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
 						"option-Set", "playername-" + tokenPlayer.getName(),
 						"option2-to", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer,
+						ConfigC.normal_tokensChangedPerson, "option-set",
+						"playername-" + name, "option2-to",
+						"amount-" + amount);
 			} else if (option.equalsIgnoreCase("add")) {
 				int tokens = 0;
 				if (W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens") != 0) {
@@ -66,6 +74,10 @@ public class CMDtokens extends DefaultCMD {
 				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
 						"option-Added", "playername-" + tokenPlayer.getName(),
 						"option2-to", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer,
+						ConfigC.normal_tokensChangedPerson, "option-added",
+						"playername-" + name, "option2-to",
+						"amount-" + amount);
 			} else if (option.equalsIgnoreCase("take")) {
 				int tokens = 0;
 				if (W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens") != 0) {
@@ -78,6 +90,10 @@ public class CMDtokens extends DefaultCMD {
 				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
 						"option-Took", "playername-" + tokenPlayer.getName(),
 						"option2-from", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer,
+						ConfigC.normal_tokensChangedPerson, "option-took",
+						"playername-" + name, "option2-from",
+						"amount-" + amount);
 			} else {
 				MessageM.sendFMessage(player,
 						ConfigC.error_tokensUnknownsetting, "option-" + option);

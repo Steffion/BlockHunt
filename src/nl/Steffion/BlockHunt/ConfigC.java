@@ -165,6 +165,8 @@ public enum ConfigC {
 	normal_removeRemovedArena ("%TAG%NRemoved arena '%A%name%%N'!", W.messages),
 	normal_tokensChanged ("%TAG%N%option% %A%amount%%N tokens %option2% %A%playername%%N.",
 			W.messages),
+	normal_tokensChangedPerson ("%TAG%NPlayer %A%playername%%N %N%option% %A%amount%%N %option2% your tokens.",
+			W.messages),
 	normal_ingameNowSolid ("%TAG%NYou're now a solid '%A%block%%N' block!",
 			W.messages),
 	normal_ingameNoMoreSolid ("%TAG%NYou're no longer a solid block!",
