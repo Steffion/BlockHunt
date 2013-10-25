@@ -66,7 +66,7 @@ public class PermissionsM {
 			return true;
 		} else if (player.hasPermission(PermissionsC.main + perm.perm)) {
 			return true;
-		} else if (player.hasPermission(PermissionsC.main + perm.perm + "*")) {
+		} else if (player.hasPermission(PermissionsC.main + perm.perm + ".*")) {
 			return true;
 		} else {
 			if (message) {

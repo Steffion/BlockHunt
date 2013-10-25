@@ -20,24 +20,24 @@ public class PermissionsC {
 	}
 
 	public enum Permissions {
-		info (main + "info", PType.ALL),
-		help (main + "help", PType.ALL),
-		reload (main + "reload", PType.ADMIN),
-		join (main + "join", PType.PLAYER),
-		joinfull (main + "joinfull", PType.MODERATOR),
-		joinsign (main + "joinsign", PType.PLAYER),
-		leave (main + "leave", PType.PLAYER),
-		list (main + "list", PType.PLAYER),
-		shop (main + "shop", PType.PLAYER),
-		shopblockchooser (main + "shop.blockchooser", PType.ADMIN),
-		start (main + "start", PType.MODERATOR),
-		create (main + "create", PType.ADMIN),
-		set (main + "set", PType.MODERATOR),
-		setwarp (main + "setwarp", PType.MODERATOR),
-		signcreate (main + "signcreate", PType.MODERATOR),
-		remove (main + "remove", PType.ADMIN),
-		tokens (main + "tokens", PType.ADMIN),
-		allcommands (main + "allcommands", PType.OP);
+		info ("info", PType.ALL),
+		help ("help", PType.ALL),
+		reload ("reload", PType.ADMIN),
+		join ("join", PType.PLAYER),
+		joinfull ("joinfull", PType.MODERATOR),
+		joinsign ("joinsign", PType.PLAYER),
+		leave ("leave", PType.PLAYER),
+		list ("list", PType.PLAYER),
+		shop ("shop", PType.PLAYER),
+		shopblockchooser ("shop.blockchooser", PType.ADMIN),
+		start ("start", PType.MODERATOR),
+		create ("create", PType.ADMIN),
+		set ("set", PType.MODERATOR),
+		setwarp ("setwarp", PType.MODERATOR),
+		signcreate ("signcreate", PType.MODERATOR),
+		remove ("remove", PType.ADMIN),
+		tokens ("tokens", PType.ADMIN),
+		allcommands ("allcommands", PType.OP);
 
 		public String perm;
 		public PType type;
