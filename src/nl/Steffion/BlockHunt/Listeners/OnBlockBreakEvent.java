@@ -30,8 +30,5 @@ public class OnBlockBreakEvent implements Listener {
 				event.setCancelled(true);
 			}
 		}
-		if (event.getBlock().equals(Material.FIRE)) {
-			event.setCancelled(true);
-		}
 	}
 }
