@@ -1,6 +1,6 @@
 name: BlockHunt
 main: nl.Steffion.BlockHunt.BlockHunt
-version: 0.2.0_BETA
+version: 0.2.0_BETA_B2
 authors:
   - Steffion
 description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
