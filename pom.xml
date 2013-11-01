@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 			<groupId>me.libraryaddict</groupId>
-			<artifactId>LibsDisguise</artifactId>
+			<artifactId>LibsDisguises</artifactId>
 			<version>7.6.4</version>
 		</dependency>
 	</dependencies>
