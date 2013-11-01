@@ -11,10 +11,6 @@
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository> 
 		<repository>
-			<id>sk89q-repo</id>
-			<url>http://maven.sk89q.com/repo</url>
-		</repository>
-		<repository>
 			<id>addstar-repo</id>
 			<url>http://maven.addstar.com.au/artifactory/ext-release-local</url>
 		</repository>
@@ -25,16 +21,6 @@
 			<groupId>org.bukkit</groupId>
 			<artifactId>bukkit</artifactId>
 			<version>1.6.4-R0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sk89q</groupId>
-			<artifactId>worldedit</artifactId>
-			<version>5.5.7-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.milkbowl.vault</groupId>
-			<artifactId>Vault</artifactId>
-			<version>1.2.26-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>me.libraryaddict</groupId>
