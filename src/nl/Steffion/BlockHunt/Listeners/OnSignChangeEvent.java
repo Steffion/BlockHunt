@@ -14,7 +14,7 @@ import org.bukkit.event.block.SignChangeEvent;
 
 public class OnSignChangeEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
 	public void onSignChangeEvent(SignChangeEvent event) {
 		Player player = event.getPlayer();
 		String[] lines = event.getLines();

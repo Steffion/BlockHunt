@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class OnPlayerCommandPreprocessEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled=true)
 	public void onPlayerCommandPreprocessEvent(
 			PlayerCommandPreprocessEvent event) {
 		Player player = event.getPlayer();

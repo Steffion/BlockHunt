@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack;
 public class OnInventoryClickEvent implements Listener {
 
 	@SuppressWarnings("deprecation")
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
 

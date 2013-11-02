@@ -31,7 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class OnPlayerInteractEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();

@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class OnBlockBreakEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
 	public void onBlockBreakEvent(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 

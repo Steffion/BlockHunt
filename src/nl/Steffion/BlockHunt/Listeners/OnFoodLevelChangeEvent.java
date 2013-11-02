@@ -11,7 +11,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class OnFoodLevelChangeEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
 	public void onFoodLevelChangeEvent(FoodLevelChangeEvent event) {
 		Player player = (Player) event.getEntity();
 
