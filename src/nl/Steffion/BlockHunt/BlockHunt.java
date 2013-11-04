@@ -1,6 +1,5 @@
 package nl.Steffion.BlockHunt;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +52,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -271,26 +269,30 @@ public class BlockHunt extends JavaPlugin implements Listener {
 						}
 
 					});
-
-					metrics.start();
-					FileConfiguration metrics_fc = new YamlConfiguration();
-					metrics_fc.load(metrics.getConfigFile());
-					if (!metrics_fc.getBoolean("opt-out", false)) {
-						MessageM.sendMessage(null,
-								"%TAG%NSending %AMCStats%N to the server...");
-					} else {
-						MessageM.sendMessage(null,
-								"%TAG%EUnable to send %AMCStats %Eto the server. %AMCStats%E is disabled?");
-					}
-				} catch (IOException e) {
-					MessageM.sendMessage(null,
-							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
-				} catch (InvalidConfigurationException e) {
+				} catch (Exception e) {
 					MessageM.sendMessage(null,
 							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
 				}
 			}
 		}, 0, 6000);
+
+		Metrics metrics;
+		try {
+			metrics = new Metrics(plugin);
+			metrics.start();
+			FileConfiguration metrics_fc = new YamlConfiguration();
+			metrics_fc.load(metrics.getConfigFile());
+			if (!metrics_fc.getBoolean("opt-out", false)) {
+				MessageM.sendMessage(null,
+						"%TAG%NSending %AMCStats%N to the server...");
+			} else {
+				MessageM.sendMessage(null,
+						"%TAG%EUnable to send %AMCStats %Eto the server. %AMCStats%E is disabled?");
+			}
+		} catch (Exception e) {
+			MessageM.sendMessage(null,
+					"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
+		}
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {
