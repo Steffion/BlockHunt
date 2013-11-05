@@ -48,38 +48,38 @@ public class InventoryHandler {
 			//
 
 			ItemStack maxPlayers_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack maxPlayers = new ItemStack(Material.PISTON_MOVING_PIECE,
+			ItemStack maxPlayers = new ItemStack(Material.BEDROCK,
 					arena.maxPlayers);
 			ItemStack maxPlayers_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
 			ItemStack minPlayers_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack minPlayers = new ItemStack(Material.PISTON_MOVING_PIECE,
+			ItemStack minPlayers = new ItemStack(Material.BEDROCK,
 					arena.minPlayers);
 			ItemStack minPlayers_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
 			ItemStack amountSeekersOnStart_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 			ItemStack amountSeekersOnStart = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.amountSeekersOnStart);
+					Material.BEDROCK, arena.amountSeekersOnStart);
 			ItemStack amountSeekersOnStart_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack timeInLobbyUntilStart_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 			ItemStack timeInLobbyUntilStart = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.timeInLobbyUntilStart);
+					Material.BEDROCK, arena.timeInLobbyUntilStart);
 			ItemStack timeInLobbyUntilStart_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack waitingTimeSeeker_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 			ItemStack waitingTimeSeeker = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.waitingTimeSeeker);
+					Material.BEDROCK, arena.waitingTimeSeeker);
 			ItemStack waitingTimeSeeker_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack gameTime_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack gameTime = new ItemStack(Material.PISTON_MOVING_PIECE,
+			ItemStack gameTime = new ItemStack(Material.BEDROCK,
 					arena.gameTime);
 			ItemStack gameTime_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
@@ -93,25 +93,25 @@ public class InventoryHandler {
 			ItemStack timeUntilHidersSword_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 			ItemStack timeUntilHidersSword = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.timeUntilHidersSword);
+					Material.BEDROCK, arena.timeUntilHidersSword);
 			ItemStack timeUntilHidersSword_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack hidersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET, 1);
 			ItemStack hidersTokenWin = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.hidersTokenWin);
+					Material.BEDROCK, arena.hidersTokenWin);
 			ItemStack hidersTokenWin_DOWN = new ItemStack(Material.GOLD_NUGGET,
 					1);
 
 			ItemStack seekersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET,
 					1);
 			ItemStack seekersTokenWin = new ItemStack(
-					Material.PISTON_MOVING_PIECE, arena.seekersTokenWin);
+					Material.BEDROCK, arena.seekersTokenWin);
 			ItemStack seekersTokenWin_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack killTokens_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack killTokens = new ItemStack(Material.PISTON_MOVING_PIECE,
+			ItemStack killTokens = new ItemStack(Material.BEDROCK,
 					arena.killTokens);
 			ItemStack killTokens_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
