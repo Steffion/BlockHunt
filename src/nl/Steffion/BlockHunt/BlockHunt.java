@@ -133,8 +133,11 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				new OnInventoryClickEvent(), this);
 		getServer().getPluginManager().registerEvents(
 				new OnInventoryCloseEvent(), this);
-		getServer().getPluginManager().registerEvents(
-				new OnPlayerCommandPreprocessEvent(), this);
+
+// Removed - This is handled by WorldGuard now.
+//		getServer().getPluginManager().registerEvents(
+//				new OnPlayerCommandPreprocessEvent(), this);
+
 		getServer().getPluginManager().registerEvents(
 				new OnPlayerDropItemEvent(), this);
 		getServer().getPluginManager().registerEvents(
