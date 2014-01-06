@@ -6,6 +6,7 @@ import java.util.List;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
+import net.milkbowl.vault.economy.Economy;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.Commands.CMDcreate;
@@ -60,6 +61,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockHunt extends JavaPlugin implements Listener {
@@ -77,6 +79,8 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 	public static PluginDescriptionFile pdfFile;
 	public static BlockHunt plugin;
+
+	public static Economy econ = null;
 
 	@SuppressWarnings("serial")
 	public static List<String> BlockHuntCMD = new ArrayList<String>() {
@@ -228,6 +232,14 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled);
 		}
 
+		if (!getServer().getPluginManager().isPluginEnabled("Vault")) {
+			MessageM.broadcastFMessage(ConfigC.warning_noVault);
+		} else {
+			MessageM.broadcastFMessage(ConfigC.warning_usingVault);
+		}
+
+		setupEconomy();
+
 		ArenaHandler.loadArenas();
 
 		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
@@ -338,37 +350,42 @@ public class BlockHunt extends JavaPlugin implements Listener {
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-10");
 							} else if (arena.timer == 5) {
-								arena.lobbyWarp.getWorld()
-										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 0);
+								for (Player pl : arena.playersInArena) {
+									pl.playSound(pl.getLocation(),
+											Sound.ORB_PICKUP, 1, 0);
+								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-5");
 							} else if (arena.timer == 4) {
-								arena.lobbyWarp.getWorld()
-										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 0);
+								for (Player pl : arena.playersInArena) {
+									pl.playSound(pl.getLocation(),
+											Sound.ORB_PICKUP, 1, 0);
+								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-4");
 							} else if (arena.timer == 3) {
-								arena.lobbyWarp.getWorld()
-										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 1);
+								for (Player pl : arena.playersInArena) {
+									pl.playSound(pl.getLocation(),
+											Sound.ORB_PICKUP, 1, 1);
+								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-3");
 							} else if (arena.timer == 2) {
-								arena.lobbyWarp.getWorld()
-										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 1);
+								for (Player pl : arena.playersInArena) {
+									pl.playSound(pl.getLocation(),
+											Sound.ORB_PICKUP, 1, 1);
+								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-2");
 							} else if (arena.timer == 1) {
-								arena.lobbyWarp.getWorld()
-										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 2);
+								for (Player pl : arena.playersInArena) {
+									pl.playSound(pl.getLocation(),
+											Sound.ORB_PICKUP, 1, 2);
+								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
 										"1-1");
@@ -844,5 +861,19 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			string = string.substring(0, maxLenght);
 		}
 		return string;
+	}
+
+	private boolean setupEconomy() {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			return false;
+		}
+		RegisteredServiceProvider<Economy> rsp = getServer()
+				.getServicesManager().getRegistration(Economy.class);
+		if (rsp == null) {
+			return false;
+		}
+
+		econ = rsp.getProvider();
+		return econ != null;
 	}
 }
