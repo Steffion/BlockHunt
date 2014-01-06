@@ -41,6 +41,8 @@ public enum ConfigC {
 	autoUpdateCheck (true, W.config),
 	autoDownloadUpdate (false, W.config),
 
+	vaultSupport (false, W.config),
+
 	wandIDname ("STICK", W.config),
 	wandName ("%A&l" + BlockHunt.pdfFile.getName() + "%N's selection wand",
 			W.config),
@@ -92,6 +94,8 @@ public enum ConfigC {
 	scoreboard_timeleft ("%ATime left:", W.config),
 	scoreboard_seekers ("%NSeekers:", W.config),
 	scoreboard_hiders ("%NHiders:", W.config),
+	scoreboard_vaultBank ("%NBank:", W.config),
+	scoreboard_tokenAmount ("%NTokens:", W.config),
 
 	requireInventoryClearOnJoin (false, W.config),
 
@@ -162,6 +166,10 @@ public enum ConfigC {
 			W.messages),
 	normal_addedToken ("%TAG%A%amount%%N tokens were added to your account!",
 			W.messages),
+	normal_addedVaultBalance ("%TAG%A%amount%%N was added to your bank!",
+			W.messages),
+	normal_addedVaultBalanceKill ("%TAG%A%amount%%N has been added for killing a hider",
+			W.messages),
 	normal_removeRemovedArena ("%TAG%NRemoved arena '%A%name%%N'!", W.messages),
 	normal_tokensChanged ("%TAG%N%option% %A%amount%%N tokens %option2% %A%playername%%N.",
 			W.messages),
@@ -190,6 +198,8 @@ public enum ConfigC {
 			W.messages),
 	warning_arenaStopped ("%TAG%WThe arena has been forced to stop!",
 			W.messages),
+	warning_noVault ("%TAG%WUsing BlockHunts token system!", W.messages),
+	warning_usingVault ("%TAG%WUsing Vault support", W.messages),
 
 	error_noPermission ("%TAG%EYou don't have the permissions to do that!",
 			W.messages),
@@ -240,6 +250,8 @@ public enum ConfigC {
 	error_shopMaxSeekersReached ("%TAG%ESorry, the maximum amount of seekers has been reached!",
 			W.messages),
 	error_shopMaxHidersReached ("%TAG%ESorry, the maximum amount of hiders has been reached!",
+			W.messages),
+	error_trueVaultNull ("%TAG%EVault has been enabled in the config.yml but cannot find the 'Vault' plugin! The plugin will not run",
 			W.messages);
 
 	public Object value;
