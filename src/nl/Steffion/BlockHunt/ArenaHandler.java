@@ -301,7 +301,7 @@ public class ArenaHandler {
 									+ arena.minPlayers);
 				}
 
-				if (arena.playersInArena.size() <= 1
+				if (arena.playersInArena.size() <= 2
 						&& arena.gameState == ArenaState.INGAME) {
 					if (arena.seekers.size() >= arena.playersInArena.size()) {
 						ArenaHandler.seekersWin(arena);
@@ -397,6 +397,7 @@ public class ArenaHandler {
 		SignsHandler.updateSigns();
 	}
 
+	// ADDED VAULT HERE
 	public static void seekersWin(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
 		for (Player player : arena.playersInArena) {
@@ -405,19 +406,29 @@ public class ArenaHandler {
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
 							command.replaceAll("%player%", player.getName()));
 				}
+				if (W.config.getFile().getBoolean("vaultSupport") == true) {
+					if (BlockHunt.econ != null) {
+						BlockHunt.econ.depositPlayer(player.getName(),
+								arena.seekersTokenWin);
+						MessageM.sendFMessage(player,
+								ConfigC.normal_addedVaultBalance, "amount-"
+										+ arena.seekersTokenWin);
+					}
+				} else {
 
-				if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
-					W.shop.getFile().set(player.getName() + ".tokens", 0);
+					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+						W.shop.getFile().set(player.getName() + ".tokens", 0);
+						W.shop.save();
+					}
+					int playerTokens = W.shop.getFile().getInt(
+							player.getName() + ".tokens");
+					W.shop.getFile().set(player.getName() + ".tokens",
+							playerTokens + arena.seekersTokenWin);
 					W.shop.save();
-				}
-				int playerTokens = W.shop.getFile().getInt(
-						player.getName() + ".tokens");
-				W.shop.getFile().set(player.getName() + ".tokens",
-						playerTokens + arena.seekersTokenWin);
-				W.shop.save();
 
-				MessageM.sendFMessage(player, ConfigC.normal_addedToken,
-						"amount-" + arena.seekersTokenWin);
+					MessageM.sendFMessage(player, ConfigC.normal_addedToken,
+							"amount-" + arena.seekersTokenWin);
+				}
 			}
 		}
 
@@ -443,19 +454,33 @@ public class ArenaHandler {
 								Bukkit.getConsoleSender(),
 								command.replaceAll("%player%", player.getName()));
 					}
+					if (W.config.getFile().getBoolean("vaultSupport") == true) {
+						if (BlockHunt.econ != null) {
+							if (!arena.seekers.contains(player)) {
+								BlockHunt.econ.depositPlayer(player.getName(),
+										arena.hidersTokenWin);
+								MessageM.sendFMessage(player,
+										ConfigC.normal_addedVaultBalance,
+										"amount-" + arena.hidersTokenWin);
+							}
+						}
+					} else {
 
-					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
-						W.shop.getFile().set(player.getName() + ".tokens", 0);
+						if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+							W.shop.getFile().set(player.getName() + ".tokens",
+									0);
+							W.shop.save();
+						}
+						int playerTokens = W.shop.getFile().getInt(
+								player.getName() + ".tokens");
+						W.shop.getFile().set(player.getName() + ".tokens",
+								playerTokens + arena.hidersTokenWin);
 						W.shop.save();
-					}
-					int playerTokens = W.shop.getFile().getInt(
-							player.getName() + ".tokens");
-					W.shop.getFile().set(player.getName() + ".tokens",
-							playerTokens + arena.hidersTokenWin);
-					W.shop.save();
 
-					MessageM.sendFMessage(player, ConfigC.normal_addedToken,
-							"amount-" + arena.hidersTokenWin);
+						MessageM.sendFMessage(player,
+								ConfigC.normal_addedToken, "amount-"
+										+ arena.hidersTokenWin);
+					}
 				}
 			}
 		}
