@@ -59,28 +59,27 @@ public class InventoryHandler {
 
 			ItemStack amountSeekersOnStart_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
-			ItemStack amountSeekersOnStart = new ItemStack(
-					Material.PAPER, arena.amountSeekersOnStart);
+			ItemStack amountSeekersOnStart = new ItemStack(Material.PAPER,
+					arena.amountSeekersOnStart);
 			ItemStack amountSeekersOnStart_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack timeInLobbyUntilStart_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
-			ItemStack timeInLobbyUntilStart = new ItemStack(
-					Material.PAPER, arena.timeInLobbyUntilStart);
+			ItemStack timeInLobbyUntilStart = new ItemStack(Material.PAPER,
+					arena.timeInLobbyUntilStart);
 			ItemStack timeInLobbyUntilStart_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack waitingTimeSeeker_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
-			ItemStack waitingTimeSeeker = new ItemStack(
-					Material.PAPER, arena.waitingTimeSeeker);
+			ItemStack waitingTimeSeeker = new ItemStack(Material.PAPER,
+					arena.waitingTimeSeeker);
 			ItemStack waitingTimeSeeker_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack gameTime_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack gameTime = new ItemStack(Material.PAPER,
-					arena.gameTime);
+			ItemStack gameTime = new ItemStack(Material.PAPER, arena.gameTime);
 			ItemStack gameTime_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
 			ItemStack disguiseBlocks_NOTE = new ItemStack(Material.BOOK, 1);
@@ -92,21 +91,21 @@ public class InventoryHandler {
 
 			ItemStack timeUntilHidersSword_UP = new ItemStack(
 					Material.GOLD_NUGGET, 1);
-			ItemStack timeUntilHidersSword = new ItemStack(
-					Material.PAPER, arena.timeUntilHidersSword);
+			ItemStack timeUntilHidersSword = new ItemStack(Material.PAPER,
+					arena.timeUntilHidersSword);
 			ItemStack timeUntilHidersSword_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
 			ItemStack hidersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET, 1);
-			ItemStack hidersTokenWin = new ItemStack(
-					Material.PAPER, arena.hidersTokenWin);
+			ItemStack hidersTokenWin = new ItemStack(Material.PAPER,
+					arena.hidersTokenWin);
 			ItemStack hidersTokenWin_DOWN = new ItemStack(Material.GOLD_NUGGET,
 					1);
 
 			ItemStack seekersTokenWin_UP = new ItemStack(Material.GOLD_NUGGET,
 					1);
-			ItemStack seekersTokenWin = new ItemStack(
-					Material.PAPER, arena.seekersTokenWin);
+			ItemStack seekersTokenWin = new ItemStack(Material.PAPER,
+					arena.seekersTokenWin);
 			ItemStack seekersTokenWin_DOWN = new ItemStack(
 					Material.GOLD_NUGGET, 1);
 
@@ -253,73 +252,147 @@ public class InventoryHandler {
 				9,
 				MessageM.replaceAll("\u00A7r"
 						+ W.config.get(ConfigC.shop_title)));
-		if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
-			W.shop.getFile().set(player.getName() + ".tokens", 0);
-			W.shop.save();
+		if (W.config.getFile().getBoolean("vaultSupport") == true) {
+			if (BlockHunt.econ != null) {
+				int vaultBalance = (int) BlockHunt.econ.getBalance(player
+						.getName());
+				List<String> lores = new ArrayList<String>();
+				List<String> lores2 = new ArrayList<String>();
+
+				ItemStack shopTokens = new ItemStack(Material.EMERALD, 1);
+				ItemMeta shopTokens_IM = shopTokens.getItemMeta();
+				shopTokens_IM.setDisplayName(MessageM
+						.replaceAll("%N&lBalance: %A" + vaultBalance));
+				shopTokens.setItemMeta(shopTokens_IM);
+
+				ItemStack shopBlockChooser = new ItemStack(
+						Material.getMaterial((String) W.config
+								.get(ConfigC.shop_blockChooserv1IDname)), 1);
+				ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
+				shopBlockChooser_IM.setDisplayName(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.shop_blockChooserv1Name)));
+				lores = W.config.getFile().getStringList(
+						ConfigC.shop_blockChooserv1Description.location);
+				lores2 = new ArrayList<String>();
+				for (String lore : lores) {
+					lores2.add(MessageM.replaceAll(lore));
+				}
+
+				lores2.add(MessageM.replaceAll(
+						(String) W.config.get(ConfigC.shop_vaultPrice),
+						"amount-"
+								+ W.config.getFile()
+										.getInt("blockChooserPrice")));
+
+				shopBlockChooser_IM.setLore(lores2);
+				shopBlockChooser.setItemMeta(shopBlockChooser_IM);
+
+				ItemStack shopBlockHuntPass = new ItemStack(
+						Material.getMaterial((String) W.config
+								.get(ConfigC.shop_BlockHuntPassv2IDName)), 1);
+				ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
+				shopBlockHuntPass_IM.setDisplayName(MessageM
+						.replaceAll((String) W.config
+								.get(ConfigC.shop_BlockHuntPassv2Name)));
+				lores = W.config.getFile().getStringList(
+						ConfigC.shop_BlockHuntPassv2Description.location);
+				lores2 = new ArrayList<String>();
+				for (String lore : lores) {
+					lores2.add(MessageM.replaceAll(lore));
+				}
+
+				lores2.add(MessageM.replaceAll(
+						(String) W.config.get(ConfigC.shop_vaultPrice),
+						"amount-"
+								+ W.config.getFile().getInt("seekerHiderPrice")));
+
+				shopBlockHuntPass_IM.setLore(lores2);
+				shopBlockHuntPass.setItemMeta(shopBlockHuntPass_IM);
+
+				shop.setItem(0, shopTokens);
+				if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
+						&& ((Boolean) W.shop.getFile().get(
+								player.getName() + ".blockchooser") == null && !PermissionsM
+								.hasPerm(player, Permissions.shopblockchooser,
+										false))) {
+					shop.setItem(1, shopBlockChooser);
+				}
+				if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
+					shop.setItem(2, shopBlockHuntPass);
+				}
+			}
+			player.openInventory(shop);
+		} else {
+			if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+				W.shop.getFile().set(player.getName() + ".tokens", 0);
+				W.shop.save();
+			}
+			int playerTokens = W.shop.getFile().getInt(
+					player.getName() + ".tokens");
+			List<String> lores = new ArrayList<String>();
+			List<String> lores2 = new ArrayList<String>();
+
+			ItemStack shopTokens = new ItemStack(Material.EMERALD, 1);
+			ItemMeta shopTokens_IM = shopTokens.getItemMeta();
+			shopTokens_IM.setDisplayName(MessageM.replaceAll("%N&lTokens: %A"
+					+ playerTokens));
+			shopTokens.setItemMeta(shopTokens_IM);
+
+			ItemStack shopBlockChooser = new ItemStack(
+					Material.getMaterial((String) W.config
+							.get(ConfigC.shop_blockChooserv1IDname)), 1);
+			ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
+			shopBlockChooser_IM.setDisplayName(MessageM
+					.replaceAll((String) W.config
+							.get(ConfigC.shop_blockChooserv1Name)));
+			lores = W.config.getFile().getStringList(
+					ConfigC.shop_blockChooserv1Description.location);
+			lores2 = new ArrayList<String>();
+			for (String lore : lores) {
+				lores2.add(MessageM.replaceAll(lore));
+			}
+
+			lores2.add(MessageM.replaceAll(
+					(String) W.config.get(ConfigC.shop_price), "amount-"
+							+ W.config.get(ConfigC.shop_blockChooserv1Price)));
+
+			shopBlockChooser_IM.setLore(lores2);
+			shopBlockChooser.setItemMeta(shopBlockChooser_IM);
+
+			ItemStack shopBlockHuntPass = new ItemStack(
+					Material.getMaterial((String) W.config
+							.get(ConfigC.shop_BlockHuntPassv2IDName)), 1);
+			ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
+			shopBlockHuntPass_IM.setDisplayName(MessageM
+					.replaceAll((String) W.config
+							.get(ConfigC.shop_BlockHuntPassv2Name)));
+			lores = W.config.getFile().getStringList(
+					ConfigC.shop_BlockHuntPassv2Description.location);
+			lores2 = new ArrayList<String>();
+			for (String lore : lores) {
+				lores2.add(MessageM.replaceAll(lore));
+			}
+
+			lores2.add(MessageM.replaceAll(
+					(String) W.config.get(ConfigC.shop_price), "amount-"
+							+ W.config.get(ConfigC.shop_BlockHuntPassv2Price)));
+
+			shopBlockHuntPass_IM.setLore(lores2);
+			shopBlockHuntPass.setItemMeta(shopBlockHuntPass_IM);
+
+			shop.setItem(0, shopTokens);
+			if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
+					&& ((Boolean) W.shop.getFile().get(
+							player.getName() + ".blockchooser") == null && !PermissionsM
+							.hasPerm(player, Permissions.shopblockchooser,
+									false))) {
+				shop.setItem(1, shopBlockChooser);
+			}
+			if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
+				shop.setItem(2, shopBlockHuntPass);
+			}
+			player.openInventory(shop);
 		}
-		int playerTokens = W.shop.getFile()
-				.getInt(player.getName() + ".tokens");
-		List<String> lores = new ArrayList<String>();
-		List<String> lores2 = new ArrayList<String>();
-
-		ItemStack shopTokens = new ItemStack(Material.EMERALD, 1);
-		ItemMeta shopTokens_IM = shopTokens.getItemMeta();
-		shopTokens_IM.setDisplayName(MessageM.replaceAll("%N&lTokens: %A"
-				+ playerTokens));
-		shopTokens.setItemMeta(shopTokens_IM);
-
-		ItemStack shopBlockChooser = new ItemStack(
-				Material.getMaterial((String) W.config
-						.get(ConfigC.shop_blockChooserv1IDname)), 1);
-		ItemMeta shopBlockChooser_IM = shopBlockChooser.getItemMeta();
-		shopBlockChooser_IM.setDisplayName(MessageM
-				.replaceAll((String) W.config
-						.get(ConfigC.shop_blockChooserv1Name)));
-		lores = W.config.getFile().getStringList(
-				ConfigC.shop_blockChooserv1Description.location);
-		lores2 = new ArrayList<String>();
-		for (String lore : lores) {
-			lores2.add(MessageM.replaceAll(lore));
-		}
-
-		lores2.add(MessageM.replaceAll(
-				(String) W.config.get(ConfigC.shop_price),
-				"amount-" + W.config.get(ConfigC.shop_blockChooserv1Price)));
-
-		shopBlockChooser_IM.setLore(lores2);
-		shopBlockChooser.setItemMeta(shopBlockChooser_IM);
-
-		ItemStack shopBlockHuntPass = new ItemStack(
-				Material.getMaterial((String) W.config
-						.get(ConfigC.shop_BlockHuntPassv2IDName)), 1);
-		ItemMeta shopBlockHuntPass_IM = shopBlockHuntPass.getItemMeta();
-		shopBlockHuntPass_IM.setDisplayName(MessageM
-				.replaceAll((String) W.config
-						.get(ConfigC.shop_BlockHuntPassv2Name)));
-		lores = W.config.getFile().getStringList(
-				ConfigC.shop_BlockHuntPassv2Description.location);
-		lores2 = new ArrayList<String>();
-		for (String lore : lores) {
-			lores2.add(MessageM.replaceAll(lore));
-		}
-
-		lores2.add(MessageM.replaceAll(
-				(String) W.config.get(ConfigC.shop_price),
-				"amount-" + W.config.get(ConfigC.shop_BlockHuntPassv2Price)));
-
-		shopBlockHuntPass_IM.setLore(lores2);
-		shopBlockHuntPass.setItemMeta(shopBlockHuntPass_IM);
-
-		shop.setItem(0, shopTokens);
-		if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true
-				&& ((Boolean) W.shop.getFile().get(
-						player.getName() + ".blockchooser") == null && !PermissionsM
-						.hasPerm(player, Permissions.shopblockchooser, false))) {
-			shop.setItem(1, shopBlockChooser);
-		}
-		if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
-			shop.setItem(2, shopBlockHuntPass);
-		}
-		player.openInventory(shop);
 	}
 }
