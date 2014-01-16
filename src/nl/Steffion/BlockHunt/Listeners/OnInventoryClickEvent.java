@@ -3,6 +3,7 @@ package nl.Steffion.BlockHunt.Listeners;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaType;
 import nl.Steffion.BlockHunt.ArenaHandler;
+import nl.Steffion.BlockHunt.BlockHunt;
 import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.InventoryHandler;
 import nl.Steffion.BlockHunt.W;
@@ -62,6 +63,8 @@ public class OnInventoryClickEvent implements Listener {
 					}
 					int playerTokens = W.shop.getFile().getInt(
 							player.getName() + ".tokens");
+					int vaultBalance = (int) BlockHunt.econ.getBalance(player
+							.getName());
 					if (item == null)
 						return;
 					if (item.getType().equals(Material.AIR))
@@ -74,25 +77,51 @@ public class OnInventoryClickEvent implements Listener {
 									.replaceAll(W.config.get(
 											ConfigC.shop_blockChooserv1Name)
 											.toString()))) {
-						if (playerTokens >= (Integer) W.config
-								.get(ConfigC.shop_blockChooserv1Price)) {
-							W.shop.getFile().set(
-									player.getName() + ".blockchooser", true);
-							W.shop.getFile()
-									.set(player.getName() + ".tokens",
-											playerTokens
-													- (Integer) W.config
-															.get(ConfigC.shop_blockChooserv1Price));
-							W.shop.save();
-							MessageM.sendFMessage(
-									player,
-									ConfigC.normal_shopBoughtItem,
-									"itemname-"
-											+ W.config
-													.get(ConfigC.shop_blockChooserv1Name));
+						if (W.config.getFile().getBoolean("vaultSupport") == true) {
+							if (BlockHunt.econ != null) {
+								if (vaultBalance >= (Integer) W.config
+										.getFile().getInt("blockChooserPrice")) {
+									W.shop.getFile().set(
+											player.getName() + ".blockchooser",
+											true);
+									BlockHunt.econ.depositPlayer(player
+											.getName(), W.config.getFile()
+											.getInt("blockChooserPrice"));
+									W.shop.save();
+									MessageM.sendFMessage(
+											player,
+											ConfigC.normal_shopBoughtItem,
+											"itemname-"
+													+ W.config
+															.get(ConfigC.shop_blockChooserv1Name));
+								} else {
+									MessageM.sendFMessage(player,
+											ConfigC.error_shopNeedMoreMoney);
+								}
+							}
 						} else {
-							MessageM.sendFMessage(player,
-									ConfigC.error_shopNeedMoreTokens);
+							if (playerTokens >= (Integer) W.config
+									.get(ConfigC.shop_blockChooserv1Price)) {
+								W.shop.getFile().set(
+										player.getName() + ".blockchooser",
+										true);
+								W.shop.getFile()
+										.set(player.getName() + ".tokens",
+												playerTokens
+														- (Integer) W.config
+																.getFile()
+																.getInt("blockChooserPrice"));
+								W.shop.save();
+								MessageM.sendFMessage(
+										player,
+										ConfigC.normal_shopBoughtItem,
+										"itemname-"
+												+ W.config
+														.get(ConfigC.shop_blockChooserv1Name));
+							} else {
+								MessageM.sendFMessage(player,
+										ConfigC.error_shopNeedMoreTokens);
+							}
 						}
 					} else if (item
 							.getItemMeta()
@@ -100,35 +129,78 @@ public class OnInventoryClickEvent implements Listener {
 							.equals(MessageM.replaceAll(W.config.get(
 									ConfigC.shop_BlockHuntPassv2Name)
 									.toString()))) {
-						if (playerTokens >= (Integer) W.config
-								.get(ConfigC.shop_BlockHuntPassv2Price)) {
-							if (W.shop.getFile().get(
-									player.getName() + ".blockhuntpass") == null) {
-								W.shop.getFile().set(
-										player.getName() + ".blockhuntpass", 0);
-								W.shop.save();
-							}
-
-							W.shop.getFile().set(
-									player.getName() + ".blockhuntpass",
-									(Integer) W.shop.getFile()
+						if (W.config.getFile().getBoolean("vaultSupport") == true) {
+							if (BlockHunt.econ != null) {
+								if (vaultBalance >= (Integer) W.config
+										.getFile().getInt("seekerHiderPrice")) {
+									if (W.shop.getFile()
 											.get(player.getName()
-													+ ".blockhuntpass") + 1);
-							W.shop.getFile()
-									.set(player.getName() + ".tokens",
-											playerTokens
-													- (Integer) W.config
-															.get(ConfigC.shop_BlockHuntPassv2Price));
-							W.shop.save();
-							MessageM.sendFMessage(
-									player,
-									ConfigC.normal_shopBoughtItem,
-									"itemname-"
-											+ W.config
-													.get(ConfigC.shop_BlockHuntPassv2Name));
+													+ ".blockhuntpass") == null) {
+										W.shop.getFile().set(
+												player.getName()
+														+ ".blockhuntpass", 0);
+										W.shop.save();
+									}
+
+									W.shop.getFile()
+											.set(player.getName()
+													+ ".blockhuntpass",
+													(Integer) W.shop
+															.getFile()
+															.get(player
+																	.getName()
+																	+ ".blockhuntpass") + 1);
+									BlockHunt.econ.depositPlayer(
+											player.getName(),
+											(int) W.config.getFile().getInt(
+													"seekerHiderPrice"));
+									W.shop.save();
+									MessageM.sendFMessage(
+											player,
+											ConfigC.normal_shopBoughtItem,
+											"itemname-"
+													+ W.config
+															.get(ConfigC.shop_BlockHuntPassv2Name));
+								} else {
+									MessageM.sendFMessage(player,
+											ConfigC.error_shopNeedMoreMoney);
+								}
+							}
 						} else {
-							MessageM.sendFMessage(player,
-									ConfigC.error_shopNeedMoreTokens);
+							if (playerTokens >= (Integer) W.config
+									.get(ConfigC.shop_BlockHuntPassv2Price)) {
+								if (W.shop.getFile().get(
+										player.getName() + ".blockhuntpass") == null) {
+									W.shop.getFile()
+											.set(player.getName()
+													+ ".blockhuntpass", 0);
+									W.shop.save();
+								}
+
+								W.shop.getFile()
+										.set(player.getName()
+												+ ".blockhuntpass",
+												(Integer) W.shop
+														.getFile()
+														.get(player.getName()
+																+ ".blockhuntpass") + 1);
+								W.shop.getFile()
+										.set(player.getName() + ".tokens",
+												playerTokens
+														- (Integer) W.config
+																.getFile()
+																.getInt("seekerHiderPrice"));
+								W.shop.save();
+								MessageM.sendFMessage(
+										player,
+										ConfigC.normal_shopBoughtItem,
+										"itemname-"
+												+ W.config
+														.get(ConfigC.shop_BlockHuntPassv2Name));
+							} else {
+								MessageM.sendFMessage(player,
+										ConfigC.error_shopNeedMoreTokens);
+							}
 						}
 					}
 
