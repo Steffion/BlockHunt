@@ -300,7 +300,6 @@ public class ArenaHandler {
 							ConfigC.warning_lobbyNeedAtleast, "1-"
 									+ arena.minPlayers);
 				}
-
 				if (arena.playersInArena.size() <= 2
 						&& arena.gameState == ArenaState.INGAME) {
 					if (arena.seekers.size() >= arena.playersInArena.size()) {
@@ -397,7 +396,6 @@ public class ArenaHandler {
 		SignsHandler.updateSigns();
 	}
 
-	// ADDED VAULT HERE
 	public static void seekersWin(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
 		for (Player player : arena.playersInArena) {
@@ -415,7 +413,6 @@ public class ArenaHandler {
 										+ arena.seekersTokenWin);
 					}
 				} else {
-
 					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
 						W.shop.getFile().set(player.getName() + ".tokens", 0);
 						W.shop.save();
@@ -447,7 +444,7 @@ public class ArenaHandler {
 	public static void hidersWin(Arena arena) {
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
 		for (Player player : arena.playersInArena) {
-			if (!arena.seekers.contains(player)) {
+			if (arena.seekers.contains(player)) {
 				if (arena.hidersWinCommands != null) {
 					for (String command : arena.hidersWinCommands) {
 						Bukkit.dispatchCommand(
@@ -456,7 +453,7 @@ public class ArenaHandler {
 					}
 					if (W.config.getFile().getBoolean("vaultSupport") == true) {
 						if (BlockHunt.econ != null) {
-							if (!arena.seekers.contains(player)) {
+							if (arena.seekers.contains(player)) {
 								BlockHunt.econ.depositPlayer(player.getName(),
 										arena.hidersTokenWin);
 								MessageM.sendFMessage(player,
@@ -465,7 +462,6 @@ public class ArenaHandler {
 							}
 						}
 					} else {
-
 						if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
 							W.shop.getFile().set(player.getName() + ".tokens",
 									0);
