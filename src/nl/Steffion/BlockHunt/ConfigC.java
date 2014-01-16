@@ -42,6 +42,8 @@ public enum ConfigC {
 	autoDownloadUpdate (false, W.config),
 
 	vaultSupport (false, W.config),
+	blockChooserPrice (3000, W.config),
+	seekerHiderPrice (150, W.config),
 
 	wandIDname ("STICK", W.config),
 	wandName ("%A&l" + BlockHunt.pdfFile.getName() + "%N's selection wand",
@@ -55,6 +57,7 @@ public enum ConfigC {
 
 	shop_title ("%H&lBlockHunt %NShop", W.config),
 	shop_price ("%NPrice: %A%amount% %Ntokens.", W.config),
+	shop_vaultPrice ("%NPrice: %A%amount%", W.config),
 
 	shop_blockChooserv1Enabled (true, W.config),
 	shop_blockChooserv1IDname ("BOOK", W.config),
@@ -246,6 +249,8 @@ public enum ConfigC {
 	error_tokensUnknownsetting ("%TAG%E'%A%option%%E' is not a known option!",
 			W.messages),
 	error_shopNeedMoreTokens ("%TAG%EYou need more tokens before you can buy this item.",
+			W.messages),
+	error_shopNeedMoreMoney ("%TAG%EYou don't have enough money to do this",
 			W.messages),
 	error_shopMaxSeekersReached ("%TAG%ESorry, the maximum amount of seekers has been reached!",
 			W.messages),
