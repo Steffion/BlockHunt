@@ -128,6 +128,12 @@ public class OnEntityDamageByEntityEvent implements Listener {
 									player.teleport(arena.seekersWarp);
 									player.setGameMode(GameMode.SURVIVAL);
 									player.setWalkSpeed(0.25F);
+
+									// Fix for client not showing players after they join
+									for (Player otherplayer : arena.playersInArena) {
+										if (otherplayer.canSee(player)) otherplayer.showPlayer(player);       // Make new player visible to others
+										if (player.canSee(otherplayer)) player.showPlayer(otherplayer);       // Make other players visible to new player
+									}
 								}
 							}
 						}

@@ -152,6 +152,12 @@ public class ArenaHandler {
 									player.setAllowFlight(false);
 									player.setWalkSpeed(0.25F);
 
+									// Fix for client not showing players after they join
+									for (Player otherplayer : arena.playersInArena) {
+										if (otherplayer.canSee(player)) otherplayer.showPlayer(player);       // Make new player visible to others
+										if (player.canSee(otherplayer)) player.showPlayer(otherplayer);       // Make other players visible to new player
+									}
+
 									if ((Boolean) W.config
 											.get(ConfigC.shop_blockChooserv1Enabled) == true) {
 										if (W.shop.getFile().get(
@@ -334,6 +340,12 @@ public class ArenaHandler {
 					seeker.teleport(arena.seekersWarp);
 					W.seekertime.put(seeker, arena.waitingTimeSeeker);
 					seeker.setWalkSpeed(0.25F);
+
+					// Fix for client not showing players after they join
+					for (Player otherplayer : arena.playersInArena) {
+						if (otherplayer.canSee(player)) otherplayer.showPlayer(player);       // Make new player visible to others
+						if (player.canSee(otherplayer)) player.showPlayer(otherplayer);       // Make other players visible to new player
+					}
 				}
 			}
 
