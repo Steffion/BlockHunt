@@ -61,6 +61,7 @@ public class ArenaHandler {
 		}
 
 		if (!alreadyJoined) {
+			System.out.println("[BlockHunt] " + player.getName() + " has joined " + arenaname);
 			for (Arena arena : W.arenaList) {
 				if (arena.arenaName.equalsIgnoreCase(arenaname)) {
 					found = true;
@@ -282,6 +283,7 @@ public class ArenaHandler {
 
 	public static void playerLeaveArena(Player player, boolean message,
 			boolean cleanup) {
+		
 		Arena arena = null;
 		for (Arena arena2 : W.arenaList) {
 			if (arena2.playersInArena != null) {
@@ -292,6 +294,8 @@ public class ArenaHandler {
 		}
 
 		if (arena != null) {
+			System.out.println("[BlockHunt] " + player.getName() + " has left " + arena.arenaName);
+
 			if (cleanup) {
 				arena.playersInArena.remove(player);
 				if (arena.seekers.contains(player)) {
@@ -413,6 +417,7 @@ public class ArenaHandler {
 	}
 
 	public static void seekersWin(Arena arena) {
+		System.out.println("[BlockHunt] Seekers have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
 		for (Player player : arena.playersInArena) {
 			if (arena.seekersWinCommands != null) {
@@ -449,6 +454,7 @@ public class ArenaHandler {
 	}
 
 	public static void hidersWin(Arena arena) {
+		System.out.println("[BlockHunt] Hiders have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
 		for (Player player : arena.playersInArena) {
 			if (!arena.seekers.contains(player)) {
@@ -488,6 +494,7 @@ public class ArenaHandler {
 	}
 
 	public static void stopArena(Arena arena) {
+		System.out.println("[BlockHunt] Arena " + arena.arenaName + " has been stopped");
 		ArenaHandler.sendFMessage(arena, ConfigC.warning_arenaStopped);
 
 		arena.seekers.clear();
