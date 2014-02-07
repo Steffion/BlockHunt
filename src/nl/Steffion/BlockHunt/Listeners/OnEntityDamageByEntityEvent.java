@@ -127,6 +127,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 											arena.waitingTimeSeeker);
 									player.teleport(arena.seekersWarp);
 									player.setGameMode(GameMode.SURVIVAL);
+									player.setWalkSpeed(0.25F);
 								}
 							}
 						}
