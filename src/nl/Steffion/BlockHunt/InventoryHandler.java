@@ -35,13 +35,13 @@ public class InventoryHandler {
 					.createInventory(
 							null,
 							54,
-							MessageM.replaceAll("\u00A7r%N&lSettings of: %A"
+							MessageM.replaceAll("\u00A7r%N&lBlockHunt Arena: %A"
 									+ shorten));
 
 			ItemStack arenaNameNote = new ItemStack(Material.PAPER, 1);
 			ItemMeta arenaNameNote_IM = arenaNameNote.getItemMeta();
 			arenaNameNote_IM.setDisplayName(MessageM
-					.replaceAll("%NSettings of arena: %A" + arena.arenaName));
+					.replaceAll("%NBlockHunt arena: %A" + arena.arenaName));
 			arenaNameNote.setItemMeta(arenaNameNote_IM);
 			panel.setItem(0, arenaNameNote);
 

@@ -50,7 +50,12 @@ public class OnInventoryClickEvent implements Listener {
 				}
 
 				return;
-			} else if (inv.getName().startsWith("\u00A7r")) {
+			}
+				
+			// Early exit if this isnt a blockhunt inventory
+			if (!inv.getName().contains("BlockHunt")) return;
+			
+			if (inv.getName().startsWith("\u00A7r")) {
 				if (inv.getName().equals(
 						MessageM.replaceAll((String) "\u00A7r"
 								+ W.config.get(ConfigC.shop_title)))) {
@@ -264,7 +269,7 @@ public class OnInventoryClickEvent implements Listener {
 							.getItemMeta()
 							.getDisplayName()
 							.replaceAll(
-									MessageM.replaceAll("%NSettings of arena: %A"),
+									MessageM.replaceAll("%NBlockHunt arena: %A"),
 									"");
 
 					Arena arena = null;

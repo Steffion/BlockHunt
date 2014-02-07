@@ -1,5 +1,9 @@
 package nl.Steffion.BlockHunt.Listeners;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import me.libraryaddict.disguise.DisguiseAPI;
 import nl.Steffion.BlockHunt.Arena;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
@@ -8,6 +12,7 @@ import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.W;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -27,8 +32,10 @@ public class OnEntityDamageByEntityEvent implements Listener {
 		}
 
 		Player damager = null;
+		String damagername = "unknown";
 		if (event.getDamager() instanceof Player) {
 			damager = (Player) event.getDamager();
+			damagername = damager.getName();
 		}
 
 		if (player != null) {
@@ -102,17 +109,28 @@ public class OnEntityDamageByEntityEvent implements Listener {
 											.sendFMessage(
 													arena,
 													ConfigC.normal_ingameHiderDied,
-													"playername-"
-															+ player.getName(),
-													"left-"
-															+ (arena.playersInArena
-																	.size() - arena.seekers
-																	.size()));
-								} else {
-									ArenaHandler.sendFMessage(arena,
-											ConfigC.normal_ingameSeekerDied,
-											"playername-" + player.getName(),
-											"secs-" + arena.waitingTimeSeeker);
+                                                    "playername-" + player.getName(),
+                                                    "killer-" + damagername);
+
+				                    int hidercount = (arena.playersInArena.size() - arena.seekers.size());
+				                    if ((hidercount <= 3) && (hidercount > 0)) {
+				                            List<String> hiders = new ArrayList<String>(); 
+				                            for (Player p : arena.playersInArena) {
+				                                            if (!arena.seekers.contains(p)) {
+				                                                    hiders.add(p.getName());
+				                                                    System.out.println("[Debug] Adding hider: " + p.getName());
+				                                            }
+				                            }
+				                            Collections.sort(hiders);
+				                            
+				                            ArenaHandler.sendFMessage(arena,
+				                                            ConfigC.normal_ingameHidersLeft,
+				                                            "left-" + StringUtils.join(hiders.toArray(), ", "));
+				                    } else {
+				                            ArenaHandler.sendFMessage(arena,
+				                                            ConfigC.normal_ingameHidersLeft,
+				                                            "left-" + hidercount);
+				                    }
 								}
 
 								player.getInventory().clear();
