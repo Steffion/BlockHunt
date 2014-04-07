@@ -24,7 +24,6 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 			if (arena.playersInArena.contains(player)) {
 				String m = event.getMessage();
 				if (m.startsWith("/blockhunt") || m.startsWith("/bh")
-						|| m.startsWith("/seekandfind")
 						|| m.startsWith("/seekandfind") || m.startsWith("/saf")
 						|| m.startsWith("/sf") || m.startsWith("/hideandseek")
 						|| m.startsWith("/has") || m.startsWith("/hs")
