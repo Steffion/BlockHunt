@@ -35,10 +35,9 @@ public class ConfigM {
 	 * @param fileName
 	 *            Name of the file.
 	 */
-	public ConfigM (String fileName) {
+	public ConfigM(String fileName) {
 		this.fileName = fileName;
-		this.file = new File("plugins/" + BlockHunt.pdfFile.getName(),
-				fileName + ".yml");
+		this.file = new File("plugins/" + BlockHunt.pdfFile.getName(), fileName + ".yml");
 		this.fileLocation = BlockHunt.pdfFile.getName();
 		this.fileC = new YamlConfiguration();
 		this.checkFile();
@@ -54,12 +53,10 @@ public class ConfigM {
 	 * @param fileLocation
 	 *            Sub-Location of the file.
 	 */
-	public ConfigM (String fileName, String fileLocation) {
+	public ConfigM(String fileName, String fileLocation) {
 		this.fileName = fileName;
-		this.file = new File("plugins/" + BlockHunt.pdfFile.getName()
-				+ "/" + fileLocation, fileName + ".yml");
-		this.fileLocation = BlockHunt.pdfFile.getName() + "/"
-				+ fileLocation;
+		this.file = new File("plugins/" + BlockHunt.pdfFile.getName() + "/" + fileLocation, fileName + ".yml");
+		this.fileLocation = BlockHunt.pdfFile.getName() + "/" + fileLocation;
 		this.fileC = new YamlConfiguration();
 		this.checkFile();
 		this.fileCS = fileC.getConfigurationSection("");
@@ -73,10 +70,7 @@ public class ConfigM {
 	public static void newFiles() {
 		ConfigM.setDefaults();
 		for (String fileName : W.newFiles) {
-			MessageM.sendMessage(
-					null,
-					"%TAG%WCouldn't find '%A%fileName%.yml%W' creating new one.",
-					"fileName-" + fileName);
+			MessageM.sendMessage(null, "%TAG%WCouldn't find '%A%fileName%.yml%W' creating new one.", "fileName-" + fileName);
 		}
 
 		W.newFiles.clear();

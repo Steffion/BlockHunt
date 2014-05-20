@@ -23,11 +23,9 @@ public class CMDtokens extends DefaultCMD {
 	 */
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		if (args.length <= 3) {
-			MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments,
-					"syntax-" + BlockHunt.CMDtokens.usage);
+			MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments, "syntax-" + BlockHunt.CMDtokens.usage);
 		} else {
 			String option = args[1];
 			String playerName = args[2];
@@ -35,16 +33,13 @@ public class CMDtokens extends DefaultCMD {
 			try {
 				amount = Integer.valueOf(args[3]);
 			} catch (NumberFormatException e) {
-				MessageM.sendFMessage(player, ConfigC.error_notANumber, "1-"
-						+ args[3]);
+				MessageM.sendFMessage(player, ConfigC.error_notANumber, "1-" + args[3]);
 				return true;
 			}
 
 			Player tokenPlayer = Bukkit.getPlayer(playerName);
 			if (tokenPlayer == null) {
-				MessageM.sendFMessage(player,
-						ConfigC.error_tokensPlayerNotOnline, "playername-"
-								+ playerName);
+				MessageM.sendFMessage(player, ConfigC.error_tokensPlayerNotOnline, "playername-" + playerName);
 				return true;
 			}
 			String name = "\u00A78Console";
@@ -55,48 +50,28 @@ public class CMDtokens extends DefaultCMD {
 			if (option.equalsIgnoreCase("set")) {
 				W.shop.getFile().set(tokenPlayer.getName() + ".tokens", amount);
 				W.shop.save();
-				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
-						"option-Set", "playername-" + tokenPlayer.getName(),
-						"option2-to", "amount-" + amount);
-				MessageM.sendFMessage(tokenPlayer,
-						ConfigC.normal_tokensChangedPerson, "option-set",
-						"playername-" + name, "option2-to",
-						"amount-" + amount);
+				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged, "option-Set", "playername-" + tokenPlayer.getName(), "option2-to", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer, ConfigC.normal_tokensChangedPerson, "option-set", "playername-" + name, "option2-to", "amount-" + amount);
 			} else if (option.equalsIgnoreCase("add")) {
 				int tokens = 0;
 				if (W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens") != 0) {
-					tokens = W.shop.getFile().getInt(
-							tokenPlayer.getName() + ".tokens");
+					tokens = W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens");
 				}
-				W.shop.getFile().set(tokenPlayer.getName() + ".tokens",
-						tokens + amount);
+				W.shop.getFile().set(tokenPlayer.getName() + ".tokens", tokens + amount);
 				W.shop.save();
-				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
-						"option-Added", "playername-" + tokenPlayer.getName(),
-						"option2-to", "amount-" + amount);
-				MessageM.sendFMessage(tokenPlayer,
-						ConfigC.normal_tokensChangedPerson, "option-added",
-						"playername-" + name, "option2-to",
-						"amount-" + amount);
+				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged, "option-Added", "playername-" + tokenPlayer.getName(), "option2-to", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer, ConfigC.normal_tokensChangedPerson, "option-added", "playername-" + name, "option2-to", "amount-" + amount);
 			} else if (option.equalsIgnoreCase("take")) {
 				int tokens = 0;
 				if (W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens") != 0) {
-					tokens = W.shop.getFile().getInt(
-							tokenPlayer.getName() + ".tokens");
+					tokens = W.shop.getFile().getInt(tokenPlayer.getName() + ".tokens");
 				}
-				W.shop.getFile().set(tokenPlayer.getName() + ".tokens",
-						tokens - amount);
+				W.shop.getFile().set(tokenPlayer.getName() + ".tokens", tokens - amount);
 				W.shop.save();
-				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged,
-						"option-Took", "playername-" + tokenPlayer.getName(),
-						"option2-from", "amount-" + amount);
-				MessageM.sendFMessage(tokenPlayer,
-						ConfigC.normal_tokensChangedPerson, "option-took",
-						"playername-" + name, "option2-from",
-						"amount-" + amount);
+				MessageM.sendFMessage(player, ConfigC.normal_tokensChanged, "option-Took", "playername-" + tokenPlayer.getName(), "option2-from", "amount-" + amount);
+				MessageM.sendFMessage(tokenPlayer, ConfigC.normal_tokensChangedPerson, "option-took", "playername-" + name, "option2-from", "amount-" + amount);
 			} else {
-				MessageM.sendFMessage(player,
-						ConfigC.error_tokensUnknownsetting, "option-" + option);
+				MessageM.sendFMessage(player, ConfigC.error_tokensUnknownsetting, "option-" + option);
 			}
 		}
 		return true;

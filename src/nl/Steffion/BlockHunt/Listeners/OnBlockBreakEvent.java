@@ -14,7 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class OnBlockBreakEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onBlockBreakEvent(BlockBreakEvent event) {
 		Player player = event.getPlayer();
 
@@ -24,8 +24,7 @@ public class OnBlockBreakEvent implements Listener {
 			}
 		}
 
-		if (event.getBlock().equals(Material.SIGN_POST)
-				|| event.getBlock().equals(Material.WALL_SIGN)) {
+		if (event.getBlock().equals(Material.SIGN_POST) || event.getBlock().equals(Material.WALL_SIGN)) {
 			if (!PermissionsM.hasPerm(player, Permissions.signcreate, true)) {
 				event.setCancelled(true);
 			}

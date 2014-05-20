@@ -14,12 +14,10 @@ import org.bukkit.entity.Player;
 public class CMDsetwarp extends DefaultCMD {
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		if (player != null) {
 			if (args.length <= 2) {
-				MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments,
-						"syntax-" + BlockHunt.CMDsetwarp.usage);
+				MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments, "syntax-" + BlockHunt.CMDsetwarp.usage);
 			} else {
 				String arenaname = args[2];
 				String warpname = args[1];
@@ -31,40 +29,28 @@ public class CMDsetwarp extends DefaultCMD {
 					}
 				}
 				if (arena != null) {
-					LocationSerializable loc = new LocationSerializable(
-							player.getLocation());
+					LocationSerializable loc = new LocationSerializable(player.getLocation());
 					if (warpname.equalsIgnoreCase("lobby")) {
 						arena.lobbyWarp = loc;
 						save(arena);
-						MessageM.sendFMessage(player,
-								ConfigC.normal_setwarpWarpSet, "warp-"
-										+ warpname);
+						MessageM.sendFMessage(player, ConfigC.normal_setwarpWarpSet, "warp-" + warpname);
 					} else if (warpname.equalsIgnoreCase("hiders")) {
 						arena.hidersWarp = loc;
 						save(arena);
-						MessageM.sendFMessage(player,
-								ConfigC.normal_setwarpWarpSet, "warp-"
-										+ warpname);
+						MessageM.sendFMessage(player, ConfigC.normal_setwarpWarpSet, "warp-" + warpname);
 					} else if (warpname.equalsIgnoreCase("seekers")) {
 						arena.seekersWarp = loc;
 						save(arena);
-						MessageM.sendFMessage(player,
-								ConfigC.normal_setwarpWarpSet, "warp-"
-										+ warpname);
+						MessageM.sendFMessage(player, ConfigC.normal_setwarpWarpSet, "warp-" + warpname);
 					} else if (warpname.equalsIgnoreCase("spawn")) {
 						arena.spawnWarp = loc;
 						save(arena);
-						MessageM.sendFMessage(player,
-								ConfigC.normal_setwarpWarpSet, "warp-"
-										+ warpname);
+						MessageM.sendFMessage(player, ConfigC.normal_setwarpWarpSet, "warp-" + warpname);
 					} else {
-						MessageM.sendFMessage(player,
-								ConfigC.error_setwarpWarpNotFound, "warp-"
-										+ warpname);
+						MessageM.sendFMessage(player, ConfigC.error_setwarpWarpNotFound, "warp-" + warpname);
 					}
 				} else {
-					MessageM.sendFMessage(player, ConfigC.error_noArena,
-							"name-" + arenaname);
+					MessageM.sendFMessage(player, ConfigC.error_noArena, "name-" + arenaname);
 				}
 			}
 		} else {

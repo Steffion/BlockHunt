@@ -8,8 +8,7 @@ import org.bukkit.entity.Player;
 public class CMDshop extends DefaultCMD {
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		InventoryHandler.openShop(player);
 		return true;
 	}

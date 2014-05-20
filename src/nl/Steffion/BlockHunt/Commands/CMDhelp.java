@@ -24,8 +24,7 @@ public class CMDhelp extends DefaultCMD {
 	 */
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		int amountCommands = 0;
 		for (CommandM command : W.commands) {
 			if (command.usage != null) {
@@ -40,38 +39,22 @@ public class CMDhelp extends DefaultCMD {
 
 		if (args.length == 1) {
 			int page = 1;
-			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-"
-					+ BlockHunt.pdfFile.getName() + " %Nhelp page %A"
-					+ page + "%N/%A" + maxPages);
+			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-" + BlockHunt.pdfFile.getName() + " %Nhelp page %A" + page + "%N/%A" + maxPages);
 			int i = 1;
 			for (CommandM command : W.commands) {
 				if (i <= 4) {
 					if (command.usage != null) {
-						if (PermissionsM.hasPerm(player, command.permission,
-								false)) {
-							MessageM.sendMessage(
-									player,
-									"%A"
-											+ command.usage
-											+ "%N - "
-											+ W.messages.getFile().get(
-													command.help.location));
+						if (PermissionsM.hasPerm(player, command.permission, false)) {
+							MessageM.sendMessage(player, "%A" + command.usage + "%N - " + W.messages.getFile().get(command.help.location));
 						} else {
-							MessageM.sendMessage(
-									player,
-									"%W"
-											+ command.usage
-											+ "%N - "
-											+ W.messages.getFile().get(
-													command.help.location));
+							MessageM.sendMessage(player, "%W" + command.usage + "%N - " + W.messages.getFile().get(command.help.location));
 						}
 						i = i + 1;
 					}
 				}
 			}
 
-			MessageM.sendFMessage(player, ConfigC.chat_headerhigh,
-					"header-&oHelp Page");
+			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-&oHelp Page");
 		} else {
 			int page = 1;
 			try {
@@ -84,41 +67,24 @@ public class CMDhelp extends DefaultCMD {
 				maxPages = page;
 			}
 
-			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-"
-					+ BlockHunt.pdfFile.getName() + " %Nhelp page %A"
-					+ page + "%N/%A" + maxPages);
+			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-" + BlockHunt.pdfFile.getName() + " %Nhelp page %A" + page + "%N/%A" + maxPages);
 
 			int i = 1;
 			for (CommandM command : W.commands) {
 				if (i <= (page * 4) + 4) {
 					if (command.usage != null) {
-						if (i >= ((page - 1) * 4) + 1
-								&& i <= ((page - 1) * 4) + 4) {
-							if (PermissionsM.hasPerm(player,
-									command.permission, false)) {
-								MessageM.sendMessage(
-										player,
-										"%A"
-												+ command.usage
-												+ "%N - "
-												+ W.messages.getFile().get(
-														command.help.location));
+						if (i >= ((page - 1) * 4) + 1 && i <= ((page - 1) * 4) + 4) {
+							if (PermissionsM.hasPerm(player, command.permission, false)) {
+								MessageM.sendMessage(player, "%A" + command.usage + "%N - " + W.messages.getFile().get(command.help.location));
 							} else {
-								MessageM.sendMessage(
-										player,
-										"%W"
-												+ command.usage
-												+ "%N - "
-												+ W.messages.getFile().get(
-														command.help.location));
+								MessageM.sendMessage(player, "%W" + command.usage + "%N - " + W.messages.getFile().get(command.help.location));
 							}
 						}
 						i = i + 1;
 					}
 				}
 			}
-			MessageM.sendFMessage(player, ConfigC.chat_headerhigh,
-					"header-&oHelp Page");
+			MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-&oHelp Page");
 		}
 		return true;
 	}

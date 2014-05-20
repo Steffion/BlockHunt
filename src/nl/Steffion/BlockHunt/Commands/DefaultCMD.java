@@ -18,8 +18,7 @@ public class DefaultCMD {
 	 * @author Steffion
 	 */
 
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		MessageM.sendMessage(player, "%TAG%NExample of a Command!");
 		// TODO Place the command stuff here.
 		return true;

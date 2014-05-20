@@ -14,17 +14,14 @@ import org.bukkit.event.block.SignChangeEvent;
 
 public class OnSignChangeEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onSignChangeEvent(SignChangeEvent event) {
 		Player player = event.getPlayer();
 		String[] lines = event.getLines();
 		if (lines[0] != null) {
-			if (lines[0].equalsIgnoreCase("[" + BlockHunt.pdfFile.getName()
-					+ "]")) {
+			if (lines[0].equalsIgnoreCase("[" + BlockHunt.pdfFile.getName() + "]")) {
 				if (PermissionsM.hasPerm(player, Permissions.signcreate, true)) {
-					SignsHandler.createSign(event, lines,
-							new LocationSerializable(event.getBlock()
-									.getLocation()));
+					SignsHandler.createSign(event, lines, new LocationSerializable(event.getBlock().getLocation()));
 				}
 			}
 		}

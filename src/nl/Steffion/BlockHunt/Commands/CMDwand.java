@@ -17,18 +17,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class CMDwand extends DefaultCMD {
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		if (player != null) {
-			ItemStack wand = new ItemStack(
-					Material.getMaterial((String) W.config
-							.get(ConfigC.wandIDname)));
+			ItemStack wand = new ItemStack(Material.getMaterial((String) W.config.get(ConfigC.wandIDname)));
 			ItemMeta im = wand.getItemMeta();
-			im.setDisplayName(MessageM.replaceAll((String) W.config
-					.get(ConfigC.wandName)));
+			im.setDisplayName(MessageM.replaceAll((String) W.config.get(ConfigC.wandName)));
 			W.config.load();
-			List<String> lores = W.config.getFile().getStringList(
-					ConfigC.wandDescription.location);
+			List<String> lores = W.config.getFile().getStringList(ConfigC.wandDescription.location);
 			List<String> lores2 = new ArrayList<String>();
 			for (String lore : lores) {
 				lores2.add(MessageM.replaceAll(lore));
@@ -38,9 +33,7 @@ public class CMDwand extends DefaultCMD {
 			wand.setItemMeta(im);
 			player.getInventory().addItem(wand);
 			player.playSound(player.getLocation(), Sound.ORB_PICKUP, 5, 0);
-			MessageM.sendFMessage(player, ConfigC.normal_wandGaveWand, "type-"
-					+ wand.getType().toString().replaceAll("_", " ")
-							.toLowerCase());
+			MessageM.sendFMessage(player, ConfigC.normal_wandGaveWand, "type-" + wand.getType().toString().replaceAll("_", " ").toLowerCase());
 		} else {
 			MessageM.sendFMessage(player, ConfigC.error_onlyIngame);
 		}

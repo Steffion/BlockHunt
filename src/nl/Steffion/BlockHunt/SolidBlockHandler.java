@@ -28,15 +28,12 @@ public class SolidBlockHandler {
 			if (!pl.equals(player)) {
 				if (W.hiddenLocWater.get(player) != null) {
 					if (W.hiddenLocWater.get(player)) {
-						pl.sendBlockChange(pBlock.getLocation(),
-								Material.STATIONARY_WATER, (byte) 0);
+						pl.sendBlockChange(pBlock.getLocation(), Material.STATIONARY_WATER, (byte) 0);
 					} else {
-						pl.sendBlockChange(pBlock.getLocation(), Material.AIR,
-								(byte) 0);
+						pl.sendBlockChange(pBlock.getLocation(), Material.AIR, (byte) 0);
 					}
 				} else {
-					pl.sendBlockChange(pBlock.getLocation(), Material.AIR,
-							(byte) 0);
+					pl.sendBlockChange(pBlock.getLocation(), Material.AIR, (byte) 0);
 				}
 
 				W.hiddenLocWater.remove(player);
@@ -50,8 +47,7 @@ public class SolidBlockHandler {
 			playerShow.showPlayer(player);
 		}
 
-		MiscDisguise disguise = new MiscDisguise(DisguiseType.FALLING_BLOCK,
-				block.getTypeId(), block.getDurability());
+		MiscDisguise disguise = new MiscDisguise(DisguiseType.FALLING_BLOCK, block.getTypeId(), block.getDurability());
 		DisguiseAPI.disguiseToAll(player, disguise);
 
 		MessageM.sendFMessage(player, ConfigC.normal_ingameNoMoreSolid);

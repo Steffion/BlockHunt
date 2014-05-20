@@ -19,8 +19,7 @@ public class CMDnotfound {
 	 * @author Steffion
 	 */
 
-	public static boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public static boolean exectue(Player player, Command cmd, String label, String[] args) {
 		MessageM.sendFMessage(player, ConfigC.error_commandNotFound);
 		return true;
 	}

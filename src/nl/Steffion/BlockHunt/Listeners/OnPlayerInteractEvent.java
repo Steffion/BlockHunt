@@ -31,7 +31,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class OnPlayerInteractEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onPlayerInteractEvent(PlayerInteractEvent event) {
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
@@ -40,49 +40,24 @@ public class OnPlayerInteractEvent implements Listener {
 			if (item.getType() != Material.AIR) {
 				if (item.getItemMeta().hasDisplayName()) {
 					ItemMeta im = item.getItemMeta();
-					if (im.getDisplayName().equals(
-							MessageM.replaceAll((String) W.config
-									.get(ConfigC.wandName)))) {
+					if (im.getDisplayName().equals(MessageM.replaceAll((String) W.config.get(ConfigC.wandName)))) {
 						Action action = event.getAction();
 						if (event.hasBlock()) {
-							LocationSerializable location = new LocationSerializable(
-									event.getClickedBlock().getLocation());
+							LocationSerializable location = new LocationSerializable(event.getClickedBlock().getLocation());
 							if (action.equals(Action.LEFT_CLICK_BLOCK)) {
 								event.setCancelled(true);
-								if (W.pos1.get(player) == null
-										|| !W.pos1.get(player).equals(location)) {
-									MessageM.sendFMessage(
-											player,
-											ConfigC.normal_wandSetPosition,
-											"number-1",
-											"pos-%N(%A" + location.getBlockX()
-													+ "%N, %A"
-													+ location.getBlockY()
-													+ "%N, %A"
-													+ location.getBlockZ()
-													+ "%N)",
-											"x-" + location.getBlockX(), "y-"
-													+ location.getBlockY(),
-											"z-" + location.getBlockZ());
+								if (W.pos1.get(player) == null || !W.pos1.get(player).equals(location)) {
+									MessageM.sendFMessage(player, ConfigC.normal_wandSetPosition, "number-1",
+											"pos-%N(%A" + location.getBlockX() + "%N, %A" + location.getBlockY() + "%N, %A" + location.getBlockZ() + "%N)", "x-"
+													+ location.getBlockX(), "y-" + location.getBlockY(), "z-" + location.getBlockZ());
 									W.pos1.put(player, location);
 								}
 							} else if (action.equals(Action.RIGHT_CLICK_BLOCK)) {
 								event.setCancelled(true);
-								if (W.pos2.get(player) == null
-										|| !W.pos2.get(player).equals(location)) {
-									MessageM.sendFMessage(
-											player,
-											ConfigC.normal_wandSetPosition,
-											"number-2",
-											"pos-%N(%A" + location.getBlockX()
-													+ "%N, %A"
-													+ location.getBlockY()
-													+ "%N, %A"
-													+ location.getBlockZ()
-													+ "%N)",
-											"x-" + location.getBlockX(), "y-"
-													+ location.getBlockY(),
-											"z-" + location.getBlockZ());
+								if (W.pos2.get(player) == null || !W.pos2.get(player).equals(location)) {
+									MessageM.sendFMessage(player, ConfigC.normal_wandSetPosition, "number-2",
+											"pos-%N(%A" + location.getBlockX() + "%N, %A" + location.getBlockY() + "%N, %A" + location.getBlockZ() + "%N)", "x-"
+													+ location.getBlockX(), "y-" + location.getBlockY(), "z-" + location.getBlockZ());
 									W.pos2.put(player, location);
 								}
 							}
@@ -94,44 +69,23 @@ public class OnPlayerInteractEvent implements Listener {
 
 		if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			if (event.getClickedBlock() != null) {
-				if (event.getClickedBlock().getType()
-						.equals(Material.SIGN_POST)
-						|| event.getClickedBlock().getType()
-								.equals(Material.WALL_SIGN)) {
-					if (SignsHandler.isSign(new LocationSerializable(event
-							.getClickedBlock().getLocation()))) {
+				if (event.getClickedBlock().getType().equals(Material.SIGN_POST) || event.getClickedBlock().getType().equals(Material.WALL_SIGN)) {
+					if (SignsHandler.isSign(new LocationSerializable(event.getClickedBlock().getLocation()))) {
 						Sign sign = (Sign) event.getClickedBlock().getState();
 						if (sign.getLine(1) != null) {
-							if (sign.getLine(1)
-									.equals(MessageM
-											.replaceAll(W.config
-													.getFile()
-													.getStringList(
-															ConfigC.sign_LEAVE.location)
-													.get(1)))) {
-								if (PermissionsM.hasPerm(player,
-										Permissions.joinsign, true)) {
-									ArenaHandler.playerLeaveArena(player, true,
-											true);
+							if (sign.getLine(1).equals(MessageM.replaceAll(W.config.getFile().getStringList(ConfigC.sign_LEAVE.location).get(1)))) {
+								if (PermissionsM.hasPerm(player, Permissions.joinsign, true)) {
+									ArenaHandler.playerLeaveArena(player, true, true);
 								}
-							} else if (sign.getLine(1).equals(
-									MessageM.replaceAll(W.config
-											.getFile()
-											.getStringList(
-													ConfigC.sign_SHOP.location)
-											.get(1)))) {
-								if (PermissionsM.hasPerm(player,
-										Permissions.shop, true)) {
+							} else if (sign.getLine(1).equals(MessageM.replaceAll(W.config.getFile().getStringList(ConfigC.sign_SHOP.location).get(1)))) {
+								if (PermissionsM.hasPerm(player, Permissions.shop, true)) {
 									InventoryHandler.openShop(player);
 								}
 							} else {
 								for (Arena arena : W.arenaList) {
-									if (sign.getLines()[1]
-											.contains(arena.arenaName)) {
-										if (PermissionsM.hasPerm(player,
-												Permissions.joinsign, true)) {
-											ArenaHandler.playerJoinArena(
-													player, arena.arenaName);
+									if (sign.getLines()[1].contains(arena.arenaName)) {
+										if (PermissionsM.hasPerm(player, Permissions.joinsign, true)) {
+											ArenaHandler.playerJoinArena(player, arena.arenaName);
 										}
 									}
 								}
@@ -142,24 +96,12 @@ public class OnPlayerInteractEvent implements Listener {
 			}
 		}
 
-		if (event.getAction() == Action.RIGHT_CLICK_BLOCK
-				|| event.getAction() == Action.LEFT_CLICK_BLOCK) {
+		if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			if (event.getClickedBlock().getType() != Material.AIR) {
-				if (event.getClickedBlock().getType()
-						.equals(Material.ENCHANTMENT_TABLE)
-						|| event.getClickedBlock().getType()
-								.equals(Material.WORKBENCH)
-						|| event.getClickedBlock().getType()
-								.equals(Material.FURNACE)
-						|| event.getClickedBlock().getType()
-								.equals(Material.CHEST)
-						|| event.getClickedBlock().getType()
-								.equals(Material.ANVIL)
-						|| event.getClickedBlock().getType()
-								.equals(Material.ENDER_CHEST)
-						|| event.getClickedBlock().getType()
-								.equals(Material.JUKEBOX)
-						|| block.getFace(block).equals(Material.FIRE)) {
+				if (event.getClickedBlock().getType().equals(Material.ENCHANTMENT_TABLE) || event.getClickedBlock().getType().equals(Material.WORKBENCH)
+						|| event.getClickedBlock().getType().equals(Material.FURNACE) || event.getClickedBlock().getType().equals(Material.CHEST)
+						|| event.getClickedBlock().getType().equals(Material.ANVIL) || event.getClickedBlock().getType().equals(Material.ENDER_CHEST)
+						|| event.getClickedBlock().getType().equals(Material.JUKEBOX) || block.getFace(block).equals(Material.FIRE)) {
 					for (Arena arena : W.arenaList) {
 						if (arena.playersInArena.contains(player)) {
 							event.setCancelled(true);
@@ -169,21 +111,16 @@ public class OnPlayerInteractEvent implements Listener {
 			}
 		}
 
-		if (event.getAction() == Action.LEFT_CLICK_BLOCK
-				|| event.getAction() == Action.LEFT_CLICK_BLOCK) {
+		if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_BLOCK) {
 			for (Arena arena : W.arenaList) {
 				if (arena.seekers.contains(player)) {
 					for (Player pl : arena.playersInArena) {
 						if (W.hiddenLoc.get(pl) != null) {
 							Block pLoc = event.getClickedBlock();
 							Block moveLocBlock = W.hiddenLoc.get(pl).getBlock();
-							if (moveLocBlock.getX() == pLoc.getX()
-									&& moveLocBlock.getY() == pLoc.getY()
-									&& moveLocBlock.getZ() == pLoc.getZ()) {
-								W.moveLoc.put(pl, new Location(pl.getWorld(),
-										0, 0, 0));
-								pl.getWorld().playSound(player.getLocation(),
-										Sound.HURT_FLESH, 1, 1);
+							if (moveLocBlock.getX() == pLoc.getX() && moveLocBlock.getY() == pLoc.getY() && moveLocBlock.getZ() == pLoc.getZ()) {
+								W.moveLoc.put(pl, new Location(pl.getWorld(), 0, 0, 0));
+								pl.getWorld().playSound(player.getLocation(), Sound.HURT_FLESH, 1, 1);
 								SolidBlockHandler.makePlayerUnsolid(pl);
 							}
 						}
@@ -193,58 +130,32 @@ public class OnPlayerInteractEvent implements Listener {
 		}
 
 		for (Arena arena : W.arenaList) {
-			if (arena.playersInArena.contains(player)
-					&& (arena.gameState.equals(ArenaState.WAITING) || arena.gameState
-							.equals(ArenaState.STARTING))) {
+			if (arena.playersInArena.contains(player) && (arena.gameState.equals(ArenaState.WAITING) || arena.gameState.equals(ArenaState.STARTING))) {
 				event.setCancelled(true);
 				ItemStack item = player.getInventory().getItemInHand();
 				if (item.getType() != Material.AIR) {
 					if (item.getItemMeta().getDisplayName() != null) {
-						if (item.getItemMeta()
-								.getDisplayName()
-								.equals(MessageM.replaceAll((String) W.config
-										.get(ConfigC.shop_blockChooserv1Name)))) {
-							Inventory blockChooser = Bukkit
-									.createInventory(
-											null,
-											36,
-											MessageM.replaceAll("\u00A7r"
-													+ W.config
-															.get(ConfigC.shop_blockChooserv1Name)));
+						if (item.getItemMeta().getDisplayName().equals(MessageM.replaceAll((String) W.config.get(ConfigC.shop_blockChooserv1Name)))) {
+							Inventory blockChooser = Bukkit.createInventory(null, 36, MessageM.replaceAll("\u00A7r" + W.config.get(ConfigC.shop_blockChooserv1Name)));
 							if (arena.disguiseBlocks != null) {
 								for (int i = arena.disguiseBlocks.size(); i > 0; i = i - 1) {
-									blockChooser.setItem(i - 1,
-											arena.disguiseBlocks.get(i - 1));
+									blockChooser.setItem(i - 1, arena.disguiseBlocks.get(i - 1));
 								}
 							}
 
 							player.openInventory(blockChooser);
 						}
 
-						if (item.getItemMeta()
-								.getDisplayName()
-								.equals(MessageM.replaceAll((String) W.config
-										.get(ConfigC.shop_BlockHuntPassv2Name)))) {
-							Inventory BlockHuntPass = Bukkit
-									.createInventory(
-											null,
-											9,
-											MessageM.replaceAll("\u00A7r"
-													+ W.config
-															.get(ConfigC.shop_BlockHuntPassv2Name)));
-							ItemStack BlockHuntPassSEEKER = new ItemStack(
-									Material.WOOL, 1, (short) 11);
-							ItemMeta BlockHuntPassIM = BlockHuntPassSEEKER
-									.getItemMeta();
-							BlockHuntPassIM.setDisplayName(MessageM
-									.replaceAll("&eSEEKER"));
+						if (item.getItemMeta().getDisplayName().equals(MessageM.replaceAll((String) W.config.get(ConfigC.shop_BlockHuntPassv2Name)))) {
+							Inventory BlockHuntPass = Bukkit.createInventory(null, 9, MessageM.replaceAll("\u00A7r" + W.config.get(ConfigC.shop_BlockHuntPassv2Name)));
+							ItemStack BlockHuntPassSEEKER = new ItemStack(Material.WOOL, 1, (short) 11);
+							ItemMeta BlockHuntPassIM = BlockHuntPassSEEKER.getItemMeta();
+							BlockHuntPassIM.setDisplayName(MessageM.replaceAll("&eSEEKER"));
 							BlockHuntPassSEEKER.setItemMeta(BlockHuntPassIM);
 							BlockHuntPass.setItem(1, BlockHuntPassSEEKER);
 
-							ItemStack BlockHuntPassHIDER = new ItemStack(
-									Material.WOOL, 1, (short) 14);
-							BlockHuntPassIM.setDisplayName(MessageM
-									.replaceAll("&eHIDER"));
+							ItemStack BlockHuntPassHIDER = new ItemStack(Material.WOOL, 1, (short) 14);
+							BlockHuntPassIM.setDisplayName(MessageM.replaceAll("&eHIDER"));
 							BlockHuntPassHIDER.setItemMeta(BlockHuntPassIM);
 							BlockHuntPass.setItem(7, BlockHuntPassHIDER);
 

@@ -18,18 +18,12 @@ import org.bukkit.inventory.ItemStack;
 
 public class OnInventoryCloseEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onInventoryCloseEvent(InventoryCloseEvent event) {
 		Inventory inv = event.getInventory();
 		if (inv.getType().equals(InventoryType.CHEST)) {
 			if (inv.getName().contains("DisguiseBlocks")) {
-				String arenaname = inv
-						.getItem(0)
-						.getItemMeta()
-						.getDisplayName()
-						.replaceAll(
-								MessageM.replaceAll("%NDisguiseBlocks of arena: %A"),
-								"");
+				String arenaname = inv.getItem(0).getItemMeta().getDisplayName().replaceAll(MessageM.replaceAll("%NDisguiseBlocks of arena: %A"), "");
 
 				Arena arena = null;
 				for (Arena arena2 : W.arenaList) {

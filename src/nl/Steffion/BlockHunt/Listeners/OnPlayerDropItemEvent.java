@@ -11,7 +11,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 
 public class OnPlayerDropItemEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onPlayerDropItemEvent(PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 

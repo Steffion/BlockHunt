@@ -18,9 +18,7 @@ public class PlayerArenaData {
 	public Collection<PotionEffect> pPotionEffects;
 	public boolean pFlying;
 
-	public PlayerArenaData (Location pLocation, GameMode pGameMode,
-			ItemStack[] pInventory, ItemStack[] pArmor, Float pEXP,
-			Integer pEXPL, Double pHealth, Integer pFood,
+	public PlayerArenaData(Location pLocation, GameMode pGameMode, ItemStack[] pInventory, ItemStack[] pArmor, Float pEXP, Integer pEXPL, Double pHealth, Integer pFood,
 			Collection<PotionEffect> pPotionEffects, boolean pFlying) {
 		this.pGameMode = pGameMode;
 		this.pInventory = pInventory;

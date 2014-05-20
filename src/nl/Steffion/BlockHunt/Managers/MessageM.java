@@ -31,15 +31,11 @@ public class MessageM {
 	 *            Variables. Seperated with a - . Ex: "playerName-" +
 	 *            player.getName();
 	 */
-	public static void sendMessage(Player player, String message,
-			String... vars) {
+	public static void sendMessage(Player player, String message, String... vars) {
 		if (player == null) {
-			Bukkit.getConsoleSender().sendMessage(
-					MessageM.replaceAll(
-							message.replaceAll("%player%", "Console"), vars));
+			Bukkit.getConsoleSender().sendMessage(MessageM.replaceAll(message.replaceAll("%player%", "Console"), vars));
 		} else {
-			player.sendMessage(MessageM.replaceAll(
-					message.replaceAll("%player%", player.getName()), vars));
+			player.sendMessage(MessageM.replaceAll(message.replaceAll("%player%", player.getName()), vars));
 		}
 	}
 
@@ -55,18 +51,12 @@ public class MessageM {
 	 *            Variables. Seperated with a - . Ex: "playerName-" +
 	 *            player.getName();
 	 */
-	public static void sendFMessage(Player player, ConfigC location,
-			String... vars) {
+	public static void sendFMessage(Player player, ConfigC location, String... vars) {
 		if (player == null) {
 			Bukkit.getConsoleSender().sendMessage(
-					MessageM.replaceAll(
-							location.config.getFile().get(location.location)
-									.toString()
-									.replaceAll("%player%", "Console"), vars));
+					MessageM.replaceAll(location.config.getFile().get(location.location).toString().replaceAll("%player%", "Console"), vars));
 		} else {
-			player.sendMessage(MessageM.replaceAll(
-					location.config.getFile().get(location.location).toString()
-							.replaceAll("%player%", player.getName()), vars));
+			player.sendMessage(MessageM.replaceAll(location.config.getFile().get(location.location).toString().replaceAll("%player%", player.getName()), vars));
 		}
 	}
 
@@ -84,13 +74,10 @@ public class MessageM {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			// String pMessage = message.replaceAll("%player%",
 			// player.getName());
-			player.sendMessage(MessageM.replaceAll(
-					message.replaceAll("%player%", player.getName()), vars));
+			player.sendMessage(MessageM.replaceAll(message.replaceAll("%player%", player.getName()), vars));
 		}
 		// message = message.replaceAll("%player%", "Console");
-		Bukkit.getConsoleSender().sendMessage(
-				MessageM.replaceAll(message.replaceAll("%player%", "Console"),
-						vars));
+		Bukkit.getConsoleSender().sendMessage(MessageM.replaceAll(message.replaceAll("%player%", "Console"), vars));
 	}
 
 	/**
@@ -108,17 +95,11 @@ public class MessageM {
 			// String pMessage =
 			// location.config.getFile().get(location.location)
 			// .toString().replaceAll("%player%", player.getName());
-			player.sendMessage(MessageM.replaceAll(
-					location.config.getFile().get(location.location).toString()
-							.replaceAll("%player%", player.getName()), vars));
+			player.sendMessage(MessageM.replaceAll(location.config.getFile().get(location.location).toString().replaceAll("%player%", player.getName()), vars));
 		}
 		// String message = location.config.getFile().get(location.location)
 		// .toString().replaceAll("%player%", "Console");
-		Bukkit.getConsoleSender().sendMessage(
-				MessageM.replaceAll(
-						location.config.getFile().get(location.location)
-								.toString().replaceAll("%player%", "Console"),
-						vars));
+		Bukkit.getConsoleSender().sendMessage(MessageM.replaceAll(location.config.getFile().get(location.location).toString().replaceAll("%player%", "Console"), vars));
 	}
 
 	/**
@@ -132,8 +113,7 @@ public class MessageM {
 	 * @return
 	 */
 	public static String replaceAll(String message, String... vars) {
-		return MessageM.replaceColours(MessageM.replaceColourVars(MessageM
-				.replaceVars(message, vars)));
+		return MessageM.replaceColours(MessageM.replaceColourVars(MessageM.replaceVars(message, vars)));
 	}
 
 	/**
@@ -205,9 +185,7 @@ public class MessageM {
 		}
 
 		public static String TAG() {
-			return (String) W.config.get(ConfigC.chat_header)
-					+ (String) W.config.get(ConfigC.chat_tag)
-					+ (String) W.config.get(ConfigC.chat_normal);
+			return (String) W.config.get(ConfigC.chat_header) + (String) W.config.get(ConfigC.chat_tag) + (String) W.config.get(ConfigC.chat_normal);
 		}
 	}
 }

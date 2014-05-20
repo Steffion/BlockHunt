@@ -12,26 +12,21 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 
 @SerializableAs("BlockHuntLocation")
-public class LocationSerializable extends Location implements
-		ConfigurationSerializable {
-	public LocationSerializable (World world, double x, double y, double z,
-			float yaw, float pitch) {
+public class LocationSerializable extends Location implements ConfigurationSerializable {
+	public LocationSerializable(World world, double x, double y, double z, float yaw, float pitch) {
 		super(world, x, y, z, yaw, pitch);
 	}
 
-	public LocationSerializable (Location loc) {
-		super(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(),
-				loc.getPitch());
+	public LocationSerializable(Location loc) {
+		super(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 	}
 
 	@Override
 	public boolean equals(Object o) {
 		if (o instanceof LocationSerializable || o instanceof Location) {
 			Location loc = (Location) o;
-			return loc.getWorld().getName().equals(getWorld().getName())
-					&& loc.getX() == getX() && loc.getY() == getY()
-					&& loc.getZ() == getZ() && loc.getYaw() == getYaw()
-					&& loc.getPitch() == getPitch();
+			return loc.getWorld().getName().equals(getWorld().getName()) && loc.getX() == getX() && loc.getY() == getY() && loc.getZ() == getZ()
+					&& loc.getYaw() == getYaw() && loc.getPitch() == getPitch();
 		}
 		return false;
 	}
@@ -53,15 +48,10 @@ public class LocationSerializable extends Location implements
 	public static LocationSerializable deserialize(Map<String, Object> map) {
 		World w = Bukkit.getWorld((String) M.g(map, "w", ""));
 		if (w == null) {
-			MessageM.sendMessage(
-					null,
-					"%EError deserializing LocationSerializable - world not found! (%A%w%%E)",
-					"w-" + w);
+			MessageM.sendMessage(null, "%EError deserializing LocationSerializable - world not found! (%A%w%%E)", "w-" + w);
 			return null;
 		}
-		return new LocationSerializable(w, (Double) M.g(map, "x", 0D),
-				(Double) M.g(map, "y", 0D), (Double) M.g(map, "z", 0D),
-				((Double) M.g(map, "a", 0D)).floatValue(), ((Double) M.g(map,
-						"p", 0D)).floatValue());
+		return new LocationSerializable(w, (Double) M.g(map, "x", 0D), (Double) M.g(map, "y", 0D), (Double) M.g(map, "z", 0D), ((Double) M.g(map, "a", 0D)).floatValue(),
+				((Double) M.g(map, "p", 0D)).floatValue());
 	}
 }

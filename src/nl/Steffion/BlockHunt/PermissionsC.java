@@ -20,29 +20,15 @@ public class PermissionsC {
 	}
 
 	public enum Permissions {
-		info ("info", PType.ALL),
-		help ("help", PType.ALL),
-		reload ("reload", PType.ADMIN),
-		join ("join", PType.PLAYER),
-		joinfull ("joinfull", PType.MODERATOR),
-		joinsign ("joinsign", PType.PLAYER),
-		leave ("leave", PType.PLAYER),
-		list ("list", PType.PLAYER),
-		shop ("shop", PType.PLAYER),
-		shopblockchooser ("shop.blockchooser", PType.ADMIN),
-		start ("start", PType.MODERATOR),
-		create ("create", PType.ADMIN),
-		set ("set", PType.MODERATOR),
-		setwarp ("setwarp", PType.MODERATOR),
-		signcreate ("signcreate", PType.MODERATOR),
-		remove ("remove", PType.ADMIN),
-		tokens ("tokens", PType.ADMIN),
-		allcommands ("allcommands", PType.OP);
+		info("info", PType.ALL), help("help", PType.ALL), reload("reload", PType.ADMIN), join("join", PType.PLAYER), joinfull("joinfull", PType.MODERATOR), joinsign(
+				"joinsign", PType.PLAYER), leave("leave", PType.PLAYER), list("list", PType.PLAYER), shop("shop", PType.PLAYER), shopblockchooser("shop.blockchooser",
+				PType.ADMIN), start("start", PType.MODERATOR), create("create", PType.ADMIN), set("set", PType.MODERATOR), setwarp("setwarp", PType.MODERATOR), signcreate(
+				"signcreate", PType.MODERATOR), remove("remove", PType.ADMIN), tokens("tokens", PType.ADMIN), allcommands("allcommands", PType.OP);
 
 		public String perm;
 		public PType type;
 
-		private Permissions (String perm, PType type) {
+		private Permissions(String perm, PType type) {
 			this.perm = perm;
 			this.type = type;
 		}

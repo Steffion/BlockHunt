@@ -15,22 +15,16 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class OnPlayerCommandPreprocessEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled=true)
-	public void onPlayerCommandPreprocessEvent(
-			PlayerCommandPreprocessEvent event) {
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+	public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
 		Player player = event.getPlayer();
 
 		for (Arena arena : W.arenaList) {
 			if (arena.playersInArena.contains(player)) {
 				String m = event.getMessage();
-				if (m.startsWith("/blockhunt") || m.startsWith("/bh")
-						|| m.startsWith("/seekandfind")
-						|| m.startsWith("/seekandfind") || m.startsWith("/saf")
-						|| m.startsWith("/sf") || m.startsWith("/hideandseek")
-						|| m.startsWith("/has") || m.startsWith("/hs")
-						|| m.startsWith("/ban") || m.startsWith("/kick")
-						|| m.startsWith("/tempban") || m.startsWith("/mute")
-						|| m.startsWith("/reload")) {
+				if (m.startsWith("/blockhunt") || m.startsWith("/bh") || m.startsWith("/seekandfind") || m.startsWith("/seekandfind") || m.startsWith("/saf")
+						|| m.startsWith("/sf") || m.startsWith("/hideandseek") || m.startsWith("/has") || m.startsWith("/hs") || m.startsWith("/ban")
+						|| m.startsWith("/kick") || m.startsWith("/tempban") || m.startsWith("/mute") || m.startsWith("/reload")) {
 					return;
 				}
 
@@ -40,8 +34,7 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 					}
 				}
 
-				if (PermissionsM
-						.hasPerm(player, Permissions.allcommands, false)) {
+				if (PermissionsM.hasPerm(player, Permissions.allcommands, false)) {
 					return;
 				}
 

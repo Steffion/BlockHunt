@@ -12,10 +12,8 @@ import org.bukkit.entity.Player;
 public class CMDlist extends DefaultCMD {
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
-		MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-"
-				+ BlockHunt.pdfFile.getName());
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
+		MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-" + BlockHunt.pdfFile.getName());
 		if (W.arenaList.size() >= 1) {
 			MessageM.sendMessage(player, "&7Available arena(s):");
 			for (Arena arena : W.arenaList) {
@@ -25,8 +23,7 @@ public class CMDlist extends DefaultCMD {
 			MessageM.sendMessage(player, "&7&oNo arenas available...");
 			MessageM.sendMessage(player, "&7&oCreate an arena first please.");
 		}
-		MessageM.sendFMessage(player, ConfigC.chat_headerhigh,
-				"header-&oArenas list");
+		MessageM.sendFMessage(player, ConfigC.chat_headerhigh, "header-&oArenas list");
 		return true;
 	}
 }

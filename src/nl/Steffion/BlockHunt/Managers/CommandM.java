@@ -31,9 +31,8 @@ public class CommandM {
 	public DefaultCMD CMD;
 	public String usage;
 
-	public CommandM (String name, String label, String args, String argsalias,
-			Permissions permission, ConfigC help, Boolean enabled,
-			List<String> mainTABlist, DefaultCMD CMD, String usage) {
+	public CommandM(String name, String label, String args, String argsalias, Permissions permission, ConfigC help, Boolean enabled, List<String> mainTABlist,
+			DefaultCMD CMD, String usage) {
 		this.name = name;
 		this.label = label;
 		this.args = args;

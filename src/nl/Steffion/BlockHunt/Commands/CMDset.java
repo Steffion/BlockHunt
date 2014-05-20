@@ -11,12 +11,10 @@ import org.bukkit.entity.Player;
 public class CMDset extends DefaultCMD {
 
 	@Override
-	public boolean exectue(Player player, Command cmd, String label,
-			String[] args) {
+	public boolean exectue(Player player, Command cmd, String label, String[] args) {
 		if (player != null) {
 			if (args.length <= 1) {
-				MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments,
-						"syntax-" + BlockHunt.CMDset.usage);
+				MessageM.sendFMessage(player, ConfigC.error_notEnoughArguments, "syntax-" + BlockHunt.CMDset.usage);
 			} else {
 				String arenaname = args[1];
 				InventoryHandler.openPanel(player, arenaname);

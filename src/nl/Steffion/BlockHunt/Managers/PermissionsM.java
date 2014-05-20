@@ -33,8 +33,7 @@ public class PermissionsM {
 	 *            permission.
 	 * @return True/False when either the player has the permission.
 	 */
-	public static boolean hasPerm(Player player, Permissions perm,
-			Boolean message) {
+	public static boolean hasPerm(Player player, Permissions perm, Boolean message) {
 		PType type = perm.type;
 		if (player == null) {
 			return true;
@@ -91,8 +90,7 @@ public class PermissionsM {
 	 *            permission.
 	 * @return True/False when either the player has the permission.
 	 */
-	public static boolean hasRawPerm(Player player, PType type, String perm,
-			Boolean message) {
+	public static boolean hasRawPerm(Player player, PType type, String perm, Boolean message) {
 		if (player == null) {
 			return true;
 		}

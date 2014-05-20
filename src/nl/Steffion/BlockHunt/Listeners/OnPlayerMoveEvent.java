@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class OnPlayerMoveEvent implements Listener {
 
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled=true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onPlayerMoveEvent(PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 
@@ -23,18 +23,12 @@ public class OnPlayerMoveEvent implements Listener {
 			if (arena.playersInArena.contains(player)) {
 				if (arena.gameState == ArenaState.INGAME) {
 					W.moveLoc.put(player, player.getLocation());
-					double maxX = Math
-							.max(arena.pos1.getX(), arena.pos2.getX());
-					double minX = Math
-							.min(arena.pos1.getX(), arena.pos2.getX());
-					double maxY = Math
-							.max(arena.pos1.getY(), arena.pos2.getY());
-					double minY = Math
-							.min(arena.pos1.getY(), arena.pos2.getY());
-					double maxZ = Math
-							.max(arena.pos1.getZ(), arena.pos2.getZ());
-					double minZ = Math
-							.min(arena.pos1.getZ(), arena.pos2.getZ());
+					double maxX = Math.max(arena.pos1.getX(), arena.pos2.getX());
+					double minX = Math.min(arena.pos1.getX(), arena.pos2.getX());
+					double maxY = Math.max(arena.pos1.getY(), arena.pos2.getY());
+					double minY = Math.min(arena.pos1.getY(), arena.pos2.getY());
+					double maxZ = Math.max(arena.pos1.getZ(), arena.pos2.getZ());
+					double minZ = Math.min(arena.pos1.getZ(), arena.pos2.getZ());
 
 					Location loc = player.getLocation();
 					if (loc.getBlockX() > maxX) {

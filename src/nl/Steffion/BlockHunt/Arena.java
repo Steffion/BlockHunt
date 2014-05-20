@@ -45,18 +45,11 @@ public class Arena implements ConfigurationSerializable {
 	public List<Player> seekers;
 	public Scoreboard scoreboard;
 
-	public Arena (String arenaName, LocationSerializable pos1,
-			LocationSerializable pos2, int maxPlayers, int minPlayers,
-			int amountSeekersOnStart, int timeInLobbyUntilStart,
-			int waitingTimeSeeker, int gameTime, int timeUntilHidersSword,
-			ArrayList<ItemStack> disguiseBlocks,
-			LocationSerializable lobbyWarp, LocationSerializable hidersWarp,
-			LocationSerializable seekersWarp, LocationSerializable spawnWarp,
-			List<String> seekersWinCommands, List<String> hidersWinCommands,
-			List<String> allowedCommands, int seekersTokenWin,
-			int hidersTokenWin, int killTokens, List<Player> playersInArena,
-			ArenaState gameState, int timer, List<Player> seekers,
-			Scoreboard scoreboard) {
+	public Arena(String arenaName, LocationSerializable pos1, LocationSerializable pos2, int maxPlayers, int minPlayers, int amountSeekersOnStart,
+			int timeInLobbyUntilStart, int waitingTimeSeeker, int gameTime, int timeUntilHidersSword, ArrayList<ItemStack> disguiseBlocks,
+			LocationSerializable lobbyWarp, LocationSerializable hidersWarp, LocationSerializable seekersWarp, LocationSerializable spawnWarp,
+			List<String> seekersWinCommands, List<String> hidersWinCommands, List<String> allowedCommands, int seekersTokenWin, int hidersTokenWin, int killTokens,
+			List<Player> playersInArena, ArenaState gameState, int timer, List<Player> seekers, Scoreboard scoreboard) {
 		this.arenaName = arenaName;
 		this.pos1 = pos1;
 		this.pos2 = pos2;
@@ -100,7 +93,11 @@ public class Arena implements ConfigurationSerializable {
 	}
 
 	public enum ArenaState {
-		WAITING, STARTING, INGAME, RESTARTING, DISABLED;
+		WAITING,
+		STARTING,
+		INGAME,
+		RESTARTING,
+		DISABLED;
 	}
 
 	@Override
@@ -132,33 +129,15 @@ public class Arena implements ConfigurationSerializable {
 
 	@SuppressWarnings("unchecked")
 	public static Arena deserialize(Map<String, Object> map) {
-		LocationSerializable loc = new LocationSerializable(
-				Bukkit.getWorld("world"), 0, 0, 0, 0, 0);
-		return new Arena((String) M.g(map, "arenaName", "UNKNOWN_NAME"),
-				(LocationSerializable) M.g(map, "pos1", loc),
-				(LocationSerializable) M.g(map, "pos2", loc), (Integer) M.g(
-						map, "maxPlayers", 12), (Integer) M.g(map,
-						"minPlayers", 3), (Integer) M.g(map,
-						"amountSeekersOnStart", 1), (Integer) M.g(map,
-						"timeInLobbyUntilStart", 90), (Integer) M.g(map,
-						"waitingTimeSeeker", 20), (Integer) M.g(map,
-						"gameTime", 200), (Integer) M.g(map,
-						"timeUntilHidersSword", 30),
-				(ArrayList<ItemStack>) M.g(map, "disguiseBlocks",
-						new ArrayList<ItemStack>()),
-				(LocationSerializable) M.g(map, "lobbyWarp", loc),
-				(LocationSerializable) M.g(map, "hidersWarp", loc),
-				(LocationSerializable) M.g(map, "seekersWarp", loc),
-				(LocationSerializable) M.g(map, "spawnWarp", loc),
-				(ArrayList<String>) M.g(map, "seekersWinCommands",
-						new ArrayList<String>()), (ArrayList<String>) M.g(map,
-						"hidersWinCommands", new ArrayList<String>()),
-				(ArrayList<String>) M.g(map, "allowedCommands",
-						new ArrayList<String>()), (Integer) M.g(map,
-						"seekersTokenWin", 10), (Integer) M.g(map,
-						"hidersTokenWin", 50), (Integer) M.g(map, "killTokens",
-						8), new ArrayList<Player>(), ArenaState.WAITING, 0,
-				new ArrayList<Player>(), Bukkit.getScoreboardManager()
-						.getNewScoreboard());
+		LocationSerializable loc = new LocationSerializable(Bukkit.getWorld("world"), 0, 0, 0, 0, 0);
+		return new Arena((String) M.g(map, "arenaName", "UNKNOWN_NAME"), (LocationSerializable) M.g(map, "pos1", loc), (LocationSerializable) M.g(map, "pos2", loc),
+				(Integer) M.g(map, "maxPlayers", 12), (Integer) M.g(map, "minPlayers", 3), (Integer) M.g(map, "amountSeekersOnStart", 1), (Integer) M.g(map,
+						"timeInLobbyUntilStart", 90), (Integer) M.g(map, "waitingTimeSeeker", 20), (Integer) M.g(map, "gameTime", 200), (Integer) M.g(map,
+						"timeUntilHidersSword", 30), (ArrayList<ItemStack>) M.g(map, "disguiseBlocks", new ArrayList<ItemStack>()), (LocationSerializable) M.g(map,
+						"lobbyWarp", loc), (LocationSerializable) M.g(map, "hidersWarp", loc), (LocationSerializable) M.g(map, "seekersWarp", loc),
+				(LocationSerializable) M.g(map, "spawnWarp", loc), (ArrayList<String>) M.g(map, "seekersWinCommands", new ArrayList<String>()), (ArrayList<String>) M.g(
+						map, "hidersWinCommands", new ArrayList<String>()), (ArrayList<String>) M.g(map, "allowedCommands", new ArrayList<String>()), (Integer) M.g(map,
+						"seekersTokenWin", 10), (Integer) M.g(map, "hidersTokenWin", 50), (Integer) M.g(map, "killTokens", 8), new ArrayList<Player>(),
+				ArenaState.WAITING, 0, new ArrayList<Player>(), Bukkit.getScoreboardManager().getNewScoreboard());
 	}
 }
