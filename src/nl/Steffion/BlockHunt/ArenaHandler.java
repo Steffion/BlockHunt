@@ -59,7 +59,6 @@ public class ArenaHandler {
 		}
 
 		if (!alreadyJoined) {
-			System.out.println("[BlockHunt] " + player.getName() + " has joined " + arenaname);
 			for (Arena arena : W.arenaList) {
 				if (arena.arenaName.equalsIgnoreCase(arenaname)) {
 					found = true;
@@ -96,6 +95,7 @@ public class ArenaHandler {
 											return;
 										}
 									}
+									System.out.println("[BlockHunt] " + player.getName() + " has joined " + arenaname);
 									arena.playersInArena.add(player);
 
 									PlayerArenaData pad = new PlayerArenaData(player.getLocation(), player.getGameMode(), player.getInventory().getContents(), player
