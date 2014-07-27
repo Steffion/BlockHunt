@@ -110,7 +110,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 									W.seekertime.put(player, arena.waitingTimeSeeker);
 									player.teleport(arena.seekersWarp);
 									player.setGameMode(GameMode.SURVIVAL);
-									player.setWalkSpeed(0.25F);
+									player.setWalkSpeed(0.3F);
 
 									// Fix for client not showing players after
 									// they join

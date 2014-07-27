@@ -120,7 +120,7 @@ public class ArenaHandler {
 									player.getInventory().setBoots(new ItemStack(Material.AIR));
 									player.setFlying(false);
 									player.setAllowFlight(false);
-									player.setWalkSpeed(0.25F);
+									player.setWalkSpeed(0.3F);
 
 									// Fix for client not showing players after
 									// they join
@@ -263,7 +263,7 @@ public class ArenaHandler {
 					arena.seekers.add(seeker);
 					seeker.teleport(arena.seekersWarp);
 					W.seekertime.put(seeker, arena.waitingTimeSeeker);
-					seeker.setWalkSpeed(0.25F);
+					seeker.setWalkSpeed(0.3F);
 
 					// Fix for client not showing players after they join
 					for (Player otherplayer : arena.playersInArena) {
