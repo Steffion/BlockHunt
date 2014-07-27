@@ -6,6 +6,7 @@ import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -17,6 +18,12 @@ public class SolidBlockHandler {
 	@SuppressWarnings("deprecation")
 	public static void makePlayerUnsolid(Player player) {
 		ItemStack block = player.getInventory().getItem(8);
+		if (block == null) {
+			player.sendMessage(ChatColor.RED + "Unable to hide you because your inventory block is missing!");
+			System.out.println("[BlockHunt] ERROR: " + player.getName() + " could not be hidden because their inventory block was missing!");
+			return;
+		}
+		
 		Block pBlock = player.getLocation().getBlock();
 
 		if (W.hiddenLoc.get(player) != null) {
