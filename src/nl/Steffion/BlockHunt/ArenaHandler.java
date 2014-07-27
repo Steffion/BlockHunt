@@ -5,6 +5,9 @@ import java.util.List;
 
 import me.libraryaddict.disguise.DisguiseAPI;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Events.EndArenaEvent;
+import nl.Steffion.BlockHunt.Events.JoinArenaEvent;
+import nl.Steffion.BlockHunt.Events.LeaveArenaEvent;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
@@ -97,6 +100,8 @@ public class ArenaHandler {
 									}
 									System.out.println("[BlockHunt] " + player.getName() + " has joined " + arenaname);
 									arena.playersInArena.add(player);
+                                    JoinArenaEvent event = new JoinArenaEvent(player, arena);
+                                    Bukkit.getPluginManager().callEvent(event);
 
 									PlayerArenaData pad = new PlayerArenaData(player.getLocation(), player.getGameMode(), player.getInventory().getContents(), player
 											.getInventory().getArmorContents(), player.getExp(), player.getLevel(), player.getHealth(), player.getFoodLevel(),
@@ -142,7 +147,7 @@ public class ArenaHandler {
 																			// player
 									}
 
-									if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled) == true) {
+									if ((Boolean) W.config.get(ConfigC.shop_blockChooserv1Enabled)) {
 										if (W.shop.getFile().get(player.getName() + ".blockchooser") != null
 												|| PermissionsM.hasPerm(player, Permissions.shopblockchooser, false)) {
 											ItemStack shopBlockChooser = new ItemStack(Material.getMaterial((String) W.config.get(ConfigC.shop_blockChooserv1IDname)), 1);
@@ -160,7 +165,7 @@ public class ArenaHandler {
 										}
 									}
 
-									if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled) == true) {
+									if ((Boolean) W.config.get(ConfigC.shop_BlockHuntPassv2Enabled)) {
 										if (W.shop.getFile().getInt(player.getName() + ".blockhuntpass") != 0) {
 											ItemStack shopBlockHuntPass = new ItemStack(Material.getMaterial((String) W.config.get(ConfigC.shop_BlockHuntPassv2IDName)),
 													1);
@@ -225,6 +230,8 @@ public class ArenaHandler {
 
 		if (arena != null) {
 			System.out.println("[BlockHunt] " + player.getName() + " has left " + arena.arenaName);
+            LeaveArenaEvent event = new LeaveArenaEvent(player, arena);
+            Bukkit.getPluginManager().callEvent(event);
 
 			if (cleanup) {
 				arena.playersInArena.remove(player);
@@ -339,23 +346,42 @@ public class ArenaHandler {
 	public static void seekersWin(Arena arena) {
 		System.out.println("[BlockHunt] Seekers have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
+
+        List<Player> winners = new ArrayList<Player>();
+        List<Player> losers = new ArrayList<Player>();
+
 		for (Player player : arena.playersInArena) {
-			if (arena.seekersWinCommands != null) {
-				for (String command : arena.seekersWinCommands) {
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", player.getName()));
-				}
 
-				if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
-					W.shop.getFile().set(player.getName() + ".tokens", 0);
-					W.shop.save();
-				}
-				int playerTokens = W.shop.getFile().getInt(player.getName() + ".tokens");
-				W.shop.getFile().set(player.getName() + ".tokens", playerTokens + arena.seekersTokenWin);
-				W.shop.save();
+            if (arena.seekers.contains(player)) {
 
-				MessageM.sendFMessage(player, ConfigC.normal_addedToken, "amount-" + arena.seekersTokenWin);
+                winners.add(player);
+
+                if (arena.seekersWinCommands != null) {
+                    for (String command : arena.seekersWinCommands) {
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", player.getName()));
+                    }
+
+                    if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+                        W.shop.getFile().set(player.getName() + ".tokens", 0);
+                        W.shop.save();
+                    }
+                    int playerTokens = W.shop.getFile().getInt(player.getName() + ".tokens");
+                    W.shop.getFile().set(player.getName() + ".tokens", playerTokens + arena.seekersTokenWin);
+                    W.shop.save();
+
+                    MessageM.sendFMessage(player, ConfigC.normal_addedToken, "amount-" + arena.seekersTokenWin);
+
+                }
+
+            } else {
+
+                losers.add(player);
+
 			}
 		}
+
+        EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
+        Bukkit.getServer().getPluginManager().callEvent(event);
 
 		arena.seekers.clear();
 
@@ -372,8 +398,20 @@ public class ArenaHandler {
 	public static void hidersWin(Arena arena) {
 		System.out.println("[BlockHunt] Hiders have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
+
+        List<Player> winners = new ArrayList<Player>();
+        List<Player> losers = new ArrayList<Player>();
+
 		for (Player player : arena.playersInArena) {
-			if (!arena.seekers.contains(player)) {
+
+			if (arena.seekers.contains(player)) {
+
+                losers.add(player);
+
+            } else {
+
+                winners.add(player);
+
 				if (arena.hidersWinCommands != null) {
 					for (String command : arena.hidersWinCommands) {
 						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", player.getName()));
@@ -390,7 +428,11 @@ public class ArenaHandler {
 					MessageM.sendFMessage(player, ConfigC.normal_addedToken, "amount-" + arena.hidersTokenWin);
 				}
 			}
+
 		}
+
+        EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
+        Bukkit.getServer().getPluginManager().callEvent(event);
 
 		arena.seekers.clear();
 
