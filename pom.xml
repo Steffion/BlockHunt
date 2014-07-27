@@ -2,7 +2,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>nl.Steffion</groupId>
    <artifactId>BlockHunt</artifactId>
-   <version>0.2.0_BETA_B2-b${env.BUILD_NUMBER}</version>
+   <version>0.2.1-b${env.BUILD_NUMBER}</version>
    <name>BlockHunt</name>
 
   <repositories>
