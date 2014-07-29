@@ -100,8 +100,8 @@ public class ArenaHandler {
 									}
 									System.out.println("[BlockHunt] " + player.getName() + " has joined " + arenaname);
 									arena.playersInArena.add(player);
-                                    JoinArenaEvent event = new JoinArenaEvent(player, arena);
-                                    Bukkit.getPluginManager().callEvent(event);
+									JoinArenaEvent event = new JoinArenaEvent(player, arena);
+									Bukkit.getPluginManager().callEvent(event);
 
 									PlayerArenaData pad = new PlayerArenaData(player.getLocation(), player.getGameMode(), player.getInventory().getContents(), player
 											.getInventory().getArmorContents(), player.getExp(), player.getLevel(), player.getHealth(), player.getFoodLevel(),
@@ -230,8 +230,8 @@ public class ArenaHandler {
 
 		if (arena != null) {
 			System.out.println("[BlockHunt] " + player.getName() + " has left " + arena.arenaName);
-            LeaveArenaEvent event = new LeaveArenaEvent(player, arena);
-            Bukkit.getPluginManager().callEvent(event);
+			LeaveArenaEvent event = new LeaveArenaEvent(player, arena);
+			Bukkit.getPluginManager().callEvent(event);
 
 			if (cleanup) {
 				arena.playersInArena.remove(player);
@@ -347,41 +347,39 @@ public class ArenaHandler {
 		System.out.println("[BlockHunt] Seekers have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winSeekers);
 
-        List<Player> winners = new ArrayList<Player>();
-        List<Player> losers = new ArrayList<Player>();
+		List<Player> winners = new ArrayList<Player>();
+		List<Player> losers = new ArrayList<Player>();
 
 		for (Player player : arena.playersInArena) {
 
-            if (arena.seekers.contains(player)) {
+			if (arena.seekers.contains(player)) {
 
-                winners.add(player);
+				winners.add(player);
 
-                if (arena.seekersWinCommands != null) {
-                    for (String command : arena.seekersWinCommands) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", player.getName()));
-                    }
+				if (arena.seekersWinCommands != null) {
+					for (String command : arena.seekersWinCommands) {
+						Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replaceAll("%player%", player.getName()));
+					}
 
-                    if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
-                        W.shop.getFile().set(player.getName() + ".tokens", 0);
-                        W.shop.save();
-                    }
-                    int playerTokens = W.shop.getFile().getInt(player.getName() + ".tokens");
-                    W.shop.getFile().set(player.getName() + ".tokens", playerTokens + arena.seekersTokenWin);
-                    W.shop.save();
+					if (W.shop.getFile().get(player.getName() + ".tokens") == null) {
+						W.shop.getFile().set(player.getName() + ".tokens", 0);
+						W.shop.save();
+					}
+					int playerTokens = W.shop.getFile().getInt(player.getName() + ".tokens");
+					W.shop.getFile().set(player.getName() + ".tokens", playerTokens + arena.seekersTokenWin);
+					W.shop.save();
 
-                    MessageM.sendFMessage(player, ConfigC.normal_addedToken, "amount-" + arena.seekersTokenWin);
+					MessageM.sendFMessage(player, ConfigC.normal_addedToken, "amount-" + arena.seekersTokenWin);
 
-                }
+				}
 
             } else {
-
-                losers.add(player);
-
+				losers.add(player);
 			}
 		}
 
-        EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+		EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
+		Bukkit.getServer().getPluginManager().callEvent(event);
 
 		arena.seekers.clear();
 
@@ -399,18 +397,16 @@ public class ArenaHandler {
 		System.out.println("[BlockHunt] Hiders have won " + arena.arenaName);
 		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
 
-        List<Player> winners = new ArrayList<Player>();
-        List<Player> losers = new ArrayList<Player>();
+		List<Player> winners = new ArrayList<Player>();
+		List<Player> losers = new ArrayList<Player>();
 
 		for (Player player : arena.playersInArena) {
 
 			if (arena.seekers.contains(player)) {
+			    losers.add(player);
+			} else {
 
-                losers.add(player);
-
-            } else {
-
-                winners.add(player);
+				winners.add(player);
 
 				if (arena.hidersWinCommands != null) {
 					for (String command : arena.hidersWinCommands) {
@@ -431,8 +427,8 @@ public class ArenaHandler {
 
 		}
 
-        EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
-        Bukkit.getServer().getPluginManager().callEvent(event);
+		EndArenaEvent event = new EndArenaEvent(winners, losers, arena);
+		Bukkit.getServer().getPluginManager().callEvent(event);
 
 		arena.seekers.clear();
 
