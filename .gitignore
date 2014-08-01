@@ -1,11 +1,15 @@
-# Mac Filesystem.
-.DS_Store
-
-# Other unneeded files.
-/bin
-/manifest.mf
+# Eclipse
 .classpath
-.settings.classpath
-.settings
 .project
-/target
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/
+
+*.gitignore
