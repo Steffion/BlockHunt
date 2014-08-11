@@ -125,7 +125,7 @@ public class ArenaHandler {
 									player.getInventory().setBoots(new ItemStack(Material.AIR));
 									player.setFlying(false);
 									player.setAllowFlight(false);
-									player.setWalkSpeed(0.3F);
+									player.setWalkSpeed(0.2F);
 
 									// Fix for client not showing players after
 									// they join
