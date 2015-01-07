@@ -299,9 +299,9 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							player.getInventory().setChestplate(new ItemStack(Material.IRON_CHESTPLATE, 1));
 							player.getInventory().setLeggings(new ItemStack(Material.IRON_LEGGINGS, 1));
 							player.getInventory().setBoots(new ItemStack(Material.IRON_BOOTS, 1));
-							player.getInventory().setItem(0, new ItemStack(Material.BOW, 1));
-							player.getInventory().setItem(0, new ItemStack(Material.ARROW, 64));
-							player.getInventory().setItem(0, new ItemStack(Material.ARROW, 64));
+							player.getInventory().setItem(1, new ItemStack(Material.BOW, 1));
+							player.getInventory().setItem(2, new ItemStack(Material.ARROW, 64));
+							player.getInventory().setItem(3, new ItemStack(Material.ARROW, 64));
 							player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 1);
 						}
 
