@@ -302,7 +302,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							ItemStack infBow = new ItemStack(Material.BOW, 1);
 							infBow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 							player.getInventory().setItem(1, infBow);
-							player.getInventory().setItem(2, new Itemstack(Material.ARROW, 1));
+							player.getInventory().setItem(2, new ItemStack(Material.ARROW, 1));
 							player.playSound(player.getLocation(), Sound.ANVIL_USE, 1, 1);
 						}
 
