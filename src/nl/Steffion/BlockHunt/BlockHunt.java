@@ -329,6 +329,22 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									}
 								}
 							}
+
+							// blockAnnouncer code.
+							if (arena.timer == (Integer)W.config.get(ConfigC.blockAnnouncer_timer) && (Boolean)W.config.get(ConfigC.blockAnnouncer_enabled)) {
+								ArrayList<String> remainingBlocks = new ArrayList<String>();
+								for (Player arenaPlayer : arena.playersInArena) {
+									if (!arena.seekers.contains(arenaPlayer)) {
+										String block = arenaPlayer.getInventory().getItem(8).getType().name();
+										block = block.substring(0, 1).toUpperCase() + block.substring(1).toLowerCase(); //Make lowercase and capitalise first letter.
+										if (!remainingBlocks.contains(block)) { //Don't print double up block names.
+											remainingBlocks.add(block);
+										}
+									}
+								}
+								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameBlocksLeft, "1-" + remainingBlocks.toString());
+							}
+
 							if (arena.timer == 190) {
 								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameArenaEnd, "1-190");
 							} else if (arena.timer == 60) {
