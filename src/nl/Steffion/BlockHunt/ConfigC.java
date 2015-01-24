@@ -50,8 +50,6 @@ public enum ConfigC {
 
 	requireInventoryClearOnJoin(false, W.config),
 
-	blockAnnouncer_enabled(true, W.config), blockAnnouncer_timer(20, W.config),
-
 	log_enabledPlugin("%TAG%N%name%&a&k + %N%version% is now Enabled. Made by %A%autors%%N.", W.messages), log_disabledPlugin(
 			"%TAG%N%name%&c&k - %N%version% is now Disabled. Made by %A%autors%%N.", W.messages),
 
