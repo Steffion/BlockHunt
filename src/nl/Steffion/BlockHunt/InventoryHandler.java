@@ -69,7 +69,11 @@ public class InventoryHandler {
 			ItemMeta disguiseBlocks_NOTE_IM = disguiseBlocks_NOTE.getItemMeta();
 			disguiseBlocks_NOTE_IM.setDisplayName(MessageM.replaceAll("%NSet the %AdisguiseBlocks%N."));
 			disguiseBlocks_NOTE.setItemMeta(disguiseBlocks_NOTE_IM);
-			panel.setItem(37, disguiseBlocks_NOTE);
+			panel.setItem(36, disguiseBlocks_NOTE);
+
+			ItemStack blockAnnouncerTime_UP = new ItemStack(Material.GOLD_NUGGET, 1);
+			ItemStack blockAnnouncerTime = new ItemStack(Material.BEDROCK, arena.blockAnnouncerTime);
+			ItemStack blockAnnouncerTime_DOWN = new ItemStack(Material.GOLD_NUGGET, 1);
 
 			ItemStack timeUntilHidersSword_UP = new ItemStack(Material.GOLD_NUGGET, 1);
 			ItemStack timeUntilHidersSword = new ItemStack(Material.BEDROCK, arena.timeUntilHidersSword);
@@ -103,6 +107,9 @@ public class InventoryHandler {
 					7, 16, 25);
 
 			updownButton(panel, arena, ArenaType.gameTime, "gameTime", "1 %Nsecond", gameTime_UP, gameTime, gameTime_DOWN, 8, 17, 26);
+
+			updownButton(panel, arena, ArenaType.blockAnnouncerTime, "blockAnnouncerTime", "5 %Nseconds", blockAnnouncerTime_UP, blockAnnouncerTime,
+					blockAnnouncerTime_DOWN, 29, 38, 47);
 
 			updownButton(panel, arena, ArenaType.timeUntilHidersSword, "timeUntilHidersSword", "1 %Nsecond", timeUntilHidersSword_UP, timeUntilHidersSword,
 					timeUntilHidersSword_DOWN, 30, 39, 48);
@@ -147,6 +154,9 @@ public class InventoryHandler {
 			break;
 		case timeUntilHidersSword:
 			setting = arena.timeUntilHidersSword;
+			break;
+		case blockAnnouncerTime:
+			setting = arena.blockAnnouncerTime;
 			break;
 		case hidersTokenWin:
 			setting = arena.hidersTokenWin;

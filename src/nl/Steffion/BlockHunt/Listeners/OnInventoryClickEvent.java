@@ -202,6 +202,8 @@ public class OnInventoryClickEvent implements Listener {
 							updownButton(player, item, arena, ArenaType.waitingTimeSeeker, arena.waitingTimeSeeker, 1000, 5, 1, 1);
 						} else if (item.getItemMeta().getDisplayName().contains("gameTime")) {
 							updownButton(player, item, arena, ArenaType.gameTime, arena.gameTime, 1000, 5, 1, 1);
+						} else if (item.getItemMeta().getDisplayName().contains("blockAnnouncerTime")) {
+							updownButton(player, item, arena, ArenaType.blockAnnouncerTime, arena.blockAnnouncerTime, 1000, 0, 5, 5);
 						} else if (item.getItemMeta().getDisplayName().contains("timeUntilHidersSword")) {
 							updownButton(player, item, arena, ArenaType.timeUntilHidersSword, arena.timeUntilHidersSword, 1000, 0, 1, 1);
 						} else if (item.getItemMeta().getDisplayName().contains("hidersTokenWin")) {
@@ -253,6 +255,9 @@ public class OnInventoryClickEvent implements Listener {
 				case gameTime:
 					arena.gameTime = option + add;
 					break;
+				case blockAnnouncerTime:
+					arena.blockAnnouncerTime = option + add;
+					break;
 				case timeUntilHidersSword:
 					arena.timeUntilHidersSword = option + add;
 					break;
@@ -289,6 +294,9 @@ public class OnInventoryClickEvent implements Listener {
 					break;
 				case gameTime:
 					arena.gameTime = option - remove;
+					break;
+				case blockAnnouncerTime:
+					arena.blockAnnouncerTime = option - remove;
 					break;
 				case timeUntilHidersSword:
 					arena.timeUntilHidersSword = option - remove;
