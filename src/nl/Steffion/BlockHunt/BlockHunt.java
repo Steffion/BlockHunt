@@ -41,6 +41,8 @@ import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -56,6 +58,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.StringUtil;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
@@ -331,18 +334,19 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							}
 
 							// blockAnnouncer code.
-							if (arena.timer == (Integer)W.config.get(ConfigC.blockAnnouncer_timer) && (Boolean)W.config.get(ConfigC.blockAnnouncer_enabled)) {
+							if ((arena.blockAnnouncerTime > 0) && (arena.timer == arena.blockAnnouncerTime)) {
 								ArrayList<String> remainingBlocks = new ArrayList<String>();
 								for (Player arenaPlayer : arena.playersInArena) {
 									if (!arena.seekers.contains(arenaPlayer)) {
 										String block = arenaPlayer.getInventory().getItem(8).getType().name();
-										block = block.substring(0, 1).toUpperCase() + block.substring(1).toLowerCase(); //Make lowercase and capitalise first letter.
+										block = WordUtils.capitalizeFully(block.replace("_", " "));
 										if (!remainingBlocks.contains(block)) { //Don't print double up block names.
 											remainingBlocks.add(block);
 										}
 									}
 								}
-								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameBlocksLeft, "1-" + remainingBlocks.toString());
+								String blocklist = StringUtils.join(remainingBlocks, ", ");
+								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameBlocksLeft, "1-" + blocklist);
 							}
 
 							if (arena.timer == 190) {
