@@ -27,6 +27,7 @@ public class Arena implements ConfigurationSerializable {
 	public int waitingTimeSeeker;
 	public int gameTime;
 	public int timeUntilHidersSword;
+	public int blockAnnouncerTime;
 	public ArrayList<ItemStack> disguiseBlocks;
 	public LocationSerializable lobbyWarp;
 	public LocationSerializable hidersWarp;
@@ -46,7 +47,7 @@ public class Arena implements ConfigurationSerializable {
 	public Scoreboard scoreboard;
 
 	public Arena(String arenaName, LocationSerializable pos1, LocationSerializable pos2, int maxPlayers, int minPlayers, int amountSeekersOnStart,
-			int timeInLobbyUntilStart, int waitingTimeSeeker, int gameTime, int timeUntilHidersSword, ArrayList<ItemStack> disguiseBlocks,
+			int timeInLobbyUntilStart, int waitingTimeSeeker, int gameTime, int timeUntilHidersSword, int blockAnnouncerTime, ArrayList<ItemStack> disguiseBlocks,
 			LocationSerializable lobbyWarp, LocationSerializable hidersWarp, LocationSerializable seekersWarp, LocationSerializable spawnWarp,
 			List<String> seekersWinCommands, List<String> hidersWinCommands, List<String> allowedCommands, int seekersTokenWin, int hidersTokenWin, int killTokens,
 			List<Player> playersInArena, ArenaState gameState, int timer, List<Player> seekers, Scoreboard scoreboard) {
@@ -60,6 +61,7 @@ public class Arena implements ConfigurationSerializable {
 		this.waitingTimeSeeker = waitingTimeSeeker;
 		this.gameTime = gameTime;
 		this.timeUntilHidersSword = timeUntilHidersSword;
+		this.blockAnnouncerTime = blockAnnouncerTime;
 		this.disguiseBlocks = disguiseBlocks;
 		this.lobbyWarp = lobbyWarp;
 		this.hidersWarp = hidersWarp;
@@ -89,7 +91,8 @@ public class Arena implements ConfigurationSerializable {
 		timeUntilHidersSword,
 		hidersTokenWin,
 		seekersTokenWin,
-		killTokens;
+		killTokens,
+		blockAnnouncerTime;
 	}
 
 	public enum ArenaState {
@@ -111,6 +114,7 @@ public class Arena implements ConfigurationSerializable {
 		map.put("amountSeekersOnStart", amountSeekersOnStart);
 		map.put("timeInLobbyUntilStart", timeInLobbyUntilStart);
 		map.put("waitingTimeSeeker", waitingTimeSeeker);
+		map.put("blockAnnouncerTime", blockAnnouncerTime);
 		map.put("gameTime", gameTime);
 		map.put("timeUntilHidersSword", timeUntilHidersSword);
 		map.put("disguiseBlocks", disguiseBlocks);
@@ -133,7 +137,7 @@ public class Arena implements ConfigurationSerializable {
 		return new Arena((String) M.g(map, "arenaName", "UNKNOWN_NAME"), (LocationSerializable) M.g(map, "pos1", loc), (LocationSerializable) M.g(map, "pos2", loc),
 				(Integer) M.g(map, "maxPlayers", 12), (Integer) M.g(map, "minPlayers", 3), (Integer) M.g(map, "amountSeekersOnStart", 1), (Integer) M.g(map,
 						"timeInLobbyUntilStart", 90), (Integer) M.g(map, "waitingTimeSeeker", 20), (Integer) M.g(map, "gameTime", 200), (Integer) M.g(map,
-						"timeUntilHidersSword", 30), (ArrayList<ItemStack>) M.g(map, "disguiseBlocks", new ArrayList<ItemStack>()), (LocationSerializable) M.g(map,
+						"timeUntilHidersSword", 30), (Integer) M.g(map, "blockAnnouncerTime", 45), (ArrayList<ItemStack>) M.g(map, "disguiseBlocks", new ArrayList<ItemStack>()), (LocationSerializable) M.g(map,
 						"lobbyWarp", loc), (LocationSerializable) M.g(map, "hidersWarp", loc), (LocationSerializable) M.g(map, "seekersWarp", loc),
 				(LocationSerializable) M.g(map, "spawnWarp", loc), (ArrayList<String>) M.g(map, "seekersWinCommands", new ArrayList<String>()), (ArrayList<String>) M.g(
 						map, "hidersWinCommands", new ArrayList<String>()), (ArrayList<String>) M.g(map, "allowedCommands", new ArrayList<String>()), (Integer) M.g(map,

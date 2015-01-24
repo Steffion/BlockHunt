@@ -41,6 +41,8 @@ import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -329,6 +331,23 @@ public class BlockHunt extends JavaPlugin implements Listener {
 									}
 								}
 							}
+
+							// blockAnnouncer code.
+							if ((arena.blockAnnouncerTime > 0) && (arena.timer == arena.blockAnnouncerTime)) {
+								ArrayList<String> remainingBlocks = new ArrayList<String>();
+								for (Player arenaPlayer : arena.playersInArena) {
+									if (!arena.seekers.contains(arenaPlayer)) {
+										String block = arenaPlayer.getInventory().getItem(8).getType().name();
+										block = WordUtils.capitalizeFully(block.replace("_", " "));
+										if (!remainingBlocks.contains(block)) { //Don't print double up block names.
+											remainingBlocks.add(block);
+										}
+									}
+								}
+								String blocklist = StringUtils.join(remainingBlocks, ", ");
+								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameBlocksLeft, "1-" + blocklist);
+							}
+
 							if (arena.timer == 190) {
 								ArenaHandler.sendFMessage(arena, ConfigC.normal_ingameArenaEnd, "1-190");
 							} else if (arena.timer == 60) {

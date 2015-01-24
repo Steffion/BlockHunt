@@ -79,7 +79,7 @@ public enum ConfigC {
 			"%TAG%NPlayer %A%playername%%N %N%option% %A%amount%%N %option2% your tokens.", W.messages), normal_ingameNowSolid(
 			"%TAG%NYou're now a solid '%A%block%%N' block!", W.messages), normal_ingameNoMoreSolid("%TAG%NYou're no longer a solid block!", W.messages), normal_shopBoughtItem(
 			"%TAG%NYou've bought the '%A%itemname%%N' item!", W.messages), normal_shopChoosenBlock("%TAG%NYou've choosen to be a(n) '%A%block%%N' block!", W.messages), normal_shopChoosenSeeker(
-			"%TAG%NYou've choosen to be a %Aseeker%N!", W.messages), normal_shopChoosenHiders("%TAG%NYou've choosen to be a %Ahider%N!", W.messages),
+			"%TAG%NYou've choosen to be a %Aseeker%N!", W.messages), normal_shopChoosenHiders("%TAG%NYou've choosen to be a %Ahider%N!", W.messages), normal_ingameBlocksLeft("%TAG%NRemaining blocks: %A%1%%N", W.messages),
 
 	warning_lobbyNeedAtleast("%TAG%WYou need atleast %A%1%%W player(s) to start the game!", W.messages), warning_ingameNEWSeekerChoosen(
 			"%TAG%WThe last seeker left and a new seeker has been choosen!", W.messages), warning_unableToCommand(
