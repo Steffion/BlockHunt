@@ -178,10 +178,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				Permissions.join, ConfigC.help_join,
 				(Boolean) W.config.get(ConfigC.commandEnabled_join),
 				BlockHuntCMD, new CMDjoin(), "/BlockHunt <join|j> <arenaname>");
-		CMDleave = new CommandM("BlockHunt LEAVE", "BlockHunt", "leave", "l",
+		CMDleave = new CommandM("lobby",
 				Permissions.leave, ConfigC.help_leave,
 				(Boolean) W.config.get(ConfigC.commandEnabled_leave),
-				BlockHuntCMD, new CMDleave(), "/BlockHunt <leave|l>");
+				BlockHuntCMD, new CMDleave(), "/lobby");
 		CMDlist = new CommandM("BlockHunt LIST", "BlockHunt", "list", "li",
 				Permissions.list, ConfigC.help_list,
 				(Boolean) W.config.get(ConfigC.commandEnabled_list),
