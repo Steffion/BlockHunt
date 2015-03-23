@@ -254,8 +254,7 @@ public class InventoryHandler {
 						+ W.config.get(ConfigC.shop_title)));
 		if (W.config.getFile().getBoolean("vaultSupport") == true) {
 			if (BlockHunt.econ != null) {
-				int vaultBalance = (int) BlockHunt.econ.getBalance(player
-						.getName());
+				int vaultBalance = (int) BlockHunt.econ.getBalance(player);
 				List<String> lores = new ArrayList<String>();
 				List<String> lores2 = new ArrayList<String>();
 

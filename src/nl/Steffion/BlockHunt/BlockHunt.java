@@ -42,8 +42,6 @@ import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
-import nl.Steffion.BlockHunt.mcstats.Metrics;
-import nl.Steffion.BlockHunt.mcstats.Metrics.Graph;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -53,8 +51,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -247,69 +243,6 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		ArenaHandler.loadArenas();
 
-		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					Metrics metrics = new Metrics(plugin);
-					Graph playersPlayingBlockHunt = metrics
-							.createGraph("Players playing BlockHunt");
-
-					playersPlayingBlockHunt.addPlotter(new Metrics.Plotter(
-							"Playing") {
-
-						@Override
-						public int getValue() {
-							int playersPlaying = 0;
-							for (Arena arena : W.arenaList) {
-								playersPlaying = playersPlaying
-										+ arena.playersInArena.size();
-							}
-							return playersPlaying;
-						}
-
-					});
-
-					playersPlayingBlockHunt.addPlotter(new Metrics.Plotter(
-							"Not playing") {
-
-						@Override
-						public int getValue() {
-							int playersPlaying = 0;
-							for (Arena arena : W.arenaList) {
-								playersPlaying = playersPlaying
-										+ arena.playersInArena.size();
-							}
-							return Bukkit.getOnlinePlayers().length
-									- playersPlaying;
-						}
-
-					});
-				} catch (Exception e) {
-					MessageM.sendMessage(null,
-							"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
-				}
-			}
-		}, 0, 6000);
-
-		Metrics metrics;
-		try {
-			metrics = new Metrics(plugin);
-			metrics.start();
-			FileConfiguration metrics_fc = new YamlConfiguration();
-			metrics_fc.load(metrics.getConfigFile());
-			if (!metrics_fc.getBoolean("opt-out", false)) {
-				MessageM.sendMessage(null,
-						"%TAG%NSending %AMCStats%N to the server...");
-			} else {
-				MessageM.sendMessage(null,
-						"%TAG%EUnable to send %AMCStats %Eto the server. %AMCStats%E is disabled?");
-			}
-		} catch (Exception e) {
-			MessageM.sendMessage(null,
-					"%TAG%EUnable to send %AMCStats %Eto the server. Something went wrong ;(!");
-		}
 
 		if ((Boolean) W.config.get(ConfigC.autoUpdateCheck)) {
 			if ((Boolean) W.config.get(ConfigC.autoDownloadUpdate)) {

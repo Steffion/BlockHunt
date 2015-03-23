@@ -10,6 +10,7 @@ import nl.Steffion.BlockHunt.Managers.MessageM;
 
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,7 +19,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class OnEntityDamageByEntityEvent implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 		Player player = null;
@@ -50,9 +50,9 @@ public class OnEntityDamageByEntityEvent implements Listener {
 						} else {
 							player.getWorld().playSound(player.getLocation(),
 									Sound.HURT_FLESH, 1, 1);
-
-							if (event.getDamage() >= player.getHealth()) {
-								player.setHealth(20);
+							Damageable d = (Damageable) player;
+							if (event.getDamage() >= d.getHealth()) {
+								player.setHealth(new Double(20));
 								event.setCancelled(true);
 
 								DisguiseAPI.undisguiseToAll(player);
