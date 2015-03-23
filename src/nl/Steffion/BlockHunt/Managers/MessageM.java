@@ -109,8 +109,7 @@ public class MessageM {
 			// location.config.getFile().get(location.location)
 			// .toString().replaceAll("%player%", player.getName());
 			player.sendMessage(MessageM.replaceAll(
-					location.config.getFile().get(location.location).toString()
-							.replaceAll("%player%", player.getName()), vars));
+					location.config.getFile().get(location.location).toString().replaceAll("%player%", player.getName()), vars));
 		}
 		// String message = location.config.getFile().get(location.location)
 		// .toString().replaceAll("%player%", "Console");

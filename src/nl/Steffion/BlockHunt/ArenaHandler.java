@@ -15,6 +15,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -113,7 +114,7 @@ public class ArenaHandler {
 										}
 									}
 									arena.playersInArena.add(player);
-
+									Damageable d = (Damageable) player;
 									PlayerArenaData pad = new PlayerArenaData(
 											player.getLocation(),
 											player.getGameMode(), player
@@ -122,7 +123,7 @@ public class ArenaHandler {
 													.getInventory()
 													.getArmorContents(),
 											player.getExp(), player.getLevel(),
-											player.getHealth(),
+											d.getHealth(),
 											player.getFoodLevel(),
 											player.getActivePotionEffects(),
 											player.getAllowFlight());
