@@ -1,0 +1,12 @@
+name: BlockHunt
+version: RECODE
+description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
+load: POSTWORLD
+authors:
+  - Steffion
+#website: http://
+main: nl.Steffion.BlockHunt.BlockHunt
+database: false
+#depend: [OnePlugin, AnotherPlugin]
+#softdepend: [OnePlugin, AnotherPlugin]
+#loadbefore: [OnePlugin, AnotherPlugin]
