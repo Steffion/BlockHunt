@@ -1,5 +1,7 @@
 package nl.Steffion.BlockHunt;
 
+import java.util.logging.Level;
+
 import nl.Steffion.BlockHunt.util.Config;
 import nl.Steffion.BlockHunt.util.Messager;
 
@@ -16,7 +18,8 @@ public class BlockHunt extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-
+		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+				"onDisable.author", "author", BlockHunt.pdf.getAuthors().get(0));
 	}
 
 	@Override
@@ -28,5 +31,12 @@ public class BlockHunt extends JavaPlugin {
 		BlockHunt.messages = new Config("messages.yml");
 
 		Bukkit.getPluginManager().registerEvents(new Messager(), this);
+
+		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+				"onEnable.author", "author", BlockHunt.pdf.getAuthors().get(0));
+		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+				"onEnable.finished", "name", BlockHunt.pdf.getName(),
+				"version", BlockHunt.pdf.getVersion());
+
 	}
 }
