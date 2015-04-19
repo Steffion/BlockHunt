@@ -1,4 +1,4 @@
-package nl.Steffion.BlockHunt.utils;
+package nl.Steffion.BlockHunt.util;
 
 import java.io.IOException;
 import java.io.InputStream;
