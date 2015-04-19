@@ -30,6 +30,8 @@ public class Locale {
 	 * Get the player's country code, so you can use it for e.g. the language
 	 * system. If it can't find the country assigned to the IP or if the player
 	 * is connecting from localhost, it will return "GB".
+	 * is connecting from localhost, it will return the default set locale in
+	 * locale.yml.
 	 *
 	 * @param player
 	 *            - Person you want to know the country code of.
@@ -64,8 +66,9 @@ public class Locale {
 					(InputStream) request.getContent()));
 			final JsonObject object = element.getAsJsonObject();
 
-			return player.getAddress().getHostString().equals("127.0.0.1") ? "GB"
-					: object.get("country_code").getAsString();
+			return player.getAddress().getHostString().equals("127.0.0.1") ? BlockHunt.locale
+					.getConfig().getString("general.defaultLanguage") : object
+					.get("country_code").getAsString();
 		} catch (final MalformedURLException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Malformed URL Exception:", e);
@@ -74,7 +77,10 @@ public class Locale {
 					"Input Output Exception:", e);
 		}
 
-		return "GB";
+		return BlockHunt.locale.getConfig()
+				.getString("general.defaultLanguage");
+	}
+
 	/**
 	 * Initiate the locale system.<br>
 	 * You're not required to call this within the onEnable.
