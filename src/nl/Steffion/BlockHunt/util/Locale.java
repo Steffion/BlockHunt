@@ -42,8 +42,14 @@ public class Locale {
 			Locale.initiateLocaleSystem();
 		}
 
-		final String urlString = "http://freegeoip.net/json/"
-				+ player.getAddress().getHostString();
+		String urlString;
+
+		if (player != null) {
+			urlString = "http://freegeoip.net/json/"
+					+ player.getAddress().getHostString();
+		} else {
+			urlString = "http://freegeoip.net/json/";
+		}
 
 		/*
 		 * This is the format of the returning JSON:
@@ -65,9 +71,11 @@ public class Locale {
 					(InputStream) request.getContent()));
 			final JsonObject object = element.getAsJsonObject();
 
-			return player.getAddress().getHostString().equals("127.0.0.1") ? BlockHunt.locale
-					.getConfig().getString("general.defaultLanguage") : object
-					.get("country_code").getAsString();
+			if (player.getAddress().getHostString().equals("127.0.0.1")) {
+				return BlockHunt.locale.getString("general.defaultLanguage");
+			} else {
+				object.get("country_code").getAsString();
+			}
 		} catch (final MalformedURLException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Malformed URL Exception:", e);
