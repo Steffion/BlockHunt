@@ -72,11 +72,11 @@ public class Locale {
 			final JsonObject object = element.getAsJsonObject();
 
 			if (player == null) {
-				object.get("country_code").getAsString();
+				return object.get("country_code").getAsString();
 			} else if (player.getAddress().getHostString().equals("127.0.0.1")) {
 				return BlockHunt.locale.getString("general.defaultLanguage");
 			} else {
-				object.get("country_code").getAsString();
+				return object.get("country_code").getAsString();
 			}
 		} catch (final MalformedURLException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
