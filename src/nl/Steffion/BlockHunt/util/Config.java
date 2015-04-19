@@ -62,7 +62,7 @@ public class Config {
 	 * @param createdNew
 	 *            - Was the config just made?
 	 */
-	public void checkDefaults(final Boolean createdNew) {
+	private void checkDefaults(final Boolean createdNew) {
 		config = YamlConfiguration.loadConfiguration(configFile);
 
 		Reader reader = null;
@@ -96,7 +96,7 @@ public class Config {
 						BlockHunt.plugin.getLogger().log(
 								Level.INFO,
 								"Found missing setting: Added '" + key
-										+ "' to " + location);
+								+ "' to " + location);
 						changed = true;
 					}
 				}
@@ -109,16 +109,46 @@ public class Config {
 	}
 
 	/**
+	 * Gets the requested boolean by path.<br>
+	 * If the boolean does not exist but a default value has been specified,
+	 * this will return the default value.<br>
+	 * If the boolean does not exist and no default value was specified, this
+	 * will return false.
+	 *
+	 * @param path
+	 *            - Path of the boolean to get.
+	 * @return Requested boolean.
+	 */
+	public Boolean getBoolean(final String path) {
+		return getConfig().getBoolean(path);
+	}
+
+	/**
 	 * Gets the config.
 	 *
-	 * @return - The FileConfiguration of the config.
+	 * @return The FileConfiguration of the config.
 	 */
-	public FileConfiguration getConfig() {
+	private FileConfiguration getConfig() {
 		if (config == null) {
 			loadConfig();
 		}
 
 		return config;
+	}
+
+	/**
+	 * Gets the requested String by path.<br>
+	 * If the String does not exist but a default value has been specified, this
+	 * will return the default value.<br>
+	 * If the String does not exist and no default value was specified, this
+	 * will return null.
+	 *
+	 * @param path
+	 *            - Path of the String to get.
+	 * @return Requested String.
+	 */
+	public String getString(final String path) {
+		return getConfig().getString(path);
 	}
 
 	/**
@@ -132,11 +162,11 @@ public class Config {
 		if (!configFile.exists()) {
 			if (BlockHunt.plugin.getResource(configName) == null) {
 				BlockHunt.plugin
-						.getLogger()
-				.log(Level.SEVERE,
-						"The file "
-								+ configName
-								+ " is missing the the resource folder. Contact the developer for help");
+				.getLogger()
+						.log(Level.SEVERE,
+								"The file "
+										+ configName
+										+ " is missing the the resource folder. Contact the developer for help");
 				return;
 			}
 
@@ -152,16 +182,16 @@ public class Config {
 	 * Load the config.
 	 */
 	public void loadConfig() {
-		loadConfig(false);
+		loadConfig(true);
 	}
 
 	/**
 	 * Load the config.
-	 * 
+	 *
 	 * @param firstLoad
 	 *            - Is this the first time loading the file?
 	 */
-	public void loadConfig(final Boolean firstLoad) {
+	private void loadConfig(final Boolean firstLoad) {
 		if (configFile == null) {
 			configFile = new File(path, configName);
 		}
@@ -201,5 +231,19 @@ public class Config {
 
 		BlockHunt.plugin.getLogger().log(Level.INFO,
 				configName + " has been saved");
+	}
+
+	/**
+	 * Sets the specified path to the given value.<br>
+	 * If value is null, the entry will be removed. Any existing entry will be
+	 * replaced, regardless of what the new value is.
+	 *
+	 * @param path
+	 *            - Path of the object to set.
+	 * @param value
+	 *            - New value to set the path to.
+	 */
+	public void set(final String path, final Object value) {
+		getConfig().set(path, value);
 	}
 }
