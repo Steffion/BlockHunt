@@ -42,6 +42,12 @@ public class Messager implements Listener {
 
 		if (config.getString(locale + "." + path) == null) {
 			locale = BlockHunt.locale.getString("general.defaultLanguage");
+			if (config.getString(locale + "." + path) == null) {
+				Messager.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
+						"messager.missingValue", "setting", path, "config",
+						config.configName);
+				return;
+			}
 		}
 
 		if (BlockHunt.locale.getBoolean("general.forceLanguage")) {
@@ -101,6 +107,12 @@ public class Messager implements Listener {
 
 		if (config.getString(locale + "." + path) == null) {
 			locale = BlockHunt.locale.getString("general.defaultLanguage");
+			if (config.getString(locale + "." + path) == null) {
+				Messager.sendMessage(player, BlockHunt.messages,
+						"messager.missingValue", "setting", path, "config",
+						config.configName);
+				return;
+			}
 		}
 
 		if (BlockHunt.locale.getBoolean("general.forceLanguage")) {
@@ -145,5 +157,7 @@ public class Messager implements Listener {
 
 		// TODO remove this test.
 		Messager.sendMessage(player, BlockHunt.messages, "test");
+
+		// TODO add a language chooser
 	}
 }
