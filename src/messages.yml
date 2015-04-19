@@ -1,0 +1,3 @@
+GB.onDisable.author: 'Plugin made by %author%. Thanks for using!'
+GB.onEnable.author: 'Plugin made by %author%.'
+GB.onEnable.finished: 'Enabling %name% v%version% - finished!'

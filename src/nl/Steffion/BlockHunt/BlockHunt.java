@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class BlockHunt extends JavaPlugin {
 	public static Config config;
+	public static Config locale;
 	public static Config messages;
 	public static PluginDescriptionFile pdf;
 	public static BlockHunt plugin;
@@ -23,5 +24,6 @@ public class BlockHunt extends JavaPlugin {
 
 		BlockHunt.config = new Config(this, "config.yml");
 		BlockHunt.messages = new Config(this, "messages.yml");
+		BlockHunt.locale = new Config(this, "plugins/Steffion", "locale.yml");
 	}
 }
