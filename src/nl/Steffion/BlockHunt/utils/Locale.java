@@ -52,11 +52,8 @@ public class Locale {
 					(InputStream) request.getContent()));
 			final JsonObject object = element.getAsJsonObject();
 
-			if (!player.getAddress().getHostString().equals("127.0.0.1")) {
-				return object.get("country_code").getAsString();
-			} else {
-				return "GB";
-			}
+			return player.getAddress().getHostString().equals("127.0.0.1") ? "GB"
+					: object.get("country_code").getAsString();
 		} catch (final MalformedURLException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Malformed URL Exception:", e);
