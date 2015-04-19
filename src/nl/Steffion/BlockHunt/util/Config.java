@@ -12,6 +12,11 @@ import nl.Steffion.BlockHunt.BlockHunt;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+/**
+ * Create and manage config files.
+ *
+ * @author Steffion
+ */
 public class Config {
 	public FileConfiguration config = null;
 	public File configFile = null;
@@ -19,6 +24,12 @@ public class Config {
 	public String location;
 	public String path;
 
+	/**
+	 * Create config from resource in the plugins folder.
+	 *
+	 * @param configName
+	 *            - Name of config e.g. 'config.yml'
+	 */
 	public Config(final String configName) {
 		path = BlockHunt.plugin.getDataFolder().toString();
 		this.configName = configName;
@@ -27,6 +38,15 @@ public class Config {
 		initiateConfig();
 	}
 
+	/**
+	 * Create config from resource in a different folder.<br>
+	 * The root folder is the folder where the server is running from.
+	 *
+	 * @param path
+	 *            - Path to different folder.
+	 * @param configName
+	 *            - Name of config e.g. 'config.yml'
+	 */
 	public Config(final String path, final String configName) {
 		this.path = path;
 		this.configName = configName;
@@ -35,6 +55,13 @@ public class Config {
 		initiateConfig();
 	}
 
+	/**
+	 * Check if defaults from the resource are written in the file.<br>
+	 * If content is missing it will add it from the resource.
+	 *
+	 * @param createdNew
+	 *            - Was the config just made?
+	 */
 	public void checkDefaults(final Boolean createdNew) {
 		config = YamlConfiguration.loadConfiguration(configFile);
 
@@ -69,7 +96,7 @@ public class Config {
 						BlockHunt.plugin.getLogger().log(
 								Level.INFO,
 								"Found missing setting: Added '" + key
-								+ "' to " + location);
+										+ "' to " + location);
 						changed = true;
 					}
 				}
@@ -81,6 +108,11 @@ public class Config {
 		}
 	}
 
+	/**
+	 * Gets the config.
+	 *
+	 * @return - The FileConfiguration of the config.
+	 */
 	public FileConfiguration getConfig() {
 		if (config == null) {
 			loadConfig();
@@ -89,6 +121,9 @@ public class Config {
 		return config;
 	}
 
+	/**
+	 * Initiate the config.
+	 */
 	public void initiateConfig() {
 		if (configFile == null) {
 			configFile = new File(path, configName);
@@ -97,11 +132,11 @@ public class Config {
 		if (!configFile.exists()) {
 			if (BlockHunt.plugin.getResource(configName) == null) {
 				BlockHunt.plugin
-				.getLogger()
-						.log(Level.SEVERE,
-								"The file "
-										+ configName
-										+ " is missing the the resource folder. Contact the developer for help");
+						.getLogger()
+				.log(Level.SEVERE,
+						"The file "
+								+ configName
+								+ " is missing the the resource folder. Contact the developer for help");
 				return;
 			}
 
@@ -113,10 +148,19 @@ public class Config {
 		loadConfig(true);
 	}
 
+	/**
+	 * Load the config.
+	 */
 	public void loadConfig() {
 		loadConfig(false);
 	}
 
+	/**
+	 * Load the config.
+	 * 
+	 * @param firstLoad
+	 *            - Is this the first time loading the file?
+	 */
 	public void loadConfig(final Boolean firstLoad) {
 		if (configFile == null) {
 			configFile = new File(path, configName);
@@ -133,10 +177,16 @@ public class Config {
 		}
 	}
 
+	/**
+	 * Reload the config.
+	 */
 	public void reloadConfig() {
 		loadConfig(false);
 	}
 
+	/**
+	 * Save the config.
+	 */
 	public void saveConfig() {
 		if ((config == null) || (configFile == null)) {
 			return;

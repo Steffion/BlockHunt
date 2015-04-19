@@ -17,8 +17,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * Get locale related information from players. Thanks to http://freegeoip.net/
- * for their API.
+ * Get locale related information from players.<br>
+ * Thanks to http://freegeoip.net/ for their API.
  *
  * @author Steffion
  */
