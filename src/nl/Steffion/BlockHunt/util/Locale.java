@@ -24,7 +24,7 @@ import com.google.gson.JsonParser;
  */
 public class Locale {
 
-	private static Boolean initiated = false;
+	public static Boolean initiated = false;
 
 	/**
 	 * Get the player's country code, so you can use it for e.g. the language
@@ -84,8 +84,7 @@ public class Locale {
 					"Input Output Exception:", e);
 		}
 
-		return BlockHunt.locale.getConfig()
-				.getString("general.defaultLanguage");
+		return BlockHunt.locale.getString("general.defaultLanguage");
 	}
 
 	/**

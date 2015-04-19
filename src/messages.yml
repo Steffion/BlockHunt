@@ -1,3 +1,6 @@
 GB.onDisable.author: 'Plugin made by %author%. Thanks for using!'
 GB.onEnable.author: 'Plugin made by %author%.'
 GB.onEnable.finished: 'Enabling %name% v%version% - finished!'
+GB.test: '&4&lThis is a test!'
+NL.test: '&5&lDit is een test!'
+GB.messager.wrongMethod: '&cThe developer is using the wrong method, tell them to change it.'

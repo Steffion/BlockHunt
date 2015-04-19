@@ -1,7 +1,9 @@
 package nl.Steffion.BlockHunt;
 
-import nl.Steffion.BlockHunt.utils.Config;
+import nl.Steffion.BlockHunt.util.Config;
+import nl.Steffion.BlockHunt.util.Messager;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,5 +26,7 @@ public class BlockHunt extends JavaPlugin {
 
 		BlockHunt.config = new Config("config.yml");
 		BlockHunt.messages = new Config("messages.yml");
+
+		Bukkit.getPluginManager().registerEvents(new Messager(), this);
 	}
 }
