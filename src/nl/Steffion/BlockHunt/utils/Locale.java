@@ -17,9 +17,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 /**
- * Get locale related information from players.
- * Thanks to http://freegeoip.net/ for their API.
- * 
+ * Get locale related information from players. Thanks to http://freegeoip.net/
+ * for their API.
+ *
  * @author Steffion
  */
 public class Locale {
@@ -29,7 +29,6 @@ public class Locale {
 	/**
 	 * Get the player's country code, so you can use it for e.g. the language
 	 * system. If it can't find the country assigned to the IP or if the player
-	 * is connecting from localhost, it will return "GB".
 	 * is connecting from localhost, it will return the default set locale in
 	 * locale.yml.
 	 *
