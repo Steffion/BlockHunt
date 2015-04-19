@@ -24,6 +24,8 @@ import com.google.gson.JsonParser;
  */
 public class Locale {
 
+	private static Boolean initiated = false;
+
 	/**
 	 * Get the player's country code, so you can use it for e.g. the language
 	 * system. If it can't find the country assigned to the IP or if the player
@@ -35,6 +37,10 @@ public class Locale {
 	 * @author Steffion
 	 */
 	public static String getCountryCode(final Player player) {
+		if (!Locale.initiated) {
+			Locale.initiateLocaleSystem();
+		}
+
 		final String urlString = "http://freegeoip.net/json/"
 				+ player.getAddress().getHostString();
 
@@ -69,5 +75,12 @@ public class Locale {
 		}
 
 		return "GB";
+	/**
+	 * Initiate the locale system.<br>
+	 * You're not required to call this within the onEnable.
+	 */
+	public static void initiateLocaleSystem() {
+		BlockHunt.locale = new Config("plugins/Steffion", "locale.yml");
+		Locale.initiated = true;
 	}
 }

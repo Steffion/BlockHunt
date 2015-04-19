@@ -22,7 +22,6 @@ public class BlockHunt extends JavaPlugin {
 		BlockHunt.plugin = this;
 		BlockHunt.pdf = getDescription();
 
-		BlockHunt.locale = new Config(this, "plugins/Steffion", "locale.yml");
 		BlockHunt.config = new Config("config.yml");
 		BlockHunt.messages = new Config("messages.yml");
 	}
