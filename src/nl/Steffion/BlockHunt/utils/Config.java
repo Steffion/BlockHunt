@@ -19,7 +19,7 @@ public class Config {
 	public String location;
 	public String path;
 
-	public Config(final BlockHunt instance, final String configName) {
+	public Config(final String configName) {
 		path = BlockHunt.plugin.getDataFolder().toString();
 		this.configName = configName;
 		location = configName;
@@ -27,8 +27,7 @@ public class Config {
 		initiateConfig();
 	}
 
-	public Config(final BlockHunt instance, final String path,
-			final String configName) {
+	public Config(final String path, final String configName) {
 		this.path = path;
 		this.configName = configName;
 		location = path + "/" + configName;
