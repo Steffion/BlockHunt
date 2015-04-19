@@ -71,7 +71,9 @@ public class Locale {
 					(InputStream) request.getContent()));
 			final JsonObject object = element.getAsJsonObject();
 
-			if (player.getAddress().getHostString().equals("127.0.0.1")) {
+			if (player == null) {
+				object.get("country_code").getAsString();
+			} else if (player.getAddress().getHostString().equals("127.0.0.1")) {
 				return BlockHunt.locale.getString("general.defaultLanguage");
 			} else {
 				object.get("country_code").getAsString();
