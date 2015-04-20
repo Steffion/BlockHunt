@@ -46,7 +46,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 					} else {
 						if (arena.seekers.contains(player)) {
 							event.setCancelled(true);
-						} else if (arena.playersInArena.contains(player) && arena.playersInArena.contains(event.getDamager())
+						} else if (arena.seekerProtection && arena.playersInArena.contains(player) && arena.playersInArena.contains(event.getDamager())
 								&& !arena.seekers.contains(event.getDamager()) && !arena.seekers.contains(player)) {
 							event.setCancelled(true);
 						} else {
