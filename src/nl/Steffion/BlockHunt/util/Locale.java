@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.logging.Level;
 
@@ -64,6 +65,7 @@ public class Locale {
 
 			final HttpURLConnection request = (HttpURLConnection) url
 					.openConnection();
+			request.setConnectTimeout(5000);
 			request.connect();
 
 			final JsonParser parser = new JsonParser();
@@ -81,6 +83,11 @@ public class Locale {
 		} catch (final MalformedURLException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Malformed URL Exception:", e);
+		} catch (final SocketTimeoutException e) {
+			BlockHunt.plugin
+					.getLogger()
+					.log(Level.SEVERE,
+							"Connection to detect language, by looking up the internet, timed out! Using default language");
 		} catch (final IOException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Input Output Exception:", e);
