@@ -85,9 +85,9 @@ public class Locale {
 					"Malformed URL Exception:", e);
 		} catch (final SocketTimeoutException e) {
 			BlockHunt.plugin
-					.getLogger()
-					.log(Level.SEVERE,
-							"Connection to detect language, by looking up the internet, timed out! Using default language");
+			.getLogger()
+			.log(Level.SEVERE,
+					"Connection to detect language, by looking up the internet, timed out! Using default language");
 		} catch (final IOException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Input Output Exception:", e);
@@ -98,10 +98,14 @@ public class Locale {
 
 	/**
 	 * Initiate the locale system.<br>
-	 * You're not required to call this within the onEnable.
+	 * Call it inside the onEnable();
 	 */
 	public static void initiateLocaleSystem() {
-		BlockHunt.locale = new Config("plugins/Steffion", "locale.yml");
 		Locale.initiated = true;
+		BlockHunt.locale = new Config("plugins/Steffion", "locale.yml");
+		BlockHunt.locale.set("users.CONSOLE.name", "CONSOLE");
+		BlockHunt.locale.set("users.CONSOLE.language",
+				Locale.getCountryCode(null));
+		BlockHunt.locale.saveConfig();
 	}
 }

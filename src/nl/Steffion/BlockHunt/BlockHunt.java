@@ -3,6 +3,7 @@ package nl.Steffion.BlockHunt;
 import java.util.logging.Level;
 
 import nl.Steffion.BlockHunt.util.Config;
+import nl.Steffion.BlockHunt.util.Locale;
 import nl.Steffion.BlockHunt.util.Messager;
 
 import org.bukkit.Bukkit;
@@ -29,6 +30,7 @@ public class BlockHunt extends JavaPlugin {
 
 		BlockHunt.config = new Config("config.yml");
 		BlockHunt.messages = new Config("messages.yml");
+		Locale.initiateLocaleSystem();
 
 		Bukkit.getPluginManager().registerEvents(new Messager(), this);
 
@@ -37,6 +39,5 @@ public class BlockHunt extends JavaPlugin {
 		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
 				"onEnable.finished", "name", BlockHunt.pdf.getName(),
 				"version", BlockHunt.pdf.getVersion());
-
 	}
 }

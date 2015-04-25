@@ -38,7 +38,7 @@ public class Messager implements Listener {
 	 */
 	public static void sendConsoleMessage(final Level level,
 			final Config config, final String path, final String... replaceVars) {
-		String locale = Locale.getCountryCode(null);
+		String locale = BlockHunt.locale.getString("users.CONSOLE.language");
 
 		if (config.getString(locale + "." + path) == null) {
 			locale = BlockHunt.locale.getString("general.defaultLanguage");
@@ -155,9 +155,9 @@ public class Messager implements Listener {
 				+ ".language", Locale.getCountryCode(player));
 		BlockHunt.locale.saveConfig();
 
-		// TODO remove this test.
+		// TODO BlockHunt - remove this test.
 		Messager.sendMessage(player, BlockHunt.messages, "test");
 
-		// TODO add a language chooser
+		// TODO BlockHunt - add a language chooser, using JSON messages/buttons
 	}
 }
