@@ -85,9 +85,9 @@ public class Locale {
 					"Malformed URL Exception:", e);
 		} catch (final SocketTimeoutException e) {
 			BlockHunt.plugin
-			.getLogger()
-			.log(Level.SEVERE,
-					"Connection to detect language, by looking up the internet, timed out! Using default language");
+					.getLogger()
+					.log(Level.SEVERE,
+							"The connection to detect the local language has timed out! Using default language");
 		} catch (final IOException e) {
 			BlockHunt.plugin.getLogger().log(Level.SEVERE,
 					"Input Output Exception:", e);
