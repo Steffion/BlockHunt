@@ -457,4 +457,14 @@ public class ArenaHandler {
 		arena.timer = 0;
 		arena.playersInArena.clear();
 	}
+	
+	public static boolean noPlayersInArenas() {
+		// Check if there are any players in any arena (quick way to early exit for event handlers)
+		for (Arena arena : W.arenaList) {
+			if (arena.playersInArena.size() > 0) {
+				return false;
+			}
+		}
+		return true;
+	}
 }
