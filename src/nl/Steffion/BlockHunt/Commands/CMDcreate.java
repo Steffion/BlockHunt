@@ -25,7 +25,7 @@ public class CMDcreate extends DefaultCMD {
 			} else {
 				if (W.pos1.get(player) != null && W.pos2.get(player) != null) {
 					if (W.pos1.get(player).getWorld().equals(W.pos2.get(player).getWorld())) {
-						Arena arena = new Arena(args[1], W.pos1.get(player), W.pos2.get(player), 12, 3, 1, 50, 20, 300, 30, 45, false, new ArrayList<ItemStack>(), null, null, null,
+						Arena arena = new Arena(args[1], W.pos1.get(player), W.pos2.get(player), 12, 3, 1, 50, 20, 300, 30, 45, false, false, false, false, false, new ArrayList<ItemStack>(), null, null, null,
 								null, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), 10, 50, 8, new ArrayList<Player>(), ArenaState.WAITING,
 								0, new ArrayList<Player>(), Bukkit.getScoreboardManager().getNewScoreboard());
 						W.arenas.getFile().set(args[1], arena);

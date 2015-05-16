@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.ConfigC;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.W;
@@ -17,8 +18,10 @@ public class OnPlayerCommandPreprocessEvent implements Listener {
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onPlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event) {
-		Player player = event.getPlayer();
+		// Early exit if no one is in any arena
+		if (ArenaHandler.noPlayersInArenas()) return;
 
+		Player player = event.getPlayer();
 		for (Arena arena : W.arenaList) {
 			if (arena.playersInArena.contains(player)) {
 				String m = event.getMessage();

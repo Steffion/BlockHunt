@@ -1,6 +1,7 @@
 package nl.Steffion.BlockHunt.Listeners;
 
 import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.ArenaHandler;
 import nl.Steffion.BlockHunt.W;
 
 import org.bukkit.entity.Entity;
@@ -15,15 +16,47 @@ public class OnEntityDamageEvent implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onEntityDamageEvent(EntityDamageEvent event) {
-		Entity ent = event.getEntity();
+		// Early exit if no one is in any arena
+		if (ArenaHandler.noPlayersInArenas()) return;
 
+		Entity ent = event.getEntity();
 		if (ent instanceof Player) {
 			Player player = (Player) event.getEntity();
 			for (Arena arena : W.arenaList) {
 				if (arena.playersInArena.contains(player)) {
-					if (!event.getCause().equals(DamageCause.ENTITY_ATTACK)) {
-						event.setCancelled(true);
+					DamageCause cause = event.getCause();
+					System.out.println("[DEBUG] EntityDamage: Player = " + player.getName() + " / Cause = " + cause);
+					switch (cause) {
+						case ENTITY_ATTACK:
+							// Do nothing about damage from an entity
+							// Any entity damage that makes it to here was already allowed by the EntityDamageByEntity event
+							break;
+						case FALL:
+							// Should we prevent the fall damage?
+							if (arena.seekers.contains(player)) {
+								if (!arena.seekersTakeFallDamage) {
+									// Prevent seeker fall damage (if configured)
+									event.setCancelled(true);
+									System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
+									return;
+								}
+							} else {
+								if (!arena.hidersTakeFallDamage) {
+									// Prevent hider fall damage (if configured)
+									event.setCancelled(true);
+									System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
+									return;
+								}
+							}
+							break;
+						default:
+							// Cancel all non-entity damage for all players (lava, drowning, fire, etc)
+							event.setCancelled(true);
+							System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
+							break;
 					}
+					System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
+					return;
 				}
 			}
 		}
