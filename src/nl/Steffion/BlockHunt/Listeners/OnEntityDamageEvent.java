@@ -25,7 +25,6 @@ public class OnEntityDamageEvent implements Listener {
 			for (Arena arena : W.arenaList) {
 				if (arena.playersInArena.contains(player)) {
 					DamageCause cause = event.getCause();
-					System.out.println("[DEBUG] EntityDamage: Player = " + player.getName() + " / Cause = " + cause);
 					switch (cause) {
 						case ENTITY_ATTACK:
 							// Do nothing about damage from an entity
@@ -37,14 +36,12 @@ public class OnEntityDamageEvent implements Listener {
 								if (!arena.seekersTakeFallDamage) {
 									// Prevent seeker fall damage (if configured)
 									event.setCancelled(true);
-									System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
 									return;
 								}
 							} else {
 								if (!arena.hidersTakeFallDamage) {
 									// Prevent hider fall damage (if configured)
 									event.setCancelled(true);
-									System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
 									return;
 								}
 							}
@@ -52,10 +49,8 @@ public class OnEntityDamageEvent implements Listener {
 						default:
 							// Cancel all non-entity damage for all players (lava, drowning, fire, etc)
 							event.setCancelled(true);
-							System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
 							break;
 					}
-					System.out.println("[DEBUG] EntityDamage: isCancelled = " + event.isCancelled());
 					return;
 				}
 			}

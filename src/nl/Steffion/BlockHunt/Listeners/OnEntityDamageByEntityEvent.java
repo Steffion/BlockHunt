@@ -41,7 +41,6 @@ public class OnEntityDamageByEntityEvent implements Listener {
 		Player damager = null;
 		if (event.getDamager() instanceof Player) {
 			damager = (Player) event.getDamager();
-			System.out.println("[DEBUG] EntityDamageByEntity: Player = " + player.getName() + " / Damager = " + damager.getName() + " / Cause = " + event.getCause());
 		} else {
 			if ((event.getCause() == DamageCause.PROJECTILE) && (event.getDamager() instanceof Arrow)) {
 				 // If damage was caused by an arrow, find out who shot the arrow
@@ -51,13 +50,11 @@ public class OnEntityDamageByEntityEvent implements Listener {
 					 damager = (Player) shooter;
 				 }
 			}
-			System.out.println("[DEBUG] EntityDamageByEntity: Player = " + player.getName()	+ " / Damager = " + event.getDamager() + " / Cause = " + event.getCause());
 		}
 
 		// Always block all damage not dealt by a player
 		if (damager == null || !(damager instanceof Player)) {
 			event.setCancelled(true);
-			System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 			return;
 		}
 
@@ -66,7 +63,6 @@ public class OnEntityDamageByEntityEvent implements Listener {
 				if (arena.gameState == ArenaState.WAITING || arena.gameState == ArenaState.STARTING) {
 					// Always cancel damage when players are waiting
 					event.setCancelled(true);
-					System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 					return;
 				} else {
 					// Seeker receiving damage
@@ -75,29 +71,24 @@ public class OnEntityDamageByEntityEvent implements Listener {
 							// Seeker damaged by seeker
 							if (!arena.seekersCanHurtSeekers) {
 								event.setCancelled(true);
-								System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 								return;
 							}
 						} else {
 							// Seeker damaged by hider
 							if (!arena.hidersCanHurtSeekers) {
 								event.setCancelled(true);
-								System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 								return;
 							}
 						}
 						event.setCancelled(true);
-						System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 						return;
 					} else {
 						// Hider damaged by hider
 						if (!arena.hidersCanHurtHiders && !arena.seekers.contains(damager)) {
 							event.setCancelled(true);
-							System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 							return;
 						}
 					}
-					System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled());
 
 					// The damage is allowed, so lets handle it!
 					player.getWorld().playSound(player.getLocation(), Sound.HURT_FLESH, 1, 1);
@@ -105,7 +96,6 @@ public class OnEntityDamageByEntityEvent implements Listener {
 					if (event.getDamage() >= player.getHealth()) {
 						player.setHealth(20);
 						event.setCancelled(true);
-						System.out.println("[DEBUG] EntityDamageByEntity: isCancelled = " + event.isCancelled() + "(handling fake damage)");
 
 						DisguiseAPI.undisguiseToAll(player);
 						W.pBlock.remove(player);
