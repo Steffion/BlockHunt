@@ -4,7 +4,7 @@ import java.util.logging.Level;
 
 import nl.Steffion.BlockHunt.util.Config;
 import nl.Steffion.BlockHunt.util.Locale;
-import nl.Steffion.BlockHunt.util.Messager;
+import nl.Steffion.BlockHunt.util.Messenger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -19,7 +19,7 @@ public class BlockHunt extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+		Messenger.sendConsoleMessage(Level.INFO, BlockHunt.messages,
 				"onDisable.author", "author", BlockHunt.pdf.getAuthors().get(0));
 	}
 
@@ -32,11 +32,11 @@ public class BlockHunt extends JavaPlugin {
 		BlockHunt.messages = new Config("messages.yml");
 		Locale.initiateLocaleSystem();
 
-		Bukkit.getPluginManager().registerEvents(new Messager(), this);
+		Bukkit.getPluginManager().registerEvents(new Messenger(), this);
 
-		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+		Messenger.sendConsoleMessage(Level.INFO, BlockHunt.messages,
 				"onEnable.author", "author", BlockHunt.pdf.getAuthors().get(0));
-		Messager.sendConsoleMessage(Level.INFO, BlockHunt.messages,
+		Messenger.sendConsoleMessage(Level.INFO, BlockHunt.messages,
 				"onEnable.finished", "name", BlockHunt.pdf.getName(),
 				"version", BlockHunt.pdf.getVersion());
 	}

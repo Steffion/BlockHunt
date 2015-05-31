@@ -30,7 +30,7 @@ public class Config {
 	 * @param configName
 	 *            - Name of config e.g. 'config.yml'
 	 */
-	public Config(final String configName) {
+	public Config (final String configName) {
 		path = BlockHunt.plugin.getDataFolder().toString();
 		this.configName = configName;
 		location = configName;
@@ -47,7 +47,7 @@ public class Config {
 	 * @param configName
 	 *            - Name of config e.g. 'config.yml'
 	 */
-	public Config(final String path, final String configName) {
+	public Config (final String path, final String configName) {
 		this.path = path;
 		this.configName = configName;
 		location = path + "/" + configName;
@@ -96,7 +96,7 @@ public class Config {
 						BlockHunt.plugin.getLogger().log(
 								Level.INFO,
 								"Found missing setting: Added '" + key
-								+ "' to " + location);
+										+ "' to " + location);
 						changed = true;
 					}
 				}
@@ -162,7 +162,7 @@ public class Config {
 		if (!configFile.exists()) {
 			if (BlockHunt.plugin.getResource(configName) == null) {
 				BlockHunt.plugin
-				.getLogger()
+						.getLogger()
 						.log(Level.SEVERE,
 								"The file "
 										+ configName

@@ -4,12 +4,14 @@ import java.util.logging.Level;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class Messager implements Listener {
+public class Messenger implements Listener {
 	/**
 	 * Replace default Minecraft colour codes.
 	 *
@@ -43,7 +45,7 @@ public class Messager implements Listener {
 		if (config.getString(locale + "." + path) == null) {
 			locale = BlockHunt.locale.getString("general.defaultLanguage");
 			if (config.getString(locale + "." + path) == null) {
-				Messager.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
+				Messenger.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
 						"messager.missingValue", "setting", path, "config",
 						config.configName);
 				return;
@@ -97,7 +99,7 @@ public class Messager implements Listener {
 	public static void sendMessage(final Player player, final Config config,
 			final String path, final String... replaceVars) {
 		if (player == null) {
-			Messager.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
+			Messenger.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
 					"messager.wrongMethod");
 			return;
 		}
@@ -108,7 +110,7 @@ public class Messager implements Listener {
 		if (config.getString(locale + "." + path) == null) {
 			locale = BlockHunt.locale.getString("general.defaultLanguage");
 			if (config.getString(locale + "." + path) == null) {
-				Messager.sendMessage(player, BlockHunt.messages,
+				Messenger.sendMessage(player, BlockHunt.messages,
 						"messager.missingValue", "setting", path, "config",
 						config.configName);
 				return;
@@ -135,8 +137,99 @@ public class Messager implements Listener {
 				counter = counter + 2;
 			}
 		}
+		player.sendMessage(Messenger.replaceColours(message));
+	}
 
-		player.sendMessage(Messager.replaceColours(message));
+	public static void sendMessageWithOriginal(final Player player,
+			final Config config, final String path, final String... replaceVars) {
+		if (player == null) {
+			Messenger.sendConsoleMessage(Level.SEVERE, BlockHunt.messages,
+					"messager.wrongMethod");
+			return;
+		}
+
+		String locale = BlockHunt.locale.getString("users."
+				+ player.getUniqueId().toString() + ".language");
+
+		if (config.getString(locale + "." + path) == null) {
+			locale = BlockHunt.locale.getString("general.defaultLanguage");
+			if (config.getString(locale + "." + path) == null) {
+				Messenger.sendMessage(player, BlockHunt.messages,
+						"messager.missingValue", "setting", path, "config",
+						config.configName);
+				return;
+			}
+		}
+
+		if (BlockHunt.locale.getBoolean("general.forceLanguage")) {
+			if (config.getString(BlockHunt.locale
+					.getString("general.defaultLanguage") + "." + path) == null) {
+				locale = "GB";
+			} else {
+				BlockHunt.locale.getString("general.defaultLanguage");
+			}
+		}
+
+		String message = config.getString(locale + "." + path);
+
+		if (replaceVars != null) {
+			Integer counter = 0;
+
+			for (int i = 0; i < (replaceVars.length / 2); i++) {
+				message = message.replaceAll("%" + replaceVars[counter] + "%",
+						replaceVars[counter + 1]);
+				counter = counter + 2;
+			}
+		}
+		AsyncPlayerChatEvent event;
+		sendRawMessage(
+				player,
+				"{\"text\":\""
+						+ event.getFormat()
+								.replace("%1$s", player.getDisplayName())
+								.replace(
+										"%2$s",
+										new StringBuilder(
+												"\",\"extra\":[{\"text\":\"")
+												.append(Messenger
+														.replaceColours(message))
+												.append("\",\"color\":\"white\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":\"")
+												.append(ChatColor.GOLD)
+												.append(orgMessageString)
+												.append(" (")
+												.append(ChatColor.GREEN)
+												.append(senderLang
+														.toUpperCase())
+												.append(ChatColor.GOLD)
+												.append(")").append(": ")
+												.append(ChatColor.GRAY)
+												.append(message)
+												.append(ChatColor.RESET)
+												.append("\"}}]}").toString()));
+		// player.sendMessage(Messenger.replaceColours(message));
+	}
+
+	public void sendRawMessage(Player player, String message) {
+		Class<?> nmsChatSerializer = Reflection.getNMSClass("ChatSerializer");
+		Class<?> nmsPacketPlayOutChat = Reflection
+				.getNMSClass("PacketPlayOutChat");
+		try {
+			Object handle = Reflection.getHandle(player);
+			Object connection = Reflection.getField(handle.getClass(),
+					"playerConnection").get(handle);
+			Object serialized = Reflection.getMethod(nmsChatSerializer, "a",
+					new Class[] { String.class }).invoke(null,
+					new Object[] { message });
+			Object packet = nmsPacketPlayOutChat
+					.getConstructor(
+							new Class[] { Reflection
+									.getNMSClass("IChatBaseComponent") })
+					.newInstance(new Object[] { serialized });
+			Reflection.getMethod(connection.getClass(), "sendPacket",
+					new Class[0]).invoke(connection, new Object[] { packet });
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/*
@@ -156,7 +249,7 @@ public class Messager implements Listener {
 		BlockHunt.locale.saveConfig();
 
 		// TODO BlockHunt - remove this test.
-		Messager.sendMessage(player, BlockHunt.messages, "test");
+		Messenger.sendMessage(player, BlockHunt.messages, "test");
 
 		// TODO BlockHunt - add a language chooser, using JSON messages/buttons
 	}
