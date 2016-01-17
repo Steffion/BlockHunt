@@ -1,0 +1,12 @@
+name: BlockHunt
+version: 2.0.0
+#description: ""
+load: STARTUP
+authors: [Steffion]
+#website: http://
+main: nl.Steffion.BlockHunt.BlockHunt
+database: false
+#depend: []
+prefix: "BlockHunt 2.0.0"
+#softdepend: []
+#loadbefore: []
