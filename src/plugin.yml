@@ -2,11 +2,28 @@ name: BlockHunt
 version: 2.0.0
 #description: ""
 load: STARTUP
-authors: [Steffion]
+author: Steffion
+authors: [Steffion, RandomPanda30]
 #website: http://
 main: nl.Steffion.BlockHunt.BlockHunt
 database: false
 #depend: []
-prefix: "BlockHunt 2.0.0"
+prefix: "BlockHunt v2.0.0"
 #softdepend: []
 #loadbefore: []
+commands:
+  blockhunt:
+    description: Main command for the BlockHunt plugin
+    aliases: [bh, hs, has, hideandseek, seekandfind, saf, sf, prophunt, ph]
+    permission: blockhunt.help
+    permission-message: "§cI'm sorry, but I cannot allow you to do that. Insufficient permissions. <<permission>>"
+    usage: "§cSyntax error! Try again. Enter /<command> to consult help."
+permissions:
+  blockhunt.*:
+    description: Grants all permissions for BlockHunt
+    default: op
+    children:
+      blockhunt.help:
+        description: Allows you to consult help
+        default: true
+    
