@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt;
 
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -23,15 +24,21 @@ public class BlockHunt extends JavaPlugin {
 
 			return true;
 		} else if (args.length == 1) {
-			if (args[0].equalsIgnoreCase("help")) {
+			if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h")) {
 				Bukkit.dispatchCommand(sender, "blockhunt help 1");
 				
 				return true;
 			}
 		} else if (args.length == 2) {
-			if (args[0].equalsIgnoreCase("help")) {
+			if (args[0].equalsIgnoreCase("help") || args[0].equalsIgnoreCase("h")) {
+				HashMap<String, String> help = new HashMap<String, String>();
+
+				help.put("§7Use /blockhunt help [n] to get page n of help.", null);
+				help.put("§6/blockhunt help [n]: §fConsult this help page.", "blockhunt.help");
+
 				int pageNumber;
-				int maxPages = 1;
+				int maxPages = (help.size() / 9) + 1;
+				int index;
 				
 				try {
 					pageNumber = Integer.parseInt(args[1]);
@@ -44,10 +51,25 @@ public class BlockHunt extends JavaPlugin {
 					pageNumber = maxPages;
 				}
 
-				sender.sendMessage("§9--------- §fBlockHunt: Index (" + pageNumber + "/1) §9--------------------");
-				sender.sendMessage("§7Use /blockhunt help [n] to get page n of help.");
-				// sender.sendMessage("§6/blockhunt help [n]: §fConsult this
-				// help page");
+				sender.sendMessage(
+						"§9--------- §fBlockHunt: Index (" + pageNumber + "/" + maxPages + ") §9--------------------");
+
+				index = (pageNumber - 1) * 9;
+				
+				for (String helpLine : help.keySet()) {
+					String perm = help.get(helpLine);
+					
+					if ((perm != null) && !sender.hasPermission(perm)) {
+						index--;
+						continue;
+					}
+					
+					sender.sendMessage(helpLine);
+					
+					if (index >= (pageNumber * 9)) {
+						break;
+					}
+				}
 				
 				return true;
 			}

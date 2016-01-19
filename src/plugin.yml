@@ -1,7 +1,7 @@
 name: BlockHunt
 version: 2.0.0
 #description: ""
-load: STARTUP
+load: POSTWORLD
 author: Steffion
 authors: [Steffion, RandomPanda30]
 #website: http://
