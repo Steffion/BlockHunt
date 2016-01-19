@@ -13,11 +13,11 @@ prefix: "BlockHunt v2.0.0"
 #loadbefore: []
 commands:
   blockhunt:
-    description: Main command for the BlockHunt plugin
+    description: Main command for the BlockHunt plugin.
     aliases: [bh, hs, has, hideandseek, seekandfind, saf, sf, prophunt, ph]
     permission: blockhunt.help
     permission-message: "§cI'm sorry, but I cannot allow you to do that. Insufficient permissions. <<permission>>"
-    usage: "§cSyntax error! Try again. Enter /<command> to consult help."
+    usage: "§cUsage: /blockhunt: to consult help"
 permissions:
   blockhunt.*:
     description: Grants all permissions for BlockHunt
