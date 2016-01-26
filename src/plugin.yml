@@ -3,7 +3,7 @@ version: 2.0.0
 #description: ""
 load: POSTWORLD
 author: Steffion
-authors: [Steffion, RandomPanda30]
+authors: [RandomPanda30]
 #website: http://
 main: nl.Steffion.BlockHunt.BlockHunt
 database: false
@@ -20,10 +20,19 @@ commands:
     usage: "§cUsage: /blockhunt: to consult help"
 permissions:
   blockhunt.*:
-    description: Grants all permissions for BlockHunt
     default: op
-    children:
+    children:      
+      blockhunt.create:
+        default: op
+      blockhunt.edit:
+        default: op
       blockhunt.help:
-        description: Allows you to consult help
         default: true
+      blockhunt.leave:
+        default: true
+      blockhunt.list:
+        default: true
+      blockhunt.remove:
+        default: op
+
     

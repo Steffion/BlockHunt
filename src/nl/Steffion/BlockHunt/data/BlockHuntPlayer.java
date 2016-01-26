@@ -1,21 +1,32 @@
-package nl.Steffion.BlockHunt.playerdata;
+package nl.Steffion.BlockHunt.data;
 
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import nl.Steffion.BlockHunt.BlockHunt;
 
 public class BlockHuntPlayer {
 	private boolean		allowFlight;
 	private ItemStack[]	armorContents;
 	private float		exp;
 	private int			foodLevel;
+	private GameMode	gamemode;
 	private double		health;
 	private ItemStack[]	inventoryContents;
 	private int			level;
+	private Location	location;
+	private BlockHunt	plugin;
 	private UUID		uuid;
 
+	public BlockHuntPlayer() {
+		plugin = BlockHunt.getPlugin();
+	}
+	
 	public void clear() {
 		Player player = Bukkit.getPlayer(uuid);
 
@@ -26,6 +37,7 @@ public class BlockHuntPlayer {
 		player.getInventory().setBoots(null);
 		player.setExp(0);
 		player.setFoodLevel(20);
+		player.setGameMode(GameMode.SURVIVAL);
 		player.setHealth(20);
 
 		for (int i = 0; i < inventoryContents.length; i++) {
@@ -45,13 +57,19 @@ public class BlockHuntPlayer {
 		player.getInventory().setBoots(armorContents[0]);
 		player.setExp(exp);
 		player.setFoodLevel(foodLevel);
+		player.setGameMode(gamemode);
 		player.setHealth(health);
 		
 		for (int i = 0; i < inventoryContents.length; i++) {
 			player.getInventory().setItem(i, inventoryContents[i]);
 		}
+		
+		player.updateInventory();
 
 		player.setLevel(level);
+		player.teleport(location);
+		
+		plugin.removePlayerData(player);
 	}
 
 	public void store(Player player) {
@@ -59,9 +77,11 @@ public class BlockHuntPlayer {
 		armorContents = player.getInventory().getArmorContents();
 		exp = player.getExp();
 		foodLevel = player.getFoodLevel();
+		gamemode = player.getGameMode();
 		health = player.getHealth();
 		inventoryContents = player.getInventory().getContents();
 		level = player.getLevel();
+		location = player.getLocation();
 		uuid = player.getUniqueId();
 	}
 	
