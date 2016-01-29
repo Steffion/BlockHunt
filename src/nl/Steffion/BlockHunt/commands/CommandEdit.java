@@ -84,6 +84,19 @@ public class CommandEdit extends Command {
 		player.getInventory().setItem(1, hidersSpawn);
 		
 		/*
+		 * Lobby location item
+		 */
+		ItemStack lobbyLocation = new ItemStack(Material.WOOL, 1, (short) 13);
+		im = lobbyLocation.getItemMeta();
+		im.setDisplayName("§2Lobby location");
+		lore.clear();
+		lore.add("§7Place this block to set the lobby location.");
+		lore.add("§cThis is a required setting.");
+		im.setLore(lore);
+		lobbyLocation.setItemMeta(im);
+		player.getInventory().setItem(2, lobbyLocation);
+		
+		/*
 		 * Seekers spawn item
 		 */
 		ItemStack seekersSpawn = new ItemStack(Material.WOOL, 1, (short) 4);
@@ -94,7 +107,7 @@ public class CommandEdit extends Command {
 		lore.add("§cThis is a required setting.");
 		im.setLore(lore);
 		seekersSpawn.setItemMeta(im);
-		player.getInventory().setItem(2, seekersSpawn);
+		player.getInventory().setItem(3, seekersSpawn);
 		
 		/*
 		 * Remove item

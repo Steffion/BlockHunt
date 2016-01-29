@@ -40,6 +40,20 @@ public class BlockPlaceEvent implements Listener {
 			}
 			
 			if (itemInHand.getItemMeta().hasDisplayName()
+					&& itemInHand.getItemMeta().getDisplayName().equals("§2Lobby location")) {
+				Arena arena = plugin.getEditors().get(player.getUniqueId());
+				
+				if (arena.getLobbyLocation() != null) {
+					player.sendBlockChange(arena.getLobbyLocation(), Material.AIR, (byte) 0);
+				}
+				
+				arena.setLobbyLocation(event.getBlock().getLocation());
+				arena.save();
+				event.setCancelled(true);
+				return;
+			}
+			
+			if (itemInHand.getItemMeta().hasDisplayName()
 					&& itemInHand.getItemMeta().getDisplayName().equals("§eSeeker's spawn")) {
 				Arena arena = plugin.getEditors().get(player.getUniqueId());
 				

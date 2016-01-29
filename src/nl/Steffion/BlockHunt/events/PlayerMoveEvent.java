@@ -28,6 +28,10 @@ public class PlayerMoveEvent implements Listener {
 				player.sendBlockChange(arena.getHidersSpawn(), Material.WOOL, (byte) 5);
 			}
 			
+			if (arena.getLobbyLocation() != null) {
+				player.sendBlockChange(arena.getLobbyLocation(), Material.WOOL, (byte) 13);
+			}
+			
 			if (arena.getSeekersSpawn() != null) {
 				player.sendBlockChange(arena.getSeekersSpawn(), Material.WOOL, (byte) 4);
 			}
@@ -38,11 +42,15 @@ public class PlayerMoveEvent implements Listener {
 				tasksComplete++;
 			}
 
+			if (arena.getLobbyLocation() != null) {
+				tasksComplete++;
+			}
+			
 			if (arena.getSeekersSpawn() != null) {
 				tasksComplete++;
 			}
 			
-			player.setExp((float) (((double) tasksComplete / 2) - 0.01));
+			player.setExp((float) (((double) tasksComplete / 3) - 0.01));
 			return;
 		}
 	}

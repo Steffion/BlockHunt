@@ -23,6 +23,10 @@ public class CommandLeave extends Command {
 			if (arena.getHidersSpawn() != null) {
 				player.sendBlockChange(arena.getHidersSpawn(), Material.AIR, (byte) 0);
 			}
+			
+			if (arena.getLobbyLocation() != null) {
+				player.sendBlockChange(arena.getLobbyLocation(), Material.AIR, (byte) 0);
+			}
 
 			if (arena.getSeekersSpawn() != null) {
 				player.sendBlockChange(arena.getSeekersSpawn(), Material.AIR, (byte) 0);
