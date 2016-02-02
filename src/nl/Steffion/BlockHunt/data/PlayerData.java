@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
-public class BlockHuntPlayer {
+public class PlayerData {
 	private boolean		allowFlight;
 	private ItemStack[]	armorContents;
 	private float		exp;
@@ -23,7 +23,7 @@ public class BlockHuntPlayer {
 	private BlockHunt	plugin;
 	private UUID		uuid;
 
-	public BlockHuntPlayer() {
+	public PlayerData() {
 		plugin = BlockHunt.getPlugin();
 	}
 	
