@@ -14,8 +14,7 @@ public class CommandCreate extends Command {
 
 	@Override
 	public boolean runCommand(CommandSender sender, String[] args) {
-		Arena newArena = new Arena();
-		newArena.save();
+		Arena newArena = plugin.getArenaHandler().createNewArena();
 		
 		sender.sendMessage("Arena has been created as '" + newArena.getName() + "'.");
 

@@ -23,12 +23,12 @@ public class BlockPlaceEvent implements Listener {
 	public void onBlockPlaceEvent(org.bukkit.event.block.BlockPlaceEvent event) {
 		Player player = event.getPlayer();
 
-		if (plugin.getEditors().containsKey(player.getUniqueId())) {
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
 			ItemStack itemInHand = player.getItemInHand();
+			Arena arena = plugin.getArenaHandler().getArena(player);
+			
 			if (itemInHand.getItemMeta().hasDisplayName()
 					&& itemInHand.getItemMeta().getDisplayName().equals("§aHider's spawn")) {
-				Arena arena = plugin.getEditors().get(player.getUniqueId());
-				
 				if (arena.getHidersSpawn() != null) {
 					player.sendBlockChange(arena.getHidersSpawn(), Material.AIR, (byte) 0);
 				}
@@ -41,8 +41,6 @@ public class BlockPlaceEvent implements Listener {
 			
 			if (itemInHand.getItemMeta().hasDisplayName()
 					&& itemInHand.getItemMeta().getDisplayName().equals("§2Lobby location")) {
-				Arena arena = plugin.getEditors().get(player.getUniqueId());
-				
 				if (arena.getLobbyLocation() != null) {
 					player.sendBlockChange(arena.getLobbyLocation(), Material.AIR, (byte) 0);
 				}
@@ -55,8 +53,6 @@ public class BlockPlaceEvent implements Listener {
 			
 			if (itemInHand.getItemMeta().hasDisplayName()
 					&& itemInHand.getItemMeta().getDisplayName().equals("§eSeeker's spawn")) {
-				Arena arena = plugin.getEditors().get(player.getUniqueId());
-				
 				if (arena.getSeekersSpawn() != null) {
 					player.sendBlockChange(arena.getSeekersSpawn(), Material.AIR, (byte) 0);
 				}

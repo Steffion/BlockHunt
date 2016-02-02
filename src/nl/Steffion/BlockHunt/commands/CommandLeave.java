@@ -17,8 +17,8 @@ public class CommandLeave extends Command {
 	public boolean runCommand(CommandSender sender, String[] args) {
 		Player player = (Player) sender;
 
-		if (plugin.getEditors().containsKey(player.getUniqueId())) {
-			Arena arena = plugin.getEditors().get(player.getUniqueId());
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			Arena arena = plugin.getArenaHandler().getArena(player);
 
 			if (arena.getHidersSpawn() != null) {
 				player.sendBlockChange(arena.getHidersSpawn(), Material.AIR, (byte) 0);
@@ -33,11 +33,11 @@ public class CommandLeave extends Command {
 			}
 
 			arena.save();
+			arena.resetEditor();
 
 			plugin.getPlayerData(player).restore();
 			plugin.getEditorsRenamingArena().remove(player.getUniqueId());
-			plugin.getEditors().remove(player.getUniqueId());
-
+			
 			player.sendMessage("You left the editor mode of '" + arena.getName() + "'.");
 			return true;
 		}

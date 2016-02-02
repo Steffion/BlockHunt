@@ -18,8 +18,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Steffion.BlockHunt.commands.CommandHandler;
 import nl.Steffion.BlockHunt.data.Arena;
-import nl.Steffion.BlockHunt.data.BlockHuntPlayer;
 import nl.Steffion.BlockHunt.data.Config;
+import nl.Steffion.BlockHunt.data.PlayerData;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
 import nl.Steffion.BlockHunt.events.EntityDamageEvent;
@@ -31,44 +31,42 @@ import nl.Steffion.BlockHunt.events.PlayerMoveEvent;
 import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 
 public class BlockHunt extends JavaPlugin {
-	public static boolean isDebugMode() {
-		return DEBUG_MODE;
+	public static boolean		DEBUG_MODE	= true;
+
+	private static BlockHunt	plugin;
+
+	public static BlockHunt getPlugin() {
+		return BlockHunt.plugin;
+	}
+
+	private ArenaHandler				arenaHandler;
+
+	private Config						arenas;
+	private CommandHandler				commandHandler;
+	private HashMap<UUID, Arena>		editorsRenamingArena;
+	private HashMap<UUID, PlayerData>	playerData;
+
+	public ArenaHandler getArenaHandler() {
+		return arenaHandler;
+	}
+
+	public Config getArenas() {
+		return arenas;
+	}
+
+	public CommandHandler getCommandHandler() {
+		return commandHandler;
 	}
 
 	public HashMap<UUID, Arena> getEditorsRenamingArena() {
 		return editorsRenamingArena;
 	}
-
-	public HashMap<UUID, BlockHuntPlayer> getPlayerData() {
+	
+	public HashMap<UUID, PlayerData> getPlayerData() {
 		return playerData;
 	}
-
-	public static final boolean	DEBUG_MODE	= true;
-	private static BlockHunt	plugin;
-								
-	public static BlockHunt getPlugin() {
-		return BlockHunt.plugin;
-	}
 	
-	private Config							arenas;
-	private CommandHandler					commandHandler;
-	private HashMap<UUID, Arena>			editors;
-	private HashMap<UUID, Arena>			editorsRenamingArena;
-	private HashMap<UUID, BlockHuntPlayer>	playerData;
-											
-	public Config getArenas() {
-		return arenas;
-	}
-	
-	public CommandHandler getCommandHandler() {
-		return commandHandler;
-	}
-	
-	public HashMap<UUID, Arena> getEditors() {
-		return editors;
-	}
-	
-	public BlockHuntPlayer getPlayerData(Player player) {
+	public PlayerData getPlayerData(Player player) {
 		return playerData.get(player.getUniqueId());
 	}
 	
@@ -103,13 +101,18 @@ public class BlockHunt extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (editors.containsKey(player.getUniqueId())) {
-				BlockHunt.plugin.getEditors().get(player.getUniqueId()).save();
-				BlockHunt.plugin.getEditors().remove(player.getUniqueId());
+			if (arenaHandler.getAllEditors().contains(player)) {
+				Arena arena = arenaHandler.getArena(player);
+				arena.save();
+
 				BlockHunt.plugin.getPlayerData(player).restore();
 				
 				getLogger().log(Level.WARNING, "Player " + player.getName()
 						+ " was still editing an arena. Let them leave first before you close the server/reload, this could corrupt player files or the arenas.");
+			}
+
+			if (arenaHandler.getAllPlayers().contains(player)) {
+				BlockHunt.plugin.getPlayerData(player).restore();
 			}
 		}
 
@@ -141,18 +144,22 @@ public class BlockHunt extends JavaPlugin {
 		 * Plugin related
 		 */
 		BlockHunt.plugin = this;
-		commandHandler = new CommandHandler();
-
+		
 		/*
 		 * Config files
 		 */
 		arenas = new Config("arenas");
+		
+		/*
+		 * Handlers
+		 */
+		arenaHandler = new ArenaHandler();
+		commandHandler = new CommandHandler();
 
 		/*
 		 * Storage variables
 		 */
-		playerData = new HashMap<UUID, BlockHuntPlayer>();
-		editors = new HashMap<UUID, Arena>();
+		playerData = new HashMap<UUID, PlayerData>();
 		editorsRenamingArena = new HashMap<UUID, Arena>();
 		
 		/*
@@ -176,7 +183,7 @@ public class BlockHunt extends JavaPlugin {
 	}
 	
 	public void storePlayerData(Player player) {
-		BlockHuntPlayer backupPlayer = new BlockHuntPlayer();
+		PlayerData backupPlayer = new PlayerData();
 		backupPlayer.store(player);
 		playerData.put(player.getUniqueId(), backupPlayer);
 	}

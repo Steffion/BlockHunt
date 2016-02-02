@@ -20,7 +20,7 @@ public class CommandEdit extends Command {
 	public boolean runCommand(CommandSender sender, String[] args) {
 		Player player = (Player) sender;
 		
-		if (plugin.getEditors().containsKey(player.getUniqueId())) {
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
 			player.sendMessage("§cYou are already editing an arena!");
 			return true;
 		}
@@ -38,16 +38,16 @@ public class CommandEdit extends Command {
 		
 		arenaName = arenaName.substring(0, arenaName.length() - 1);
 		
-		if (!plugin.getArenas().getConfig().contains(arenaName)) {
+		if (plugin.getArenaHandler().getArena(arenaName) == null) {
 			player.sendMessage("§cNo arena exists with the name '" + arenaName + "'");
 			return true;
 		}
 
-		Arena arena = new Arena(arenaName);
+		Arena arena = plugin.getArenaHandler().getArena(arenaName);
 		
 		plugin.storePlayerData(player);
 		plugin.getPlayerData(player).clear();
-		plugin.getEditors().put(player.getUniqueId(), arena);
+		plugin.getArenaHandler().setEditor(arena, player);
 
 		player.setAllowFlight(true);
 

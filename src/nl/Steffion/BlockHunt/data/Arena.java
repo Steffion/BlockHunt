@@ -1,15 +1,22 @@
 package nl.Steffion.BlockHunt.data;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
 public class Arena {
+	private UUID		editor;
 	private Location	hidersSpawn;
 	private Location	lobbyLocation;
 	private String		name;
+	private List<UUID>	players;
 	private BlockHunt	plugin;
 	private Location	seekersSpawn;
 
@@ -27,13 +34,23 @@ public class Arena {
 			name = "Arena_" + arenaNumber;
 			break;
 		}
+
+		players = new ArrayList<UUID>();
 	}
 
 	public Arena(String name) {
 		plugin = BlockHunt.getPlugin();
 
 		this.name = name;
-		load();
+		players = new ArrayList<UUID>();
+	}
+
+	public void addPlayer(Player player) {
+		players.add(player.getUniqueId());
+	}
+
+	public Player getEditor() {
+		return plugin.getServer().getPlayer(editor);
 	}
 	
 	public Location getHidersSpawn() {
@@ -47,11 +64,21 @@ public class Arena {
 	public String getName() {
 		return name;
 	}
+	
+	public List<Player> getPlayers() {
+		List<Player> players = new ArrayList<Player>();
+
+		for (UUID uuid : this.players) {
+			players.add(plugin.getServer().getPlayer(uuid));
+		}
+		
+		return players;
+	}
 
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
 	}
-	
+
 	public void load() {
 		plugin.getArenas().load();
 		ConfigurationSection arenas = plugin.getArenas().getConfig();
@@ -73,6 +100,14 @@ public class Arena {
 					arenas.getDouble(name + ".seekersSpawn.x"), arenas.getDouble(name + ".seekersSpawn.y"),
 					arenas.getDouble(name + ".seekersSpawn.z"));
 		}
+	}
+	
+	public void removePlayer(Player player) {
+		players.remove(player.getUniqueId());
+	}
+	
+	public void resetEditor() {
+		editor = null;
 	}
 
 	public void save() {
@@ -102,6 +137,10 @@ public class Arena {
 		plugin.getArenas().save();
 	}
 
+	public void setEditor(Player editor) {
+		this.editor = editor.getUniqueId();
+	}
+	
 	public void setHidersSpawn(Location hidersSpawn) {
 		this.hidersSpawn = hidersSpawn;
 	}
@@ -109,12 +148,13 @@ public class Arena {
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public void setSeekersSpawn(Location seekersSpawn) {
 		this.seekersSpawn = seekersSpawn;
 	}
+	
 }

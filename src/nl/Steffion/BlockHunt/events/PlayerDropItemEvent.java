@@ -18,7 +18,7 @@ public class PlayerDropItemEvent implements Listener {
 	public void onPlayerDropItemEvent(org.bukkit.event.player.PlayerDropItemEvent event) {
 		Player player = event.getPlayer();
 
-		if (plugin.getEditors().containsKey(player.getUniqueId())) {
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
 			event.setCancelled(true);
 		}
 	}

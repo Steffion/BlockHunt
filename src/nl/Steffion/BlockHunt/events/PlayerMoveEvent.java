@@ -21,8 +21,8 @@ public class PlayerMoveEvent implements Listener {
 	public void onPlayerMoveEvent(org.bukkit.event.player.PlayerMoveEvent event) {
 		Player player = event.getPlayer();
 		
-		if (plugin.getEditors().containsKey(player.getUniqueId())) {
-			Arena arena = plugin.getEditors().get(player.getUniqueId());
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			Arena arena = plugin.getArenaHandler().getArena(player);
 			
 			if (arena.getHidersSpawn() != null) {
 				player.sendBlockChange(arena.getHidersSpawn(), Material.WOOL, (byte) 5);

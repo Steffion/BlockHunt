@@ -19,7 +19,7 @@ public class EntityDamageEvent implements Listener {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
 
-			if (plugin.getEditors().containsKey(player.getUniqueId())) {
+			if (plugin.getArenaHandler().getAllEditors().contains(player)) {
 				event.setCancelled(true);
 			}
 		}
