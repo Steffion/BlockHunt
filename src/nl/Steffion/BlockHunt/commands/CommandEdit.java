@@ -25,6 +25,11 @@ public class CommandEdit extends Command {
 			return true;
 		}
 		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+			player.sendMessage("§cYou are already playing in an arena!");
+			return true;
+		}
+		
 		if (args.length < 2) {
 			player.sendMessage("§cUsage: /" + getUsage());
 			return true;

@@ -20,8 +20,13 @@ public class CommandJoin extends Command {
 	public boolean runCommand(CommandSender sender, String[] args) {
 		Player player = (Player) sender;
 		
-		if (plugin.getArenaHandler().getArena(player) != null) {
-			player.sendMessage("§cYou're already in an arena!");
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			player.sendMessage("§cYou are already editing an arena!");
+			return true;
+		}
+		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+			player.sendMessage("§cYou are already playing in an arena!");
 			return true;
 		}
 		
