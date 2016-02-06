@@ -1,4 +1,4 @@
-package nl.Steffion.BlockHunt.commands;
+package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,13 +6,21 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import nl.Steffion.BlockHunt.commands.Command;
+import nl.Steffion.BlockHunt.commands.CommandCreate;
+import nl.Steffion.BlockHunt.commands.CommandEdit;
+import nl.Steffion.BlockHunt.commands.CommandHelp;
+import nl.Steffion.BlockHunt.commands.CommandLeave;
+import nl.Steffion.BlockHunt.commands.CommandList;
+import nl.Steffion.BlockHunt.commands.CommandRemove;
+
 public class CommandHandler {
 	private CommandCreate	commandCreate;
 	private CommandEdit		commandEdit;
 	private CommandHelp		commandHelp;
 	private CommandLeave	commandLeave;
 	private CommandList		commandList;
-	private CommandRemove commandRemove;
+	private CommandRemove	commandRemove;
 	private List<Command>	commands	= new ArrayList<Command>();
 
 	public CommandHandler() {
@@ -62,7 +70,7 @@ public class CommandHandler {
 				if (args[0].equalsIgnoreCase("remove") || args[0].equalsIgnoreCase("r")) {
 					return commandRemove;
 				}
-			}			
+			}
 		}
 		
 		return null;

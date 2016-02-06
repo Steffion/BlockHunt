@@ -16,7 +16,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import nl.Steffion.BlockHunt.commands.CommandHandler;
 import nl.Steffion.BlockHunt.data.Arena;
 import nl.Steffion.BlockHunt.data.Config;
 import nl.Steffion.BlockHunt.data.PlayerData;
