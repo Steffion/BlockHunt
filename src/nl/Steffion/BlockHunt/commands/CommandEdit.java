@@ -50,8 +50,8 @@ public class CommandEdit extends Command {
 			return true;
 		}
 		
-		plugin.storePlayerData(player);
-		plugin.getPlayerData(player).clear();
+		plugin.getPlayerHandler().storePlayerData(player);
+		plugin.getPlayerHandler().getPlayerData(player).clear();
 		plugin.getArenaHandler().setEditor(arena, player);
 
 		player.setAllowFlight(true);

@@ -5,8 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -18,7 +16,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import nl.Steffion.BlockHunt.data.Arena;
 import nl.Steffion.BlockHunt.data.Config;
-import nl.Steffion.BlockHunt.data.PlayerData;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
 import nl.Steffion.BlockHunt.events.EntityDamageEvent;
@@ -31,16 +28,18 @@ import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 
 public class BlockHunt extends JavaPlugin {
 	public static boolean		DEBUG_MODE	= true;
+
 	private static BlockHunt	plugin;
 
 	public static BlockHunt getPlugin() {
 		return BlockHunt.plugin;
 	}
 
-	private ArenaHandler				arenaHandler;
-	private Config						arenas;
-	private CommandHandler				commandHandler;
-	private HashMap<UUID, PlayerData>	playerData;
+	private ArenaHandler	arenaHandler;
+
+	private Config			arenas;
+	private CommandHandler	commandHandler;
+	private PlayerHandler	playerHandler;
 
 	public ArenaHandler getArenaHandler() {
 		return arenaHandler;
@@ -54,14 +53,10 @@ public class BlockHunt extends JavaPlugin {
 		return commandHandler;
 	}
 
-	public HashMap<UUID, PlayerData> getPlayerData() {
-		return playerData;
+	public PlayerHandler getPlayerHandler() {
+		return playerHandler;
 	}
-	
-	public PlayerData getPlayerData(Player player) {
-		return playerData.get(player.getUniqueId());
-	}
-	
+
 	public void handleExeption(Exception e) {
 		LocalDateTime time = LocalDateTime.now();
 
@@ -97,14 +92,14 @@ public class BlockHunt extends JavaPlugin {
 				Arena arena = arenaHandler.getArena(player);
 				arena.save();
 
-				BlockHunt.plugin.getPlayerData(player).restore();
+				playerHandler.getPlayerData(player).restore();
 				
 				getLogger().log(Level.WARNING, "Player " + player.getName()
 						+ " was still editing an arena. Let them leave first before you close the server/reload, this could corrupt player files or the arenas.");
 			}
 
 			if (arenaHandler.getAllPlayers().contains(player)) {
-				BlockHunt.plugin.getPlayerData(player).restore();
+				playerHandler.getPlayerData(player).restore();
 			}
 		}
 
@@ -147,12 +142,8 @@ public class BlockHunt extends JavaPlugin {
 		 */
 		arenaHandler = new ArenaHandler();
 		commandHandler = new CommandHandler();
+		playerHandler = new PlayerHandler();
 
-		/*
-		 * Storage variables
-		 */
-		playerData = new HashMap<UUID, PlayerData>();
-		
 		/*
 		 * Registering listeners
 		 */
@@ -168,15 +159,5 @@ public class BlockHunt extends JavaPlugin {
 		
 		getLogger().log(Level.INFO, "BlockHunt has succesfully been loaded!");
 	}
-	
-	public void removePlayerData(Player player) {
-		playerData.remove(player.getUniqueId());
-	}
-	
-	public void storePlayerData(Player player) {
-		PlayerData backupPlayer = new PlayerData();
-		backupPlayer.store(player);
-		playerData.put(player.getUniqueId(), backupPlayer);
-	}
-	
+
 }

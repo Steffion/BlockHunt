@@ -35,7 +35,7 @@ public class CommandLeave extends Command {
 			arena.save();
 			arena.resetEditor();
 
-			plugin.getPlayerData(player).restore();
+			plugin.getPlayerHandler().getPlayerData(player).restore();
 			
 			player.sendMessage("You left the editor mode of '" + arena.getName() + "'.");
 			return true;

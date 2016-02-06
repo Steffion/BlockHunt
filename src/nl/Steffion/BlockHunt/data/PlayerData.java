@@ -69,7 +69,7 @@ public class PlayerData {
 		player.setLevel(level);
 		player.teleport(location);
 		
-		plugin.removePlayerData(player);
+		plugin.getPlayerHandler().removePlayerData(player);
 	}
 
 	public void store(Player player) {
