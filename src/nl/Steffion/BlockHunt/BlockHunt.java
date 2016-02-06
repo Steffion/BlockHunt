@@ -14,6 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import nl.Steffion.BlockHunt.configdefaults.ConfigDefaults;
 import nl.Steffion.BlockHunt.data.Config;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
@@ -141,7 +142,7 @@ public class BlockHunt extends JavaPlugin {
 		 */
 		arenas = new Config("arenas");
 		pluginConfig = new Config("config");
-		pluginConfig.setDefaults(nl.Steffion.BlockHunt.configdefaults.Config.getValues());
+		pluginConfig.setDefaults(ConfigDefaults.getValues());
 		
 		/*
 		 * Handlers

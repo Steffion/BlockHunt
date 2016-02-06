@@ -2,13 +2,13 @@ package nl.Steffion.BlockHunt.configdefaults;
 
 import java.util.HashMap;
 
-public enum Config {
+public enum ConfigDefaults {
 	GENERAL_MINPLAYERS(3);
 
 	public static HashMap<String, Object> getValues() {
 		HashMap<String, Object> values = new HashMap<String, Object>();
 
-		for (Config content : Config.values()) {
+		for (ConfigDefaults content : ConfigDefaults.values()) {
 			values.put(content.key, content.value);
 		}
 		
@@ -18,7 +18,7 @@ public enum Config {
 	private String	key;
 	private Object	value;
 
-	private Config(Object value) {
+	private ConfigDefaults(Object value) {
 		key = name();
 		this.value = value;
 	}
