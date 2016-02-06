@@ -40,6 +40,14 @@ public class CommandLeave extends Command {
 			player.sendMessage("You left the editor mode of '" + arena.getName() + "'.");
 			return true;
 		}
+		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+			plugin.getArenaHandler().getArena(player).removePlayer(player);
+			plugin.getPlayerHandler().getPlayerData(player).restore();
+
+			player.sendMessage("You left the arena.");
+			return true;
+		}
 
 		player.sendMessage("§cYou are not in a lobby/arena!");
 		return true;

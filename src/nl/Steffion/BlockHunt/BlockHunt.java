@@ -14,7 +14,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import nl.Steffion.BlockHunt.data.Arena;
 import nl.Steffion.BlockHunt.data.Config;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
@@ -94,9 +93,7 @@ public class BlockHunt extends JavaPlugin {
 	public void onDisable() {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (arenaHandler.getAllEditors().contains(player)) {
-				Arena arena = arenaHandler.getArena(player);
-				arena.save();
-
+				arenaHandler.getArena(player).save();
 				playerHandler.getPlayerData(player).restore();
 				
 				getLogger().log(Level.WARNING, "Player " + player.getName()
@@ -105,6 +102,8 @@ public class BlockHunt extends JavaPlugin {
 
 			if (arenaHandler.getAllPlayers().contains(player)) {
 				playerHandler.getPlayerData(player).restore();
+				getLogger().log(Level.WARNING, "Player " + player.getName()
+						+ " was still in arena. Let them leave first before you close the server/reload, this could corrupt player files or the arenas.");
 			}
 		}
 

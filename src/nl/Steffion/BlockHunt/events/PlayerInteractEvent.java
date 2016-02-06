@@ -57,6 +57,21 @@ public class PlayerInteractEvent implements Listener {
 				}
 			}
 		}
+		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+			if ((player.getItemInHand() != null) && (player.getItemInHand().getType() != Material.AIR)) {
+				ItemStack itemInHand = player.getItemInHand();
+				
+				if (itemInHand.getItemMeta().hasDisplayName()
+						&& itemInHand.getItemMeta().getDisplayName().equals("§cExit arena")
+						&& ((event.getAction() == Action.RIGHT_CLICK_AIR)
+								|| (event.getAction() == Action.RIGHT_CLICK_BLOCK))) {
+					Bukkit.dispatchCommand(player, "blockhunt leave");
+					event.setCancelled(true);
+					return;
+				}
+			}
+		}
 	}
 	
 }
