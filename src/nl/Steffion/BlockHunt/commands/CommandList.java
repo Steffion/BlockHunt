@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import nl.Steffion.BlockHunt.data.Arena;
+
 public class CommandList extends Command {
 
 	public CommandList() {
@@ -16,8 +18,8 @@ public class CommandList extends Command {
 	public boolean runCommand(CommandSender sender, String[] args) {
 		List<String> arenas = new ArrayList<String>();
 
-		for (Object arena : plugin.getArenas().getConfig().getKeys(false).toArray()) {
-			arenas.add(arena.toString());
+		for (Arena arena : plugin.getArenaHandler().getArenas()) {
+			arenas.add(arena.getName());
 		}
 
 		Collections.sort(arenas);
