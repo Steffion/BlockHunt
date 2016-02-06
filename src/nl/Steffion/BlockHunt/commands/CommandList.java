@@ -23,31 +23,24 @@ public class CommandList extends Command {
 		Collections.sort(arenas);
 
 		String line = "";
-		boolean first = true;
 		int amountOnLine = 0;
 
 		sender.sendMessage("§9--------- §fBlockHunt: Arenas §9--------------------");
 
 		for (String arenaName : arenas) {
-			if (first) {
-				line = arenaName;
-				first = false;
-			} else {
-				line = line + ", " + arenaName;
-			}
+			line += arenaName + ", ";
 			
 			amountOnLine++;
 
 			if (amountOnLine == 5) {
 				sender.sendMessage(line);
 				line = "";
-				first = true;
 				amountOnLine = 0;
 			}
 		}
 
 		if ((line != null) && !line.isEmpty()) {
-			sender.sendMessage(line);
+			sender.sendMessage(line.substring(0, line.length() - 2));
 		}
 
 		if (arenas.size() == 0) {
