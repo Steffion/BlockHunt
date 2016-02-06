@@ -32,7 +32,6 @@ import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 
 public class BlockHunt extends JavaPlugin {
 	public static boolean		DEBUG_MODE	= true;
-
 	private static BlockHunt	plugin;
 
 	public static BlockHunt getPlugin() {
@@ -40,10 +39,8 @@ public class BlockHunt extends JavaPlugin {
 	}
 
 	private ArenaHandler				arenaHandler;
-
 	private Config						arenas;
 	private CommandHandler				commandHandler;
-	private HashMap<UUID, Arena>		editorsRenamingArena;
 	private HashMap<UUID, PlayerData>	playerData;
 
 	public ArenaHandler getArenaHandler() {
@@ -58,10 +55,6 @@ public class BlockHunt extends JavaPlugin {
 		return commandHandler;
 	}
 
-	public HashMap<UUID, Arena> getEditorsRenamingArena() {
-		return editorsRenamingArena;
-	}
-	
 	public HashMap<UUID, PlayerData> getPlayerData() {
 		return playerData;
 	}
@@ -160,7 +153,6 @@ public class BlockHunt extends JavaPlugin {
 		 * Storage variables
 		 */
 		playerData = new HashMap<UUID, PlayerData>();
-		editorsRenamingArena = new HashMap<UUID, Arena>();
 		
 		/*
 		 * Registering listeners

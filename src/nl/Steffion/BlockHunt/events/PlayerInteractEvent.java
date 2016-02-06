@@ -42,7 +42,7 @@ public class PlayerInteractEvent implements Listener {
 						&& ((event.getAction() == Action.RIGHT_CLICK_AIR)
 								|| (event.getAction() == Action.RIGHT_CLICK_BLOCK))) {
 					player.sendMessage("Enter the new name in chat (enter '-' to abort):");
-					plugin.getEditorsRenamingArena().put(player.getUniqueId(), arena);
+					arena.setEditorRenamingArena(true);
 					event.setCancelled(true);
 					return;
 				}

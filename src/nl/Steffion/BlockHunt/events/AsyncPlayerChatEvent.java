@@ -19,10 +19,12 @@ public class AsyncPlayerChatEvent implements Listener {
 	public void onPlayerChatEvent(org.bukkit.event.player.AsyncPlayerChatEvent event) {
 		Player player = event.getPlayer();
 
-		if (plugin.getEditorsRenamingArena().containsKey(player.getUniqueId())) {
+		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			Arena arena = plugin.getArenaHandler().getArena(player);
 			String newName = event.getMessage();
-			Arena arena = plugin.getEditorsRenamingArena().get(player.getUniqueId());
-
+			
+			if (!arena.isEditorRenamingArena()) return;
+			
 			if (!newName.equals("-")) {
 				plugin.getArenas().getConfig().set(arena.getName(), null);
 				arena.setName(newName);
@@ -32,7 +34,7 @@ public class AsyncPlayerChatEvent implements Listener {
 				player.sendMessage("Arena was not renamed.");
 			}
 			
-			plugin.getEditorsRenamingArena().remove(player.getUniqueId());
+			arena.setEditorRenamingArena(false);
 			event.setCancelled(true);
 		}
 	}

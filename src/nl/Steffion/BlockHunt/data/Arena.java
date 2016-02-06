@@ -13,6 +13,7 @@ import nl.Steffion.BlockHunt.BlockHunt;
 
 public class Arena {
 	private UUID		editor;
+	private boolean		editorIsRenamingArena;
 	private Location	hidersSpawn;
 	private Location	lobbyLocation;
 	private String		name;
@@ -52,20 +53,21 @@ public class Arena {
 	public Player getEditor() {
 		return plugin.getServer().getPlayer(editor);
 	}
-	
+
 	public Location getHidersSpawn() {
 		return hidersSpawn;
 	}
-
+	
 	public Location getLobbyLocation() {
 		return lobbyLocation;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
 	
 	public List<Player> getPlayers() {
+
 		List<Player> players = new ArrayList<Player>();
 
 		for (UUID uuid : this.players) {
@@ -74,9 +76,13 @@ public class Arena {
 		
 		return players;
 	}
-
+	
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
+	}
+
+	public boolean isEditorRenamingArena() {
+		return editorIsRenamingArena;
 	}
 
 	public void load() {
@@ -108,6 +114,7 @@ public class Arena {
 	
 	public void resetEditor() {
 		editor = null;
+		editorIsRenamingArena = false;
 	}
 
 	public void save() {
@@ -136,9 +143,13 @@ public class Arena {
 		
 		plugin.getArenas().save();
 	}
-
+	
 	public void setEditor(Player editor) {
 		this.editor = editor.getUniqueId();
+	}
+	
+	public void setEditorRenamingArena(boolean editorRenamingArena) {
+		editorIsRenamingArena = editorRenamingArena;
 	}
 	
 	public void setHidersSpawn(Location hidersSpawn) {
