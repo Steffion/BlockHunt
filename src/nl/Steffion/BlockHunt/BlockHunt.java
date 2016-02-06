@@ -40,6 +40,7 @@ public class BlockHunt extends JavaPlugin {
 	private Config			arenas;
 	private CommandHandler	commandHandler;
 	private PlayerHandler	playerHandler;
+	private Config			pluginConfig;
 
 	public ArenaHandler getArenaHandler() {
 		return arenaHandler;
@@ -55,6 +56,10 @@ public class BlockHunt extends JavaPlugin {
 
 	public PlayerHandler getPlayerHandler() {
 		return playerHandler;
+	}
+
+	public Config getPluginConfig() {
+		return pluginConfig;
 	}
 
 	public void handleExeption(Exception e) {
@@ -136,6 +141,8 @@ public class BlockHunt extends JavaPlugin {
 		 * Config files
 		 */
 		arenas = new Config("arenas");
+		pluginConfig = new Config("config");
+		pluginConfig.setDefaults(nl.Steffion.BlockHunt.configdefaults.Config.getValues());
 		
 		/*
 		 * Handlers

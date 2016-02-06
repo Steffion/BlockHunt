@@ -2,6 +2,7 @@ package nl.Steffion.BlockHunt.data;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.logging.Level;
 
 import org.bukkit.configuration.ConfigurationSection;
@@ -11,11 +12,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import nl.Steffion.BlockHunt.BlockHunt;
 
 public class Config {
+	private HashMap<String, Object>	defaults;
 	private File					file;
 	private FileConfiguration		fileC;
 	private ConfigurationSection	fileCS;
 	private BlockHunt				plugin;
-
+									
 	/**
 	 * Use this class to create an automated config file.
 	 *
@@ -31,7 +33,7 @@ public class Config {
 		fileCS = fileC.getConfigurationSection("");
 		load();
 	}
-
+	
 	/**
 	 * Use this class to create an automated config file.
 	 *
@@ -66,8 +68,20 @@ public class Config {
 		}
 	}
 	
+	public Object get(String key) {
+		if (!defaults.containsKey(key)) return "§c" + key + "§r";
+		
+		if (fileCS.contains(key) && (defaults.get(key).getClass() == fileCS.get(key).getClass()))
+			return fileCS.get(key);
+		else return defaults.get(key);
+	}
+	
 	public ConfigurationSection getConfig() {
 		return fileCS;
+	}
+
+	public HashMap<String, Object> getDefaults() {
+		return defaults;
 	}
 	
 	/**
@@ -94,6 +108,10 @@ public class Config {
 		} catch (Exception e) {
 			plugin.handleExeption(e);
 		}
+	}
+	
+	public void setDefaults(HashMap<String, Object> defaults) {
+		this.defaults = defaults;
 	}
 	
 }
