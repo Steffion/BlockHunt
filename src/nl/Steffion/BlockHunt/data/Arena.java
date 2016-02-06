@@ -167,5 +167,13 @@ public class Arena {
 	public void setSeekersSpawn(Location seekersSpawn) {
 		this.seekersSpawn = seekersSpawn;
 	}
+
+	public boolean isSetup() {
+		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) {
+			return false;
+		}
+
+		return true;
+	}
 	
 }

@@ -19,34 +19,27 @@ public class CommandList extends Command {
 		List<String> arenas = new ArrayList<String>();
 
 		for (Arena arena : plugin.getArenaHandler().getArenas()) {
-			arenas.add(arena.getName());
+			if (arena.isSetup()) {
+				arenas.add(arena.getName());
+			} else {
+				arenas.add("§7§o" + arena.getName() + "§r");
+			}
 		}
 
 		Collections.sort(arenas);
 
 		String line = "";
-		int amountOnLine = 0;
 
 		sender.sendMessage("§9--------- §fBlockHunt: Arenas §9--------------------");
 
 		for (String arenaName : arenas) {
 			line += arenaName + ", ";
-			
-			amountOnLine++;
-
-			if (amountOnLine == 5) {
-				sender.sendMessage(line);
-				line = "";
-				amountOnLine = 0;
-			}
-		}
-
-		if ((line != null) && !line.isEmpty()) {
-			sender.sendMessage(line.substring(0, line.length() - 2));
 		}
 
 		if (arenas.size() == 0) {
 			sender.sendMessage("§7§oNo arenas found...");
+		} else {
+			sender.sendMessage(line.substring(0, line.length() - 2));
 		}
 
 		return true;
