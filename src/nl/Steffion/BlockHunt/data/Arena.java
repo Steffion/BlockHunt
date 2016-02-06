@@ -8,6 +8,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
@@ -19,13 +23,14 @@ public class Arena {
 	private String		name;
 	private List<UUID>	players;
 	private BlockHunt	plugin;
+	private Objective	scoreboard;
 	private Location	seekersSpawn;
+	private BukkitTask	thread;
 
 	public Arena() {
 		plugin = BlockHunt.getPlugin();
 		
 		int arenaNumber = 1;
-
 		while (true) {
 			if (plugin.getArenas().getConfig().contains("Arena_" + arenaNumber)) {
 				arenaNumber++;
@@ -35,19 +40,25 @@ public class Arena {
 			name = "Arena_" + arenaNumber;
 			break;
 		}
-
+		
 		players = new ArrayList<UUID>();
+		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
+				"dummy");
 	}
 
 	public Arena(String name) {
 		plugin = BlockHunt.getPlugin();
 
 		this.name = name;
+		
 		players = new ArrayList<UUID>();
+		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
+				"dummy");
 	}
 
 	public void addPlayer(Player player) {
 		players.add(player.getUniqueId());
+		startThread();
 	}
 
 	public Player getEditor() {
@@ -57,15 +68,15 @@ public class Arena {
 	public Location getHidersSpawn() {
 		return hidersSpawn;
 	}
-	
+
 	public Location getLobbyLocation() {
 		return lobbyLocation;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
-	
+
 	public List<Player> getPlayers() {
 
 		List<Player> players = new ArrayList<Player>();
@@ -80,11 +91,17 @@ public class Arena {
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
 	}
-
+	
 	public boolean isEditorRenamingArena() {
 		return editorIsRenamingArena;
 	}
 
+	public boolean isSetup() {
+		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) return false;
+
+		return true;
+	}
+	
 	public void load() {
 		plugin.getArenas().load();
 		ConfigurationSection arenas = plugin.getArenas().getConfig();
@@ -110,13 +127,14 @@ public class Arena {
 	
 	public void removePlayer(Player player) {
 		players.remove(player.getUniqueId());
+		player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
 	}
-	
+
 	public void resetEditor() {
 		editor = null;
 		editorIsRenamingArena = false;
 	}
-
+	
 	public void save() {
 		plugin.getArenas().getConfig().set(name, "");
 
@@ -147,7 +165,7 @@ public class Arena {
 	public void setEditor(Player editor) {
 		this.editor = editor.getUniqueId();
 	}
-	
+
 	public void setEditorRenamingArena(boolean editorRenamingArena) {
 		editorIsRenamingArena = editorRenamingArena;
 	}
@@ -159,7 +177,7 @@ public class Arena {
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -168,12 +186,55 @@ public class Arena {
 		this.seekersSpawn = seekersSpawn;
 	}
 
-	public boolean isSetup() {
-		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) {
-			return false;
+	public void startThread() {
+		thread = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				if (players.isEmpty()) {
+					stopThread();
+				}
+
+				plugin.getServer().broadcastMessage("THREAD RUNNING: " + name);
+				updateScoreboard();
+				
+			}
+			
+		}, 0, 20);
+	}
+	
+	public void stopThread() {
+		plugin.getServer().getScheduler().cancelTask(thread.getTaskId());
+	}
+
+	protected void updateScoreboard() {
+		scoreboard.setDisplaySlot(DisplaySlot.SIDEBAR);
+		scoreboard.setDisplayName("§9§lBlockHunt");
+
+		for (String entry : scoreboard.getScoreboard().getEntries()) {
+			scoreboard.getScoreboard().resetScores(entry);
 		}
 
-		return true;
+		List<String> scoreboardEntries = new ArrayList<String>();
+
+		scoreboardEntries.add("§lArena: §6" + name);
+		scoreboardEntries
+				.add("§lPlayers: §6" + players.size() + "/" + plugin.getPluginConfig().get("GENERAL_MAXPLAYERS"));
+				
+		if (players.size() < ((int) plugin.getPluginConfig().get("GENERAL_MINPLAYERS"))) {
+			scoreboardEntries
+					.add("§lMinimum required players: §6" + plugin.getPluginConfig().get("GENERAL_MINPLAYERS"));
+			scoreboardEntries.add("§6§lWaiting for players...");
+		}
+		
+		for (int i = 0; i < scoreboardEntries.size(); i++) {
+			Score scoreboardEntry = scoreboard.getScore(scoreboardEntries.get(i));
+			scoreboardEntry.setScore(scoreboardEntries.size() - i - 1);
+		}
+		
+		for (Player player : getPlayers()) {
+			player.setScoreboard(scoreboard.getScoreboard());
+		}
 	}
 	
 }
