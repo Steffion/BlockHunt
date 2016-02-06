@@ -45,6 +45,11 @@ public class CommandEdit extends Command {
 
 		Arena arena = plugin.getArenaHandler().getArena(arenaName);
 		
+		if (arena.getEditor() != null) {
+			player.sendMessage("§c" + arena.getEditor().getName() + " is already editing this arena!");
+			return true;
+		}
+		
 		plugin.storePlayerData(player);
 		plugin.getPlayerData(player).clear();
 		plugin.getArenaHandler().setEditor(arena, player);
