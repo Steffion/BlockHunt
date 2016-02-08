@@ -77,14 +77,16 @@ public class CommandHandler {
 			sender.sendMessage(" §c§lMake sure all the required plugins are installed!");
 			sender.sendMessage("");
 			
-			String install = "       §c§lInstall: ";
+			String install = "       §c§lReload the server: ";
 			
 			if (!new File("plugins/LibsDisguises.jar").exists()) {
 				install += "LibsDisguises, ";
+				install = install.replaceAll("Reload the server", "Install");
 			}
 			
 			if (!new File("plugins/ProtocolLib.jar").exists()) {
 				install += "ProtocolLib, ";
+				install = install.replaceAll("Reload the server", "Install");
 			}
 			
 			install = install.substring(0, install.length() - 2) + ".";
