@@ -27,10 +27,10 @@ public class CommandHelp extends Command {
 		if (pageNumber > maxPages) {
 			pageNumber = maxPages;
 		}
-
+		
 		sender.sendMessage(
 				"§9--------- §fBlockHunt: Index (" + pageNumber + "/" + maxPages + ") §9--------------------");
-
+				
 		for (int index = (pageNumber - 1) * 6; index < (pageNumber * 6); index++) {
 			if (index >= plugin.getCommandHandler().getCommands().size()) {
 				sender.sendMessage(" ");
@@ -53,18 +53,14 @@ public class CommandHelp extends Command {
 		
 		String authors = "";
 		String version = plugin.getDescription().getVersion();
-		boolean first = true;
 		
 		for (String author : plugin.getDescription().getAuthors()) {
-			if (first) {
-				authors = authors + author;
-				first = false;
-			} else {
-				authors = authors + ", " + author;
-			}
+			authors += author + "§7§o, §6§o";
 		}
 		
-		sender.sendMessage(" ");
+		authors = authors.substring(0, authors.length() - 6);
+		
+		sender.sendMessage("");
 		sender.sendMessage("§7§oPlugin created by: §6§o" + authors + "§7§o!");
 		sender.sendMessage("§7§oVersion: §6§o" + version);
 		return true;
