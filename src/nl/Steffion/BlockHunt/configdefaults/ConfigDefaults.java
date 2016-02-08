@@ -3,7 +3,7 @@ package nl.Steffion.BlockHunt.configdefaults;
 import java.util.HashMap;
 
 public enum ConfigDefaults {
-	GENERAL_MAXPLAYERS(12), GENERAL_MINPLAYERS(3);
+	GAMETIME(300), LOBBYTIME(40), MAXPLAYERS(12), MINPLAYERS(3), PRECENTAGE_SEEKERS(0.2), SEEKERSWAITTIME(20);
 
 	public static HashMap<String, Object> getValues() {
 		HashMap<String, Object> values = new HashMap<String, Object>();
