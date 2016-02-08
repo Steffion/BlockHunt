@@ -21,12 +21,14 @@ commands:
 permissions:
   blockhunt.*:
     default: op
-    children:      
+    children:
       blockhunt.create:
         default: op
       blockhunt.edit:
         default: op
       blockhunt.help:
+        default: true
+      blockhunt.join:
         default: true
       blockhunt.leave:
         default: true
@@ -34,5 +36,3 @@ permissions:
         default: true
       blockhunt.remove:
         default: op
-
-    
