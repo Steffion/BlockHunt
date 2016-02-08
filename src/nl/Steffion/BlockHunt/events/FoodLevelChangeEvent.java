@@ -19,7 +19,8 @@ public class FoodLevelChangeEvent implements Listener {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
 			
-			if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			if (plugin.getArenaHandler().getAllPlayers().contains(player)
+					|| plugin.getArenaHandler().getAllEditors().contains(player)) {
 				event.setCancelled(true);
 			}
 		}
