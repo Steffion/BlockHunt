@@ -8,11 +8,14 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.Disguise;
 import nl.Steffion.BlockHunt.BlockHunt;
 
 public class PlayerData {
 	private boolean		allowFlight;
 	private ItemStack[]	armorContents;
+	private Disguise	disguise;
 	private float		exp;
 	private int			foodLevel;
 	private GameMode	gamemode;
@@ -35,6 +38,7 @@ public class PlayerData {
 		player.getInventory().setChestplate(null);
 		player.getInventory().setLeggings(null);
 		player.getInventory().setBoots(null);
+		DisguiseAPI.undisguiseToAll(player);
 		player.setExp(0);
 		player.setFoodLevel(20);
 		player.setGameMode(GameMode.SURVIVAL);
@@ -55,6 +59,9 @@ public class PlayerData {
 		player.getInventory().setChestplate(armorContents[2]);
 		player.getInventory().setLeggings(armorContents[1]);
 		player.getInventory().setBoots(armorContents[0]);
+		if (disguise != null) {
+			DisguiseAPI.disguiseToAll(player, disguise);
+		}
 		player.setExp(exp);
 		player.setFoodLevel(foodLevel);
 		player.setGameMode(gamemode);
@@ -75,6 +82,7 @@ public class PlayerData {
 	public void store(Player player) {
 		allowFlight = player.getAllowFlight();
 		armorContents = player.getInventory().getArmorContents();
+		disguise = DisguiseAPI.getDisguise(player);
 		exp = player.getExp();
 		foodLevel = player.getFoodLevel();
 		gamemode = player.getGameMode();
