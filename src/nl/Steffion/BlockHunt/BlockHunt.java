@@ -28,6 +28,7 @@ import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 
 public class BlockHunt extends JavaPlugin {
 	public static boolean		DEBUG_MODE	= true;
+	public static boolean		ENABLED		= true;
 
 	private static BlockHunt	plugin;
 
@@ -36,7 +37,6 @@ public class BlockHunt extends JavaPlugin {
 	}
 
 	private ArenaHandler	arenaHandler;
-
 	private Config			arenas;
 	private CommandHandler	commandHandler;
 	private PlayerHandler	playerHandler;
@@ -164,7 +164,27 @@ public class BlockHunt extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerPickupItemEvent(), this);
 		
-		getLogger().log(Level.INFO, "BlockHunt has succesfully been loaded!");
+		/*
+		 * Check dependencies
+		 */
+
+		if (!new File("plugins/LibsDisguises.jar").exists()) {
+			getLogger().log(Level.SEVERE, "Required dependency is not installed! (LibsDisguises)");
+
+			BlockHunt.ENABLED = false;
+		}
+		
+		if (!new File("plugins/ProtocolLib.jar").exists()) {
+			getLogger().log(Level.SEVERE, "Required dependency is not installed! (ProtocolLib)");
+
+			BlockHunt.ENABLED = false;
+		}
+		
+		if (BlockHunt.ENABLED) {
+			getLogger().log(Level.INFO, "BlockHunt has succesfully been loaded!");
+		} else {
+			getLogger().log(Level.WARNING, "BlockHunt has NOT succesfully been loaded!");
+		}
 	}
 
 }

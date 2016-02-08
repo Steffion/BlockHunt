@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,10 @@ public class CommandHandler {
 	private CommandList		commandList;
 	private CommandRemove	commandRemove;
 	private List<Command>	commands	= new ArrayList<Command>();
-
+	private BlockHunt		plugin;
+							
 	public CommandHandler() {
+		plugin = BlockHunt.getPlugin();
 		commandCreate = new CommandCreate();
 		commandEdit = new CommandEdit();
 		commandHelp = new CommandHelp();
@@ -67,6 +70,43 @@ public class CommandHandler {
 	}
 	
 	public boolean handleCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
+		if (!BlockHunt.ENABLED) {
+			sender.sendMessage("§9--------- §fBlockHunt: §eWarning §9--------------------");
+			sender.sendMessage("");
+			sender.sendMessage("     §c§lBlockHunt is missing required dependencies!");
+			sender.sendMessage(" §c§lMake sure all the required plugins are installed!");
+			sender.sendMessage("");
+			
+			String install = "       §c§lInstall: ";
+			
+			if (!new File("plugins/LibsDisguises.jar").exists()) {
+				install += "LibsDisguises, ";
+			}
+			
+			if (!new File("plugins/ProtocolLib.jar").exists()) {
+				install += "ProtocolLib, ";
+			}
+			
+			install = install.substring(0, install.length() - 2) + ".";
+
+			sender.sendMessage(install);
+			sender.sendMessage("");
+			
+			String authors = "";
+			String version = plugin.getDescription().getVersion();
+			
+			for (String author : plugin.getDescription().getAuthors()) {
+				authors += author + "§7§o, §6§o";
+			}
+			
+			authors = authors.substring(0, authors.length() - 6);
+			
+			sender.sendMessage("");
+			sender.sendMessage("§7§oPlugin created by: §6§o" + authors + "§7§o!");
+			sender.sendMessage("§7§oVersion: §6§o" + version);
+			return true;
+		}
+
 		Command command = getCommandMatch(cmd, args);
 
 		if (command == null) return false;

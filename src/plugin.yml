@@ -9,7 +9,7 @@ main: nl.Steffion.BlockHunt.BlockHunt
 database: false
 #depend: []
 prefix: "BlockHunt v2.0.0_ALPHA_B1"
-#softdepend: []
+softdepend: [LibsDisguises, ProtocolLib]
 #loadbefore: []
 commands:
   blockhunt:
