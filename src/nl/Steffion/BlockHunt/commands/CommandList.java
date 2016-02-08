@@ -11,7 +11,7 @@ import nl.Steffion.BlockHunt.data.Arena;
 public class CommandList extends Command {
 
 	public CommandList() {
-		super("blockhunt list", "blocklist.list", false, "Shows a list of arenas.");
+		super("blockhunt list", "blockhunt.list", false, "Shows a list of arenas.");
 	}
 	
 	@Override
