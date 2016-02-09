@@ -7,19 +7,18 @@ import org.bukkit.event.Listener;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
-public class PlayerDropItemEvent implements Listener {
+public class BlockBreakEvent implements Listener {
 	private BlockHunt plugin;
 	
-	public PlayerDropItemEvent() {
+	public BlockBreakEvent() {
 		plugin = BlockHunt.getPlugin();
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerDropItemEvent(org.bukkit.event.player.PlayerDropItemEvent event) {
+	public void onBlockBreakEvent(org.bukkit.event.block.BlockBreakEvent event) {
 		Player player = event.getPlayer();
-
-		if (plugin.getArenaHandler().getAllEditors().contains(player)
-				|| plugin.getArenaHandler().getAllPlayers().contains(player)) {
+		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
 			event.setCancelled(true);
 		}
 	}

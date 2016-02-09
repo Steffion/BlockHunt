@@ -19,7 +19,8 @@ public class InventoryClickEvent implements Listener {
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player) event.getWhoClicked();
 			
-			if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+			if (plugin.getArenaHandler().getAllEditors().contains(player)
+					|| plugin.getArenaHandler().getAllPlayers().contains(player)) {
 				event.setCancelled(true);
 			}
 		}

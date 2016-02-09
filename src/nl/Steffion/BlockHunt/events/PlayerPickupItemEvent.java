@@ -18,7 +18,8 @@ public class PlayerPickupItemEvent implements Listener {
 	public void onPlayerDropItemEvent(org.bukkit.event.player.PlayerPickupItemEvent event) {
 		Player player = event.getPlayer();
 
-		if (plugin.getArenaHandler().getAllEditors().contains(player)) {
+		if (plugin.getArenaHandler().getAllEditors().contains(player)
+				|| plugin.getArenaHandler().getAllPlayers().contains(player)) {
 			event.setCancelled(true);
 		}
 	}

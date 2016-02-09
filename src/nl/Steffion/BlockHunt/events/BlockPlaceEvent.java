@@ -11,7 +11,6 @@ import nl.Steffion.BlockHunt.BlockHunt;
 import nl.Steffion.BlockHunt.data.Arena;
 
 public class BlockPlaceEvent implements Listener {
-
 	private BlockHunt plugin;
 	
 	public BlockPlaceEvent() {
@@ -62,6 +61,10 @@ public class BlockPlaceEvent implements Listener {
 				event.setCancelled(true);
 				return;
 			}
+		}
+		
+		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+			event.setCancelled(true);
 		}
 	}
 }

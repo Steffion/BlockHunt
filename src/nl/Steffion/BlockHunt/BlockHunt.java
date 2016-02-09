@@ -17,12 +17,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import nl.Steffion.BlockHunt.configdefaults.ConfigDefaults;
 import nl.Steffion.BlockHunt.data.Config;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
+import nl.Steffion.BlockHunt.events.BlockBreakEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
+import nl.Steffion.BlockHunt.events.EntityDamageByEntityEvent;
 import nl.Steffion.BlockHunt.events.EntityDamageEvent;
 import nl.Steffion.BlockHunt.events.FoodLevelChangeEvent;
 import nl.Steffion.BlockHunt.events.InventoryClickEvent;
 import nl.Steffion.BlockHunt.events.PlayerDropItemEvent;
 import nl.Steffion.BlockHunt.events.PlayerInteractEvent;
+import nl.Steffion.BlockHunt.events.PlayerItemDamageEvent;
 import nl.Steffion.BlockHunt.events.PlayerMoveEvent;
 import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 
@@ -156,11 +159,14 @@ public class BlockHunt extends JavaPlugin {
 		 */
 		getServer().getPluginManager().registerEvents(new AsyncPlayerChatEvent(), this);
 		getServer().getPluginManager().registerEvents(new BlockPlaceEvent(), this);
+		getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
+		getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
 		getServer().getPluginManager().registerEvents(new FoodLevelChangeEvent(), this);
 		getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerDropItemEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteractEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerItemDamageEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerPickupItemEvent(), this);
 		
