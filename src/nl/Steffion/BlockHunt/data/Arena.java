@@ -79,14 +79,13 @@ public class Arena {
 	}
 
 	public List<Player> getHiders() {
-
-		List<Player> players = new ArrayList<Player>();
+		List<Player> hiders = new ArrayList<Player>();
 
 		for (UUID uuid : teamHiders) {
-			players.add(plugin.getServer().getPlayer(uuid));
+			hiders.add(plugin.getServer().getPlayer(uuid));
 		}
 		
-		return players;
+		return hiders;
 	}
 
 	public Location getHidersSpawn() {
@@ -102,7 +101,6 @@ public class Arena {
 	}
 	
 	public List<Player> getPlayers() {
-		
 		List<Player> players = new ArrayList<Player>();
 		
 		for (UUID uuid : this.players) {
@@ -113,14 +111,13 @@ public class Arena {
 	}
 	
 	public List<Player> getSeekers() {
-
-		List<Player> players = new ArrayList<Player>();
+		List<Player> seekers = new ArrayList<Player>();
 
 		for (UUID uuid : teamSeekers) {
-			players.add(plugin.getServer().getPlayer(uuid));
+			seekers.add(plugin.getServer().getPlayer(uuid));
 		}
 		
-		return players;
+		return seekers;
 	}
 	
 	public Location getSeekersSpawn() {
