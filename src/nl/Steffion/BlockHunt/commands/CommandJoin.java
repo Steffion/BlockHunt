@@ -62,9 +62,6 @@ public class CommandJoin extends Command {
 		}
 		
 		arena.addPlayer(player);
-		plugin.getPlayerHandler().storePlayerData(player);
-		plugin.getPlayerHandler().getPlayerData(player).clear();
-		player.getPlayer().teleport(arena.getLobbyLocation());
 		
 		ItemMeta im;
 		ArrayList<String> lore = new ArrayList<String>();

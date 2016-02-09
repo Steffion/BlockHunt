@@ -8,16 +8,21 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Note;
 import org.bukkit.Note.Tone;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import nl.Steffion.BlockHunt.BlockHunt;
 
 public class Arena {
@@ -71,7 +76,24 @@ public class Arena {
 
 	public void addPlayer(Player player) {
 		players.add(player.getUniqueId());
+		
+		plugin.getPlayerHandler().storePlayerData(player);
+		plugin.getPlayerHandler().getPlayerData(player).clear();
+		player.getPlayer().teleport(lobbyLocation);
+		
 		startThread();
+	}
+
+	public void addSeeker(Player player) {
+		player.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
+		
+		if (state == ArenaState.PREGAME) {
+			player.teleport(seekersSpawn);
+		} else {
+			player.teleport(hidersSpawn);
+		}
+
+		teamSeekers.add(player.getUniqueId());
 	}
 
 	public Player getEditor() {
@@ -87,15 +109,15 @@ public class Arena {
 		
 		return hiders;
 	}
-
+	
 	public Location getHidersSpawn() {
 		return hidersSpawn;
 	}
-	
+
 	public Location getLobbyLocation() {
 		return lobbyLocation;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -123,11 +145,11 @@ public class Arena {
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
 	}
-	
+
 	public boolean isEditorRenamingArena() {
 		return editorIsRenamingArena;
 	}
-
+	
 	public boolean isSetup() {
 		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) return false;
 
@@ -156,17 +178,26 @@ public class Arena {
 					arenas.getDouble(name + ".seekersSpawn.z"));
 		}
 	}
+
+	public void removeHider(Player player) {
+		DisguiseAPI.undisguiseToAll(player);
+		teamHiders.remove(player.getUniqueId());
+	}
 	
 	public void removePlayer(Player player) {
 		players.remove(player.getUniqueId());
+		teamHiders.remove(player.getUniqueId());
+		teamSeekers.remove(player.getUniqueId());
+		
+		plugin.getPlayerHandler().getPlayerData(player).restore();
 		player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
 	}
-
+	
 	public void resetEditor() {
 		editor = null;
 		editorIsRenamingArena = false;
 	}
-	
+
 	public void save() {
 		plugin.getArenas().getConfig().set(name, "");
 
@@ -197,7 +228,7 @@ public class Arena {
 	public void setEditor(Player editor) {
 		this.editor = editor.getUniqueId();
 	}
-
+	
 	public void setEditorRenamingArena(boolean editorRenamingArena) {
 		editorIsRenamingArena = editorRenamingArena;
 	}
@@ -219,7 +250,8 @@ public class Arena {
 	}
 
 	public void startThread() {
-		thread = plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, new Runnable() {
+		if (thread != null) return;
+		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 			
 			@Override
 			public void run() {
@@ -241,7 +273,7 @@ public class Arena {
 					}
 					
 					timer--;
-
+					
 					switch (timer) {
 						case 10:
 							for (Player player : getPlayers()) {
@@ -277,16 +309,16 @@ public class Arena {
 							for (Player player : getPlayers()) {
 								player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
 							}
-
+							
 							state = ArenaState.PREGAME;
 							timer = (int) plugin.getPluginConfig().get("SEEKERSWAITTIME");
-
+							
 							int seekerAmount = (int) (Math.round(
 									players.size() * (double) plugin.getPluginConfig().get("PRECENTAGE_SEEKERS")) + 1);
-
+									
 							for (int i = 1; i <= seekerAmount; i++) {
 								Random random = new Random();
-
+								
 								UUID randomSeeker = players.get(random.nextInt(i));
 								teamSeekers.add(randomSeeker);
 								
@@ -301,20 +333,27 @@ public class Arena {
 							
 							for (Player player : getPlayers()) {
 								player.sendMessage(seekers);
-
+								
 								if (!getSeekers().contains(player)) {
 									teamHiders.add(player.getUniqueId());
 								}
 							}
-
+							
+							Random random = new Random();
+							
 							for (Player hider : getHiders()) {
+								int itemid = random.nextInt(200);
+								DisguiseAPI.disguiseToAll(hider,
+										new MiscDisguise(DisguiseType.FALLING_BLOCK, itemid, 0));
+								hider.getInventory().setItem(0, new ItemStack(itemid));
 								hider.teleport(hidersSpawn);
 							}
-
+							
 							for (Player seeker : getSeekers()) {
+								seeker.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
 								seeker.teleport(seekersSpawn);
 							}
-
+							
 							break;
 						default:
 							break;
@@ -325,11 +364,11 @@ public class Arena {
 					}
 				} else if (state == ArenaState.PREGAME) {
 					timer--;
-
+					
 					if (timer == 0) {
 						state = ArenaState.INGAME;
 						timer = (int) plugin.getPluginConfig().get("GAMETIME");
-
+						
 						for (Player seeker : getSeekers()) {
 							seeker.teleport(hidersSpawn);
 						}
@@ -342,13 +381,17 @@ public class Arena {
 					}
 				} else if (state == ArenaState.INGAME) {
 					timer--;
-
-					if (timer == 0 || teamHiders.isEmpty()) {
+					
+					if ((timer == 0) || teamHiders.isEmpty()) {
 						state = ArenaState.WAITING;
 						teamHiders = new ArrayList<UUID>();
 						teamSeekers = new ArrayList<UUID>();
-
+						
 						for (Player player : getPlayers()) {
+							DisguiseAPI.undisguiseToAll(player);
+							player.getInventory().setItem(0, null);
+							player.setExp(0);
+							player.setHealth(player.getMaxHealth());
 							player.teleport(lobbyLocation);
 							player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
 						}
@@ -367,6 +410,7 @@ public class Arena {
 	
 	public void stopThread() {
 		plugin.getServer().getScheduler().cancelTask(thread.getTaskId());
+		thread = null;
 	}
 
 	protected void updateScoreboard() {

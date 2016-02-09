@@ -42,7 +42,7 @@ public class PlayerData {
 		player.setExp(0);
 		player.setFoodLevel(20);
 		player.setGameMode(GameMode.SURVIVAL);
-		player.setHealth(20);
+		player.setHealth(player.getMaxHealth());
 
 		for (int i = 0; i < inventoryContents.length; i++) {
 			player.getInventory().setItem(i, null);

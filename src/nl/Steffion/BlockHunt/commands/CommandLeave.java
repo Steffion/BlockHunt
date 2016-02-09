@@ -43,7 +43,6 @@ public class CommandLeave extends Command {
 		
 		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
 			plugin.getArenaHandler().getArena(player).removePlayer(player);
-			plugin.getPlayerHandler().getPlayerData(player).restore();
 
 			player.sendMessage("You left the arena.");
 			return true;
