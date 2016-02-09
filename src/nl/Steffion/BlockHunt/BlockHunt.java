@@ -108,7 +108,7 @@ public class BlockHunt extends JavaPlugin {
 			}
 		}
 
-		getLogger().log(Level.INFO, "BlockHunt has succesfully been disabled.");
+		getLogger().log(Level.INFO, "BlockHunt has successfully been disabled.");
 	}
 
 	@Override
@@ -167,7 +167,6 @@ public class BlockHunt extends JavaPlugin {
 		/*
 		 * Check dependencies
 		 */
-
 		if (!new File("plugins/LibsDisguises.jar").exists()) {
 			getLogger().log(Level.SEVERE, "Required dependency is not installed! (LibsDisguises)");
 
@@ -180,10 +179,13 @@ public class BlockHunt extends JavaPlugin {
 			BlockHunt.ENABLED = false;
 		}
 		
+		/*
+		 * Plugin successful enabled?
+		 */
 		if (BlockHunt.ENABLED) {
-			getLogger().log(Level.INFO, "BlockHunt has succesfully been loaded!");
+			getLogger().log(Level.INFO, "BlockHunt has successfully been loaded!");
 		} else {
-			getLogger().log(Level.WARNING, "BlockHunt has NOT succesfully been loaded!");
+			getLogger().log(Level.WARNING, "BlockHunt has NOT successfully been loaded!");
 		}
 	}
 

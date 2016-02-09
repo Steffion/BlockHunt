@@ -59,6 +59,7 @@ public class PlayerData {
 		player.getInventory().setChestplate(armorContents[2]);
 		player.getInventory().setLeggings(armorContents[1]);
 		player.getInventory().setBoots(armorContents[0]);
+		DisguiseAPI.undisguiseToAll(player);
 		if (disguise != null) {
 			DisguiseAPI.disguiseToAll(player, disguise);
 		}
