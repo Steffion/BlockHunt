@@ -79,7 +79,7 @@ public class Arena {
 		
 		plugin.getPlayerHandler().storePlayerData(player);
 		plugin.getPlayerHandler().getPlayerData(player).clear();
-		player.getPlayer().teleport(lobbyLocation);
+		player.teleport(lobbyLocation);
 		
 		startThread();
 	}
@@ -146,6 +146,10 @@ public class Arena {
 		return seekersSpawn;
 	}
 
+	public ArenaState getState() {
+		return state;
+	}
+	
 	public boolean isEditorRenamingArena() {
 		return editorIsRenamingArena;
 	}
@@ -155,7 +159,7 @@ public class Arena {
 
 		return true;
 	}
-	
+
 	public void load() {
 		plugin.getArenas().load();
 		ConfigurationSection arenas = plugin.getArenas().getConfig();
@@ -178,7 +182,7 @@ public class Arena {
 					arenas.getDouble(name + ".seekersSpawn.z"));
 		}
 	}
-
+	
 	public void removeHider(Player player) {
 		DisguiseAPI.undisguiseToAll(player);
 		teamHiders.remove(player.getUniqueId());
@@ -192,12 +196,12 @@ public class Arena {
 		plugin.getPlayerHandler().getPlayerData(player).restore();
 		player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
 	}
-	
+
 	public void resetEditor() {
 		editor = null;
 		editorIsRenamingArena = false;
 	}
-
+	
 	public void save() {
 		plugin.getArenas().getConfig().set(name, "");
 
@@ -240,7 +244,7 @@ public class Arena {
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -248,7 +252,7 @@ public class Arena {
 	public void setSeekersSpawn(Location seekersSpawn) {
 		this.seekersSpawn = seekersSpawn;
 	}
-
+	
 	public void startThread() {
 		if (thread != null) return;
 		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
@@ -316,10 +320,16 @@ public class Arena {
 							int seekerAmount = (int) (Math.round(
 									players.size() * (double) plugin.getPluginConfig().get("PRECENTAGE_SEEKERS")) + 1);
 									
-							for (int i = 1; i <= seekerAmount; i++) {
+							for (int i = 0; i < seekerAmount; i++) {
 								Random random = new Random();
 								
-								UUID randomSeeker = players.get(random.nextInt(i));
+								UUID randomSeeker = players.get(random.nextInt(players.size()));
+								
+								if (teamSeekers.contains(randomSeeker)) {
+									i--;
+									continue;
+								}
+								
 								teamSeekers.add(randomSeeker);
 								
 							}
@@ -407,7 +417,7 @@ public class Arena {
 			
 		}, 0, 20);
 	}
-	
+
 	public void stopThread() {
 		plugin.getServer().getScheduler().cancelTask(thread.getTaskId());
 		thread = null;

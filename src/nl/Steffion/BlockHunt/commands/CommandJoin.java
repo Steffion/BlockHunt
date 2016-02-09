@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import nl.Steffion.BlockHunt.data.Arena;
+import nl.Steffion.BlockHunt.data.ArenaState;
 
 public class CommandJoin extends Command {
 	
@@ -31,7 +32,7 @@ public class CommandJoin extends Command {
 		}
 		
 		if (args.length < 2) {
-			player.getPlayer().sendMessage("§cUsage: /" + getUsage());
+			player.sendMessage("§cUsage: /" + getUsage());
 			return true;
 		}
 		
@@ -52,12 +53,17 @@ public class CommandJoin extends Command {
 		}
 
 		if (arena == null) {
-			player.getPlayer().sendMessage("§cNo arena exists with the name '" + arenaName + "'");
+			player.sendMessage("§cNo arena exists with the name '" + arenaName + "'");
 			return true;
 		}
 		
 		if (!arena.isSetup()) {
-			player.getPlayer().sendMessage("§cThis arena is not completely setup.");
+			player.sendMessage("§cThis arena is not completely setup.");
+			return true;
+		}
+		
+		if (arena.getState() != ArenaState.WAITING) {
+			player.sendMessage("§cThis arena is already in-game!");
 			return true;
 		}
 		
@@ -76,9 +82,9 @@ public class CommandJoin extends Command {
 		lore.add("§7Right-click to exit the arena.");
 		im.setLore(lore);
 		exit.setItemMeta(im);
-		player.getPlayer().getInventory().setItem(8, exit);
+		player.getInventory().setItem(8, exit);
 		
-		player.getPlayer().sendMessage("You've joined '" + arena.getName() + "'.");
+		player.sendMessage("You've joined '" + arena.getName() + "'.");
 		return true;
 	}
 	

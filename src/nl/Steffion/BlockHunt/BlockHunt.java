@@ -28,6 +28,7 @@ import nl.Steffion.BlockHunt.events.PlayerInteractEvent;
 import nl.Steffion.BlockHunt.events.PlayerItemDamageEvent;
 import nl.Steffion.BlockHunt.events.PlayerMoveEvent;
 import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
+import nl.Steffion.BlockHunt.events.PlayerQuitEvent;
 
 public class BlockHunt extends JavaPlugin {
 	public static boolean		DEBUG_MODE	= true;
@@ -169,6 +170,7 @@ public class BlockHunt extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerItemDamageEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
 		getServer().getPluginManager().registerEvents(new PlayerPickupItemEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
 		
 		/*
 		 * Check dependencies
