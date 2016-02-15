@@ -36,11 +36,11 @@ public class Arena {
 	private Objective	scoreboard;
 	private Location	seekersSpawn;
 	private ArenaState	state;
-	private List<UUID>	teamHiders;
+	private List<Hider>	teamHiders;
 	private List<UUID>	teamSeekers;
 	private BukkitTask	thread;
 	private int			timer;
-
+						
 	public Arena() {
 		plugin = BlockHunt.getPlugin();
 		
@@ -56,7 +56,7 @@ public class Arena {
 		}
 		
 		players = new ArrayList<UUID>();
-		teamHiders = new ArrayList<UUID>();
+		teamHiders = new ArrayList<Hider>();
 		teamSeekers = new ArrayList<UUID>();
 		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
 				"dummy");
@@ -67,7 +67,7 @@ public class Arena {
 		plugin = BlockHunt.getPlugin();
 		this.name = name;
 		players = new ArrayList<UUID>();
-		teamHiders = new ArrayList<UUID>();
+		teamHiders = new ArrayList<Hider>();
 		teamSeekers = new ArrayList<UUID>();
 		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
 				"dummy");
@@ -100,24 +100,32 @@ public class Arena {
 		return plugin.getServer().getPlayer(editor);
 	}
 
-	public List<Player> getHiders() {
-		List<Player> hiders = new ArrayList<Player>();
+	public Hider getHider(Player player) {
+		for (Hider hider : teamHiders) {
+			if (hider.getPlayer().getUniqueId() == player.getUniqueId()) return hider;
+		}
 
-		for (UUID uuid : teamHiders) {
-			hiders.add(plugin.getServer().getPlayer(uuid));
+		return null;
+	}
+	
+	public List<Hider> getHiders() {
+		List<Hider> hiders = new ArrayList<Hider>();
+
+		for (Hider hider : teamHiders) {
+			hiders.add(hider);
 		}
 		
 		return hiders;
 	}
-	
+
 	public Location getHidersSpawn() {
 		return hidersSpawn;
 	}
-
+	
 	public Location getLobbyLocation() {
 		return lobbyLocation;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -145,7 +153,7 @@ public class Arena {
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
 	}
-
+	
 	public ArenaState getState() {
 		return state;
 	}
@@ -184,19 +192,33 @@ public class Arena {
 	}
 	
 	public void removeHider(Player player) {
+		for (int i = 0; i < teamHiders.size(); i++) {
+			Hider hider = teamHiders.get(i);
+			
+			if (hider.getPlayer().getUniqueId() == player.getUniqueId()) {
+				teamHiders.remove(i);
+				break;
+			}
+		}
+		
 		DisguiseAPI.undisguiseToAll(player);
-		teamHiders.remove(player.getUniqueId());
 	}
 	
 	public void removePlayer(Player player) {
 		players.remove(player.getUniqueId());
-		teamHiders.remove(player.getUniqueId());
+		removeHider(player);
 		teamSeekers.remove(player.getUniqueId());
 		
 		plugin.getPlayerHandler().getPlayerData(player).restore();
 		player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
 	}
 
+	protected void resetArena() {
+		state = ArenaState.WAITING;
+		teamHiders = new ArrayList<Hider>();
+		teamSeekers = new ArrayList<UUID>();
+	}
+	
 	public void resetEditor() {
 		editor = null;
 		editorIsRenamingArena = false;
@@ -240,7 +262,7 @@ public class Arena {
 	public void setHidersSpawn(Location hidersSpawn) {
 		this.hidersSpawn = hidersSpawn;
 	}
-	
+
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
@@ -248,21 +270,20 @@ public class Arena {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	public void setSeekersSpawn(Location seekersSpawn) {
 		this.seekersSpawn = seekersSpawn;
 	}
-	
+
 	public void startThread() {
 		if (thread != null) return;
 		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				if (players.isEmpty()) {
-					state = ArenaState.WAITING;
-					teamHiders = new ArrayList<UUID>();
-					teamSeekers = new ArrayList<UUID>();
+					resetArena();
 					stopThread();
 				}
 				
@@ -271,7 +292,9 @@ public class Arena {
 						state = ArenaState.STARTING;
 						timer = (int) plugin.getPluginConfig().get("LOBBYTIME");
 					}
-				} else if (state == ArenaState.STARTING) {
+				}
+
+				if (state == ArenaState.STARTING) {
 					if (players.size() < ((int) plugin.getPluginConfig().get("MINPLAYERS"))) {
 						state = ArenaState.WAITING;
 					}
@@ -345,18 +368,16 @@ public class Arena {
 								player.sendMessage(seekers);
 								
 								if (!getSeekers().contains(player)) {
-									teamHiders.add(player.getUniqueId());
+									teamHiders.add(new Hider(player));
 								}
 							}
 							
-							Random random = new Random();
-							
-							for (Player hider : getHiders()) {
-								int itemid = random.nextInt(200);
-								DisguiseAPI.disguiseToAll(hider,
-										new MiscDisguise(DisguiseType.FALLING_BLOCK, itemid, 0));
-								hider.getInventory().setItem(0, new ItemStack(itemid));
-								hider.teleport(hidersSpawn);
+							for (Hider hider : getHiders()) {
+								DisguiseAPI.disguiseToAll(hider.getPlayer(),
+										new MiscDisguise(DisguiseType.FALLING_BLOCK, 3, 0));
+								hider.getPlayer().getInventory().setItem(0, new ItemStack(3));
+								hider.setBlock(Material.DIRT);
+								hider.getPlayer().teleport(hidersSpawn);
 							}
 							
 							for (Player seeker : getSeekers()) {
@@ -372,7 +393,9 @@ public class Arena {
 					for (Player player : getPlayers()) {
 						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("LOBBYTIME")));
 					}
-				} else if (state == ArenaState.PREGAME) {
+				}
+
+				if (state == ArenaState.PREGAME) {
 					timer--;
 					
 					if (timer == 0) {
@@ -389,13 +412,13 @@ public class Arena {
 					for (Player player : getPlayers()) {
 						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("SEEKERSWAITTIME")));
 					}
-				} else if (state == ArenaState.INGAME) {
+				}
+
+				if (state == ArenaState.INGAME) {
 					timer--;
 					
 					if ((timer == 0) || teamHiders.isEmpty()) {
-						state = ArenaState.WAITING;
-						teamHiders = new ArrayList<UUID>();
-						teamSeekers = new ArrayList<UUID>();
+						resetArena();
 						
 						for (Player player : getPlayers()) {
 							DisguiseAPI.undisguiseToAll(player);
@@ -411,13 +434,42 @@ public class Arena {
 						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("GAMETIME")));
 					}
 				}
+
+				if ((state == ArenaState.PREGAME) || (state == ArenaState.INGAME)) {
+					for (Hider hider : getHiders()) {
+						int hiderTimer = hider.getSolidBlockTimer();
+						
+						if (hiderTimer >= 3) {
+							if (hider.getPlayer().getLocation().getBlock().getType() != Material.AIR) {
+								hider.getPlayer().sendMessage("You can't become a block here!");
+								hider.setSolidBlockTimer(0);
+							} else {
+								for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+									if (onlinePlayer.equals(hider.getPlayer())) {
+										continue;
+									}
+
+									onlinePlayer.sendBlockChange(hider.getPlayer().getLocation(), hider.getBlock(),
+											(byte) 0);
+								}
+								
+								//TODO round
+								hider.getPlayer().teleport(hider.getPlayer().getLocation());
+							}
+						} else {
+							hider.setSolidBlockTimer(hiderTimer + 1);
+						}
+						
+						hider.getPlayer().setExp(((float) hiderTimer / 3));
+					}
+				}
 				
 				updateScoreboard();
 			}
 			
 		}, 0, 20);
 	}
-
+	
 	public void stopThread() {
 		plugin.getServer().getScheduler().cancelTask(thread.getTaskId());
 		thread = null;
