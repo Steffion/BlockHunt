@@ -451,10 +451,8 @@ public class Arena {
 
 									onlinePlayer.sendBlockChange(hider.getPlayer().getLocation(), hider.getBlock(),
 											(byte) 0);
+									onlinePlayer.hidePlayer(hider.getPlayer());
 								}
-								
-								//TODO round
-								hider.getPlayer().teleport(hider.getPlayer().getLocation());
 							}
 						} else {
 							hider.setSolidBlockTimer(hiderTimer + 1);
