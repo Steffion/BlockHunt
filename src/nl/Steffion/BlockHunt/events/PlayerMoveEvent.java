@@ -70,7 +70,7 @@ public class PlayerMoveEvent implements Listener {
 				
 				if (hider.getSolidBlockTimer() >= 3) {
 					for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
-						onlinePlayer.sendBlockChange(from, Material.AIR, (byte) 0);
+						onlinePlayer.sendBlockChange(hider.getHideLocation(), Material.AIR, (byte) 0);
 						onlinePlayer.showPlayer(player);
 					}
 				}

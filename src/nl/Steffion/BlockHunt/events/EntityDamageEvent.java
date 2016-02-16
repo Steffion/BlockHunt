@@ -6,6 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import nl.Steffion.BlockHunt.BlockHunt;
+import nl.Steffion.BlockHunt.data.Arena;
+import nl.Steffion.BlockHunt.data.ArenaState;
 
 public class EntityDamageEvent implements Listener {
 	private BlockHunt plugin;
@@ -21,6 +23,14 @@ public class EntityDamageEvent implements Listener {
 
 			if (plugin.getArenaHandler().getAllEditors().contains(player)) {
 				event.setCancelled(true);
+			}
+			
+			if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
+				Arena arena = plugin.getArenaHandler().getArena(player);
+				
+				if (arena.getState() != ArenaState.INGAME) {
+					event.setCancelled(true);
+				}
 			}
 		}
 	}

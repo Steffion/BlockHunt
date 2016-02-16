@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt.events;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -7,6 +8,7 @@ import org.bukkit.event.Listener;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 import nl.Steffion.BlockHunt.data.Arena;
+import nl.Steffion.BlockHunt.data.ArenaState;
 
 public class EntityDamageByEntityEvent implements Listener {
 	private BlockHunt plugin;
@@ -28,8 +30,11 @@ public class EntityDamageByEntityEvent implements Listener {
 				
 				if (arena.getHiders().contains(player) && arena.getHiders().contains(attacker)) return;
 				if (arena.getSeekers().contains(player) && arena.getSeekers().contains(attacker)) return;
+				if (arena.getState() != ArenaState.INGAME) return;
 
 				event.setCancelled(false);
+				
+				player.getLocation().getWorld().playSound(player.getLocation(), Sound.HURT_FLESH, 5, 0);
 
 				if (event.getFinalDamage() >= player.getHealth()) {
 					event.setCancelled(true);
@@ -38,6 +43,8 @@ public class EntityDamageByEntityEvent implements Listener {
 					for (Player arenaPlayer : arena.getPlayers()) {
 						arenaPlayer.sendMessage(player.getName() + " was slain by " + attacker.getName());
 					}
+					
+					
 					
 					arena.removeHider(player);
 					arena.addSeeker(player);

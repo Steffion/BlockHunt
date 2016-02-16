@@ -373,6 +373,7 @@ public class Arena {
 							}
 							
 							for (Hider hider : getHiders()) {
+								// TODO random from list
 								DisguiseAPI.disguiseToAll(hider.getPlayer(),
 										new MiscDisguise(DisguiseType.FALLING_BLOCK, 3, 0));
 								hider.getPlayer().getInventory().setItem(0, new ItemStack(3));
@@ -439,26 +440,37 @@ public class Arena {
 					for (Hider hider : getHiders()) {
 						int hiderTimer = hider.getSolidBlockTimer();
 						
-						if (hiderTimer >= 3) {
+						hider.setSolidBlockTimer(hiderTimer + 1);
+
+						if (hiderTimer == 3) {
 							if (hider.getPlayer().getLocation().getBlock().getType() != Material.AIR) {
 								hider.getPlayer().sendMessage("You can't become a block here!");
 								hider.setSolidBlockTimer(0);
 							} else {
+								hider.setHideLocation(hider.getPlayer().getLocation());
+								hider.getPlayer().playSound(hider.getPlayer().getLocation(), Sound.ORB_PICKUP, 1, 0);
+							
 								for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
 									if (onlinePlayer.equals(hider.getPlayer())) {
 										continue;
 									}
-
-									onlinePlayer.sendBlockChange(hider.getPlayer().getLocation(), hider.getBlock(),
-											(byte) 0);
+									
+									onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
 									onlinePlayer.hidePlayer(hider.getPlayer());
 								}
 							}
-						} else {
-							hider.setSolidBlockTimer(hiderTimer + 1);
+						} else if (hiderTimer > 3) {
+							for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+								if (onlinePlayer.equals(hider.getPlayer())) {
+									continue;
+								}
+								
+								onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
+								onlinePlayer.hidePlayer(hider.getPlayer());
+							}
 						}
 						
-						hider.getPlayer().setExp(((float) hiderTimer / 3));
+						hider.getPlayer().setExp(((float) (hiderTimer > 3 ? 3 : hiderTimer) / 3));
 					}
 				}
 				
