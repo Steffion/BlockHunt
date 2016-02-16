@@ -84,6 +84,8 @@ public class PlayerInteractEvent implements Listener {
 					for (Hider hider : arena.getHiders()) {
 						Location hideLocation = hider.getHideLocation();
 						
+						if (hideLocation == null) return;
+						
 						if ((loc.getBlockX() == hideLocation.getBlockX())
 								&& (loc.getBlockY() == hideLocation.getBlockY())
 								&& (loc.getBlockZ() == hideLocation.getBlockZ())) {

@@ -59,7 +59,7 @@ public class PlayerMoveEvent implements Listener {
 		if (plugin.getArenaHandler().getAllPlayers().contains(player)) {
 			Arena arena = plugin.getArenaHandler().getArena(player);
 
-			if (arena.getHider(player)==null) return;
+			if (arena.getHider(player) == null) return;
 
 			Location from = event.getFrom();
 			Location to = event.getTo();
@@ -70,6 +70,8 @@ public class PlayerMoveEvent implements Listener {
 				
 				if (hider.getSolidBlockTimer() >= 3) {
 					for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+						if (hider.getHideLocation() == null) return;
+						
 						onlinePlayer.sendBlockChange(hider.getHideLocation(), Material.AIR, (byte) 0);
 						onlinePlayer.showPlayer(player);
 					}
