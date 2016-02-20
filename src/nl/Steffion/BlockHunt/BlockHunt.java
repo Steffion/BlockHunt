@@ -107,6 +107,8 @@ public class BlockHunt extends JavaPlugin {
 
 			if (arenaHandler.getAllPlayers().contains(player)) {
 				playerHandler.getPlayerData(player).restore();
+				player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
+				
 				getLogger().log(Level.WARNING, "Player " + player.getName()
 						+ " was still in arena. Let them leave first before you close the server/reload, this could corrupt player files or the arenas.");
 			}
@@ -118,22 +120,29 @@ public class BlockHunt extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		if (BlockHunt.DEBUG_MODE) {
-			for (World world : Bukkit.getWorlds()) {
-				world.setTime(200);
-				world.setStorm(false);
-			}
+			Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+				
+				@Override
+				public void run() {
+					for (World world : Bukkit.getWorlds()) {
+						world.setTime(200);
+						world.setStorm(false);
+					}
+
+					for (Player player : Bukkit.getOnlinePlayers()) {
+						player.setHealth(player.getMaxHealth());
+						player.setFoodLevel(20);
+						// player.setLevel(63);
+						// player.setExp((float) 0.64);
+						// player.getInventory().clear();
+						// player.getInventory().addItem(new
+						// ItemStack(Material.STONE_SLAB2, 45));
+						// player.getInventory().setChestplate(new
+						// ItemStack(Material.DIAMOND_CHESTPLATE));
+					}
+				}
+			}, 0, 20 * 60);
 			
-			for (Player player : Bukkit.getOnlinePlayers()) {
-				player.setHealth(player.getMaxHealth());
-				player.setFoodLevel(20);
-				// player.setLevel(63);
-				// player.setExp((float) 0.64);
-				// player.getInventory().clear();
-				// player.getInventory().addItem(new
-				// ItemStack(Material.STONE_SLAB2, 45));
-				// player.getInventory().setChestplate(new
-				// ItemStack(Material.DIAMOND_CHESTPLATE));
-			}
 		}
 
 		/*
