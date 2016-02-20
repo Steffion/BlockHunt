@@ -9,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import nl.Steffion.BlockHunt.data.Arena;
-import nl.Steffion.BlockHunt.data.ArenaState;
 
 public class CommandJoin extends Command {
 	
@@ -62,7 +61,7 @@ public class CommandJoin extends Command {
 			return true;
 		}
 		
-		if (arena.getState() != ArenaState.WAITING) {
+		if (arena.hasStarted()) {
 			player.sendMessage("§cThis arena is already in-game!");
 			return true;
 		}

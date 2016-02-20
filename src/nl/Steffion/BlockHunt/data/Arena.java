@@ -158,6 +158,13 @@ public class Arena {
 		return state;
 	}
 	
+	public boolean hasStarted() {
+		if (state == ArenaState.WAITING) return false;
+		if (state == ArenaState.STARTING) return false;
+		
+		return true;
+	}
+	
 	public boolean isEditorRenamingArena() {
 		return editorIsRenamingArena;
 	}
