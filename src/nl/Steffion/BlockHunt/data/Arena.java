@@ -86,6 +86,8 @@ public class Arena {
 
 	public void addSeeker(Player player) {
 		player.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
+		player.getInventory().setItem(1, new ItemStack(Material.BOW));
+		player.getInventory().setItem(7, new ItemStack(Material.ARROW, 64));
 		
 		if (state == ArenaState.PREGAME) {
 			player.teleport(seekersSpawn);
@@ -303,7 +305,12 @@ public class Arena {
 
 				if (state == ArenaState.STARTING) {
 					if (players.size() < ((int) plugin.getPluginConfig().get("MINPLAYERS"))) {
+						for (Player player : getPlayers()) {
+							player.setExp(0);
+						}
+						
 						state = ArenaState.WAITING;
+						return;
 					}
 					
 					timer--;
@@ -360,8 +367,7 @@ public class Arena {
 									continue;
 								}
 								
-								teamSeekers.add(randomSeeker);
-								
+								addSeeker(plugin.getServer().getPlayer(randomSeeker));
 							}
 							
 							String seekers = "The seekers have been choosen: ";
@@ -431,6 +437,8 @@ public class Arena {
 						for (Player player : getPlayers()) {
 							DisguiseAPI.undisguiseToAll(player);
 							player.getInventory().setItem(0, null);
+							player.getInventory().setItem(1, null);
+							player.getInventory().setItem(7, null);
 							player.setExp(0);
 							player.setHealth(player.getMaxHealth());
 							player.teleport(lobbyLocation);
