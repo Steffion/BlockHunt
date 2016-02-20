@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.BlockHunt;
@@ -39,6 +40,17 @@ public class Hider {
 		return solidBlockTimer;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void revealHider() {
+		for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+			onlinePlayer.sendBlockChange(hideLocation, Material.AIR, (byte) 0);
+			onlinePlayer.showPlayer(getPlayer());
+		}
+		
+		hideLocation.getWorld().playSound(hideLocation, Sound.HURT_FLESH, 5, 0);
+		solidBlockTimer = 0;
+	}
+	
 	public void setBlock(Material block) {
 		this.block = block;
 	}
@@ -50,7 +62,7 @@ public class Hider {
 	public void setPlayer(Player player) {
 		this.player = player.getUniqueId();
 	}
-	
+
 	public void setSolidBlockTimer(int solidBlockTimer) {
 		this.solidBlockTimer = solidBlockTimer;
 	}
