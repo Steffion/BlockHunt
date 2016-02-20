@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
@@ -386,11 +387,29 @@ public class Arena {
 							}
 							
 							for (Hider hider : getHiders()) {
-								// TODO random from list
+								Material randomBlock = null;
+								
+								while (true) {
+									@SuppressWarnings("unchecked")
+									ArrayList<String> allowedBlocks = (ArrayList<String>) plugin.getPluginConfig()
+											.get("ALLOWED_BLOCKS");
+									Random random = new Random();
+									String randomBlockName = allowedBlocks.get(random.nextInt(allowedBlocks.size()));
+
+									try {
+										randomBlock = Material.valueOf(randomBlockName);
+										break;
+									} catch (IllegalArgumentException e) {
+										plugin.getLogger().log(Level.WARNING,
+												"There is no material called '" + randomBlockName
+														+ "'! Please edit your ALLOWED_BLOCKS in the config.yml.");
+									}
+								}
+								
 								DisguiseAPI.disguiseToAll(hider.getPlayer(),
-										new MiscDisguise(DisguiseType.FALLING_BLOCK, 3, 0));
-								hider.getPlayer().getInventory().setItem(0, new ItemStack(3));
-								hider.setBlock(Material.DIRT);
+										new MiscDisguise(DisguiseType.FALLING_BLOCK, randomBlock.getId(), 0));
+								hider.getPlayer().getInventory().setItem(7, new ItemStack(randomBlock.getId()));
+								hider.setBlock(randomBlock);
 								hider.getPlayer().teleport(hidersSpawn);
 							}
 							
@@ -464,7 +483,7 @@ public class Arena {
 							} else {
 								hider.setHideLocation(hider.getPlayer().getLocation());
 								hider.getPlayer().playSound(hider.getPlayer().getLocation(), Sound.ORB_PICKUP, 1, 0);
-							
+
 								for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
 									if (onlinePlayer.equals(hider.getPlayer())) {
 										continue;
