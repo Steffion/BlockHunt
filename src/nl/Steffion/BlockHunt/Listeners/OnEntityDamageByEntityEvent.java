@@ -49,7 +49,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 							event.setCancelled(true);
 						} else {
 							player.getWorld().playSound(player.getLocation(),
-									Sound.HURT_FLESH, 1, 1);
+									Sound.ENTITY_PLAYER_HURT, 1, 1);
 
 							if (event.getDamage() >= player.getHealth()) {
 								player.setHealth(20);

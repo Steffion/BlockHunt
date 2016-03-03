@@ -433,7 +433,7 @@ public class ArenaHandler {
 
 		for (Player player : arena.playersInArena) {
 			playerLeaveArena(player, false, false);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 		}
 
 		arena.gameState = ArenaState.WAITING;
@@ -485,7 +485,7 @@ public class ArenaHandler {
 
 		for (Player player : arena.playersInArena) {
 			playerLeaveArena(player, false, false);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 		}
 
 		arena.gameState = ArenaState.WAITING;
@@ -500,7 +500,7 @@ public class ArenaHandler {
 
 		for (Player player : arena.playersInArena) {
 			playerLeaveArena(player, false, false);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+			player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 		}
 
 		arena.gameState = ArenaState.WAITING;
