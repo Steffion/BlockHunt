@@ -1,5 +1,5 @@
 name: BlockHunt
-version: 2.0.0_ALPHA_B1
+version: 1.0.0_ALPHA_B6
 #description: ""
 load: POSTWORLD
 author: Steffion
@@ -8,7 +8,7 @@ authors: [RandomPanda30]
 main: nl.Steffion.BlockHunt.BlockHunt
 database: false
 #depend: []
-prefix: "BlockHunt v2.0.0_ALPHA_B1"
+prefix: "BlockHunt v1.0.0_ALPHA_B6"
 softdepend: [LibsDisguises, ProtocolLib]
 #loadbefore: []
 commands:

@@ -6,6 +6,11 @@ import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.data.Arena;
 
+/**
+ * 
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class CommandLeave extends Command {
 
 	public CommandLeave() {
@@ -33,7 +38,7 @@ public class CommandLeave extends Command {
 			}
 
 			arena.save();
-			arena.resetEditor();
+			arena.removeEditor();
 
 			plugin.getPlayerHandler().getPlayerData(player).restore();
 			

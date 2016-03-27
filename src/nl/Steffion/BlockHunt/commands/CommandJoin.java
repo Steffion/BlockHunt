@@ -10,10 +10,30 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import nl.Steffion.BlockHunt.data.Arena;
 
+/**
+ * 
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class CommandJoin extends Command {
+	private ItemStack exit;
 	
 	public CommandJoin() {
 		super("blockhunt join <arena>", "blockhunt.join", true, "Join an arena.");
+		
+		ItemMeta im;
+		ArrayList<String> lore = new ArrayList<String>();
+		
+		/*
+		 * Exit item
+		 */
+		 exit = new ItemStack(Material.WOOD_DOOR);
+		im = exit.getItemMeta();
+		im.setDisplayName("§cExit arena");
+		lore.clear();
+		lore.add("§7Right-click to exit the arena.");
+		im.setLore(lore);
+		exit.setItemMeta(im);
 	}
 
 	@Override
@@ -68,19 +88,6 @@ public class CommandJoin extends Command {
 		
 		arena.addPlayer(player);
 		
-		ItemMeta im;
-		ArrayList<String> lore = new ArrayList<String>();
-		
-		/*
-		 * Exit item
-		 */
-		ItemStack exit = new ItemStack(Material.WOOD_DOOR);
-		im = exit.getItemMeta();
-		im.setDisplayName("§cExit arena");
-		lore.clear();
-		lore.add("§7Right-click to exit the arena.");
-		im.setLore(lore);
-		exit.setItemMeta(im);
 		player.getInventory().setItem(8, exit);
 		
 		player.sendMessage("You've joined '" + arena.getName() + "'.");

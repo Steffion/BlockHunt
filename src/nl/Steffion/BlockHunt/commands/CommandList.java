@@ -8,6 +8,11 @@ import org.bukkit.command.CommandSender;
 
 import nl.Steffion.BlockHunt.data.Arena;
 
+/**
+ * 
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class CommandList extends Command {
 
 	public CommandList() {

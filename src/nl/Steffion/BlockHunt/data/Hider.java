@@ -9,11 +9,14 @@ import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 
+/**
+ * 
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class Hider {
 	private Material	block;
-
 	private Location	hideLocation;
-
 	private UUID		player;
 	private BlockHunt	plugin;
 	private int			solidBlockTimer;
@@ -47,7 +50,7 @@ public class Hider {
 			onlinePlayer.showPlayer(getPlayer());
 		}
 		
-		hideLocation.getWorld().playSound(hideLocation, Sound.HURT_FLESH, 5, 0);
+		hideLocation.getWorld().playSound(hideLocation, Sound.ENTITY_PLAYER_ATTACK_CRIT, 5, 0);
 		solidBlockTimer = 0;
 	}
 	

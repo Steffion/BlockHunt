@@ -1,10 +1,6 @@
 package nl.Steffion.BlockHunt;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.time.LocalDateTime;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -14,8 +10,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import nl.Steffion.BlockHunt.configdefaults.ConfigDefaults;
-import nl.Steffion.BlockHunt.data.Config;
+import nl.Steffion.BlockHunt.configdefaults.SettingsDefaults;
+import nl.Steffion.BlockHunt.configs.Config;
 import nl.Steffion.BlockHunt.events.AsyncPlayerChatEvent;
 import nl.Steffion.BlockHunt.events.BlockBreakEvent;
 import nl.Steffion.BlockHunt.events.BlockPlaceEvent;
@@ -30,12 +26,23 @@ import nl.Steffion.BlockHunt.events.PlayerMoveEvent;
 import nl.Steffion.BlockHunt.events.PlayerPickupItemEvent;
 import nl.Steffion.BlockHunt.events.PlayerQuitEvent;
 
+/**
+ * The main class of BlockHunt.
+ *
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class BlockHunt extends JavaPlugin {
 	public static boolean		DEBUG_MODE	= true;
 	public static boolean		ENABLED		= true;
 
 	private static BlockHunt	plugin;
 
+	/**
+	 * Return the JavaPlugin instance, useful for getting the server etc.
+	 *
+	 * @return JavaPlugin instance
+	 */
 	public static BlockHunt getPlugin() {
 		return BlockHunt.plugin;
 	}
@@ -44,51 +51,54 @@ public class BlockHunt extends JavaPlugin {
 	private Config			arenas;
 	private CommandHandler	commandHandler;
 	private PlayerHandler	playerHandler;
-	private Config			pluginConfig;
+	private Config			settings;
 
+	/**
+	 * Returns the ArenaHandler, useful for anything related to arenas.
+	 *
+	 * @return The ArenaHandler
+	 */
 	public ArenaHandler getArenaHandler() {
 		return arenaHandler;
 	}
 
+	/**
+	 * Returns the arena config.
+	 *
+	 * @return arenas.yml config
+	 */
 	public Config getArenas() {
 		return arenas;
 	}
 
+	/**
+	 * Returns the ArenaHandler, useful for anything related to commands.
+	 *
+	 * @return The ArenaHandler
+	 */
 	public CommandHandler getCommandHandler() {
 		return commandHandler;
 	}
 
+	/**
+	 * Returns the PlayerHandler, useful for anything related to players and
+	 * their data.
+	 *
+	 * @return The PlayerHandler
+	 */
 	public PlayerHandler getPlayerHandler() {
 		return playerHandler;
 	}
 
-	public Config getPluginConfig() {
-		return pluginConfig;
+	/**
+	 * Returns the settings config.
+	 *
+	 * @return settings.yml config
+	 */
+	public Config getSettings() {
+		return settings;
 	}
 
-	public void handleExeption(Exception e) {
-		LocalDateTime time = LocalDateTime.now();
-
-		getLogger().log(Level.SEVERE, "~~ ERROR ~~");
-		getLogger().log(Level.SEVERE, e.getClass().getName() + ": " + e.getLocalizedMessage() + "!");
-		getLogger().log(Level.SEVERE, "Contact the developer for asstiance!");
-		getLogger().log(Level.SEVERE, "Include the file at: plugins/BlockHunt/errors/" + LocalDateTime.now() + ".txt");
-		getLogger().log(Level.SEVERE, "~~ ERROR ~~");
-
-		try {
-			File file = new File("plugins/BlockHunt/errors/" + time + ".txt");
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-			
-			FileOutputStream fos = new FileOutputStream(new File("plugins/BlockHunt/errors/" + time + ".txt"), true);
-			PrintStream ps = new PrintStream(fos);
-			e.printStackTrace(ps);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-			return;
-		}
-	}
-	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		return commandHandler.handleCommand(sender, cmd, label, args);
@@ -107,7 +117,7 @@ public class BlockHunt extends JavaPlugin {
 
 			if (arenaHandler.getAllPlayers().contains(player)) {
 				playerHandler.getPlayerData(player).restore();
-				player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
+				player.setScoreboard(getServer().getScoreboardManager().getMainScoreboard());
 				
 				getLogger().log(Level.WARNING, "Player " + player.getName()
 						+ " was still in arena. Let them leave first before you close the server/reload, this could corrupt player files or the arenas.");
@@ -128,21 +138,14 @@ public class BlockHunt extends JavaPlugin {
 						world.setTime(200);
 						world.setStorm(false);
 					}
-
-					for (Player player : Bukkit.getOnlinePlayers()) {
-						player.setHealth(player.getMaxHealth());
-						player.setFoodLevel(20);
-						// player.setLevel(63);
-						// player.setExp((float) 0.64);
-						// player.getInventory().clear();
-						// player.getInventory().addItem(new
-						// ItemStack(Material.STONE_SLAB2, 45));
-						// player.getInventory().setChestplate(new
-						// ItemStack(Material.DIAMOND_CHESTPLATE));
-					}
 				}
+				
 			}, 0, 20 * 60);
-			
+
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				player.setHealth(player.getMaxHealth());
+				player.setFoodLevel(20);
+			}
 		}
 
 		/*
@@ -154,8 +157,7 @@ public class BlockHunt extends JavaPlugin {
 		 * Config files
 		 */
 		arenas = new Config("arenas");
-		pluginConfig = new Config("config");
-		pluginConfig.setDefaults(ConfigDefaults.getValues());
+		settings = new Config("settings", SettingsDefaults.getValues());
 		
 		/*
 		 * Handlers

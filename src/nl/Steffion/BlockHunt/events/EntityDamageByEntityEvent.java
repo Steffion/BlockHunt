@@ -10,7 +10,7 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 import nl.Steffion.BlockHunt.data.Arena;
-import nl.Steffion.BlockHunt.data.ArenaState;
+import nl.Steffion.BlockHunt.data.Arena.ArenaState;
 
 public class EntityDamageByEntityEvent implements Listener {
 	private BlockHunt plugin;
@@ -52,7 +52,7 @@ public class EntityDamageByEntityEvent implements Listener {
 					arena.getHider(player).revealHider();
 				}
 				
-				player.getLocation().getWorld().playSound(player.getLocation(), Sound.HURT_FLESH, 5, 0);
+				player.getLocation().getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT, 5, 0);
 
 				if (event.getFinalDamage() >= player.getHealth()) {
 					event.setCancelled(true);

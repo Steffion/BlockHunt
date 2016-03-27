@@ -4,10 +4,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import nl.Steffion.BlockHunt.data.Arena;
-
+/**
+ *
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class CommandRemove extends Command {
-
+	
 	public CommandRemove() {
 		super("blockhunt remove <arena>", "blockhunt.remove", false, "Remove an arena.");
 	}
@@ -32,18 +35,14 @@ public class CommandRemove extends Command {
 			return true;
 		}
 
-		Arena arena = new Arena(arenaName);
-
 		if (sender instanceof Player) {
 			Bukkit.dispatchCommand(sender, "blockhunt leave");
 		}
-
-		plugin.getArenas().getConfig().set(arena.getName(), null);
-		plugin.getArenas().save();
-
-		sender.sendMessage("Arena '" + arena.getName() + "' has been removed succesfully!");
-		return true;
 		
+		plugin.getArenaHandler().deleteArena(arenaName);
+
+		sender.sendMessage("Arena '" + arenaName + "' has been removed succesfully!");
+		return true;
 	}
 
 }

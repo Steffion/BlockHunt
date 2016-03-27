@@ -1,4 +1,4 @@
-package nl.Steffion.BlockHunt.data;
+package nl.Steffion.BlockHunt.configs;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,30 +17,37 @@ public class Config {
 	private FileConfiguration		fileC;
 	private ConfigurationSection	fileCS;
 	private BlockHunt				plugin;
-									
+
 	/**
 	 * Use this class to create an automated config file.
 	 *
 	 * @param fileName
-	 *            Name of the file.
+	 *            - name of the file.
 	 */
 	public Config(String fileName) {
-		plugin = BlockHunt.getPlugin();
-
-		file = new File("plugins/BlockHunt", fileName + ".yml");
-		fileC = new YamlConfiguration();
-		checkFile();
-		fileCS = fileC.getConfigurationSection("");
-		load();
+		this(fileName, "");
+	}
+	
+	/**
+	 * Use this class to create an automated config file with defaults.
+	 *
+	 * @param fileName
+	 *            - name of the file.
+	 * @param defaults
+	 *            - defaults
+	 */
+	public Config(String fileName, HashMap<String, Object> defaults) {
+		this(fileName);
+		this.defaults = defaults;
 	}
 	
 	/**
 	 * Use this class to create an automated config file.
 	 *
 	 * @param fileName
-	 *            Name of the file.
+	 *            - name of the file.
 	 * @param fileLocation
-	 *            Sub-Location of the file.
+	 *            - sub-Location of the file.
 	 */
 	public Config(String fileName, String fileLocation) {
 		plugin = BlockHunt.getPlugin();
@@ -51,7 +58,7 @@ public class Config {
 		fileCS = fileC.getConfigurationSection("");
 		load();
 	}
-	
+
 	/**
 	 * Check if file exists, if not create one.
 	 */
@@ -63,7 +70,7 @@ public class Config {
 				file.createNewFile();
 				plugin.getLogger().log(Level.INFO, "Missing config file has been created. (" + file.getName() + ")");
 			} catch (IOException e) {
-				plugin.handleExeption(e);
+				e.printStackTrace();
 			}
 		}
 	}
@@ -76,10 +83,20 @@ public class Config {
 		else return defaults.get(key);
 	}
 	
+	/**
+	 * Get the config to get and set settings.
+	 *
+	 * @return {@link ConfigurationSection} of this.
+	 */
 	public ConfigurationSection getConfig() {
 		return fileCS;
 	}
 
+	/**
+	 * Get the default settings.
+	 *
+	 * @return {@link HashMap} with default settings.
+	 */
 	public HashMap<String, Object> getDefaults() {
 		return defaults;
 	}
@@ -94,7 +111,7 @@ public class Config {
 			try {
 				fileC.load(file);
 			} catch (Exception e) {
-				plugin.handleExeption(e);
+				e.printStackTrace();
 			}
 		}
 	}
@@ -106,12 +123,8 @@ public class Config {
 		try {
 			fileC.save(file);
 		} catch (Exception e) {
-			plugin.handleExeption(e);
+			e.printStackTrace();
 		}
-	}
-	
-	public void setDefaults(HashMap<String, Object> defaults) {
-		this.defaults = defaults;
 	}
 	
 }

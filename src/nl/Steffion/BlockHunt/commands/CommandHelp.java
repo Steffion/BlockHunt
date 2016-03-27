@@ -5,26 +5,39 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+/**
+ *
+ * @author Steffion (Stef de Goey) 2016
+ * 
+ */
 public class CommandHelp extends Command {
-
+	
 	public CommandHelp() {
 		super("blockhunt help [n]", "blockhunt.help", false, "§7Use /blockhunt help [n] to get page n of help.");
 	}
 
 	@Override
 	public boolean runCommand(CommandSender sender, String[] args) {
+		/*
+		 * Get a list of helplines to show to the player.
+		 */
 		List<String> helpLines = new ArrayList<String>();
 
+		helpLines.add(getHelp());
+		
 		for (Command command : plugin.getCommandHandler().getCommands()) {
-			if (!(command instanceof CommandHelp)) {
-				if (sender.hasPermission(command.getPermission())) {
-					helpLines.add("§6/" + command.getUsage() + ": §f" + command.getHelp());
-				}
-			} else {
-				helpLines.add(getHelp());
+			if (command instanceof CommandHelp) {
+				continue;
+			}
+
+			if (sender.hasPermission(command.getPermission())) {
+				helpLines.add("§6/" + command.getUsage() + ": §f" + command.getHelp());
 			}
 		}
 		
+		/*
+		 * Calculate the amount of pages and parse the requested page number.
+		 */
 		int pageNumber;
 		int maxPages = (helpLines.size() / 6) + 1;
 
@@ -43,9 +56,12 @@ public class CommandHelp extends Command {
 			pageNumber = maxPages;
 		}
 
+		/*
+		 * Display the help menu.
+		 */
 		sender.sendMessage(
 				"§9--------- §fBlockHunt: Index (" + pageNumber + "/" + maxPages + ") §9--------------------");
-
+		
 		int linesLeft = 6;
 
 		for (int index = (pageNumber - 1) * 6; index < (pageNumber * 6); index++) {
@@ -63,18 +79,8 @@ public class CommandHelp extends Command {
 			sender.sendMessage(" ");
 		}
 
-		String authors = "";
-		String version = plugin.getDescription().getVersion();
-
-		for (String author : plugin.getDescription().getAuthors()) {
-			authors += author + "§7§o, §6§o";
-		}
-
-		authors = authors.substring(0, authors.length() - 6);
-
-		sender.sendMessage(" ");
-		sender.sendMessage("§7§oPlugin created by: §6§o" + authors + "§7§o!");
-		sender.sendMessage("§7§oVersion: §6§o" + version);
+		plugin.getCommandHandler().printPluginInfo(sender);
 		return true;
 	}
+	
 }

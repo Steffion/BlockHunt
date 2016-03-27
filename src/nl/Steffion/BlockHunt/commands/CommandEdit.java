@@ -10,10 +10,94 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import nl.Steffion.BlockHunt.data.Arena;
 
+/**
+ *
+ * @author Steffion (Stef de Goey) 2016
+ * 
+ */
 public class CommandEdit extends Command {
+	private ItemStack	delete;
+	private ItemStack	exit;
+	private ItemStack	hidersSpawn;
+	private ItemStack	lobbyLocation;
+	private ItemStack	namingTool;
+	private ItemStack	seekersSpawn;
 	
 	public CommandEdit() {
 		super("blockhunt edit <arena>", "blockhunt.edit", true, "Edit an arena.");
+		
+		ItemMeta im;
+		ArrayList<String> lore = new ArrayList<String>();
+		
+		/*
+		 * Naming tool
+		 */
+		namingTool = new ItemStack(Material.NAME_TAG);
+		im = namingTool.getItemMeta();
+		im.setDisplayName("§7Rename arena");
+		lore.clear();
+		lore.add("§7Right-click to edit the arena name.");
+		im.setLore(lore);
+		namingTool.setItemMeta(im);
+		
+		/*
+		 * Hiders spawn item
+		 */
+		hidersSpawn = new ItemStack(Material.WOOL, 1, (short) 5);
+		im = hidersSpawn.getItemMeta();
+		im.setDisplayName("§aHider's spawn");
+		lore.clear();
+		lore.add("§7Place this block to set the hider's spawn.");
+		lore.add("§cThis is a required setting.");
+		im.setLore(lore);
+		hidersSpawn.setItemMeta(im);
+		
+		/*
+		 * Lobby location item
+		 */
+		lobbyLocation = new ItemStack(Material.WOOL, 1, (short) 13);
+		im = lobbyLocation.getItemMeta();
+		im.setDisplayName("§2Lobby location");
+		lore.clear();
+		lore.add("§7Place this block to set the lobby location.");
+		lore.add("§cThis is a required setting.");
+		im.setLore(lore);
+		lobbyLocation.setItemMeta(im);
+		
+		/*
+		 * Seekers spawn item
+		 */
+		seekersSpawn = new ItemStack(Material.WOOL, 1, (short) 4);
+		im = seekersSpawn.getItemMeta();
+		im.setDisplayName("§eSeeker's spawn");
+		lore.clear();
+		lore.add("§7Place this block to set the seeker's spawn.");
+		lore.add("§cThis is a required setting.");
+		im.setLore(lore);
+		seekersSpawn.setItemMeta(im);
+		
+		/*
+		 * Remove item
+		 */
+		delete = new ItemStack(Material.BARRIER);
+		im = delete.getItemMeta();
+		im.setDisplayName("§c§lDELETE ARENA IMMEDIATELY");
+		lore.clear();
+		lore.add("§7Right-click to delete the arena §c§lIMMEDIATELY.");
+		lore.add("§c§lTHERE IS NO RETURN!");
+		im.setLore(lore);
+		delete.setItemMeta(im);
+		
+		/*
+		 * Exit item
+		 */
+		exit = new ItemStack(Material.WOOD_DOOR);
+		im = exit.getItemMeta();
+		im.setDisplayName("§cExit editor mode");
+		lore.clear();
+		lore.add("§7Right-click to exit the editor mode.");
+		im.setLore(lore);
+		exit.setItemMeta(im);
 	}
 	
 	@Override
@@ -35,13 +119,7 @@ public class CommandEdit extends Command {
 			return true;
 		}
 		
-		String arenaName = "";
-
-		for (int i = 1; i < args.length; i++) {
-			arenaName = arenaName + args[i] + " ";
-		}
-		
-		arenaName = arenaName.substring(0, arenaName.length() - 1);
+		String arenaName = plugin.getArenaHandler().buildName(args, 1);
 		
 		if (plugin.getArenaHandler().getArena(arenaName) == null) {
 			player.sendMessage("§cNo arena exists with the name '" + arenaName + "'");
@@ -65,83 +143,11 @@ public class CommandEdit extends Command {
 			player.teleport(arena.getHidersSpawn());
 		}
 
-		ItemMeta im;
-		ArrayList<String> lore = new ArrayList<String>();
-		
-		/*
-		 * Naming tool
-		 */
-		ItemStack namingTool = new ItemStack(Material.NAME_TAG);
-		im = namingTool.getItemMeta();
-		im.setDisplayName("§7Rename arena");
-		lore.clear();
-		lore.add("§7Right-click to edit the arena name.");
-		im.setLore(lore);
-		namingTool.setItemMeta(im);
 		player.getInventory().setItem(0, namingTool);
-		
-		/*
-		 * Hiders spawn item
-		 */
-		ItemStack hidersSpawn = new ItemStack(Material.WOOL, 1, (short) 5);
-		im = hidersSpawn.getItemMeta();
-		im.setDisplayName("§aHider's spawn");
-		lore.clear();
-		lore.add("§7Place this block to set the hider's spawn.");
-		lore.add("§cThis is a required setting.");
-		im.setLore(lore);
-		hidersSpawn.setItemMeta(im);
 		player.getInventory().setItem(1, hidersSpawn);
-		
-		/*
-		 * Lobby location item
-		 */
-		ItemStack lobbyLocation = new ItemStack(Material.WOOL, 1, (short) 13);
-		im = lobbyLocation.getItemMeta();
-		im.setDisplayName("§2Lobby location");
-		lore.clear();
-		lore.add("§7Place this block to set the lobby location.");
-		lore.add("§cThis is a required setting.");
-		im.setLore(lore);
-		lobbyLocation.setItemMeta(im);
 		player.getInventory().setItem(2, lobbyLocation);
-		
-		/*
-		 * Seekers spawn item
-		 */
-		ItemStack seekersSpawn = new ItemStack(Material.WOOL, 1, (short) 4);
-		im = seekersSpawn.getItemMeta();
-		im.setDisplayName("§eSeeker's spawn");
-		lore.clear();
-		lore.add("§7Place this block to set the seeker's spawn.");
-		lore.add("§cThis is a required setting.");
-		im.setLore(lore);
-		seekersSpawn.setItemMeta(im);
 		player.getInventory().setItem(3, seekersSpawn);
-		
-		/*
-		 * Remove item
-		 */
-		ItemStack delete = new ItemStack(Material.BARRIER);
-		im = delete.getItemMeta();
-		im.setDisplayName("§c§lDELETE ARENA IMMEDIATELY");
-		lore.clear();
-		lore.add("§7Right-click to delete the arena §c§lIMMEDIATELY.");
-		lore.add("§c§lTHERE IS NO RETURN!");
-		im.setLore(lore);
-		delete.setItemMeta(im);
 		player.getInventory().setItem(7, delete);
-		
-		/*
-		 * Exit item
-		 */
-		ItemStack exit = new ItemStack(Material.WOOD_DOOR);
-		im = exit.getItemMeta();
-		im.setDisplayName("§cExit editor mode");
-		lore.clear();
-		lore.add("§7Right-click to exit the editor mode.");
-		im.setLore(lore);
-		exit.setItemMeta(im);
 		player.getInventory().setItem(8, exit);
 
 		player.sendMessage("You're now editing arena: '" + arena.getName() + "'.");

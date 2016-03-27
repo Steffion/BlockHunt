@@ -27,6 +27,10 @@ import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import nl.Steffion.BlockHunt.BlockHunt;
 
 public class Arena {
+	public enum ArenaState {
+		INGAME, PREGAME, STARTING, WAITING;
+	}
+
 	private UUID		editor;
 	private boolean		editorIsRenamingArena;
 	private Location	hidersSpawn;
@@ -41,9 +45,9 @@ public class Arena {
 	private List<UUID>	teamSeekers;
 	private BukkitTask	thread;
 	private int			timer;
-						
+
 	public Arena() {
-		plugin = BlockHunt.getPlugin();
+		this(null);
 		
 		int arenaNumber = 1;
 		while (true) {
@@ -55,13 +59,6 @@ public class Arena {
 			name = "Arena_" + arenaNumber;
 			break;
 		}
-		
-		players = new ArrayList<UUID>();
-		teamHiders = new ArrayList<Hider>();
-		teamSeekers = new ArrayList<UUID>();
-		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
-				"dummy");
-		state = ArenaState.WAITING;
 	}
 
 	public Arena(String name) {
@@ -75,16 +72,29 @@ public class Arena {
 		state = ArenaState.WAITING;
 	}
 
+	/**
+	 * Adds a player to the arena.
+	 *
+	 * @param player
+	 *            - player who needs to be added
+	 */
 	public void addPlayer(Player player) {
 		players.add(player.getUniqueId());
 		
 		plugin.getPlayerHandler().storePlayerData(player);
 		plugin.getPlayerHandler().getPlayerData(player).clear();
+
 		player.teleport(lobbyLocation);
 		
 		startThread();
 	}
 
+	/**
+	 * Add player to the seeker list.
+	 *
+	 * @param player
+	 *            - player to be added to the seeker list.
+	 */
 	public void addSeeker(Player player) {
 		player.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
 		player.getInventory().setItem(1, new ItemStack(Material.BOW));
@@ -99,10 +109,21 @@ public class Arena {
 		teamSeekers.add(player.getUniqueId());
 	}
 
+	/**
+	 *
+	 * @return The current editor of this arena, null if none.
+	 */
 	public Player getEditor() {
 		return plugin.getServer().getPlayer(editor);
 	}
-
+	
+	/**
+	 *
+	 * @param player
+	 *            - get the {@link Hider} class of the player.
+	 * @return The {@link Hider} class of the player, if not a hider returns
+	 *         null.
+	 */
 	public Hider getHider(Player player) {
 		for (Hider hider : teamHiders) {
 			if (hider.getPlayer().getUniqueId() == player.getUniqueId()) return hider;
@@ -110,25 +131,35 @@ public class Arena {
 
 		return null;
 	}
-	
+
+	/**
+	 *
+	 * @return A list of {@link Hider}s.
+	 */
 	public List<Hider> getHiders() {
-		List<Hider> hiders = new ArrayList<Hider>();
-
-		for (Hider hider : teamHiders) {
-			hiders.add(hider);
-		}
-		
-		return hiders;
+		return teamHiders;
 	}
-
+	
+	/**
+	 *
+	 * @return The {@link Hider}'s spawn.
+	 */
 	public Location getHidersSpawn() {
 		return hidersSpawn;
 	}
-	
+
+	/**
+	 *
+	 * @return The lobby location.
+	 */
 	public Location getLobbyLocation() {
 		return lobbyLocation;
 	}
-
+	
+	/**
+	 *
+	 * @return The name of the arena.
+	 */
 	public String getName() {
 		return name;
 	}
@@ -143,6 +174,12 @@ public class Arena {
 		return players;
 	}
 	
+	/**
+	 * <i>Different than getHiders(); because seekers don't have a separate
+	 * class.</i>
+	 *
+	 * @return A list of {@link Player}'s who are seekers.
+	 */
 	public List<Player> getSeekers() {
 		List<Player> seekers = new ArrayList<Player>();
 
@@ -153,14 +190,26 @@ public class Arena {
 		return seekers;
 	}
 	
+	/**
+	 *
+	 * @return The seeker's spawn.
+	 */
 	public Location getSeekersSpawn() {
 		return seekersSpawn;
 	}
 	
+	/**
+	 *
+	 * @return State of the arena.
+	 */
 	public ArenaState getState() {
 		return state;
 	}
 	
+	/**
+	 *
+	 * @return Boolean if the arena has started.
+	 */
 	public boolean hasStarted() {
 		if (state == ArenaState.WAITING) return false;
 		if (state == ArenaState.STARTING) return false;
@@ -168,16 +217,27 @@ public class Arena {
 		return true;
 	}
 	
+	/**
+	 *
+	 * @return Boolean if the editor is currently renaming the arena.
+	 */
 	public boolean isEditorRenamingArena() {
 		return editorIsRenamingArena;
 	}
-	
+
+	/**
+	 *
+	 * @return Boolean if the arena has all the required settings.
+	 */
 	public boolean isSetup() {
 		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) return false;
 
 		return true;
 	}
-
+	
+	/**
+	 * Load the arena from the config file.
+	 */
 	public void load() {
 		plugin.getArenas().load();
 		ConfigurationSection arenas = plugin.getArenas().getConfig();
@@ -201,6 +261,20 @@ public class Arena {
 		}
 	}
 	
+	/**
+	 * Remove the editor. Used when the editor leaves the editing mode.
+	 */
+	public void removeEditor() {
+		editor = null;
+		editorIsRenamingArena = false;
+	}
+
+	/**
+	 * Remove a player from the hider team.
+	 *
+	 * @param player
+	 *            - player to be removed.
+	 */
 	public void removeHider(Player player) {
 		for (int i = 0; i < teamHiders.size(); i++) {
 			Hider hider = teamHiders.get(i);
@@ -214,6 +288,12 @@ public class Arena {
 		DisguiseAPI.undisguiseToAll(player);
 	}
 	
+	/**
+	 * Remove a player from the arena.
+	 *
+	 * @param player
+	 *            - Player to remove.
+	 */
 	public void removePlayer(Player player) {
 		players.remove(player.getUniqueId());
 		removeHider(player);
@@ -222,18 +302,19 @@ public class Arena {
 		plugin.getPlayerHandler().getPlayerData(player).restore();
 		player.setScoreboard(plugin.getServer().getScoreboardManager().getMainScoreboard());
 	}
-
+	
+	/**
+	 * Reset some arena variables. Used after a game finished.
+	 */
 	protected void resetArena() {
 		state = ArenaState.WAITING;
 		teamHiders = new ArrayList<Hider>();
 		teamSeekers = new ArrayList<UUID>();
 	}
 	
-	public void resetEditor() {
-		editor = null;
-		editorIsRenamingArena = false;
-	}
-	
+	/**
+	 * Save the arena to the file.
+	 */
 	public void save() {
 		plugin.getArenas().getConfig().set(name, "");
 
@@ -261,30 +342,60 @@ public class Arena {
 		plugin.getArenas().save();
 	}
 	
+	/**
+	 * Set the editor of the arena.
+	 *
+	 * @param editor
+	 */
 	public void setEditor(Player editor) {
 		this.editor = editor.getUniqueId();
 	}
 	
+	/**
+	 * Use this if the editor wants to rename the arena.
+	 *
+	 * @param editorRenamingArena
+	 */
 	public void setEditorRenamingArena(boolean editorRenamingArena) {
 		editorIsRenamingArena = editorRenamingArena;
 	}
-	
+
+	/**
+	 * Set the hider spawn of the arena.
+	 *
+	 * @param hidersSpawn
+	 */
 	public void setHidersSpawn(Location hidersSpawn) {
 		this.hidersSpawn = hidersSpawn;
 	}
 
+	/**
+	 * Set the lobby location of the arena.
+	 *
+	 * @param lobbyLocation
+	 */
 	public void setLobbyLocation(Location lobbyLocation) {
 		this.lobbyLocation = lobbyLocation;
 	}
-
+	
+	/**
+	 * Set the name of the arena.
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * Set the seekers spawn of the arena.
+	 *
+	 * @param seekersSpawn
+	 */
 	public void setSeekersSpawn(Location seekersSpawn) {
 		this.seekersSpawn = seekersSpawn;
 	}
-
+	
 	public void startThread() {
 		if (thread != null) return;
 		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
@@ -298,14 +409,14 @@ public class Arena {
 				}
 				
 				if (state == ArenaState.WAITING) {
-					if (players.size() >= ((int) plugin.getPluginConfig().get("MINPLAYERS"))) {
+					if (players.size() >= ((int) plugin.getSettings().get("MINPLAYERS"))) {
 						state = ArenaState.STARTING;
-						timer = (int) plugin.getPluginConfig().get("LOBBYTIME");
+						timer = (int) plugin.getSettings().get("LOBBYTIME");
 					}
 				}
 
 				if (state == ArenaState.STARTING) {
-					if (players.size() < ((int) plugin.getPluginConfig().get("MINPLAYERS"))) {
+					if (players.size() < ((int) plugin.getSettings().get("MINPLAYERS"))) {
 						for (Player player : getPlayers()) {
 							player.setExp(0);
 						}
@@ -349,15 +460,15 @@ public class Arena {
 							break;
 						case 0:
 							for (Player player : getPlayers()) {
-								player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1, 1);
+								player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 							}
 							
 							state = ArenaState.PREGAME;
-							timer = (int) plugin.getPluginConfig().get("SEEKERSWAITTIME");
+							timer = (int) plugin.getSettings().get("SEEKERSWAITTIME");
 							
 							int seekerAmount = (int) (Math.round(
-									players.size() * (double) plugin.getPluginConfig().get("PRECENTAGE_SEEKERS")) + 1);
-									
+									players.size() * (double) plugin.getSettings().get("PRECENTAGE_SEEKERS")) + 1);
+
 							for (int i = 0; i < seekerAmount; i++) {
 								Random random = new Random();
 								
@@ -391,10 +502,11 @@ public class Arena {
 								
 								while (true) {
 									@SuppressWarnings("unchecked")
-									ArrayList<String> allowedBlocks = (ArrayList<String>) plugin.getPluginConfig()
+									ArrayList<Material> allowedBlocks = (ArrayList<Material>) plugin.getSettings()
 											.get("ALLOWED_BLOCKS");
 									Random random = new Random();
-									String randomBlockName = allowedBlocks.get(random.nextInt(allowedBlocks.size()));
+									String randomBlockName = allowedBlocks.get(random.nextInt(allowedBlocks.size()))
+											.name();
 
 									try {
 										randomBlock = Material.valueOf(randomBlockName);
@@ -424,7 +536,7 @@ public class Arena {
 					}
 					
 					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("LOBBYTIME")));
+						player.setExp((float) timer / ((int) plugin.getSettings().get("LOBBYTIME")));
 					}
 				}
 
@@ -433,7 +545,7 @@ public class Arena {
 					
 					if (timer == 0) {
 						state = ArenaState.INGAME;
-						timer = (int) plugin.getPluginConfig().get("GAMETIME");
+						timer = (int) plugin.getSettings().get("GAMETIME");
 						
 						for (Player seeker : getSeekers()) {
 							seeker.teleport(hidersSpawn);
@@ -443,7 +555,7 @@ public class Arena {
 					}
 					
 					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("SEEKERSWAITTIME")));
+						player.setExp((float) timer / ((int) plugin.getSettings().get("SEEKERSWAITTIME")));
 					}
 				}
 
@@ -461,12 +573,12 @@ public class Arena {
 							player.setExp(0);
 							player.setHealth(player.getMaxHealth());
 							player.teleport(lobbyLocation);
-							player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
 						}
 					}
 					
 					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getPluginConfig().get("GAMETIME")));
+						player.setExp((float) timer / ((int) plugin.getSettings().get("GAMETIME")));
 					}
 				}
 
@@ -482,7 +594,8 @@ public class Arena {
 								hider.setSolidBlockTimer(0);
 							} else {
 								hider.setHideLocation(hider.getPlayer().getLocation());
-								hider.getPlayer().playSound(hider.getPlayer().getLocation(), Sound.ORB_PICKUP, 1, 0);
+								hider.getPlayer().playSound(hider.getPlayer().getLocation(),
+										Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 
 								for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
 									if (onlinePlayer.equals(hider.getPlayer())) {
@@ -513,12 +626,15 @@ public class Arena {
 			
 		}, 0, 20);
 	}
-	
+
 	public void stopThread() {
 		plugin.getServer().getScheduler().cancelTask(thread.getTaskId());
 		thread = null;
 	}
 
+	/**
+	 * Update scoreboard for all players in the arena.
+	 */
 	protected void updateScoreboard() {
 		scoreboard.setDisplaySlot(DisplaySlot.SIDEBAR);
 		scoreboard.setDisplayName("§9§lBlockHunt");
@@ -530,10 +646,10 @@ public class Arena {
 		List<String> scoreboardEntries = new ArrayList<String>();
 
 		scoreboardEntries.add("§lArena: §6" + name);
-		scoreboardEntries.add("§lPlayers: §6" + players.size() + "/" + plugin.getPluginConfig().get("MAXPLAYERS"));
+		scoreboardEntries.add("§lPlayers: §6" + players.size() + "/" + plugin.getSettings().get("MAXPLAYERS"));
 		
 		if (state == ArenaState.WAITING) {
-			scoreboardEntries.add("§lMinimum required players: §6" + plugin.getPluginConfig().get("MINPLAYERS"));
+			scoreboardEntries.add("§lMinimum required players: §6" + plugin.getSettings().get("MINPLAYERS"));
 			scoreboardEntries.add("§6§lWaiting for players...");
 		}
 
@@ -572,6 +688,10 @@ public class Arena {
 		}
 		
 		for (int i = 0; i < scoreboardEntries.size(); i++) {
+			if (scoreboardEntries.get(i).length() > 32) {
+				scoreboardEntries.set(i, scoreboardEntries.get(i).substring(0, 32));
+			}
+			
 			Score scoreboardEntry = scoreboard.getScore(scoreboardEntries.get(i));
 			scoreboardEntry.setScore(scoreboardEntries.size() - i - 1);
 		}

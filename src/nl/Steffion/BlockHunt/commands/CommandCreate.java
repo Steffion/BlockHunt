@@ -6,6 +6,11 @@ import org.bukkit.entity.Player;
 
 import nl.Steffion.BlockHunt.data.Arena;
 
+/**
+ * 
+ * @author Steffion (Stef de Goey) 2016
+ *
+ */
 public class CommandCreate extends Command {
 
 	public CommandCreate() {

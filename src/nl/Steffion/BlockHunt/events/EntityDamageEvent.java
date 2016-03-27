@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 
 import nl.Steffion.BlockHunt.BlockHunt;
 import nl.Steffion.BlockHunt.data.Arena;
-import nl.Steffion.BlockHunt.data.ArenaState;
+import nl.Steffion.BlockHunt.data.Arena.ArenaState;
 
 public class EntityDamageEvent implements Listener {
 	private BlockHunt plugin;
