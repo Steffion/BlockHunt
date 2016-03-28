@@ -13,8 +13,6 @@ public class PlayerQuitEvent implements Listener {
 
 	public PlayerQuitEvent() {
 		plugin = BlockHunt.getPlugin();
-
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

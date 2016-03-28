@@ -12,8 +12,6 @@ public class FoodLevelChangeEvent implements Listener {
 
 	public FoodLevelChangeEvent() {
 		plugin = BlockHunt.getPlugin();
-
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

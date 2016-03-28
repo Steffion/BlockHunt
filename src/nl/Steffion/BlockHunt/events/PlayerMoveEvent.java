@@ -16,8 +16,6 @@ public class PlayerMoveEvent implements Listener {
 
 	public PlayerMoveEvent() {
 		plugin = BlockHunt.getPlugin();
-
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@SuppressWarnings("deprecation")

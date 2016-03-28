@@ -13,8 +13,6 @@ public class AsyncPlayerChatEvent implements Listener {
 
 	public AsyncPlayerChatEvent() {
 		plugin = BlockHunt.getPlugin();
-
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

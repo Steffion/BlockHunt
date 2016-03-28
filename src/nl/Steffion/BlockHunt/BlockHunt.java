@@ -166,6 +166,25 @@ public class BlockHunt extends JavaPlugin {
 		arenaHandler = new ArenaHandler();
 		commandHandler = new CommandHandler();
 		playerHandler = new PlayerHandler();
+
+		/*
+		Registering events here
+
+		 */
+
+		getServer().getPluginManager().registerEvents(new AsyncPlayerChatEvent(), this);
+		getServer().getPluginManager().registerEvents(new BlockPlaceEvent(), this);
+		getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
+		getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
+		getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
+		getServer().getPluginManager().registerEvents(new FoodLevelChangeEvent(), this);
+		getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerDropItemEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerInteractEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerItemDamageEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerPickupItemEvent(), this);
+		getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
 		
 		/*
 		 * Check dependencies
@@ -189,7 +208,6 @@ public class BlockHunt extends JavaPlugin {
 			getLogger().log(Level.INFO, "BlockHunt has successfully been loaded!");
 		} else {
 			getLogger().log(Level.WARNING, "BlockHunt has NOT successfully been loaded!");
-			getServer().getPluginManager().disablePlugin(this);
 		}
 	}
 

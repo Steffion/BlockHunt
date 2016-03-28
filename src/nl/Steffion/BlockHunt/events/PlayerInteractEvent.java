@@ -19,8 +19,6 @@ public class PlayerInteractEvent implements Listener {
 	
 	public PlayerInteractEvent() {
 		plugin = BlockHunt.getPlugin();
-
-		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	//TODO Fix this deprecation

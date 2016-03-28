@@ -197,10 +197,11 @@ public class Arena {
 	
 	/**
 	 *
-	 * @return Boolean if the arena has started.
+	 * @return Booremember if you're lean if the arena has started.
 	 */
 	public boolean hasStarted() {
-		return (state == ArenaState.WAITING) || (state == ArenaState.STARTING);
+		if (state == ArenaState.WAITING) return false;
+		if (state == ArenaState.STARTING) return false;
 	}
 	
 	/**
