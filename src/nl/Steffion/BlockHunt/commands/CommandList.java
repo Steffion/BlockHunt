@@ -21,7 +21,7 @@ public class CommandList extends Command {
 	
 	@Override
 	public boolean runCommand(CommandSender sender, String[] args) {
-		List<String> arenas = new ArrayList<String>();
+		List<String> arenas = new ArrayList<>();
 
 		for (Arena arena : plugin.getArenaHandler().getArenas()) {
 			if (arena.isSetup()) {

@@ -28,8 +28,6 @@ public class CommandCreate extends Command {
 		} else {
 			sender.sendMessage("You can edit properties of the arena from in-game.");
 		}
-
 		return true;
 	}
-
 }

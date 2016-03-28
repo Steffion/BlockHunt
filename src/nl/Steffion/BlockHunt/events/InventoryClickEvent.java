@@ -1,5 +1,6 @@
 package nl.Steffion.BlockHunt.events;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -12,10 +13,20 @@ public class InventoryClickEvent implements Listener {
 
 	public InventoryClickEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerDropItemEvent(org.bukkit.event.inventory.InventoryClickEvent event) {
+	public void onInventoryClickEvent(org.bukkit.event.inventory.InventoryClickEvent event) {
+		if(event.getCurrentItem() == null) {
+			return;
+		}
+
+		if(event.getCurrentItem().getType().equals(Material.AIR)) {
+			return;
+		}
+
 		if (event.getWhoClicked() instanceof Player) {
 			Player player = (Player) event.getWhoClicked();
 			

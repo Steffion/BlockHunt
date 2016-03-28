@@ -12,6 +12,8 @@ public class PlayerDropItemEvent implements Listener {
 	
 	public PlayerDropItemEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

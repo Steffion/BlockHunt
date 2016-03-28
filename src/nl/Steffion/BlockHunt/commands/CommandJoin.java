@@ -22,7 +22,7 @@ public class CommandJoin extends Command {
 		super("blockhunt join <arena>", "blockhunt.join", true, "Join an arena.");
 		
 		ItemMeta im;
-		ArrayList<String> lore = new ArrayList<String>();
+		ArrayList<String> lore = new ArrayList<>();
 		
 		/*
 		 * Exit item

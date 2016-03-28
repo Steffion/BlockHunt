@@ -2,6 +2,7 @@ package nl.Steffion.BlockHunt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.bukkit.entity.Player;
 
@@ -13,7 +14,7 @@ import nl.Steffion.BlockHunt.data.Arena;
  * 
  */
 public class ArenaHandler {
-	private List<Arena>	arenas	= new ArrayList<Arena>();
+	private List<Arena>	arenas	= new ArrayList<>();
 	private BlockHunt	plugin;
 	
 	ArenaHandler() {
@@ -82,15 +83,8 @@ public class ArenaHandler {
 	 * @return A list of all editors in all arenas.
 	 */
 	public List<Player> getAllEditors() {
-		List<Player> editors = new ArrayList<Player>();
-
-		for (Arena arena : arenas) {
-			if (arena.getEditor() != null) {
-				editors.add(arena.getEditor());
-			}
-		}
-		
-		return editors;
+		return arenas.stream().filter(arena -> arena.getEditor()
+				!= null).map(Arena::getEditor).collect(Collectors.toList());
 	}
 	
 	/**
@@ -98,7 +92,7 @@ public class ArenaHandler {
 	 * @return A list of all players in all arenas.
 	 */
 	public List<Player> getAllPlayers() {
-		List<Player> players = new ArrayList<Player>();
+		List<Player> players = new ArrayList<>();
 
 		for (Arena arena : arenas) {
 			players.addAll(arena.getPlayers());

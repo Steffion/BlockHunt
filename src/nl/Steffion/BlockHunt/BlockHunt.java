@@ -125,22 +125,23 @@ public class BlockHunt extends JavaPlugin {
 		}
 
 		getLogger().log(Level.INFO, "BlockHunt has successfully been disabled.");
+
+		/*
+		Prevents memeory leaks
+		 */
+
+		plugin = null;
 	}
 
 	@Override
 	public void onEnable() {
 		if (BlockHunt.DEBUG_MODE) {
-			Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
-				
-				@Override
-				public void run() {
-					for (World world : Bukkit.getWorlds()) {
-						world.setTime(200);
-						world.setStorm(false);
-					}
-				}
-				
-			}, 0, 20 * 60);
+			Bukkit.getScheduler().runTaskTimer(this, () -> {
+                for (World world : Bukkit.getWorlds()) {
+                    world.setTime(200);
+                    world.setStorm(false);
+                }
+            }, 0, 20 * 60);
 
 			for (Player player : Bukkit.getOnlinePlayers()) {
 				player.setHealth(player.getMaxHealth());
@@ -165,23 +166,6 @@ public class BlockHunt extends JavaPlugin {
 		arenaHandler = new ArenaHandler();
 		commandHandler = new CommandHandler();
 		playerHandler = new PlayerHandler();
-
-		/*
-		 * Registering listeners
-		 */
-		getServer().getPluginManager().registerEvents(new AsyncPlayerChatEvent(), this);
-		getServer().getPluginManager().registerEvents(new BlockPlaceEvent(), this);
-		getServer().getPluginManager().registerEvents(new BlockBreakEvent(), this);
-		getServer().getPluginManager().registerEvents(new EntityDamageByEntityEvent(), this);
-		getServer().getPluginManager().registerEvents(new EntityDamageEvent(), this);
-		getServer().getPluginManager().registerEvents(new FoodLevelChangeEvent(), this);
-		getServer().getPluginManager().registerEvents(new InventoryClickEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerDropItemEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerInteractEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerItemDamageEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerMoveEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerPickupItemEvent(), this);
-		getServer().getPluginManager().registerEvents(new PlayerQuitEvent(), this);
 		
 		/*
 		 * Check dependencies
@@ -205,6 +189,7 @@ public class BlockHunt extends JavaPlugin {
 			getLogger().log(Level.INFO, "BlockHunt has successfully been loaded!");
 		} else {
 			getLogger().log(Level.WARNING, "BlockHunt has NOT successfully been loaded!");
+			getServer().getPluginManager().disablePlugin(this);
 		}
 	}
 

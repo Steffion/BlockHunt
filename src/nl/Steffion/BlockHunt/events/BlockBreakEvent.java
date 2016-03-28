@@ -12,6 +12,8 @@ public class BlockBreakEvent implements Listener {
 	
 	public BlockBreakEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

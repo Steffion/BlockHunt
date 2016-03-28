@@ -27,7 +27,7 @@ public class CommandEdit extends Command {
 		super("blockhunt edit <arena>", "blockhunt.edit", true, "Edit an arena.");
 		
 		ItemMeta im;
-		ArrayList<String> lore = new ArrayList<String>();
+		ArrayList<String> lore = new ArrayList<>();
 		
 		/*
 		 * Naming tool

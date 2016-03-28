@@ -12,6 +12,8 @@ public class PlayerPickupItemEvent implements Listener {
 	
 	public PlayerPickupItemEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

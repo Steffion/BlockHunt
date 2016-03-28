@@ -12,10 +12,12 @@ public class FoodLevelChangeEvent implements Listener {
 
 	public FoodLevelChangeEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-	public void onPlayerDropItemEvent(org.bukkit.event.entity.FoodLevelChangeEvent event) {
+	public void onFoodLevelChangeEvent(org.bukkit.event.entity.FoodLevelChangeEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
 			

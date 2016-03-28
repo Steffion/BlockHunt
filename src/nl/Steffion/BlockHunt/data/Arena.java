@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Instrument;
@@ -64,9 +65,9 @@ public class Arena {
 	public Arena(String name) {
 		plugin = BlockHunt.getPlugin();
 		this.name = name;
-		players = new ArrayList<UUID>();
-		teamHiders = new ArrayList<Hider>();
-		teamSeekers = new ArrayList<UUID>();
+		players = new ArrayList<>();
+		teamHiders = new ArrayList<>();
+		teamSeekers = new ArrayList<>();
 		scoreboard = plugin.getServer().getScoreboardManager().getNewScoreboard().registerNewObjective("BlockHunt",
 				"dummy");
 		state = ArenaState.WAITING;
@@ -165,13 +166,7 @@ public class Arena {
 	}
 	
 	public List<Player> getPlayers() {
-		List<Player> players = new ArrayList<Player>();
-		
-		for (UUID uuid : this.players) {
-			players.add(plugin.getServer().getPlayer(uuid));
-		}
-		
-		return players;
+		return this.players.stream().map(uuid -> plugin.getServer().getPlayer(uuid)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -181,13 +176,7 @@ public class Arena {
 	 * @return A list of {@link Player}'s who are seekers.
 	 */
 	public List<Player> getSeekers() {
-		List<Player> seekers = new ArrayList<Player>();
-
-		for (UUID uuid : teamSeekers) {
-			seekers.add(plugin.getServer().getPlayer(uuid));
-		}
-		
-		return seekers;
+		return teamSeekers.stream().map(uuid -> plugin.getServer().getPlayer(uuid)).collect(Collectors.toList());
 	}
 	
 	/**
@@ -211,10 +200,7 @@ public class Arena {
 	 * @return Boolean if the arena has started.
 	 */
 	public boolean hasStarted() {
-		if (state == ArenaState.WAITING) return false;
-		if (state == ArenaState.STARTING) return false;
-		
-		return true;
+		return (state == ArenaState.WAITING) || (state == ArenaState.STARTING);
 	}
 	
 	/**
@@ -230,9 +216,7 @@ public class Arena {
 	 * @return Boolean if the arena has all the required settings.
 	 */
 	public boolean isSetup() {
-		if ((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null)) return false;
-
-		return true;
+		return !((hidersSpawn == null) || (lobbyLocation == null) || (seekersSpawn == null));
 	}
 	
 	/**
@@ -308,8 +292,8 @@ public class Arena {
 	 */
 	protected void resetArena() {
 		state = ArenaState.WAITING;
-		teamHiders = new ArrayList<Hider>();
-		teamSeekers = new ArrayList<UUID>();
+		teamHiders = new ArrayList<>();
+		teamSeekers = new ArrayList<>();
 	}
 	
 	/**
@@ -398,233 +382,227 @@ public class Arena {
 	
 	public void startThread() {
 		if (thread != null) return;
-		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-			
-			@SuppressWarnings("deprecation")
-			@Override
-			public void run() {
-				if (players.isEmpty()) {
-					resetArena();
-					stopThread();
-				}
-				
-				if (state == ArenaState.WAITING) {
-					if (players.size() >= ((int) plugin.getSettings().get("MINPLAYERS"))) {
-						state = ArenaState.STARTING;
-						timer = (int) plugin.getSettings().get("LOBBYTIME");
-					}
-				}
+		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
+            if (players.isEmpty()) {
+                resetArena();
+                stopThread();
+            }
 
-				if (state == ArenaState.STARTING) {
-					if (players.size() < ((int) plugin.getSettings().get("MINPLAYERS"))) {
-						for (Player player : getPlayers()) {
-							player.setExp(0);
-						}
-						
-						state = ArenaState.WAITING;
-						return;
-					}
-					
-					timer--;
-					
-					switch (timer) {
-						case 10:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.G));
-							}
-							break;
-						case 5:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.B));
-							}
-							break;
-						case 4:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.B));
-							}
-							break;
-						case 3:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.C));
-							}
-							break;
-						case 2:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.C));
-							}
-							break;
-						case 1:
-							for (Player player : getPlayers()) {
-								player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.D));
-							}
-							break;
-						case 0:
-							for (Player player : getPlayers()) {
-								player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
-							}
-							
-							state = ArenaState.PREGAME;
-							timer = (int) plugin.getSettings().get("SEEKERSWAITTIME");
-							
-							int seekerAmount = (int) (Math.round(
-									players.size() * (double) plugin.getSettings().get("PRECENTAGE_SEEKERS")) + 1);
+            if (state == ArenaState.WAITING) {
+                if (players.size() >= ((int) plugin.getSettings().get("MINPLAYERS"))) {
+                    state = ArenaState.STARTING;
+                    timer = (int) plugin.getSettings().get("LOBBYTIME");
+                }
+            }
 
-							for (int i = 0; i < seekerAmount; i++) {
-								Random random = new Random();
-								
-								UUID randomSeeker = players.get(random.nextInt(players.size()));
-								
-								if (teamSeekers.contains(randomSeeker)) {
-									i--;
-									continue;
-								}
-								
-								addSeeker(plugin.getServer().getPlayer(randomSeeker));
-							}
-							
-							String seekers = "The seekers have been choosen: ";
-							for (Player seeker : getSeekers()) {
-								seekers += seeker.getName() + ", ";
-							}
-							
-							seekers = seekers.substring(0, seekers.length() - 2);
-							
-							for (Player player : getPlayers()) {
-								player.sendMessage(seekers);
-								
-								if (!getSeekers().contains(player)) {
-									teamHiders.add(new Hider(player));
-								}
-							}
-							
-							for (Hider hider : getHiders()) {
-								Material randomBlock = null;
-								
-								while (true) {
-									@SuppressWarnings("unchecked")
-									ArrayList<Material> allowedBlocks = (ArrayList<Material>) plugin.getSettings()
-											.get("ALLOWED_BLOCKS");
-									Random random = new Random();
-									String randomBlockName = allowedBlocks.get(random.nextInt(allowedBlocks.size()))
-											.name();
+            if (state == ArenaState.STARTING) {
+                if (players.size() < ((int) plugin.getSettings().get("MINPLAYERS"))) {
+                    for (Player player : getPlayers()) {
+                        player.setExp(0);
+                    }
 
-									try {
-										randomBlock = Material.valueOf(randomBlockName);
-										break;
-									} catch (IllegalArgumentException e) {
-										plugin.getLogger().log(Level.WARNING,
-												"There is no material called '" + randomBlockName
-														+ "'! Please edit your ALLOWED_BLOCKS in the config.yml.");
-									}
-								}
-								
-								DisguiseAPI.disguiseToAll(hider.getPlayer(),
-										new MiscDisguise(DisguiseType.FALLING_BLOCK, randomBlock.getId(), 0));
-								hider.getPlayer().getInventory().setItem(7, new ItemStack(randomBlock.getId()));
-								hider.setBlock(randomBlock);
-								hider.getPlayer().teleport(hidersSpawn);
-							}
-							
-							for (Player seeker : getSeekers()) {
-								seeker.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
-								seeker.teleport(seekersSpawn);
-							}
-							
-							break;
-						default:
-							break;
-					}
-					
-					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getSettings().get("LOBBYTIME")));
-					}
-				}
+                    state = ArenaState.WAITING;
+                    return;
+                }
 
-				if (state == ArenaState.PREGAME) {
-					timer--;
-					
-					if (timer == 0) {
-						state = ArenaState.INGAME;
-						timer = (int) plugin.getSettings().get("GAMETIME");
-						
-						for (Player seeker : getSeekers()) {
-							seeker.teleport(hidersSpawn);
-						}
-						
-						hidersSpawn.getWorld().strikeLightningEffect(hidersSpawn);
-					}
-					
-					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getSettings().get("SEEKERSWAITTIME")));
-					}
-				}
+                timer--;
 
-				if (state == ArenaState.INGAME) {
-					timer--;
-					
-					if ((timer == 0) || teamHiders.isEmpty()) {
-						resetArena();
-						
-						for (Player player : getPlayers()) {
-							DisguiseAPI.undisguiseToAll(player);
-							player.getInventory().setItem(0, null);
-							player.getInventory().setItem(1, null);
-							player.getInventory().setItem(7, null);
-							player.setExp(0);
-							player.setHealth(player.getMaxHealth());
-							player.teleport(lobbyLocation);
-							player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
-						}
-					}
-					
-					for (Player player : getPlayers()) {
-						player.setExp((float) timer / ((int) plugin.getSettings().get("GAMETIME")));
-					}
-				}
+                switch (timer) {
+                    case 10:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.G));
+                        }
+                        break;
+                    case 5:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.B));
+                        }
+                        break;
+                    case 4:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(0, Tone.B));
+                        }
+                        break;
+                    case 3:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.C));
+                        }
+                        break;
+                    case 2:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.C));
+                        }
+                        break;
+                    case 1:
+                        for (Player player : getPlayers()) {
+                            player.playNote(player.getLocation(), Instrument.PIANO, Note.natural(1, Tone.D));
+                        }
+                        break;
+                    case 0:
+                        for (Player player : getPlayers()) {
+                            player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+                        }
 
-				if ((state == ArenaState.PREGAME) || (state == ArenaState.INGAME)) {
-					for (Hider hider : getHiders()) {
-						int hiderTimer = hider.getSolidBlockTimer();
-						
-						hider.setSolidBlockTimer(hiderTimer + 1);
+                        state = ArenaState.PREGAME;
+                        timer = (int) plugin.getSettings().get("SEEKERSWAITTIME");
 
-						if (hiderTimer == 3) {
-							if (hider.getPlayer().getLocation().getBlock().getType() != Material.AIR) {
-								hider.getPlayer().sendMessage("You can't become a block here!");
-								hider.setSolidBlockTimer(0);
-							} else {
-								hider.setHideLocation(hider.getPlayer().getLocation());
-								hider.getPlayer().playSound(hider.getPlayer().getLocation(),
-										Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
+                        int seekerAmount = (int) (Math.round(
+                                players.size() * (double) plugin.getSettings().get("PRECENTAGE_SEEKERS")) + 1);
 
-								for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
-									if (onlinePlayer.equals(hider.getPlayer())) {
-										continue;
-									}
-									
-									onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
-									onlinePlayer.hidePlayer(hider.getPlayer());
-								}
-							}
-						} else if (hiderTimer > 3) {
-							for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
-								if (onlinePlayer.equals(hider.getPlayer())) {
-									continue;
-								}
-								
-								onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
-								onlinePlayer.hidePlayer(hider.getPlayer());
-							}
-						}
-						
-						hider.getPlayer().setExp(((float) (hiderTimer > 3 ? 3 : hiderTimer) / 3));
-					}
-				}
-				
-				updateScoreboard();
-			}
-			
-		}, 0, 20);
+                        for (int i = 0; i < seekerAmount; i++) {
+                            Random random = new Random();
+
+                            UUID randomSeeker = players.get(random.nextInt(players.size()));
+
+                            if (teamSeekers.contains(randomSeeker)) {
+                                i--;
+                                continue;
+                            }
+
+                            addSeeker(plugin.getServer().getPlayer(randomSeeker));
+                        }
+
+                        String seekers = "The seekers have been choosen: ";
+                        for (Player seeker : getSeekers()) {
+                            seekers += seeker.getName() + ", ";
+                        }
+
+                        seekers = seekers.substring(0, seekers.length() - 2);
+
+                        for (Player player : getPlayers()) {
+                            player.sendMessage(seekers);
+
+                            if (!getSeekers().contains(player)) {
+                                teamHiders.add(new Hider(player));
+                            }
+                        }
+
+                        for (Hider hider : getHiders()) {
+                            Material randomBlock = null;
+
+                            while (true) {
+                                @SuppressWarnings("unchecked")
+                                ArrayList<Material> allowedBlocks = (ArrayList<Material>) plugin.getSettings()
+                                        .get("ALLOWED_BLOCKS");
+                                Random random = new Random();
+                                String randomBlockName = allowedBlocks.get(random.nextInt(allowedBlocks.size()))
+                                        .name();
+
+                                try {
+                                    randomBlock = Material.valueOf(randomBlockName);
+                                    break;
+                                } catch (IllegalArgumentException e) {
+                                    plugin.getLogger().log(Level.WARNING,
+                                            "There is no material called '" + randomBlockName
+                                                    + "'! Please edit your ALLOWED_BLOCKS in the config.yml.");
+                                }
+                            }
+
+                            DisguiseAPI.disguiseToAll(hider.getPlayer(),
+                                    new MiscDisguise(DisguiseType.FALLING_BLOCK, randomBlock.getId(), 0));
+                            hider.getPlayer().getInventory().setItem(7, new ItemStack(randomBlock.getId()));
+                            hider.setBlock(randomBlock);
+                            hider.getPlayer().teleport(hidersSpawn);
+                        }
+
+                        for (Player seeker : getSeekers()) {
+                            seeker.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
+                            seeker.teleport(seekersSpawn);
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+
+                for (Player player : getPlayers()) {
+                    player.setExp((float) timer / ((int) plugin.getSettings().get("LOBBYTIME")));
+                }
+            }
+
+            if (state == ArenaState.PREGAME) {
+                timer--;
+
+                if (timer == 0) {
+                    state = ArenaState.INGAME;
+                    timer = (int) plugin.getSettings().get("GAMETIME");
+
+                    for (Player seeker : getSeekers()) {
+                        seeker.teleport(hidersSpawn);
+                    }
+
+                    hidersSpawn.getWorld().strikeLightningEffect(hidersSpawn);
+                }
+
+                for (Player player : getPlayers()) {
+                    player.setExp((float) timer / ((int) plugin.getSettings().get("SEEKERSWAITTIME")));
+                }
+            }
+
+            if (state == ArenaState.INGAME) {
+                timer--;
+
+                if ((timer == 0) || teamHiders.isEmpty()) {
+                    resetArena();
+
+                    for (Player player : getPlayers()) {
+                        DisguiseAPI.undisguiseToAll(player);
+                        player.getInventory().setItem(0, null);
+                        player.getInventory().setItem(1, null);
+                        player.getInventory().setItem(7, null);
+                        player.setExp(0);
+                        player.setHealth(player.getMaxHealth());
+                        player.teleport(lobbyLocation);
+                        player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1, 1);
+                    }
+                }
+
+                for (Player player : getPlayers()) {
+                    player.setExp((float) timer / ((int) plugin.getSettings().get("GAMETIME")));
+                }
+            }
+
+            if ((state == ArenaState.PREGAME) || (state == ArenaState.INGAME)) {
+                for (Hider hider : getHiders()) {
+                    int hiderTimer = hider.getSolidBlockTimer();
+
+                    hider.setSolidBlockTimer(hiderTimer + 1);
+
+                    if (hiderTimer == 3) {
+                        if (hider.getPlayer().getLocation().getBlock().getType() != Material.AIR) {
+                            hider.getPlayer().sendMessage("You can't become a block here!");
+                            hider.setSolidBlockTimer(0);
+                        } else {
+                            hider.setHideLocation(hider.getPlayer().getLocation());
+                            hider.getPlayer().playSound(hider.getPlayer().getLocation(),
+                                    Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
+
+                            for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+                                if (onlinePlayer.equals(hider.getPlayer())) {
+                                    continue;
+                                }
+
+                                onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
+                                onlinePlayer.hidePlayer(hider.getPlayer());
+                            }
+                        }
+                    } else if (hiderTimer > 3) {
+                        for (Player onlinePlayer : plugin.getServer().getOnlinePlayers()) {
+                            if (onlinePlayer.equals(hider.getPlayer())) {
+                                continue;
+                            }
+
+                            onlinePlayer.sendBlockChange(hider.getHideLocation(), hider.getBlock(), (byte) 0);
+                            onlinePlayer.hidePlayer(hider.getPlayer());
+                        }
+                    }
+
+                    hider.getPlayer().setExp(((float) (hiderTimer > 3 ? 3 : hiderTimer) / 3));
+                }
+            }
+
+            updateScoreboard();
+        }, 0, 20);
 	}
 
 	public void stopThread() {
@@ -643,7 +621,7 @@ public class Arena {
 			scoreboard.getScoreboard().resetScores(entry);
 		}
 
-		List<String> scoreboardEntries = new ArrayList<String>();
+		List<String> scoreboardEntries = new ArrayList<>();
 
 		scoreboardEntries.add("§lArena: §6" + name);
 		scoreboardEntries.add("§lPlayers: §6" + players.size() + "/" + plugin.getSettings().get("MAXPLAYERS"));
@@ -700,5 +678,4 @@ public class Arena {
 			player.setScoreboard(scoreboard.getScoreboard());
 		}
 	}
-	
 }

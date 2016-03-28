@@ -29,7 +29,7 @@ public class Settings {
 	public static HashMap<String, Object> getValues() {
 		SettingsDefaults defaultsClass = new SettingsDefaults();
 		Field[] fields = defaultsClass.getClass().getDeclaredFields();
-		HashMap<String, Object> defaults = new HashMap<String, Object>();
+		HashMap<String, Object> defaults = new HashMap<>();
 
 		for (Field f : fields) {
 			try {

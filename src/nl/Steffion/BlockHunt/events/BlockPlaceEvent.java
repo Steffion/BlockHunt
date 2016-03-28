@@ -15,6 +15,8 @@ public class BlockPlaceEvent implements Listener {
 	
 	public BlockPlaceEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@SuppressWarnings("deprecation")

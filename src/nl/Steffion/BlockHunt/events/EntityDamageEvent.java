@@ -14,6 +14,8 @@ public class EntityDamageEvent implements Listener {
 	
 	public EntityDamageEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

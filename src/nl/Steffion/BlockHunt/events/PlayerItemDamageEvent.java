@@ -12,6 +12,8 @@ public class PlayerItemDamageEvent implements Listener {
 	
 	public PlayerItemDamageEvent() {
 		plugin = BlockHunt.getPlugin();
+
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)

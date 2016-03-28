@@ -17,7 +17,7 @@ public class PlayerHandler {
 	private HashMap<UUID, PlayerData> playerData;
 	
 	PlayerHandler() {
-		playerData = new HashMap<UUID, PlayerData>();
+		playerData = new HashMap<>();
 	}
 	
 	/**

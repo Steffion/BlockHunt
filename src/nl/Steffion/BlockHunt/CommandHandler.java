@@ -61,7 +61,7 @@ public class CommandHandler {
 	 * @return A list of commands.
 	 */
 	public List<Command> getCommands() {
-		List<Command> commands = new ArrayList<Command>();
+		List<Command> commands = new ArrayList<>();
 		
 		commands.add(new CommandHelp());
 		

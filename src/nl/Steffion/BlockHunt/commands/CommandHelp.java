@@ -21,7 +21,7 @@ public class CommandHelp extends Command {
 		/*
 		 * Get a list of helplines to show to the player.
 		 */
-		List<String> helpLines = new ArrayList<String>();
+		List<String> helpLines = new ArrayList<>();
 
 		helpLines.add(getHelp());
 		
