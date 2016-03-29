@@ -22,6 +22,7 @@ public class PlayerInteractEvent implements Listener {
 	}
 
 	//TODO Fix this deprecation
+	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerInteractEvent(org.bukkit.event.player.PlayerInteractEvent event) {
 		Player player = event.getPlayer();

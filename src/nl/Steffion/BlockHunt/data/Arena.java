@@ -197,11 +197,13 @@ public class Arena {
 	
 	/**
 	 *
-	 * @return Booremember if you're lean if the arena has started.
+	 * @return Boolean if the arena has started.
 	 */
 	public boolean hasStarted() {
 		if (state == ArenaState.WAITING) return false;
 		if (state == ArenaState.STARTING) return false;
+		
+		return true;
 	}
 	
 	/**
@@ -381,6 +383,7 @@ public class Arena {
 		this.seekersSpawn = seekersSpawn;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void startThread() {
 		if (thread != null) return;
 		thread = plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
