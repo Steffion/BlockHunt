@@ -44,6 +44,10 @@
         <id>libsdisguises-repo</id>
         <url>http://server.psmc.ca/repo/</url>
     </repository>
+    <repository>
+      <id>dmulloy2-repo</id>
+      <url>http://repo.dmulloy2.net/content/groups/public/</url>
+    </repository>
   </repositories>
   <dependencies>
   	<dependency>
@@ -63,5 +67,10 @@
   			</exclusion>
   		</exclusions>
   	</dependency>
+  	<dependency>
+      <groupId>com.comphenix.protocol</groupId>
+      <artifactId>ProtocolLib</artifactId>
+      <version>3.6.5</version>
+    </dependency>
   </dependencies>
 </project>
