@@ -1,14 +1,14 @@
-name: BlockHunt
-version: 1.0.0_ALPHA_B6
+name: ${project.name}
+version: ${project.version}
 #description: ""
 load: POSTWORLD
 author: Steffion
 authors: [RandomPanda30]
-#website: http://
-main: nl.Steffion.BlockHunt.BlockHunt
+website: ${project.url}
+main: ${project.groupId}.${project.artifactId}.${project.name}
 database: false
 #depend: []
-prefix: "BlockHunt v1.0.0_ALPHA_B6"
+prefix: "BlockHunt v${project.version}"
 softdepend: [LibsDisguises, ProtocolLib]
 #loadbefore: []
 commands:
