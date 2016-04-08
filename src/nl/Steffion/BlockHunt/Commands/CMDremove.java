@@ -40,7 +40,7 @@ public class CMDremove extends DefaultCMD {
 								signLoc.getWorld().playEffect(signLoc,
 										Effect.MOBSPAWNER_FLAMES, 0);
 								signLoc.getWorld().playSound(signLoc,
-										Sound.ENDERDRAGON_WINGS, 1, 1);
+										Sound.ENTITY_ENDERDRAGON_FLAP, 1, 1);
 								W.signs.getFile().set(sign, null);
 							}
 						}

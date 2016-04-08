@@ -183,7 +183,7 @@ public class OnPlayerInteractEvent implements Listener {
 								W.moveLoc.put(pl, new Location(pl.getWorld(),
 										0, 0, 0));
 								pl.getWorld().playSound(player.getLocation(),
-										Sound.HURT_FLESH, 1, 1);
+										Sound.ENTITY_PLAYER_HURT, 1, 1);
 								SolidBlockHandler.makePlayerUnsolid(pl);
 							}
 						}
