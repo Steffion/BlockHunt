@@ -33,6 +33,32 @@
           <target>1.8</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+            <artifactSet>
+                <includes>
+                    <include>org.mcstats.*:*</include>
+                </includes>
+            </artifactSet>
+            <relocations>
+                <relocation>
+                    <pattern>org.mcstats</pattern>
+                    <shadedPattern>nl.Steffion.BlockHunt</shadedPattern>
+                </relocation>
+            </relocations>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <repositories>
@@ -47,6 +73,10 @@
     <repository>
       <id>dmulloy2-repo</id>
       <url>http://repo.dmulloy2.net/content/groups/public/</url>
+    </repository>
+    <repository>
+      <id>Plugin Metrics</id>
+      <url>http://repo.mcstats.org/content/repositories/public</url>
     </repository>
     <repository>
 	  <id>vault-repo</id>
@@ -81,5 +111,11 @@
   		<artifactId>Vault</artifactId>
   		<version>1.5.6</version>
   	</dependency>
+  	<dependency>
+      <groupId>org.mcstats.bukkit</groupId>
+      <artifactId>metrics</artifactId>
+      <version>R7</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>

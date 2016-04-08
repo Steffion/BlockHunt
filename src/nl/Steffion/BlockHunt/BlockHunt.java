@@ -42,8 +42,6 @@ import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
-import nl.Steffion.BlockHunt.mcstats.Metrics;
-import nl.Steffion.BlockHunt.mcstats.Metrics.Graph;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -63,6 +61,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
+import org.mcstats.Metrics.Graph;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
