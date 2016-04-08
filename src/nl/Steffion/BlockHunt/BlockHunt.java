@@ -245,6 +245,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		setupEconomy();
 
+		ConfigurationSerialization.registerClass(Arena.class);
 		ArenaHandler.loadArenas();
 
 		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
