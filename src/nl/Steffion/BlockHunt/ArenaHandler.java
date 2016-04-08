@@ -79,7 +79,7 @@ public class ArenaHandler {
 
 						for (ItemStack invitem : player.getInventory()
 								.getArmorContents()) {
-							if (invitem.getType() != Material.AIR) {
+							if (invitem != null && invitem.getType() != Material.AIR) {
 								inventoryempty = false;
 							}
 						}
