@@ -42,8 +42,6 @@ import nl.Steffion.BlockHunt.Managers.ConfigM;
 import nl.Steffion.BlockHunt.Managers.MessageM;
 import nl.Steffion.BlockHunt.Managers.PermissionsM;
 import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
-import nl.Steffion.BlockHunt.mcstats.Metrics;
-import nl.Steffion.BlockHunt.mcstats.Metrics.Graph;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -63,6 +61,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
+import org.mcstats.Metrics.Graph;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
@@ -281,7 +281,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 								playersPlaying = playersPlaying
 										+ arena.playersInArena.size();
 							}
-							return Bukkit.getOnlinePlayers().length
+							return Bukkit.getOnlinePlayers().size()
 									- playersPlaying;
 						}
 
@@ -357,7 +357,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 5) {
 								for (Player pl : arena.playersInArena) {
 									pl.playSound(pl.getLocation(),
-											Sound.ORB_PICKUP, 1, 0);
+											Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -365,7 +365,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 4) {
 								for (Player pl : arena.playersInArena) {
 									pl.playSound(pl.getLocation(),
-											Sound.ORB_PICKUP, 1, 0);
+											Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -373,7 +373,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 3) {
 								for (Player pl : arena.playersInArena) {
 									pl.playSound(pl.getLocation(),
-											Sound.ORB_PICKUP, 1, 1);
+											Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -381,7 +381,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 2) {
 								for (Player pl : arena.playersInArena) {
 									pl.playSound(pl.getLocation(),
-											Sound.ORB_PICKUP, 1, 1);
+											Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -389,7 +389,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 1) {
 								for (Player pl : arena.playersInArena) {
 									pl.playSound(pl.getLocation(),
-											Sound.ORB_PICKUP, 1, 2);
+											Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 2);
 								}
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_lobbyArenaIsStarting,
@@ -523,7 +523,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							player.getInventory().setBoots(
 									new ItemStack(Material.IRON_BOOTS, 1));
 							player.playSound(player.getLocation(),
-									Sound.ANVIL_USE, 1, 1);
+									Sound.BLOCK_ANVIL_USE, 1, 1);
 						}
 
 						if (W.seekertime.get(player) != null) {
@@ -572,31 +572,31 @@ public class BlockHunt extends JavaPlugin implements Listener {
 							} else if (arena.timer == 5) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 0);
+												Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, "1-5");
 							} else if (arena.timer == 4) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 0);
+												Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 0);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, "1-4");
 							} else if (arena.timer == 3) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 1);
+												Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, "1-3");
 							} else if (arena.timer == 2) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 1);
+												Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, "1-2");
 							} else if (arena.timer == 1) {
 								arena.lobbyWarp.getWorld()
 										.playSound(arena.lobbyWarp,
-												Sound.ORB_PICKUP, 1, 2);
+												Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 2);
 								ArenaHandler.sendFMessage(arena,
 										ConfigC.normal_ingameArenaEnd, "1-1");
 							}
@@ -667,7 +667,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 															Enchantment.DURABILITY,
 															10);
 													player.playSound(pLoc,
-															Sound.ORB_PICKUP,
+															Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
 															1, 1);
 													W.hiddenLoc.put(player,
 															moveLoc);
