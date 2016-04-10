@@ -8,6 +8,7 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import net.milkbowl.vault.economy.Economy;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Metrics.Graph;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.Commands.CMDcreate;
 import nl.Steffion.BlockHunt.Commands.CMDhelp;
@@ -61,8 +62,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
-import org.mcstats.Metrics.Graph;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
