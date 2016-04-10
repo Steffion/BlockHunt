@@ -30,6 +30,7 @@ public class CMDinfo extends DefaultCMD {
 						+ BlockHunt.pdfFile.getAuthors().get(0));
 		MessageM.sendMessage(player, "%NVersion: %A%version%%N.", "version-"
 				+ BlockHunt.pdfFile.getVersion());
+		player.sendMessage("§b§oRaw version: §e§ov" + BlockHunt.pdfFile.getVersion());
 		MessageM.sendMessage(player, "%NType %A%helpusage% %Nfor help.",
 				"helpusage-" + BlockHunt.CMDhelp.usage);
 		MessageM.sendMessage(player,

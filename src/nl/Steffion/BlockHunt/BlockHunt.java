@@ -8,6 +8,7 @@ import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
 import net.milkbowl.vault.economy.Economy;
 import nl.Steffion.BlockHunt.Arena.ArenaState;
+import nl.Steffion.BlockHunt.Metrics.Graph;
 import nl.Steffion.BlockHunt.PermissionsC.Permissions;
 import nl.Steffion.BlockHunt.Commands.CMDcreate;
 import nl.Steffion.BlockHunt.Commands.CMDhelp;
@@ -61,8 +62,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
-import org.mcstats.Metrics.Graph;
 
 public class BlockHunt extends JavaPlugin implements Listener {
 	/**
@@ -226,10 +225,14 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		if (!getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
 			MessageM.broadcastFMessage(ConfigC.error_libsDisguisesNotInstalled);
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
 			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled);
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 		
 		if(W.config.getFile().getBoolean("vaultSupport") == true) {
@@ -245,6 +248,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		setupEconomy();
 
+		ConfigurationSerialization.registerClass(Arena.class);
 		ArenaHandler.loadArenas();
 
 		Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
@@ -253,6 +257,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			public void run() {
 				try {
 					Metrics metrics = new Metrics(plugin);
+					if (metrics.isOptOut()) return;
 					Graph playersPlayingBlockHunt = metrics
 							.createGraph("Players playing BlockHunt");
 
@@ -293,13 +298,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			}
 		}, 0, 6000);
 
-		Metrics metrics;
 		try {
-			metrics = new Metrics(plugin);
-			metrics.start();
-			FileConfiguration metrics_fc = new YamlConfiguration();
-			metrics_fc.load(metrics.getConfigFile());
-			if (!metrics_fc.getBoolean("opt-out", false)) {
+			Metrics metrics = new Metrics(plugin);
+			if (!metrics.isOptOut()) {
+				metrics.start();
 				MessageM.sendMessage(null,
 						"%TAG%NSending %AMCStats%N to the server...");
 			} else {

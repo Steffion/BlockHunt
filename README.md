@@ -4,12 +4,7 @@ Block Hide And Seek plugin for the Bukkit Development.
 Called BlockHunt.
 Find more info at: http://dev.bukkit.org/bukkit-plugins/blockhunt/ !
 
-
-
-Welcome to the recode branch of the BlockHunt repository!
-
-You can follow my progress of recoding the BlockHunt plugin here.
-I am not sure if I will finish the plugin. More information will follow.
+Snapshot build: http://jenkins.steffion.com/job/BlockHunt/lastSuccessfulBuild/
 
 ## Try out recode [![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt-recode)](http://jenkins.steffion.com/job/BlockHunt-recode/)
 Try out the recode version! Go to my Jenkins and download the latest version.
