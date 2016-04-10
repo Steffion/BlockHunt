@@ -150,6 +150,7 @@ public class ArenaHandler {
 											new ItemStack(Material.AIR));
 									player.setFlying(false);
 									player.setAllowFlight(false);
+									player.setWalkSpeed(0.25F);
 
 									if ((Boolean) W.config
 											.get(ConfigC.shop_blockChooserv1Enabled) == true) {
@@ -331,6 +332,7 @@ public class ArenaHandler {
 					arena.seekers.add(seeker);
 					seeker.teleport(arena.seekersWarp);
 					W.seekertime.put(seeker, arena.waitingTimeSeeker);
+					seeker.setWalkSpeed(0.25F);
 				}
 			}
 
@@ -356,6 +358,7 @@ public class ArenaHandler {
 			if (player.getAllowFlight()) {
 				player.setFlying(true);
 			}
+			player.setWalkSpeed(0.2F);
 
 			W.pData.remove(player);
 
