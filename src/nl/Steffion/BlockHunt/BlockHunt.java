@@ -257,6 +257,7 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			public void run() {
 				try {
 					Metrics metrics = new Metrics(plugin);
+					if (metrics.isOptOut()) return;
 					Graph playersPlayingBlockHunt = metrics
 							.createGraph("Players playing BlockHunt");
 
@@ -297,13 +298,10 @@ public class BlockHunt extends JavaPlugin implements Listener {
 			}
 		}, 0, 6000);
 
-		Metrics metrics;
 		try {
-			metrics = new Metrics(plugin);
-			metrics.start();
-			FileConfiguration metrics_fc = new YamlConfiguration();
-			metrics_fc.load(metrics.getConfigFile());
-			if (!metrics_fc.getBoolean("opt-out", false)) {
+			Metrics metrics = new Metrics(plugin);
+			if (!metrics.isOptOut()) {
+				metrics.start();
 				MessageM.sendMessage(null,
 						"%TAG%NSending %AMCStats%N to the server...");
 			} else {
