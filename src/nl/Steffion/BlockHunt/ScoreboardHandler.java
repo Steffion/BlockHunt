@@ -25,17 +25,17 @@ public class ScoreboardHandler {
 			object.setDisplayName(BlockHunt.cutString(
 					MessageM.replaceAll((String) W.config
 							.get(ConfigC.scoreboard_title)), 32));
-			Score timeleft = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score timeleft = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_timeleft)), 32)));
+							.get(ConfigC.scoreboard_timeleft)), 32));
 			timeleft.setScore(arena.timer);
-			Score seekers = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score seekers = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_seekers)), 32)));
+							.get(ConfigC.scoreboard_seekers)), 32));
 			seekers.setScore(arena.seekers.size());
-			Score hiders = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score hiders = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_hiders)), 32)));
+							.get(ConfigC.scoreboard_hiders)), 32));
 			hiders.setScore(arena.playersInArena.size() - arena.seekers.size());
 			if (arena.gameState == ArenaState.INGAME) {
 				for (Player pl : arena.playersInArena) {
@@ -57,17 +57,17 @@ public class ScoreboardHandler {
 			object.setDisplayName(BlockHunt.cutString(
 					MessageM.replaceAll((String) W.config
 							.get(ConfigC.scoreboard_title)), 32));
-			Score timeleft = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score timeleft = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_timeleft)), 32)));
+							.get(ConfigC.scoreboard_timeleft)), 32));
 			timeleft.setScore(arena.timer);
-			Score seekers = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score seekers = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_seekers)), 32)));
+							.get(ConfigC.scoreboard_seekers)), 32));
 			seekers.setScore(arena.seekers.size());
-			Score hiders = object.getScore(Bukkit.getOfflinePlayer(BlockHunt
+			Score hiders = object.getScore(BlockHunt
 					.cutString(MessageM.replaceAll((String) W.config
-							.get(ConfigC.scoreboard_hiders)), 32)));
+							.get(ConfigC.scoreboard_hiders)), 32));
 			hiders.setScore(arena.playersInArena.size() - arena.seekers.size());
 			if (arena.gameState == ArenaState.INGAME) {
 				for (Player pl : arena.playersInArena) {
