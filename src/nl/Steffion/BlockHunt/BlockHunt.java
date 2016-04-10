@@ -226,10 +226,14 @@ public class BlockHunt extends JavaPlugin implements Listener {
 
 		if (!getServer().getPluginManager().isPluginEnabled("LibsDisguises")) {
 			MessageM.broadcastFMessage(ConfigC.error_libsDisguisesNotInstalled);
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 
 		if (!getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
 			MessageM.broadcastFMessage(ConfigC.error_protocolLibNotInstalled);
+			getServer().getPluginManager().disablePlugin(this);
+			return;
 		}
 		
 		if(W.config.getFile().getBoolean("vaultSupport") == true) {
