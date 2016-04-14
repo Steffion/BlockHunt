@@ -18,7 +18,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class OnEntityDamageByEntityEvent implements Listener {
 
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
 		Player player = null;

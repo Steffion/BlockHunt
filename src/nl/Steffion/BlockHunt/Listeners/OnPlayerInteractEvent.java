@@ -36,7 +36,7 @@ public class OnPlayerInteractEvent implements Listener {
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
 		if (PermissionsM.hasPerm(player, Permissions.create, false)) {
-			ItemStack item = player.getItemInHand();
+			ItemStack item = player.getInventory().getItemInMainHand();
 			if (item.getType() != Material.AIR) {
 				if (item.getItemMeta().hasDisplayName()) {
 					ItemMeta im = item.getItemMeta();
@@ -197,7 +197,7 @@ public class OnPlayerInteractEvent implements Listener {
 					&& (arena.gameState.equals(ArenaState.WAITING) || arena.gameState
 							.equals(ArenaState.STARTING))) {
 				event.setCancelled(true);
-				ItemStack item = player.getInventory().getItemInHand();
+				ItemStack item = player.getInventory().getItemInMainHand();
 				if (item.getType() != Material.AIR) {
 					if (item.getItemMeta().getDisplayName() != null) {
 						if (item.getItemMeta()
