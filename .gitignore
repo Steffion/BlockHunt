@@ -82,7 +82,7 @@ local.properties
 .cproject
 
 # JDT-specific (Eclipse Java Development Tools)
-.classpath
+#.classpath
 
 # PDT-specific
 .buildpath
@@ -104,4 +104,5 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+### Minecraft Server Debug ###
 /server/*

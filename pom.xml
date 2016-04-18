@@ -41,10 +41,6 @@
         <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-        <id>libsdisguises-repo</id>
-        <url>http://server.psmc.ca/repo/</url>
-    </repository>
-    <repository>
       <id>dmulloy2-repo</id>
       <url>http://repo.dmulloy2.net/content/groups/public/</url>
     </repository>
@@ -59,17 +55,6 @@
   		<artifactId>spigot-api</artifactId>
   		<version>1.9.2-R0.1-SNAPSHOT</version>
   		<scope>provided</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>LibsDisguises</groupId>
-  		<artifactId>LibsDisguises</artifactId>
-  		<version>9.0.2-SNAPSHOT</version>
-  		<exclusions>
-  			<exclusion>
-  				<artifactId>spigot-1.9</artifactId>
-  				<groupId>spigot</groupId>
-  			</exclusion>
-  		</exclusions>
   	</dependency>
   	<dependency>
       <groupId>com.comphenix.protocol</groupId>
