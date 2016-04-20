@@ -104,4 +104,5 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+### Minecraft Server Debug ###
 /server/*
