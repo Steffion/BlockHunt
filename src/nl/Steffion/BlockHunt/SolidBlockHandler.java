@@ -43,7 +43,7 @@ public class SolidBlockHandler {
 			}
 		}
 
-		player.playSound(player.getLocation(), Sound.ENTITY_BAT_HURT, 1, 1);
+		player.playSound(player.getLocation(), Sound.BAT_HURT, 1, 1);
 		block.removeEnchantment(Enchantment.DURABILITY);
 
 		for (Player playerShow : Bukkit.getOnlinePlayers()) {
