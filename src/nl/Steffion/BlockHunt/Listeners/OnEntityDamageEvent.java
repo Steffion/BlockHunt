@@ -1,8 +1,5 @@
 package nl.Steffion.BlockHunt.Listeners;
 
-import nl.Steffion.BlockHunt.Arena;
-import nl.Steffion.BlockHunt.W;
-
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +8,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
-public class OnEntityDamageEvent implements Listener {
+import nl.Steffion.BlockHunt.Arena;
+import nl.Steffion.BlockHunt.W;
 
-	@EventHandler(priority = EventPriority.NORMAL)
+public class OnEntityDamageEvent implements Listener {
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onEntityDamageEvent(EntityDamageEvent event) {
 		Entity ent = event.getEntity();
 
