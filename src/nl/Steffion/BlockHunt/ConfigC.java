@@ -45,6 +45,7 @@ public enum ConfigC {
 	blockChooserPrice (3000, W.config),
 	seekerHiderPrice (150, W.config),
 
+	wandEnabled(false, W.config),
 	wandIDname ("STICK", W.config),
 	wandName ("%A&l" + BlockHunt.pdfFile.getName() + "%N's selection wand",
 			W.config),
@@ -234,8 +235,6 @@ public enum ConfigC {
 	error_leaveNotInArena ("%TAG%EYou're not in an arena!", W.messages),
 	error_createSelectionFirst ("%TAG%EMake a selection first. Use the wand command: %A/"
 			+ BlockHunt.pdfFile.getName() + " <wand|w>%E.",
-			W.messages),
-	error_createNotSameWorld ("%TAG%EMake your selection points in the same world!",
 			W.messages),
 	error_setTooHighNumber ("%TAG%EThat amount is too high! Max amount is: %A%max%%E.",
 			W.messages),
