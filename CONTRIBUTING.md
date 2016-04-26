@@ -1,19 +1,4 @@
-Contributing to BlockHunt
-====
-
-If you want to contribute to BlockHunt you're welcome to do so!
-Just code what you would like to see or help with "Accepted" issues.
-
-When commiting use the following symbols:
-* + For new features/code.
-* - For removed code.
-* * For fixes, like bugs.
-* ~ Changed stuff/others.
-
-Thanks for helping!
-
-Read before posting issue
-====
+#Read before posting issue
 So if you have an issue regarding BlockHunt that's fine, just go through this check list before you go writing up new issues that we have to deal with.
 
 1: Plugins - The plugins that BlockHunt requires are ProtocolLib and LibsDisguise, both of these should be updated and should be tested to see if they are working.
