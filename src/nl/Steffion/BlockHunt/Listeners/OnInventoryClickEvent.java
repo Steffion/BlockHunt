@@ -63,8 +63,6 @@ public class OnInventoryClickEvent implements Listener {
 					}
 					int playerTokens = W.shop.getFile().getInt(
 							player.getName() + ".tokens");
-					int vaultBalance = (int) BlockHunt.econ.getBalance(player
-							.getName());
 					if (item == null)
 						return;
 					if (item.getType().equals(Material.AIR))
@@ -79,6 +77,8 @@ public class OnInventoryClickEvent implements Listener {
 											.toString()))) {
 						if (W.config.getFile().getBoolean("vaultSupport") == true) {
 							if (BlockHunt.econ != null) {
+								int vaultBalance = (int) BlockHunt.econ.getBalance(player
+										.getName());
 								if (vaultBalance >= (Integer) W.config
 										.getFile().getInt("blockChooserPrice")) {
 									W.shop.getFile().set(
@@ -131,6 +131,8 @@ public class OnInventoryClickEvent implements Listener {
 									.toString()))) {
 						if (W.config.getFile().getBoolean("vaultSupport") == true) {
 							if (BlockHunt.econ != null) {
+								int vaultBalance = (int) BlockHunt.econ.getBalance(player
+										.getName());
 								if (vaultBalance >= (Integer) W.config
 										.getFile().getInt("seekerHiderPrice")) {
 									if (W.shop.getFile()
