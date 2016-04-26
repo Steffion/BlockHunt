@@ -145,7 +145,7 @@ public class ArenaHandler {
 										player.removePotionEffect(pe.getType());
 									}
 									player.setFoodLevel(20);
-									player.setHealth(20);
+									player.setHealth(player.getMaxHealth());
 									player.setLevel(arena.timer);
 									player.setExp(0);
 									player.getInventory().clear();

@@ -46,7 +46,7 @@ public class OnEntityDamageByEntityEvent implements Listener {
 							player.getWorld().playSound(player.getLocation(), Sound.ENTITY_PLAYER_HURT, 1, 1);
 
 							if (event.getDamage() >= player.getHealth()) {
-								player.setHealth(20);
+								player.setHealth(player.getMaxHealth());
 								event.setCancelled(true);
 
 								DisguiseAPI.undisguiseToAll(player);
