@@ -17,14 +17,15 @@ public class OnPlayerMoveEvent implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onPlayerMoveEvent(PlayerMoveEvent event) {
-		if (!W.config.getFile().getBoolean("wandEnabled")) return;
-
 		Player player = event.getPlayer();
 
 		for (Arena arena : W.arenaList) {
 			if (arena.playersInArena.contains(player)) {
 				if (arena.gameState == ArenaState.INGAME) {
 					W.moveLoc.put(player, player.getLocation());
+					
+					if (!W.config.getFile().getBoolean("wandEnabled")) continue;
+					
 					double maxX = Math.max(arena.pos1.getX(), arena.pos2.getX());
 					double minX = Math.min(arena.pos1.getX(), arena.pos2.getX());
 					double maxY = Math.max(arena.pos1.getY(), arena.pos2.getY());
