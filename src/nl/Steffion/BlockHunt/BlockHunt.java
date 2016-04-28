@@ -52,8 +52,6 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -194,10 +192,12 @@ public class BlockHunt extends JavaPlugin implements Listener {
 				(Boolean) W.config.get(ConfigC.commandEnabled_start),
 				BlockHuntCMD, new CMDstart(),
 				"/BlockHunt <start|go> <arenaname>");
-		CMDwand = new CommandM("BlockHunt WAND", "BlockHunt", "wand", "w",
-				Permissions.create, ConfigC.help_wand,
-				(Boolean) W.config.get(ConfigC.commandEnabled_wand),
-				BlockHuntCMD, new CMDwand(), "/BlockHunt <wand|w>");
+		if (W.config.getFile().getBoolean("wandEnabled")) {
+			CMDwand = new CommandM("BlockHunt WAND", "BlockHunt", "wand", "w",
+					Permissions.create, ConfigC.help_wand,
+					(Boolean) W.config.get(ConfigC.commandEnabled_wand),
+					BlockHuntCMD, new CMDwand(), "/BlockHunt <wand|w>");
+		}
 		CMDcreate = new CommandM("BlockHunt CREATE", "BlockHunt", "create",
 				"c", Permissions.create, ConfigC.help_create,
 				(Boolean) W.config.get(ConfigC.commandEnabled_create),

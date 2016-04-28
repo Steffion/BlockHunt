@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.Steffion</groupId>
   <artifactId>BlockHunt</artifactId>
-  <version>0.2.0</version>
+  <version>0.2.1</version>
   <name>BlockHunt</name>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -53,7 +53,7 @@
   	<dependency>
   		<groupId>org.spigotmc</groupId>
   		<artifactId>spigot-api</artifactId>
-  		<version>1.9-R0.1-SNAPSHOT</version>
+  		<version>1.9.2-R0.1-SNAPSHOT</version>
   		<scope>provided</scope>
   	</dependency>
   	<dependency>
