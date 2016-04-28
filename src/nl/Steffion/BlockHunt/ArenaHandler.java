@@ -23,7 +23,17 @@ import nl.Steffion.BlockHunt.Serializables.LocationSerializable;
 @SuppressWarnings("deprecation")
 public class ArenaHandler {
 	public static void hidersWin(Arena arena) {
-		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders);
+		String hidersLeft = "";
+		
+		for (Player player : arena.playersInArena) {
+			if (!arena.seekers.contains(player)) {
+				hidersLeft += player.getName() + ", ";
+			}
+		}
+		
+		hidersLeft = hidersLeft.substring(0, hidersLeft.length() - 2);
+		
+		ArenaHandler.sendFMessage(arena, ConfigC.normal_winHiders, "names-" + hidersLeft);
 		for (Player player : arena.playersInArena) {
 			if (arena.seekers.contains(player)) {
 				if (arena.hidersWinCommands != null) {

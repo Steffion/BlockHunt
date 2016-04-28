@@ -165,7 +165,7 @@ public enum ConfigC {
 	normal_ingameSeekerDied ("%TAG%NSeeker %A%playername%%N died! He will respawn in %A%secs%%N seconds!",
 			W.messages),
 	normal_winSeekers ("%TAG%NThe %ASEEKERS%N have won!", W.messages),
-	normal_winHiders ("%TAG%NThe %AHIDERS%N have won!", W.messages),
+	normal_winHiders ("%TAG%NThe %AHIDERS%N have won! (%A%names%%N)", W.messages),
 	normal_setwarpWarpSet ("%TAG%NSet warp '%A%warp%%N' to your location!",
 			W.messages),
 	normal_addedToken ("%TAG%A%amount%%N tokens were added to your account!",
