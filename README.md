@@ -13,7 +13,7 @@ This plugin has been heavily inspired from the gamemode "PropHunt", from the gam
 |:--|:--|:--|:--|:--|
 |**Release (master)**|**v0.2.1**|**v1.9.2**|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt)](http://jenkins.steffion.com/job/BlockHunt/)|[Bukkit Dev](http://dev.bukkit.org/bukkit-plugins/blockhunt/files/)|
 |Snapshot (dev)|v0.2.2-SNAPSHOT|v1.9.2|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt-dev)](http://jenkins.steffion.com/job/BlockHunt-dev/)|[Jenkins](http://jenkins.steffion.com/job/BlockHunt-dev/)|
-|Old version (1.8)|v0.2.0-MC1.8.8|v1.8.8|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt-1.8)](http://jenkins.steffion.com/job/BlockHunt-1.8/)|[Jenkins](http://jenkins.steffion.com/job/BlockHunt-1.8/)|
+|Old version (1.8)|v0.2.1-MC1.8.8|v1.8.8|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt-1.8)](http://jenkins.steffion.com/job/BlockHunt-1.8/)|[Jenkins](http://jenkins.steffion.com/job/BlockHunt-1.8/)|
 |Recode (recode)|v0.3.0-ALPHA|v1.9.2|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt-recode)](http://jenkins.steffion.com/job/BlockHunt-recode/)|[Jenkins](http://jenkins.steffion.com/job/BlockHunt-recode/)|
 
 ### This plugin requires you to download and install two addinonal plugins! ([Lib's Disguises](https://www.spigotmc.org/resources/libs-disguises.81/) and [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/))
