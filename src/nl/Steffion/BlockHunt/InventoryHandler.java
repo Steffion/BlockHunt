@@ -246,6 +246,7 @@ public class InventoryHandler {
 		player.openInventory(panel);
 	}
 
+	@SuppressWarnings("deprecation")
 	public static void openShop(Player player) {
 		Inventory shop = Bukkit.createInventory(
 				null,

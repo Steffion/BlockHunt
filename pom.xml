@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>nl.Steffion</groupId>
   <artifactId>BlockHunt</artifactId>
-  <version>0.2.0-MC1.8.8</version>
+  <version>0.2.1-MC1.8.8</version>
   <name>BlockHunt</name>
   <build>
     <sourceDirectory>src</sourceDirectory>

@@ -45,6 +45,7 @@ public enum ConfigC {
 	blockChooserPrice (3000, W.config),
 	seekerHiderPrice (150, W.config),
 
+	wandEnabled(false, W.config),
 	wandIDname ("STICK", W.config),
 	wandName ("%A&l" + BlockHunt.pdfFile.getName() + "%N's selection wand",
 			W.config),
@@ -164,7 +165,7 @@ public enum ConfigC {
 	normal_ingameSeekerDied ("%TAG%NSeeker %A%playername%%N died! He will respawn in %A%secs%%N seconds!",
 			W.messages),
 	normal_winSeekers ("%TAG%NThe %ASEEKERS%N have won!", W.messages),
-	normal_winHiders ("%TAG%NThe %AHIDERS%N have won!", W.messages),
+	normal_winHiders ("%TAG%NThe %AHIDERS%N have won! (%A%names%%N)", W.messages),
 	normal_setwarpWarpSet ("%TAG%NSet warp '%A%warp%%N' to your location!",
 			W.messages),
 	normal_addedToken ("%TAG%A%amount%%N tokens were added to your account!",
@@ -234,8 +235,6 @@ public enum ConfigC {
 	error_leaveNotInArena ("%TAG%EYou're not in an arena!", W.messages),
 	error_createSelectionFirst ("%TAG%EMake a selection first. Use the wand command: %A/"
 			+ BlockHunt.pdfFile.getName() + " <wand|w>%E.",
-			W.messages),
-	error_createNotSameWorld ("%TAG%EMake your selection points in the same world!",
 			W.messages),
 	error_setTooHighNumber ("%TAG%EThat amount is too high! Max amount is: %A%max%%E.",
 			W.messages),
