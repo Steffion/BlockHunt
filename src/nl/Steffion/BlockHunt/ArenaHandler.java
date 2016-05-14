@@ -337,7 +337,7 @@ public class ArenaHandler {
 			player.updateInventory();
 			player.setExp(pad.pEXP);
 			player.setLevel(pad.pEXPL);
-			player.setHealth(pad.pHealth);
+			player.setHealth(pad.pHealth > 20 ? 20 : pad.pHealth);
 			player.setFoodLevel(pad.pFood);
 			player.addPotionEffects(pad.pPotionEffects);
 			player.teleport(arena.spawnWarp);
