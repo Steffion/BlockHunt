@@ -2,7 +2,7 @@ name: ${project.name}
 main: ${project.groupId}.${project.artifactId}.${project.name}
 version: ${project.version}
 authors:
-  - Steffion
+  - 'Steffion'
 description: An easy to set up, Hide and seek plugin. Hide as blocks from the killer seekers.
 softdepend: [LibsDisguises, ProtocolLib, Multiverse-Core, My Worlds, Vault]
 load: POSTWORLD
@@ -12,11 +12,6 @@ commands:
     description: N/A
     aliases:
         - bh
-        - prophunt
-        - ph
-        - hideandseek
-        - has
-        - hs
-        - seekandfind
-        - saf
-        - sf
+        - blockhunt
+        - blockh
+        - bhunt
