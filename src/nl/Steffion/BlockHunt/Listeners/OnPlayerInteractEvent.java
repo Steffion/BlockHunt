@@ -36,7 +36,7 @@ public class OnPlayerInteractEvent implements Listener {
 		Player player = event.getPlayer();
 		Block block = event.getClickedBlock();
 		if (PermissionsM.hasPerm(player, Permissions.create, false)) {
-			ItemStack item = player.getInventory().getItemInMainHand();
+			ItemStack item = player.getItemInHand();
 			if (item.getType() != Material.AIR) {
 				if (item.getItemMeta().hasDisplayName()) {
 					ItemMeta im = item.getItemMeta();
@@ -183,7 +183,7 @@ public class OnPlayerInteractEvent implements Listener {
 								W.moveLoc.put(pl, new Location(pl.getWorld(),
 										0, 0, 0));
 								pl.getWorld().playSound(player.getLocation(),
-										Sound.ENTITY_PLAYER_HURT, 1, 1);
+										Sound.HURT_FLESH, 1, 1);
 								SolidBlockHandler.makePlayerUnsolid(pl);
 							}
 						}
@@ -197,7 +197,7 @@ public class OnPlayerInteractEvent implements Listener {
 					&& (arena.gameState.equals(ArenaState.WAITING) || arena.gameState
 							.equals(ArenaState.STARTING))) {
 				event.setCancelled(true);
-				ItemStack item = player.getInventory().getItemInMainHand();
+				ItemStack item = player.getInventory().getItemInHand();
 				if (item.getType() != Material.AIR) {
 					if (item.getItemMeta().getDisplayName() != null) {
 						if (item.getItemMeta()
