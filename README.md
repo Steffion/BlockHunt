@@ -1,6 +1,6 @@
 # ![Thanks to ColeRule for making this awesome banner!](http://g2f.nl/0qheg35 "Thanks to ColeRule for making this awesome banner!") 
 
-##Introduction
+## Introduction
 Hide and seek is a popular game mode on Minecraft that allows you to hide as blocks and disguise as normal props from seekers. This plugin allows you to do that but with a lot more features added on such as: shops, stats etc...
 
 This plugin has been heavily inspired from the gamemode "PropHunt", from the game, "Garry's Mod".
@@ -8,7 +8,7 @@ This plugin has been heavily inspired from the gamemode "PropHunt", from the gam
 
 **Download and try this plugin out for yourself!**
 
-##Downloads
+## Downloads
 |Branch|Plugin version|Compatiable Minecraft version|Build status|Download|
 |:--|:--|:--|:--|:--|
 |**Release (master)**|**v0.2.1**|**v1.9.2**|[![Build Status](http://jenkins.steffion.com/buildStatus/icon?job=BlockHunt)](http://jenkins.steffion.com/job/BlockHunt/)|[Bukkit Dev](http://dev.bukkit.org/bukkit-plugins/blockhunt/files/)|
@@ -18,7 +18,7 @@ This plugin has been heavily inspired from the gamemode "PropHunt", from the gam
 
 ### This plugin requires you to download and install two addinonal plugins! ([Lib's Disguises](https://www.spigotmc.org/resources/libs-disguises.81/) and [ProtocolLib](http://dev.bukkit.org/bukkit-plugins/protocollib/))
 
-##Support
+## Support
 ||Link|
 |:--|:--|
 |**Issues/Tickets on GitHub**|[Click Here](https://github.com/Steffion/BlockHunt/issues/)|
@@ -26,7 +26,7 @@ This plugin has been heavily inspired from the gamemode "PropHunt", from the gam
 |**Dev-Bukkit comments**|[Click Here](http://dev.bukkit.org/bukkit-plugins/blockhunt/#comments)|
 |**E-mail**|[Click Here](mailto:steffion@icloud.com?subject=BlockHunt)|
 
-##Features
+## Features
 * Custom wand for selection arena.
 * Multiple arenas.
 * **Join/Leave signs!**
@@ -39,10 +39,10 @@ This plugin has been heavily inspired from the gamemode "PropHunt", from the gam
 * Instant respawn.
 * **_And more!_**
 
-##MCStats
+## MCStats
 [![](http://api.mcstats.org/signature/blockhunt.png)](http://mcstats.org/plugin/BlockHunt/)
 
-##Commands & Permissions
+## Commands & Permissions
 _**Note:** Instead of using /BlockHunt you could use:_
 * /bh
 * /hideandseek
@@ -72,7 +72,7 @@ _**Note:** Instead of using /BlockHunt you could use:_
 ||Gives you the BlockChooser.|blockhunt.shop.blockchooser|blockhunt.admin|
 ||Gives you the ability to do all commands in-game.|blockhunt.allcommands|Operators|
 
-###Other special permissions
+### Other special permissions
 |Permission|Description|
 |:--|:--|
 |`blockhunt.*`|All BlockHunt permissions.|
@@ -81,7 +81,7 @@ _**Note:** Instead of using /BlockHunt you could use:_
 |`blockhunt.admin`|All admin related permissions.|
 |`*`|All permissions on your server, including BlockHunt's permissions.|
 
-##How to set-up?
+## How to set-up?
 Use this video to manage your way through the set-up phase!
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=msPQ1UMiHWg
@@ -90,7 +90,7 @@ alt="" width="240" height="180" border="10" /></a>
 
 **Thanks to [Koz4Christ](https://www.youtube.com/user/koz4christ/) for this video!**
 
-##Donate
+## Donate
 Do you have some spare money lying around? Support BlockHunt and donate, as this will give us more encouragement to produce new updates. It will also show us how interested people are in this plugin!
 
 [![](https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RWASM5GV7GYTU)
